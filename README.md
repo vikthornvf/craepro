@@ -1,2 +1,2 @@
 # craepro
-Server API/Rest for consumption of Crae Pro project.
+Crae Pro project for business services automation of CRAE school.
