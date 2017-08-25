@@ -3,5 +3,5 @@ require('./config/database')('localhost/craepro');
 
 app.listen(3000, function() {
 
-	console.log("Server started.");
+	console.log('Server started.');
 });
