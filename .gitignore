@@ -44,6 +44,7 @@ server/.vscode
 server/node_modules
 client/node_modules
 client/typings
+client/dist
 client/app/**/*.js
 client/app/**/*.map
 client/npm-debug.log
