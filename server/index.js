@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'production';
+
 var app = require('./config/express')();
 require('./config/database')('localhost/craepro');
 

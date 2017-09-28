@@ -2,14 +2,13 @@ var express     = require('express');
 var consign     = require('consign');
 var bodyParser  = require('body-parser');
 var path        = require('path');
-var environment = require('../environments/environment.prod');
 
 module.exports = function() {
 
 	var app = express();
 
 	let dir;
-	if (environment.production)
+	if (process.env.NODE_ENV === 'production')
 		dir = path.join(__dirname, '../..', 'client/dist');
 	else
 		dir = path.join(__dirname, '../..', 'client/src');
