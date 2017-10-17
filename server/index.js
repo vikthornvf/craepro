@@ -1,7 +1,7 @@
-process.env.NODE_ENV = 'production';
+require('dotenv').config();
 
 var app = require('./config/express')();
-require('./config/database')('localhost/craepro');
+require('./config/database')(process.env.DB_URI);
 
 app.listen(3000, function() {
 

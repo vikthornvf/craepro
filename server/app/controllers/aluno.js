@@ -2,25 +2,23 @@ var mongoose = require('mongoose');
 var model = mongoose.model('Aluno');
 var controller = {};
 
-controller.list = function(req, res) {
-
+controller.list = (req, res) => {
 	model.find()
-		.then(function(fotos) {
-			res.json(fotos);
+		.then((alunos) => {
+			res.json(alunos);
 		},
-		function(err) {
+		err => {
 			console.log(err);
 			res.status(500).json(err);
 		});
 }
 
-controller.add = function(req, res) {
-
+controller.add = (req, res) => {
 	model.create(req.body)
-		.then(function(foto) {
-			res.json(foto);
+		.then((aluno) => {
+			res.json(aluno);
 		},
-		function(err) {
+		err => {
 			console.log(err);
 			res.status(500).json(err);
 		});
@@ -29,9 +27,9 @@ controller.add = function(req, res) {
 controller.findById = function(req, res) {
 
 	model.findById(req.params.id)
-		.then(function(foto) {
-			if (!foto) throw Error('Aluno não encontrado.');
-			res.json(foto);
+		.then(function(aluno) {
+			if (!aluno) throw Error('Aluno não encontrado.');
+			res.json(aluno);
 		},
 		function(err) {
 			console.log(err);
@@ -42,8 +40,8 @@ controller.findById = function(req, res) {
 controller.update = function(req, res) {
 
 	model.findByIdAndUpdate(req.params.id, req.body)
-		.then(function(foto) {
-			res.json(foto);
+		.then(function(aluno) {
+			res.json(aluno);
 		},
 		function(err) {
 			console.log(err);

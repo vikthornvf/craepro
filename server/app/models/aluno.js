@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var schema = mongoose.Schema({
-
+const schema = new mongoose.Schema({
 	nome: {
 		type: String,
 		required: true
 	}
 });
 
-mongoose.model('Aluno', schema);
+const Aluno = mongoose.model('Aluno', schema);
+
+module.exports = Aluno;
