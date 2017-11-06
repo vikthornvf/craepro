@@ -1,18 +1,18 @@
 const assert = require('assert');
 const Aluno = require('../app/models/aluno');
 
-describe('Deleta alunos', () => {
+describe('Deleta registros', () => {
    let aluno;
 
    beforeEach((done) => {
-       aluno = new Aluno({nome:'Joao'});
+       aluno = new Aluno({ nome:'Joao' });
        aluno.save()
            .then(() => done());
    });
 
    function assertNome(operation, done) {
        operation
-           .then(() => Aluno.findOne({nome:'Joao'}))
+           .then(() => Aluno.findOne({ nome:'Joao' }))
            .then((aluno) => {
                assert(aluno === null);
                done();
@@ -25,14 +25,14 @@ describe('Deleta alunos', () => {
 
    it('metodo de classe (schema) remove', (done) => {
        assertNome(
-           Aluno.remove({nome:'Joao'}),
+           Aluno.remove({ nome:'Joao' }),
            done
        );
    });
 
    it('metodo de classe (schema) findAndRemove', (done) => {
        assertNome(
-           Aluno.findOneAndRemove({nome:'Joao'}),
+           Aluno.findOneAndRemove({ nome:'Joao' }),
            done
        );
    });

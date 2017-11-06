@@ -15,7 +15,16 @@ before(done => {
 })
 
 beforeEach((done) => {
-    mongoose.connection.collections.alunos.drop(() => {
-        done();
+    const { alunos, atendimentos, professors, escolas, usuarios } = mongoose.connection.collections;
+    alunos.drop(() => {
+        atendimentos.drop(() => {
+            professors.drop(() => {
+                escolas.drop(() => {
+                    usuarios.drop(() => {
+                        done();
+                    });
+                });
+            });
+        });
     });
 });

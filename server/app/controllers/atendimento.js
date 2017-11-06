@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Aluno = mongoose.model('aluno');
+const Atendimento = mongoose.model('atendimento');
 
 module.exports = {
 	list(req, res) {
-		Aluno.find()
+		Atendimento.find()
 			.then((result) => {
 				res.json(result);
 			},
@@ -14,7 +14,7 @@ module.exports = {
 	},
 
 	add(req, res) {
-		Aluno.create(req.body)
+		Atendimento.create(req.body)
 			.then((result) => {
 				res.json(result);
 			},
@@ -25,9 +25,9 @@ module.exports = {
 	},
 
 	findById(req, res) {
-		Aluno.findById(req.params.id)
+		Atendimento.findById(req.params.id)
 			.then(function(result) {
-				if (!result) throw Error('Aluno não encontrado.');
+				if (!result) throw Error('Atendimento não encontrado.');
 				res.json(result);
 			},
 			function(err) {
@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	update(req, res) {
-		Aluno.findByIdAndUpdate(req.params.id, req.body)
+		Atendimento.findByIdAndUpdate(req.params.id, req.body)
 			.then(function(result) {
 				res.json(result);
 			},
@@ -48,7 +48,7 @@ module.exports = {
 	},
 
 	deleteById(req, res) {
-		Aluno.remove({_id: req.params.id})
+		Atendimento.remove({_id: req.params.id})
 			.then(function() {
 				res.sendStatus(204);
 			},

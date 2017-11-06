@@ -2,31 +2,51 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const atendimentoSchema = new Schema({
-    turno: String,
     encaminhamento: Date,
     inicio: Date,
-    desligamento: Date,
+    alta: Date,
+    hora: String,
+    dia: String,
+    turno: String,
+    tipo: { type: String, required: true },
     aluno: {
         type: Schema.Types.ObjectId,
-        ref: 'aluno'
+        ref: 'aluno',
+        required: true
     },
     professor: {
         type: Schema.Types.ObjectId,
-        ref: 'professor'
+        ref: 'professor',
+        required: true
     },
 });
 
 atendimentoSchema.virtual('status').get(function() {
-    if (!this.desligamento) {
+    if (!this.alta) {
         return this.inicio
             ? 'Ativo'
             : 'Espera';
     }
-    return 'Desligado';
+    return 'Alta';
 });
 
-atendimentoSchema.pre('save', function() {
+atendimentoSchema.pre('save', function(next) {
     if (!this.encaminhamento) this.encaminhamento = new Date();
+
+    const Aluno = mongoose.model('aluno');
+    const Professor = mongoose.model('professor');
+
+    Promise.all([
+        Aluno.update(
+            { _id: this.aluno._id },
+            { $push: { atendimentos: this } }
+        ),
+        Professor.update(
+            { _id: this.professor._id },
+            { $push: { atendimentos: this } }
+        )
+    ])
+    .then(() => next());
 });
 
 const Atendimento = mongoose.model('atendimento', atendimentoSchema);

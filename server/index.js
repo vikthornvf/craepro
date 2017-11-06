@@ -1,9 +1,8 @@
 require('dotenv').config();
 
-var app = require('./config/express')();
+const app = require('./config/express')();
 require('./config/database')(process.env.DB_URI);
 
-app.listen(3000, function() {
-
+app.listen(3000, () => {
 	console.log('Server started.');
 });

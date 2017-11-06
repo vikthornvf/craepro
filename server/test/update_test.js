@@ -1,7 +1,7 @@
 const assert = require('assert');
 const Aluno = require('../app/models/aluno');
 
-describe('Atualiza alunos', () => {
+describe('Atualiza registros', () => {
     let aluno;
 
     beforeEach((done) => {
