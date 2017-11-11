@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const Professor = mongoose.model('professor');
+const Professor = mongoose.model('Professor');
 
 module.exports = {
+
 	list(req, res) {
-		Professor.find()
+		Professor.find({})
 			.then((result) => {
 				res.json(result);
 			},

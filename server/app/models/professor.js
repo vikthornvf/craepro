@@ -1,24 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const EnderecoSchema = require('./endereco');
+const TelefoneSchema = require('./telefone_schema');
 
 const professorSchema = new Schema({
 	nome: { type: String, required: true },
 	tipoAtendimentos: [{ type: String }],
-	telefones: [{ type: String }],
-	enderecos: [EnderecoSchema],
+	telefones: [TelefoneSchema],
 	atendimentos: [{
 		type: Schema.Types.ObjectId,
-		ref: 'atendimento'
+		ref: 'Atendimento'
 	}]
 });
 
 professorSchema.pre('remove', function(next) {
-    const Atendimento = mongoose.model('atendimento');
+    const Atendimento = mongoose.model('Atendimento');
 
     Atendimento.remove({ _id: { $in: this.atendimentos } })
         .then(() => next());
 });
 
-const Professor = mongoose.model('professor', professorSchema);
+const Professor = mongoose.model('Professor', professorSchema);
 module.exports = Professor;

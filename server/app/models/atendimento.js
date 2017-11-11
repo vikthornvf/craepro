@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const atendimentoSchema = new Schema({
-    encaminhamento: Date,
+    encaminhamento: {
+        type: Date,
+        default: new Date(),
+        required: true
+    },
     inicio: Date,
     alta: Date,
     hora: String,
@@ -11,12 +15,12 @@ const atendimentoSchema = new Schema({
     tipo: { type: String, required: true },
     aluno: {
         type: Schema.Types.ObjectId,
-        ref: 'aluno',
+        ref: 'Aluno',
         required: true
     },
     professor: {
         type: Schema.Types.ObjectId,
-        ref: 'professor',
+        ref: 'Professor',
         required: true
     },
 });
@@ -31,10 +35,8 @@ atendimentoSchema.virtual('status').get(function() {
 });
 
 atendimentoSchema.pre('save', function(next) {
-    if (!this.encaminhamento) this.encaminhamento = new Date();
-
-    const Aluno = mongoose.model('aluno');
-    const Professor = mongoose.model('professor');
+    const Aluno = mongoose.model('Aluno');
+    const Professor = mongoose.model('Professor');
 
     Promise.all([
         Aluno.update(
@@ -49,5 +51,5 @@ atendimentoSchema.pre('save', function(next) {
     .then(() => next());
 });
 
-const Atendimento = mongoose.model('atendimento', atendimentoSchema);
+const Atendimento = mongoose.model('Atendimento', atendimentoSchema);
 module.exports = Atendimento;

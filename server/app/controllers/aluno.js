@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
-const Aluno = mongoose.model('aluno');
+const Aluno = mongoose.model('Aluno');
 
 module.exports = {
+
 	list(req, res) {
-		Aluno.find()
+		const escola = { _id: req.params.escolaId };
+		const isDesativado = req.params.isDesativados;
+
+		let query = {};
+		if (escola._id) {
+			query.escola = escola;
+		}
+
+		Aluno.find(query)
+			.populate('escola', 'nome')
 			.then((result) => {
 				res.json(result);
 			},
@@ -26,6 +36,7 @@ module.exports = {
 
 	findById(req, res) {
 		Aluno.findById(req.params.id)
+			.populate('')
 			.then(function(result) {
 				if (!result) throw Error('Aluno não encontrado.');
 				res.json(result);

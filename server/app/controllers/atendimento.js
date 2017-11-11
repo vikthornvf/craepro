@@ -1,9 +1,21 @@
 const mongoose = require('mongoose');
-const Atendimento = mongoose.model('atendimento');
+const Atendimento = mongoose.model('Atendimento');
 
 module.exports = {
+
 	list(req, res) {
-		Atendimento.find()
+		const aluno = { _id: req.params.alunoId };
+		const professor = { _id: req.params.professorId };
+
+		let query = {};
+		if (aluno._id) {
+			query.aluno = aluno;
+		}
+		if (professor._id) {
+			query.professor = professor;
+		}
+
+		Atendimento.find(query)
 			.then((result) => {
 				res.json(result);
 			},

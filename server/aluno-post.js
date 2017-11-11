@@ -21,7 +21,7 @@ var client = http.request(config, function(res) {
 });
 
 var aluno = {
-	nome: 'Vikthor',
+	//
 };
 
 client.end(JSON.stringify(aluno));

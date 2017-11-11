@@ -47,10 +47,22 @@ describe.only('Lista registros', (done) => {
             });
     });
 
-    it('lista aluno pelo id', (done) => {
+    it.only('encontra aluno pelo id', (done) => {
         Aluno.findOne({ _id: aluno._id })
+            .populate('escola')
+            .populate('atendimentos')
+            .populate('responsavels')
             .then(result => {
+                console.log(result);
                 assert(result.nome === 'Joao');
+                done();
+            });
+    });
+
+    it('lista todos os atendimentos', (done) => {
+        Atendimento.find({})
+            .then((atendimentos) => {
+                console.log(atendimentos);
                 done();
             });
     });
@@ -58,6 +70,7 @@ describe.only('Lista registros', (done) => {
     it('lista os atendimentos de certo aluno', (done) => {
         Atendimento.find({ aluno: aluno })
             .then((atendimentos) => {
+                console.log(atendimentos);
                 assert(atendimentos.length === 2);
                 done();
             });
@@ -66,7 +79,26 @@ describe.only('Lista registros', (done) => {
     it('lista os atendimentos de certo professor', (done) => {
         Atendimento.find({ professor: professor })
             .then((atendimentos) => {
+                console.log(atendimentos);
                 assert(atendimentos.length === 1);
+                done();
+            });
+    });
+
+    xit('lista alunos que nao estao desativados', (done) => {
+        // working solution:
+        // db.getCollection('alunos').find({
+        //     $or: [
+        //         { atendimentos: { $exists: true, $ne: [] } },
+        //         { atendimentos: { alta: null } }
+        //     ]})
+        Aluno.find({ atendimentos: { $exists: true, $ne: [] } })
+            .populate({
+                path: 'atendimentos',
+                match: { alta: null }
+            })
+            .then((alunos) => {
+                console.log(alunos);
                 done();
             });
     });

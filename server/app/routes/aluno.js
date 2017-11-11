@@ -1,12 +1,15 @@
+const controller = require('../controllers/aluno');
+
 module.exports = (app) => {
 
-	var controller = app.controllers.aluno;
+	app.get('/api/aluno/escola/:escolaId', controller.list);
+	app.get('/api/aluno/escola/:escolaId/desativados/:isDesativados', controller.list);
 
-	app.route('/aluno')
+	app.route('/api/aluno')
 		.get(controller.list)
 		.post(controller.add);
 
-	app.route('/aluno/:id')
+	app.route('/api/aluno/:id')
 		.get(controller.findById)
 		.put(controller.update)
 		.delete(controller.deleteById);

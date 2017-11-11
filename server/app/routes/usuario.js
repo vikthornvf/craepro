@@ -1,12 +1,14 @@
-const controller = require('../controllers/professor');
+const controller = require('../controllers/usuario');
 
 module.exports = (app) => {
 
-	app.route('/api/professor')
+	app.post('/api/authenticate', controller.auth);
+
+	app.route('/api/usuario')
 		.get(controller.list)
 		.post(controller.add);
 
-	app.route('/api/professor/:id')
+	app.route('/api/usuario/:id')
 		.get(controller.findById)
 		.put(controller.update)
 		.delete(controller.deleteById);

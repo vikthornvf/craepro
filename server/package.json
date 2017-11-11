@@ -8,6 +8,7 @@
     "consign": "^0.1.6",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
     "mocha": "^4.0.1",
     "mongoose": "^4.12.4",
     "mongoose-bcrypt": "^1.5.0"
