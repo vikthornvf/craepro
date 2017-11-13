@@ -31,4 +31,4 @@ const HorarioEnum = {
     }
 };
 
-module.exports = tipoEnum;
+module.exports = HorarioEnum;

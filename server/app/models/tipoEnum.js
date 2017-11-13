@@ -10,4 +10,4 @@ const TipoEnum = {
     P: 'P'
 };
 
-module.exports = tipoEnum;
+module.exports = TipoEnum;
