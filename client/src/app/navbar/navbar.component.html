@@ -1,0 +1,11 @@
+<!-- NOT WORKING -->
+<a data-activates="sidenav" class="hide-on-large-only btn-floating side-nav-btn">
+    <i class="material-icons teal">menu</i>
+</a>
+<nav>
+    <ul id="slide-out" class="side-nav fixed">
+        <li *ngFor="let routeName of routeNames" routerLinkActive="active"><a [routerLink]="[routeName]">{{routeName}}</a></li>
+    </ul>
+    <a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>
+    <a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>
+</nav>
