@@ -1,0 +1,23 @@
+.logo {
+    padding-top: 20px;
+    padding-left: 65px;
+}
+
+a.button-collapse.top-nav {
+	position: absolute;
+	text-align: center;
+	height: 48px;
+	width: 48px;
+	left: 15px;
+	float: none;
+	margin-left: -10px;
+	color: #fff;
+	font-size: 36px;
+	z-index: 2;
+}
+
+@media only screen and (min-width: 601px) {
+	a.button-collapse.top-nav {
+		top: 5px;
+	}
+}

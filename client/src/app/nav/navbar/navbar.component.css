@@ -1,0 +1,19 @@
+nav form {
+    height: 64px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    nav form {
+        height: 56px !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    nav form {
+        margin-left: 42px;
+    }
+}
+
+.input-field input[type=search] + label {
+    top: -10px;
+}

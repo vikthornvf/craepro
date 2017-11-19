@@ -1,0 +1,45 @@
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+    <div class="collapsible-header flex-container disabled">
+        <input type="checkbox" disabled>
+        <label class="disabled"></label>
+        <div class="flex nome"><b class="truncate">Nome</b></div>
+        <div class="flex escola"><b class="truncate">Escola</b></div>
+        <div class="flex serie-turno"><b class="truncate">Série</b></div>
+		</div>
+		<li *ngFor="let aluno of alunos">
+			<div class="collapsible-header flex-container selectable" (click)="onSelectAluno(aluno._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="aluno._id"
+					[checked]="aluno._id === selectedAlunoId">
+				<label [for]="aluno._id"></label>
+				<div class="flex nome truncate">{{aluno.nome}}</div>
+				<div class="flex escola truncate">{{aluno.escola}}</div>
+				<div class="flex serie-turno truncate">{{aluno.serieTurno}}</div>
+			</div>
+			<div class="collapsible-body">
+				<ul materialize="collapsible" class="v-scroll">
+					<div class="collapsible-header flex-container disabled">
+						<input type="checkbox" disabled>
+						<label class="disabled"></label>
+						<div class="flex-item"><b>Profissional</b></div>
+						<div class="flex-item"><b>Solicitação</b></div>
+						<div class="flex-item"><b>Tipo</b></div>
+						<div class="flex-item"><b>Status</b></div>
+						<div class="flex-item"><b>Início</b></div>
+						<div class="flex-item"><b>Alta</b></div>
+						<div class="flex-item-extended"><b>Parecer</b></div>
+					</div>
+					<app-atendimento-item
+						[fonte]="aluno"
+						[atendimento]="atendimento"
+						[selectedId]="selectedAtendimentoId"
+						(click)="onSelectAtendimento(atendimento._id)"
+						*ngFor="let atendimento of atendimentos"></app-atendimento-item>
+				</ul>
+				<br>
+				<a class="waves-effect waves-light btn-large"><i class="material-icons left">add_box</i> Novo Atendimento</a>
+			</div>
+    </li>
+</ul>

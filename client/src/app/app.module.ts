@@ -1,22 +1,24 @@
 import { MaterializeModule } from 'angular2-materialize';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { AlunoListComponent } from './aluno-list/aluno-list.component';
+import { NavModule } from './nav/nav.module';
+import { AlunoModule } from './alunos/aluno.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    AlunoListComponent
-  ],
-  imports: [
-    BrowserModule,
-    MaterializeModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		MaterializeModule,
+		BrowserModule,
+		RouterModule,
+		NavModule,
+		AlunoModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

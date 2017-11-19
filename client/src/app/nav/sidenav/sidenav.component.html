@@ -1,0 +1,12 @@
+<a materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="sidenav" class="button-collapse top-nav hide-on-large-only">
+	<i class="material-icons">menu</i>
+</a>
+<ul id="sidenav" class="side-nav fixed">
+	<li><img src="../assets/img/logo-min-bot180x135.png" class="logo"></li>
+	<li class="divider"></li>
+	<li *ngFor="let routeName of routeNames">
+		<!-- routerLinkActive="active" -->
+		<a class="waves-effect waves-teal">{{ routeName }}</a>
+		<!-- [routerLink]="[routeName]" -->
+	</li>
+</ul>

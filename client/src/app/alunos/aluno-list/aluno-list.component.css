@@ -1,0 +1,15 @@
+.collapsible-body {
+	padding: 1rem;
+}
+
+.flex.nome {
+	width: 55%;
+}
+
+.flex.escola {
+	width: 25%;
+}
+
+.flex.serie-turno {
+	width: 20%;
+}
