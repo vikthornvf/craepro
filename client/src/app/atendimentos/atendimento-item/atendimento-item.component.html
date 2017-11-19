@@ -5,8 +5,7 @@
 		[id]="atendimento._id"
 		[checked]="atendimento._id === selectedId">
 	<label [for]="atendimento._id"></label>
-	<div class="flex-item" *ngIf="isAluno; else isProfessor">{{ atendimento.profissional }}</div>
-	<ng-template #isProfessor><div class="flex-item">{{ atendimento.aluno }}</div></ng-template>
+	<div class="flex-item"><ng-content></ng-content></div>
 	<div class="flex-item">{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</div>
 	<div class="flex-item">{{ atendimento.tipo }}</div>
 	<div class="flex-item">{{ atendimento.status }}</div>
