@@ -2,7 +2,7 @@
     <div class="collapsible-header flex-container disabled">
         <input type="checkbox" disabled>
         <label class="disabled"></label>
-        <div class="flex nome"><b class="truncate">Nome</b></div>
+        <div class="flex nome"><b class="truncate">Nome (Status)</b></div>
         <div class="flex escola"><b class="truncate">Escola</b></div>
         <div class="flex serie-turno"><b class="truncate">Série</b></div>
 		</div>
@@ -14,7 +14,12 @@
 					[id]="aluno._id"
 					[checked]="aluno._id === selectedAlunoId">
 				<label [for]="aluno._id"></label>
-				<div class="flex nome truncate">{{aluno.nome}}</div>
+				<div class="flex nome truncate">{{aluno.nome}}<i class="material-icons right status" [ngClass]="{
+					'ativo': aluno.status === 'A',
+					'ativo-parcial': aluno.status === 'P',
+					'espera': aluno.status === 'E',
+					'desligado': aluno.status === 'D' }">more</i>
+				</div>
 				<div class="flex escola truncate">{{aluno.escola}}</div>
 				<div class="flex serie-turno truncate">{{aluno.serieTurno}}</div>
 			</div>
@@ -42,3 +47,18 @@
 			</div>
     </li>
 </ul>
+<div class="fixed-action-btn" *ngIf="selectedAlunoId">
+	<a materialize
+		class="btn-floating btn-large light-blue tooltipped pulse"
+		data-position="left"
+		data-delay="50"
+		data-tooltip="I am a tooltip">
+		<i class="large material-icons">mode_edit</i>
+	</a>
+	<ul>
+		<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+		<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+	</ul>
+</div>
