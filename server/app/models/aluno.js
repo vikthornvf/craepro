@@ -18,11 +18,11 @@ const alunoSchema = new Schema({
 	}],
 });
 
-alunoSchema.pre('remove', function(next) {
-    const Atendimento = mongoose.model('Atendimento');
+alunoSchema.pre('remove', function (next) {
+	const Atendimento = mongoose.model('Atendimento');
 
-    Atendimento.remove({ _id: { $in: this.atendimentos } })
-        .then(() => next());
+	Atendimento.remove({ _id: { $in: this.atendimentos } })
+		.then(() => next());
 });
 
 const Aluno = mongoose.model('Aluno', alunoSchema);

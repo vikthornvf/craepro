@@ -1,19 +1,20 @@
-nav form {
-    height: 64px !important;
-}
-
-@media only screen and (max-width: 600px) {
-    nav form {
-        height: 56px !important;
-    }
+nav {
+	transition: background-color .6s ease;
+	-webkit-transition: background-color .6s ease;
+	-moz-transition: background-color .6s ease;
+	-o-transition: background-color .6s ease;
 }
 
 @media only screen and (max-width: 992px) {
-    nav form {
-        margin-left: 42px;
-    }
+	ul li {
+			margin-left: 42px;
+	}
 }
 
-.input-field input[type=search] + label {
-    top: -10px;
+.navbar {
+	background-color: #0288d1;
+}
+
+.navbar-search {
+	background-color: #4db6ac;
 }

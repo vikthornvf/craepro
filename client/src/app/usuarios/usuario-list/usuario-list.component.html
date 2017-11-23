@@ -1,0 +1,28 @@
+<h4 class="grey-text">Usuários</h4>
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+		<div class="collapsible-header flex-container disabled">
+				<input type="checkbox" disabled>
+				<label class="disabled"></label>
+				<div class="flex nome"><b class="truncate">Nome</b></div>
+				<div class="flex email"><b class="truncate">E-mail</b></div>
+				<div class="flex escola"><b class="truncate">Escola</b></div>
+		</div>
+		<li *ngFor="let usuario of usuarios | navFilter: keyword:'nome'">
+			<div class="collapsible-header flex-container selectable" (click)="onSelectUsuario(usuario._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="usuario._id"
+					[checked]="usuario._id === selectedUsuarioId">
+				<label [for]="usuario._id"></label>
+				<div class="flex nome truncate">{{ usuario.nome }}</div>
+				<div class="flex email truncate">{{ usuario.email }}</div>
+				<div class="flex escola truncate">{{ usuario.escola }}</div>
+			</div>
+		</li>
+</ul>
+<div class="fixed-action-btn" *ngIf="selectedUsuarioId">
+	<a class="btn-floating btn-large amber pulse">
+		<i class="large material-icons">mode_edit</i>
+	</a>
+</div>

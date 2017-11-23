@@ -1,16 +1,27 @@
+import { MaterializeSharedModule } from '../materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NavModule } from '../nav/nav.module';
+import { AtendimentoModule } from '../atendimentos/atendimento.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
-import { AtendimentoItemComponent } from '../atendimentos/atendimento-item/atendimento-item.component';
+import { AlunoComponent } from './aluno/aluno.component';
 
 @NgModule({
 	declarations: [
 		AlunoListComponent,
-		AtendimentoItemComponent
+		AlunoComponent
 	],
-	exports: [AlunoListComponent],
-	imports: [BrowserModule],
+	exports: [
+		AlunoListComponent,
+		AlunoComponent
+	],
+	imports: [
+		MaterializeSharedModule,
+		BrowserModule,
+		NavModule,
+		AtendimentoModule
+	],
 	providers: []
 })
 export class AlunoModule { }

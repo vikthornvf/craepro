@@ -1,0 +1,11 @@
+.collapsible-body {
+	padding: 1rem;
+}
+
+.flex.nome {
+	width: 55%;
+}
+
+.flex.atendimentos {
+	width: 45%;
+}

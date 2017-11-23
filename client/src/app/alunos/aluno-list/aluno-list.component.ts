@@ -1,21 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import { Component, EventEmitter, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
+import { AtendimentoModule } from '../../atendimentos/atendimento.module';
+import { NavbarService } from '../../nav/navbar/navbar.service';
+
+declare var $: any;
 
 @Component({
 	selector: 'app-aluno-list',
 	templateUrl: './aluno-list.component.html',
 	styleUrls: ['./aluno-list.component.css']
 })
-export class AlunoListComponent implements OnInit {
+export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-	selectedAlunoId = '';
-	selectedAtendimentoId = '';
+	keyword = '';
 	alunos: Aluno[] = [];
+	selectedAlunoId = '';
+
 	atendimentos: Atendimento[] = [];
+	selectedAtendimentoId = '';
+
+	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
+	modalAtendimentoParams = [{ dismissible: false }];
+
+	constructor(private navProps: NavbarService) { }
 
 	ngOnInit(): void {
-		// TODO load alunos
+		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
+		this.navProps.changeNavbarSearch(true);
+		this.loadAlunos();
+	}
+
+	ngOnDestroy(): void {
+		this.navProps.changeNavbarSearch(false);
+	}
+
+	ngAfterViewInit(): void {
+		$('.tooltipped').tooltip();
+	}
+
+	loadAlunos() {
 		this.alunos = [
 			new Aluno('1', 'Adão', 'Escola', 'D', '9', 'Tarde'),
 			new Aluno('2', 'Rosângela', 'Escola', 'P', '9', 'Manha'),
@@ -23,13 +48,10 @@ export class AlunoListComponent implements OnInit {
 			new Aluno('4', 'Yuri', 'Escola', 'A', '5', 'Noite'),
 			new Aluno('5', 'Thiagus', 'Escola', 'A', '4', 'Tarde'),
 			new Aluno('6', 'Vikthor', 'Escola', 'A', '2', 'Tarde'),
-			new Aluno('7', 'Isaac', 'Escola', 'E', '1', 'Manha'),
-			new Aluno('8', 'Ícaro', 'Escola', 'E', '1', 'Manha')
+			new Aluno('7', 'Deisi', 'Escola', 'A', '2', 'Tarde'),
+			new Aluno('8', 'Isaac', 'Escola', 'E', '1', 'Manha'),
+			new Aluno('9', 'Ícaro', 'Escola', 'E', '1', 'Manha')
 		];
-	}
-
-	loadAlunos() {
-		// this.alunos =
 	}
 
 	onSelectAluno(alunoId: string) {
@@ -37,6 +59,11 @@ export class AlunoListComponent implements OnInit {
 		this.selectedAlunoId = this.selectedAlunoId !== alunoId
 			? alunoId
 			: null;
+	}
+
+	getAlunoLink() {
+		console.log(`aluno/${this.selectedAlunoId}`);
+		return `aluno/${this.selectedAlunoId}`;
 	}
 
 	loadAtendimentos(alunoId: string) {
@@ -50,5 +77,15 @@ export class AlunoListComponent implements OnInit {
 		this.selectedAtendimentoId = this.selectedAtendimentoId !== atendimentoId
 			? atendimentoId
 			: null;
+	}
+
+	openModalAtendimento() {
+		this.modalAtendimentoActions.emit({ action: 'modal', params: ['open'] });
+	}
+
+	onSaveAtendimento() {
+		// TODO
+		// if (this.selectedAtendimentoId) save
+		// else create;
 	}
 }

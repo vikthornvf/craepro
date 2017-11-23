@@ -1,0 +1,15 @@
+<form class="transparent">
+	<div class="input-field">
+	<input
+		type="search"
+		placeholder="Buscar"
+		required id="search"
+		(keyup)="onKeyup()"
+		[(ngModel)]="keyword"
+		[ngModelOptions]="{standalone: true}">
+		<label class="show-on-large label-icon" for="search">
+			<i class="material-icons">search</i>
+		</label>
+		<i class="material-icons" (click)="onCleanKeyword()">close</i>
+	</div>
+</form>

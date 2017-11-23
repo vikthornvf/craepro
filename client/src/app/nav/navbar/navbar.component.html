@@ -1,36 +1,28 @@
-<nav class="teal lighten-2">
+<nav class="navbar" [ngClass]="{ 'navbar-search': navbarSearch }">
 	<div class="nav-wrapper">
 		<div class="row">
 			<div class="col s9">
-				<form class="teal lighten-3">
-					<div class="input-field">
-						<input
-							type="search"
-							placeholder="Buscar"
-							required id="search"
-							[(ngModel)]="keyword"
-							[ngModelOptions]="{standalone: true}">
-						<label class="show-on-large label-icon" for="search">
-							<i class="material-icons">search</i>
-						</label>
-						<i class="material-icons" (click)="onCleanKeyword()">close</i>
-					</div>
-				</form>
+				<app-navbar-search *ngIf="navbarSearch; else navbarReturn"></app-navbar-search>
+				<ng-template #navbarReturn>
+					<ul class="left">
+						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
+					</ul>
+				</ng-template>
 			</div>
 			<div class="col s3">
 				<ul class="right" id="navbar">
 					<li>
-						<a class='dropdown-button' href='#' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
+						<a class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
 							<i class="material-icons">account_circle</i>
 						</a>
 					</li>
+				</ul>
+				<ul id='user-dropdown' class='dropdown-content'>
+					<li><a routerLink="/usuarios/usuario"><i class="material-icons left">person</i>Minha conta</a></li>
+					<li><a routerLink="/usuario-senha"><i class="material-icons left">lock</i>Trocar senha</a></li>
+					<li><a (click)="onLoggout()"><i class="material-icons left">power_settings_new</i>Sair</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </nav>
-<ul id='user-dropdown' class='dropdown-content'>
-	<li><a href="#!"><i class="material-icons left">person</i>Minha conta</a></li>
-	<li><a href="#!"><i class="material-icons left">lock</i>Trocar senha</a></li>
-	<li><a href="#!"><i class="material-icons left">power_settings_new</i>Sair</a></li>
-</ul>

@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Atendimento } from '../atendimento.model';
 import { Aluno } from '../../alunos/aluno.model';
+
+declare var $: any;
 
 /**
  * AtendimentoItem
@@ -11,8 +13,12 @@ import { Aluno } from '../../alunos/aluno.model';
 	templateUrl: './atendimento-item.component.html',
 	styleUrls: ['./atendimento-item.component.css']
 })
-export class AtendimentoItemComponent {
+export class AtendimentoItemComponent implements AfterViewInit {
 
 	@Input() atendimento: Atendimento;
 	@Input() selectedId: string;
+
+	ngAfterViewInit() {
+		$('.collapsible').collapsible();
+	}
 }

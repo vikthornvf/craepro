@@ -5,9 +5,9 @@
  * P - Psicologico
  */
 const TipoEnum = {
-    A: 'A',
-    F: 'F',
-    P: 'P'
+	A: 'A',
+	F: 'F',
+	P: 'P'
 };
 
 module.exports = TipoEnum;

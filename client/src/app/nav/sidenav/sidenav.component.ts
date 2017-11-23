@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent {
-	routeNames = [
-		'Alunos',
-		'Professores',
-		'Escolas',
-		'Usuários'
+	routes = [
+		{ name: 'alunos', label: 'Alunos' },
+		{ name: 'professores', label: 'Professores' },
+		{ name: 'escolas', label: 'Escolas' },
+		{ name: 'usuarios', label: 'Usuários' }
 	];
 }

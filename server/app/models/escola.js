@@ -4,9 +4,16 @@ const TelefoneSchema = require('./telefone_schema');
 const EnderecoSchema = require('./endereco_schema');
 
 const escolaSchema = new Schema({
-    nome: { type: String, required: true },
-    telefones: [TelefoneSchema],
-    endereco: EnderecoSchema
+	nome: { type: String, required: true },
+	telefones: [TelefoneSchema],
+	endereco: EnderecoSchema
+});
+
+escolaSchema.virtual('qtdAlunos').get(function() {
+	const Aluno = mongoose.model('Aluno');
+
+	Aluno.count({ escola: this })
+		.then(() => next());
 });
 
 const Escola = mongoose.model('Escola', escolaSchema);

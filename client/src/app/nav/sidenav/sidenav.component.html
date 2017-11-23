@@ -4,9 +4,7 @@
 <ul id="sidenav" class="side-nav fixed">
 	<li><img src="../assets/img/logo-min-bot180x135.png" class="logo"></li>
 	<li class="divider"></li>
-	<li *ngFor="let routeName of routeNames">
-		<!-- routerLinkActive="active" -->
-		<a class="waves-effect waves-teal">{{ routeName }}</a>
-		<!-- [routerLink]="[routeName]" -->
+	<li *ngFor="let route of routes" routerLinkActive="active">
+		<a class="waves-effect waves-teal" [routerLink]="[route.name]">{{ route.label }}</a>
 	</li>
 </ul>

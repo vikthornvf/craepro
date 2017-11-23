@@ -1,64 +1,79 @@
+<h4 class="grey-text">Alunos</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-    <div class="collapsible-header flex-container disabled">
-        <input type="checkbox" disabled>
-        <label class="disabled"></label>
-        <div class="flex nome"><b class="truncate">Nome (Status)</b></div>
-        <div class="flex escola"><b class="truncate">Escola</b></div>
-        <div class="flex serie-turno"><b class="truncate">Série</b></div>
+	<div class="collapsible-header flex-container disabled">
+			<input type="checkbox" disabled>
+			<label class="disabled"></label>
+			<div class="flex nome"><b class="truncate">Nome (Status)</b></div>
+			<div class="flex escola"><b class="truncate">Escola</b></div>
+			<div class="flex serie-turno"><b class="truncate">Série (Turno)</b></div>
+	</div>
+	<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
+		<div class="collapsible-header flex-container selectable" (click)="onSelectAluno(aluno._id)">
+			<input
+				type="checkbox"
+				class="filled-in"
+				[id]="aluno._id"
+				[checked]="aluno._id === selectedAlunoId">
+			<label [for]="aluno._id"></label>
+			<div class="flex nome truncate">{{ aluno.nome }}
+				<i
+					materialize="tooltip"
+					class="material-icons right status tooltipped"
+					data-position="left"
+					data-ldelay="50"
+					[attr.data-tooltip]="aluno.statusFormatted"
+					[ngClass]="aluno.status.toLowerCase()">more</i>
+			</div>
+			<div class="flex escola truncate">{{ aluno.escola }}</div>
+			<div class="flex serie-turno truncate">{{ aluno.serieTurno }}</div>
 		</div>
-		<li *ngFor="let aluno of alunos">
-			<div class="collapsible-header flex-container selectable" (click)="onSelectAluno(aluno._id)">
-				<input
-					type="checkbox"
-					class="filled-in"
-					[id]="aluno._id"
-					[checked]="aluno._id === selectedAlunoId">
-				<label [for]="aluno._id"></label>
-				<div class="flex nome truncate">{{aluno.nome}}<i class="material-icons right status" [ngClass]="{
-					'ativo': aluno.status === 'A',
-					'ativo-parcial': aluno.status === 'P',
-					'espera': aluno.status === 'E',
-					'desligado': aluno.status === 'D' }">more</i>
+		<div class="collapsible-body">
+			<ul materialize="collapsible" class="v-scroll">
+				<div class="collapsible-header flex-container disabled">
+					<input type="checkbox" disabled>
+					<label class="disabled"></label>
+					<div class="flex-item"><b>Profissional</b></div>
+					<div class="flex-item"><b>Solicitação</b></div>
+					<div class="flex-item"><b>Tipo</b></div>
+					<div class="flex-item"><b>Status</b></div>
+					<div class="flex-item"><b>Início</b></div>
+					<div class="flex-item"><b>Alta</b></div>
+					<div class="flex-item-extended"><b>Parecer</b></div>
 				</div>
-				<div class="flex escola truncate">{{aluno.escola}}</div>
-				<div class="flex serie-turno truncate">{{aluno.serieTurno}}</div>
-			</div>
-			<div class="collapsible-body">
-				<ul materialize="collapsible" class="v-scroll">
-					<div class="collapsible-header flex-container disabled">
-						<input type="checkbox" disabled>
-						<label class="disabled"></label>
-						<div class="flex-item"><b>Profissional</b></div>
-						<div class="flex-item"><b>Solicitação</b></div>
-						<div class="flex-item"><b>Tipo</b></div>
-						<div class="flex-item"><b>Status</b></div>
-						<div class="flex-item"><b>Início</b></div>
-						<div class="flex-item"><b>Alta</b></div>
-						<div class="flex-item-extended"><b>Parecer</b></div>
-					</div>
-					<app-atendimento-item
-						[atendimento]="atendimento"
-						[selectedId]="selectedAtendimentoId"
-						(click)="onSelectAtendimento(atendimento._id)"
-						*ngFor="let atendimento of atendimentos">{{ atendimento.profissional }}</app-atendimento-item>
-				</ul>
-				<br>
-				<a class="waves-effect waves-light btn-large teal lighten-2"><i class="material-icons left">add_box</i> Novo Atendimento</a>
-			</div>
-    </li>
+				<app-atendimento-item
+					[atendimento]="atendimento"
+					[selectedId]="selectedAtendimentoId"
+					(click)="onSelectAtendimento(atendimento._id)"
+					*ngFor="let atendimento of atendimentos">{{ atendimento.profissional }}</app-atendimento-item>
+			</ul>
+			<br>
+			<a class="waves-effect waves-light btn-large teal lighten-2" (click)="openModalAtendimento()">
+				<i class="material-icons left">add_box</i> Novo Atendimento
+			</a>
+		</div>
+	</li>
 </ul>
 <div class="fixed-action-btn" *ngIf="selectedAlunoId">
-	<a materialize
-		class="btn-floating btn-large light-blue tooltipped pulse"
-		data-position="left"
-		data-delay="50"
-		data-tooltip="I am a tooltip">
+	<a class="btn-floating btn-large amber pulse" [routerLink]="getAlunoLink()">
 		<i class="large material-icons">mode_edit</i>
 	</a>
-	<ul>
-		<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-		<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+	<ul *ngIf="selectedAtendimentoId">
+		<li><a class="waves-effect waves-light btn-floating teal lighten-2" (click)="openModalAtendimento()">
+			<i class="material-icons">assignment</i></a>
+		</li>
 	</ul>
+</div>
+<div
+	id="modal1"
+	class="modal modal-fixed-footer"
+	materialize="modal"
+	[materializeParams]="modalAtendimentoParams"
+	[materializeActions]="modalAtendimentoActions">
+	<div class="modal-content">
+		<app-atendimento [atendimentoId]="selectedAtendimentoId" [selectedId]="selectedAlunoId"></app-atendimento>
+	</div>
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onSaveAtendimento()">Salvar</a>
+		<a class="waves-effect modal-close waves-effect waves-red btn-flat">Cancelar</a>
+	</div>
 </div>

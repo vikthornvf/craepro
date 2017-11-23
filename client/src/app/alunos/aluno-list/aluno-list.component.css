@@ -14,18 +14,18 @@
 	width: 20%;
 }
 
-.status.ativo {
+.status.a {
 	color: #2196f3;
 }
 
-.status.ativo-parcial {
+.status.p {
 	color: #4caf50;
 }
 
-.status.espera {
+.status.e {
 	color: #ffc107;
 }
 
-.status.desligado {
+.status.d {
 	color: #9e9e9e;
 }

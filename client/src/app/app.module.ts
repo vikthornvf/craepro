@@ -1,22 +1,26 @@
-import { MaterializeModule } from 'angular2-materialize';
+import { MaterializeSharedModule } from './materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavModule } from './nav/nav.module';
 import { AlunoModule } from './alunos/aluno.module';
+import { ProfessorModule } from './professores/professor.module';
+import { EscolaModule } from './escolas/escola.module';
+import { UsuarioModule } from './usuarios/usuario.module';
 
 @NgModule({
 	declarations: [
 		AppComponent
 	],
 	imports: [
-		MaterializeModule,
+		MaterializeSharedModule,
 		BrowserModule,
-		RouterModule,
 		NavModule,
-		AlunoModule
+		AlunoModule,
+		ProfessorModule,
+		EscolaModule,
+		UsuarioModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
