@@ -5,6 +5,8 @@ import { AtendimentoModule } from '../atendimentos/atendimento.module';
 
 import { ProfessorListComponent } from './professor-list/professor-list.component';
 
+import { ProfessorService } from './professor.service';
+
 @NgModule({
 	declarations: [
 		ProfessorListComponent
@@ -17,6 +19,6 @@ import { ProfessorListComponent } from './professor-list/professor-list.componen
 		NavModule,
 		AtendimentoModule
 	],
-	providers: []
+	providers: [ProfessorService]
 })
 export class ProfessorModule { }

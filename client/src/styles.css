@@ -32,6 +32,11 @@ blockquote {
 	border-left: 5px solid #4db6ac;
 }
 
+form {
+  animation-duration: .3s;
+  animation-name: slidein;
+}
+
 .flex-container {
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -41,19 +46,7 @@ blockquote {
 
 .collapsible {
   animation-duration: .3s;
-  animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-    opacity: 0;
-		transform: translate3d(-200px, 0, 0);
-  }
-
-  to {
-    opacity: 1;
-		transform: translate3d(0, 0, 0);
-  }
+  animation-name: fadein;
 }
 
 .collapsible-header.selectable:hover {
@@ -80,4 +73,26 @@ blockquote {
 
 .v-scroll {
 	overflow-y: auto;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+		transform: translate3d(-200px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+		transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadein {
+  from {
+		opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

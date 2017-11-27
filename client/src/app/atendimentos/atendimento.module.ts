@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AtendimentoItemComponent } from './atendimento-item/atendimento-item.component';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
+import { AtendimentoService } from './atendimento.service';
 
 @NgModule({
 	declarations: [
@@ -14,6 +15,6 @@ import { AtendimentoComponent } from './atendimento/atendimento.component';
 		AtendimentoComponent
 	],
 	imports: [BrowserModule],
-	providers: []
+	providers: [AtendimentoService]
 })
 export class AtendimentoModule { }

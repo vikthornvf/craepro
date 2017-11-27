@@ -18,7 +18,7 @@ const appRoutes: Routes = [
 	{ path: 'usuarios', component: UsuarioListComponent },
 	{ path: 'usuarios/usuario', component: UsuarioComponent },
 	{ path: 'usuarios/usuario/:id', component: UsuarioComponent },
-	{ path: 'usuario-senha', component: UsuarioSenhaComponent },
+	{ path: 'usuarios/usuario-senha', component: UsuarioSenhaComponent },
 	{ path: '**', redirectTo: 'alunos' }
 ];
 

@@ -10,8 +10,7 @@ declare var $: any;
  */
 @Component({
 	selector: 'app-atendimento-item',
-	templateUrl: './atendimento-item.component.html',
-	styleUrls: ['./atendimento-item.component.css']
+	templateUrl: './atendimento-item.component.html'
 })
 export class AtendimentoItemComponent implements AfterViewInit {
 

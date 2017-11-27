@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Escola } from '../escola.model';
 import { NavbarService } from '../../nav/navbar/navbar.service';
+import { EscolaService } from '../escola.service';
 
 @Component({
 	selector: 'app-escola-list',
@@ -13,7 +14,7 @@ export class EscolaListComponent implements OnInit, OnDestroy {
 	selectedEscolaId = '';
 	escolas: Escola[] = [];
 
-	constructor(private navProps: NavbarService) { }
+	constructor(private service: EscolaService, private navProps: NavbarService) { }
 
 	ngOnInit(): void {
 		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
@@ -30,14 +31,7 @@ export class EscolaListComponent implements OnInit, OnDestroy {
 	}
 
 	loadEscolas() {
-		this.escolas = [
-			new Escola('1', 'Escolinha', 4),
-			new Escola('2', 'A Escola', 5),
-			new Escola('3', 'Colégio', 2),
-			new Escola('4', 'Educanddo', 1),
-			new Escola('5', 'Óia o Estudo', 3),
-			new Escola('6', 'Vamstudá', 6),
-		];
+		this.escolas = this.service.list();
 	}
 
 	onSelectEscola(escolaId: string) {

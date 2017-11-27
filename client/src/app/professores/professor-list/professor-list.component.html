@@ -1,43 +1,43 @@
 <h4 class="grey-text">Professores</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-		<div class="collapsible-header flex-container disabled">
-				<input type="checkbox" disabled>
-				<label class="disabled"></label>
-				<div class="flex nome"><b class="truncate">Nome</b></div>
-				<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
+	<div class="collapsible-header flex-container disabled">
+		<input type="checkbox" disabled>
+		<label class="disabled"></label>
+		<div class="flex nome"><b class="truncate">Nome</b></div>
+		<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
+	</div>
+	<li *ngFor="let professor of professores | navFilter: keyword:'nome'">
+		<div class="collapsible-header flex-container selectable" (click)="onSelectProfessor(professor._id)">
+			<input
+				type="checkbox"
+				class="filled-in"
+				[id]="professor._id"
+				[checked]="professor._id === selectedProfessorId">
+			<label [for]="professor._id"></label>
+			<div class="flex nome truncate">{{ professor.nome }}</div>
+			<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>
 		</div>
-		<li *ngFor="let professor of professores | navFilter: keyword:'nome'">
-			<div class="collapsible-header flex-container selectable" (click)="onSelectProfessor(professor._id)">
-				<input
-					type="checkbox"
-					class="filled-in"
-					[id]="professor._id"
-					[checked]="professor._id === selectedProfessorId">
-				<label [for]="professor._id"></label>
-				<div class="flex nome truncate">{{ professor.nome }}</div>
-				<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>
-			</div>
-			<div class="collapsible-body">
-				<ul materialize="collapsible" class="v-scroll">
-					<div class="collapsible-header flex-container disabled">
-						<input type="checkbox" disabled>
-						<label class="disabled"></label>
-						<div class="flex-item"><b>Aluno</b></div>
-						<div class="flex-item"><b>Solicitação</b></div>
-						<div class="flex-item"><b>Tipo</b></div>
-						<div class="flex-item"><b>Status</b></div>
-						<div class="flex-item"><b>Início</b></div>
-						<div class="flex-item"><b>Alta</b></div>
-						<div class="flex-item-extended"><b>Parecer</b></div>
-					</div>
-					<app-atendimento-item
-						[atendimento]="atendimento"
-						[selectedId]="selectedAtendimentoId"
-						(click)="onSelectAtendimento(atendimento._id)"
-						*ngFor="let atendimento of atendimentos">{{ atendimento.aluno }}</app-atendimento-item>
-				</ul>
-			</div>
-		</li>
+		<div class="collapsible-body">
+			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length">
+				<div class="collapsible-header flex-container disabled">
+					<input type="checkbox" disabled>
+					<label class="disabled"></label>
+					<div class="flex-item"><b>Aluno</b></div>
+					<div class="flex-item"><b>Solicitação</b></div>
+					<div class="flex-item"><b>Tipo</b></div>
+					<div class="flex-item"><b>Status</b></div>
+					<div class="flex-item"><b>Início</b></div>
+					<div class="flex-item"><b>Alta</b></div>
+					<div class="flex-item-extended"><b>Parecer</b></div>
+				</div>
+				<app-atendimento-item
+					[atendimento]="atendimento"
+					[selectedId]="selectedAtendimentoId"
+					(click)="onSelectAtendimento(atendimento._id)"
+					*ngFor="let atendimento of atendimentos">{{ atendimento.aluno.nome }}</app-atendimento-item>
+			</ul>
+		</div>
+	</li>
 </ul>
 <div class="fixed-action-btn" *ngIf="selectedProfessorId">
 	<a class="btn-floating btn-large amber pulse">

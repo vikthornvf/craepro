@@ -1,8 +1,8 @@
 export class Professor {
 	constructor(
-		public _id: string,
-		public nome: string,
-		public atendimentoTipos: string[]) { }
+		public _id?: string,
+		public nome?: string,
+		public atendimentoTipos?: string[]) { }
 
 	get atendimentoTiposFormatted() {
 		let str = '';

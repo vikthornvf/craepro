@@ -1,7 +1,46 @@
 .logo {
-    padding-top: 20px;
-    padding-left: 65px;
+	transition: all .25s;
+	padding-top: 20px;
+	padding-left: 65px;
+	transform: scale(1);
+	-o-transform: scale(1);
+	-ms-transform: scale(1);
+	-moz-transform: scale(1);
+	-webkit-transform: scale(1);
 }
+
+.logo:hover {
+	transition: all .5s;
+	transform: scale(1.05);
+	-o-transform: scale(1.05);
+	-ms-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-webkit-transform: scale(1.05);
+}
+
+.heart-pane a {
+	width: 100%;
+	line-height: 45px;
+	padding: 0 30px;
+}
+
+.heart-pane {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	height: 45px;
+	width: 300px;
+	background-color: #fff;
+	z-index: 1000;
+	border-top: 1px solid rgba(0,0,0,0.14);
+}
+
+.heart {
+	color: firebrick;
+	padding-left: 3px;
+	animation: heartbeat 1.5s infinite;
+}
+
 
 a.button-collapse.top-nav {
 	position: absolute;
@@ -20,4 +59,14 @@ a.button-collapse.top-nav {
 	a.button-collapse.top-nav {
 		top: 5px;
 	}
+}
+
+@keyframes heartbeat
+{
+  0%   { transform: scale(1); }
+  20%  { transform: scale(1.15); }
+  40%  { transform: scale(1); }
+  60%  { transform: scale(1.15); }
+  80%  { transform: scale(1); }
+  100% { transform: scale(1); }
 }

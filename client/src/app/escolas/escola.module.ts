@@ -4,6 +4,8 @@ import { NavModule } from '../nav/nav.module';
 
 import { EscolaListComponent } from './escola-list/escola-list.component';
 
+import { EscolaService } from './escola.service';
+
 @NgModule({
 	declarations: [
 		EscolaListComponent
@@ -13,6 +15,6 @@ import { EscolaListComponent } from './escola-list/escola-list.component';
 		BrowserModule,
 		NavModule
 	],
-	providers: []
+	providers: [EscolaService]
 })
 export class EscolaModule { }

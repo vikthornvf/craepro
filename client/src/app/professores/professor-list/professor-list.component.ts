@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProfessorService } from '../professor.service';
+import { AtendimentoService } from '../../atendimentos/atendimento.service';
 import { Professor } from '../professor.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { NavbarService } from '../../nav/navbar/navbar.service';
@@ -16,7 +18,10 @@ export class ProfessorListComponent implements OnInit, OnDestroy {
 	professores: Professor[] = [];
 	atendimentos: Atendimento[] = [];
 
-	constructor(private navProps: NavbarService) { }
+	constructor(
+		private service: ProfessorService,
+		private serviceAtendimento: AtendimentoService,
+		private navProps: NavbarService) { }
 
 	ngOnInit(): void {
 		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
@@ -33,26 +38,21 @@ export class ProfessorListComponent implements OnInit, OnDestroy {
 	}
 
 	loadProfessores() {
-		this.professores = [
-			new Professor('1', 'Cris', ['AEE', 'Psicológico']),
-			new Professor('2', 'Fernando', ['Psicológico']),
-			new Professor('3', 'Luciano', ['AEE', 'Fonoaudiológico']),
-			new Professor('4', 'Ramon', ['AEE']),
-		];
+		this.professores = this.service.list();
 	}
 
 	onSelectProfessor(professorId: string) {
-		this.loadAtendimentos(professorId);
-		this.selectedProfessorId = this.selectedProfessorId !== professorId
-			? professorId
-			: null;
+		if (this.selectedProfessorId !== professorId) {
+			this.selectedProfessorId = professorId;
+			this.loadAtendimentos(professorId);
+			return;
+		}
+		this.selectedProfessorId = null;
+		this.atendimentos = [];
 	}
 
 	loadAtendimentos(professorId: string) {
-		this.atendimentos = [
-			new Atendimento('1', 'AEE', 'Ativo', 'Vikthor', '', 'Ta bacana', new Date(), new Date(), new Date()),
-			new Atendimento('2', 'Psicologico', 'Em espera', 'Deisi', '', 'So esperando mesmo...', new Date(), new Date(), new Date())
-		];
+		this.atendimentos = this.serviceAtendimento.listByProfessor(professorId);
 	}
 
 	onSelectAtendimento(atendimentoId: string) {

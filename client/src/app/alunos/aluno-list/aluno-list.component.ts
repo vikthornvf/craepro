@@ -1,5 +1,7 @@
 import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Component, EventEmitter, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AlunoService } from '../aluno.service';
+import { AtendimentoService } from '../../atendimentos/atendimento.service';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { AtendimentoModule } from '../../atendimentos/atendimento.module';
@@ -24,7 +26,10 @@ export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
 	modalAtendimentoParams = [{ dismissible: false }];
 
-	constructor(private navProps: NavbarService) { }
+	constructor(
+		private service: AlunoService,
+		private serviceAtendimento: AtendimentoService,
+		private navProps: NavbarService) { }
 
 	ngOnInit(): void {
 		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
@@ -41,36 +46,29 @@ export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	loadAlunos() {
-		this.alunos = [
-			new Aluno('1', 'Adão', 'Escola', 'D', '9', 'Tarde'),
-			new Aluno('2', 'Rosângela', 'Escola', 'P', '9', 'Manha'),
-			new Aluno('3', 'Allan', 'Escola', 'A', '6', 'Manha'),
-			new Aluno('4', 'Yuri', 'Escola', 'A', '5', 'Noite'),
-			new Aluno('5', 'Thiagus', 'Escola', 'A', '4', 'Tarde'),
-			new Aluno('6', 'Vikthor', 'Escola', 'A', '2', 'Tarde'),
-			new Aluno('7', 'Deisi', 'Escola', 'A', '2', 'Tarde'),
-			new Aluno('8', 'Isaac', 'Escola', 'E', '1', 'Manha'),
-			new Aluno('9', 'Ícaro', 'Escola', 'E', '1', 'Manha')
-		];
+		// this.service.list()
+		// 	.subscribe(
+		// 		alunos => this.alunos = alunos,
+		// 		err => console.log(err));
+		this.alunos = this.service.list();
 	}
 
 	onSelectAluno(alunoId: string) {
-		this.loadAtendimentos(alunoId);
-		this.selectedAlunoId = this.selectedAlunoId !== alunoId
-			? alunoId
-			: null;
+		if (this.selectedAlunoId !== alunoId) {
+			this.selectedAlunoId = alunoId;
+			this.loadAtendimentos(alunoId);
+			return;
+		}
+		this.selectedAlunoId = null;
+		this.atendimentos = [];
 	}
 
 	getAlunoLink() {
-		console.log(`aluno/${this.selectedAlunoId}`);
 		return `aluno/${this.selectedAlunoId}`;
 	}
 
 	loadAtendimentos(alunoId: string) {
-		this.atendimentos = [
-			new Atendimento('1', 'AEE', 'Ativo', '', 'Cris', 'Ta bacana', new Date(), new Date(), new Date()),
-			new Atendimento('2', 'Psicologico', 'Em espera', '', 'Fernando', 'So esperando mesmo...', new Date(), new Date(), new Date())
-		];
+		this.atendimentos = this.serviceAtendimento.listByAluno(alunoId);
 	}
 
 	onSelectAtendimento(atendimentoId: string) {

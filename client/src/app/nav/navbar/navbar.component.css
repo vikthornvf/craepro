@@ -1,8 +1,8 @@
 nav {
-	transition: background-color .6s ease;
-	-webkit-transition: background-color .6s ease;
-	-moz-transition: background-color .6s ease;
-	-o-transition: background-color .6s ease;
+	transition: background-color .6s linear;
+	-webkit-transition: background-color .6s linear;
+	-moz-transition: background-color .6s linear;
+	-o-transition: background-color .6s linear;
 }
 
 @media only screen and (max-width: 992px) {

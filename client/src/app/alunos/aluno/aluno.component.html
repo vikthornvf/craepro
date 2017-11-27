@@ -1,12 +1,27 @@
 <h2>{{ aluno.nome }}</h2>
-<blockquote>
+<form materialize>
 	<div class="row">
-		<div class="col">Aluno(a) da Escola</div>
-		<a class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='escola-dropdown'>
-			<i class="material-icons">account_circle</i>
-		</a>
-		<ul id='escola-dropdown' class='dropdown-content'>
-			<li>Escola</li>
-		</ul>
+		<div class="input-field col m6 s12">
+			<app-select
+				id="selectEscola"
+				[options]="escolas"
+				[initialValue]="aluno.escola._id"
+				(change)="onSelectEscola($event)">Escola</app-select>
+		</div>
+		<div class="input-field col m3 s6">
+			<app-select
+				id="selectSerie"
+				[options]="series"
+				[initialValue]="aluno.serie"
+				(change)="onSelectSerie($event)">Série</app-select>
+		</div>
+		<div class="input-field col m3 s6">
+			<app-select
+				id="selectTurno"
+				[options]="turnos"
+				[initialValue]="aluno.turno"
+				(change)="onSelectTurno($event)">Turno</app-select>
+		</div>
 	</div>
-</blockquote>
+	<!-- <p>{{ 'Initial value: ' + aluno.escola.nome }}</p> -->
+</form>
