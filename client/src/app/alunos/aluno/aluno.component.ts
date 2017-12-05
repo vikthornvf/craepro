@@ -12,6 +12,7 @@ import { Atendimento } from '../../atendimentos/atendimento.model';
 })
 export class AlunoComponent implements OnInit {
 
+	edit = false;
 	aluno: Aluno = new Aluno();
 	escolas: Escola[] = [];
 	atendimentos: Atendimento[] = [];
@@ -24,6 +25,10 @@ export class AlunoComponent implements OnInit {
 
 	constructor(private service: AlunoService, private route: ActivatedRoute) { }
 
+	print() {
+		console.log(this.aluno);
+	}
+
 	ngOnInit() {
 		this.loadSeries();
 		this.loadTurnos();
@@ -32,8 +37,8 @@ export class AlunoComponent implements OnInit {
 			if (_id) {
 				this.loadAluno(_id);
 				this.loadAtendimentos(_id);
-				this.loadEscolas();
 			}
+			this.loadEscolas();
 		});
 	}
 

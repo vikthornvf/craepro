@@ -12,14 +12,17 @@ import { UsuarioSenhaComponent } from './usuarios/usuario/usuario-senha.componen
 const appRoutes: Routes = [
 	{ path: '', redirectTo: 'alunos', pathMatch: 'full' },
 	{ path: 'alunos', component: AlunoListComponent },
+	{ path: 'alunos/aluno', component: AlunoComponent },
 	{ path: 'alunos/aluno/:id', component: AlunoComponent },
 	{ path: 'professores', component: ProfessorListComponent },
+	{ path: 'professores/professor', component: ProfessorListComponent },
+	{ path: 'professores/professor/:id', component: ProfessorListComponent },
 	{ path: 'escolas', component: EscolaListComponent },
 	{ path: 'usuarios', component: UsuarioListComponent },
 	{ path: 'usuarios/usuario', component: UsuarioComponent },
 	{ path: 'usuarios/usuario/:id', component: UsuarioComponent },
 	{ path: 'usuarios/usuario-senha', component: UsuarioSenhaComponent },
-	{ path: '**', redirectTo: 'alunos' }
+	// { path: '**', redirectTo: 'alunos' }
 ];
 
 @NgModule({

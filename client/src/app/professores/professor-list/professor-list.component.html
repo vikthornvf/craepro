@@ -1,4 +1,12 @@
-<h4 class="grey-text">Professores</h4>
+<h4 class="grey-text">Professores
+	<button
+		class="btn-add right tooltipped"
+		materialize="tooltip"
+		data-position="top"
+		data-ldelay="50"
+		data-tooltip="Novo Professor"
+		[routerLink]="'professor'"><i class="material-icons small">add</i></button>
+</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
 	<div class="collapsible-header flex-container disabled">
 		<input type="checkbox" disabled>
@@ -18,7 +26,7 @@
 			<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>
 		</div>
 		<div class="collapsible-body">
-			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length">
+			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length; else semAtendimentos">
 				<div class="collapsible-header flex-container disabled">
 					<input type="checkbox" disabled>
 					<label class="disabled"></label>
@@ -33,17 +41,21 @@
 				<app-atendimento-item
 					[atendimento]="atendimento"
 					[selectedId]="selectedAtendimentoId"
-					(click)="onSelectAtendimento(atendimento._id)"
+					(select)="onSelectAtendimento(atendimento._id)"
+					(openModal)="atendimentoModal.open(selectedProfessorId, selectedAtendimentoId)"
 					*ngFor="let atendimento of atendimentos">{{ atendimento.aluno.nome }}</app-atendimento-item>
 			</ul>
+			<ng-template #semAtendimentos>
+				<p>Sem Atendimentos</p>
+			</ng-template>
 		</div>
 	</li>
 </ul>
-<div class="fixed-action-btn" *ngIf="selectedProfessorId">
-	<a class="btn-floating btn-large amber pulse">
-		<i class="large material-icons">mode_edit</i>
-	</a>
+<app-floating-edit-button [link]="getProfessorLink()" [active]="selectedProfessorId">
 	<ul *ngIf="selectedAtendimentoId">
-		<li><a class="btn-floating teal lighten-2"><i class="material-icons">assignment</i></a></li>
+		<li><a class="waves-effect waves-light btn btn-floating teal lighten-2 z-depth-2" (click)="atendimentoModal.open(selectedProfessorId, selectedAtendimentoId)">
+			<i class="material-icons">assignment</i></a>
+		</li>
 	</ul>
-</div>
+</app-floating-edit-button>
+<app-atendimento-modal #atendimentoModal></app-atendimento-modal>

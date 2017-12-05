@@ -1,4 +1,12 @@
-<h4 class="grey-text">Usuários</h4>
+<h4 class="grey-text">Usuários
+	<button
+		class="btn-add right tooltipped"
+		materialize="tooltip"
+		data-position="top"
+		data-ldelay="50"
+		data-tooltip="Novo Usuário"
+		[routerLink]="'usuario'"><i class="material-icons small">add</i></button>
+</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
 		<div class="collapsible-header flex-container disabled">
 				<input type="checkbox" disabled>
@@ -21,8 +29,4 @@
 			</div>
 		</li>
 </ul>
-<div class="fixed-action-btn" *ngIf="selectedUsuarioId">
-	<a class="btn-floating btn-large amber pulse">
-		<i class="large material-icons">mode_edit</i>
-	</a>
-</div>
+<app-floating-edit-button [link]="getUsuarioLink()" [active]="selectedUsuarioId"></app-floating-edit-button>

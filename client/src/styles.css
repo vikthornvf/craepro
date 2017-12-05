@@ -33,20 +33,17 @@ blockquote {
 }
 
 form {
-  animation-duration: .3s;
-  animation-name: slidein;
-}
-
-.flex-container {
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	width:100%;
+	-webkit-animation-duration: .3s;
+	-webkit-animation-name: slidein;
+					animation-duration: .3s;
+					animation-name: slidein;
 }
 
 .collapsible {
-  animation-duration: .3s;
-  animation-name: fadein;
+	-webkit-animation-duration: .3s;
+	-webkit-animation-name: fadein;
+					animation-duration: .3s;
+					animation-name: fadein;
 }
 
 .collapsible-header.selectable:hover {
@@ -55,6 +52,60 @@ form {
 
 .collapsible-header.selectable.active {
 	background-color: #f5f5f5;
+}
+
+.btn {
+  overflow: hidden;
+}
+.btn:hover:before {
+  opacity:1;
+}
+
+.btn:before {
+	content: '';
+	opacity: 0;
+	background-color: rgba(0,0,0,.03);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	transition: opacity .2s;
+	z-index: -1;
+}
+
+.z-depth-2:hover {
+	-webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+					box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+}
+
+.btn-floating.btn-large {
+	-webkit-animation-name: showup;
+	-webkit-animation-duration: .3s;
+					animation-name: showup;
+					animation-duration: .3s;
+}
+
+.btn-add {
+	margin-top: 8px;
+	cursor: pointer;
+	border: none;
+	border-radius: 50%;
+	background-color: transparent;
+	padding: 0px 3px;
+}
+.btn-add:active {
+	background-color: #eeeeee;
+}
+.btn-add:focus {
+	background-color: #eeeeee;
+}
+
+.flex-container {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width:100%;
 }
 
 .flex-item {
@@ -73,6 +124,12 @@ form {
 
 .v-scroll {
 	overflow-y: auto;
+}
+
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 }
 
 @keyframes slidein {

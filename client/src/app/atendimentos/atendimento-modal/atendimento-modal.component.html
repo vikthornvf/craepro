@@ -1,0 +1,14 @@
+<div
+	id="modalAtendimento"
+	class="modal modal-fixed-footer"
+	materialize="modal"
+	[materializeParams]="modalAtendimentoParams"
+	[materializeActions]="modalAtendimentoActions">
+	<div class="modal-content">
+		<app-atendimento [atendimentoId]="selectedAtendimentoId" [selectedId]="selectedId"></app-atendimento>
+	</div>
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onSaveAtendimento()">Salvar</a>
+		<a class="waves-effect modal-close waves-effect waves-red btn-flat">Cancelar</a>
+	</div>
+</div>

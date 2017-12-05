@@ -1,4 +1,12 @@
-<h4 class="grey-text">Alunos</h4>
+<h4 class="grey-text">Alunos
+	<button
+		class="btn-add right tooltipped"
+		materialize="tooltip"
+		data-position="top"
+		data-ldelay="50"
+		data-tooltip="Novo Aluno"
+		[routerLink]="'aluno'"><i class="material-icons small">add</i></button>
+</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
 	<div class="collapsible-header flex-container disabled">
 			<input type="checkbox" disabled>
@@ -17,8 +25,8 @@
 			<label [for]="aluno._id"></label>
 			<div class="flex nome truncate">{{ aluno.nome }}
 				<i
-					materialize="tooltip"
 					class="material-icons right status tooltipped"
+					materialize="tooltip"
 					data-position="left"
 					data-ldelay="50"
 					[attr.data-tooltip]="aluno.statusFormatted"
@@ -28,7 +36,10 @@
 			<div class="flex serie-turno truncate">{{ aluno.serieTurno }}</div>
 		</div>
 		<div class="collapsible-body">
-			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length">
+			<div class="progress" *ngIf="!isAtendimentosLoaded">
+					<div class="indeterminate"></div>
+			</div>
+			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length; else semAtendimentos">
 				<div class="collapsible-header flex-container disabled">
 					<input type="checkbox" disabled>
 					<label class="disabled"></label>
@@ -43,37 +54,24 @@
 				<app-atendimento-item
 					[atendimento]="atendimento"
 					[selectedId]="selectedAtendimentoId"
-					(click)="onSelectAtendimento(atendimento._id)"
+					(select)="onSelectAtendimento(atendimento._id)"
+					(openModal)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)"
 					*ngFor="let atendimento of atendimentos">{{ atendimento.profissional.nome }}</app-atendimento-item>
 			</ul>
+			<ng-template #semAtendimentos>
+				<p>Sem Atendimentos</p>
+			</ng-template>
 			<br>
-			<a class="waves-effect waves-light btn-large teal lighten-2" (click)="openModalAtendimento()">
-				<i class="material-icons left">add_box</i> Novo Atendimento
-			</a>
+			<a class="waves-effect waves-light btn btn-large teal lighten-2" (click)="atendimentoModal.open(selectedAlunoId)">
+				<i class="material-icons left">add_box</i> Novo Atendimento</a>
 		</div>
 	</li>
 </ul>
-<div class="fixed-action-btn" *ngIf="selectedAlunoId">
-	<a class="btn-floating btn-large amber pulse" [routerLink]="getAlunoLink()">
-		<i class="large material-icons">mode_edit</i>
-	</a>
+<app-floating-edit-button [link]="getAlunoLink()" [active]="selectedAlunoId">
 	<ul *ngIf="selectedAtendimentoId">
-		<li><a class="waves-effect waves-light btn-floating teal lighten-2" (click)="openModalAtendimento()">
+		<li><a class="waves-effect waves-light btn btn-floating teal lighten-2 z-depth-2" (click)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)">
 			<i class="material-icons">assignment</i></a>
 		</li>
 	</ul>
-</div>
-<div
-	id="modalAtendimento"
-	class="modal modal-fixed-footer"
-	materialize="modal"
-	[materializeParams]="modalAtendimentoParams"
-	[materializeActions]="modalAtendimentoActions">
-	<div class="modal-content">
-		<app-atendimento [atendimentoId]="selectedAtendimentoId" [selectedId]="selectedAlunoId"></app-atendimento>
-	</div>
-	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onSaveAtendimento()">Salvar</a>
-		<a class="waves-effect modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	</div>
-</div>
+</app-floating-edit-button>
+<app-atendimento-modal #atendimentoModal></app-atendimento-modal>

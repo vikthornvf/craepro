@@ -1,30 +1,26 @@
-import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
-import { Component, EventEmitter, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { AlunoService } from '../aluno.service';
 import { AtendimentoService } from '../../atendimentos/atendimento.service';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
-import { AtendimentoModule } from '../../atendimentos/atendimento.module';
 import { NavbarService } from '../../nav/navbar/navbar.service';
-
-declare var $: any;
+import { Subscription } from 'rxjs/Subscription';
+import { AtendimentoModalComponent } from '../../atendimentos/atendimento-modal/atendimento-modal.component';
 
 @Component({
 	selector: 'app-aluno-list',
 	templateUrl: './aluno-list.component.html',
-	styleUrls: ['./aluno-list.component.css']
+	styleUrls: ['./aluno-list.component.css'],
 })
-export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AlunoListComponent implements OnInit, OnDestroy {
 
 	keyword = '';
+	keywordObservable: Subscription;
 	alunos: Aluno[] = [];
 	selectedAlunoId = '';
-
 	atendimentos: Atendimento[] = [];
 	selectedAtendimentoId = '';
-
-	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
-	modalAtendimentoParams = [{ dismissible: false }];
+	isAtendimentosLoaded = false;
 
 	constructor(
 		private service: AlunoService,
@@ -32,17 +28,17 @@ export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 		private navProps: NavbarService) { }
 
 	ngOnInit(): void {
-		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
+		this.keywordObservable = this.navProps.keyword.subscribe(keyword => {
+			this.selectedAlunoId = null;
+			this.keyword = keyword;
+		});
 		this.navProps.changeNavbarSearch(true);
 		this.loadAlunos();
 	}
 
 	ngOnDestroy(): void {
+		this.keywordObservable.unsubscribe();
 		this.navProps.changeNavbarSearch(false);
-	}
-
-	ngAfterViewInit(): void {
-		$('.tooltipped').tooltip();
 	}
 
 	loadAlunos() {
@@ -60,7 +56,7 @@ export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 			return;
 		}
 		this.selectedAlunoId = null;
-		this.atendimentos = [];
+		setTimeout(() => this.atendimentos = [], 300);
 	}
 
 	getAlunoLink() {
@@ -68,17 +64,17 @@ export class AlunoListComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	loadAtendimentos(alunoId: string) {
+		this.atendimentos = [];
+		this.isAtendimentosLoaded = false;
+		// TODO load here
 		this.atendimentos = this.serviceAtendimento.listByAluno(alunoId);
+		this.isAtendimentosLoaded = true;
 	}
 
 	onSelectAtendimento(atendimentoId: string) {
 		this.selectedAtendimentoId = this.selectedAtendimentoId !== atendimentoId
 			? atendimentoId
 			: null;
-	}
-
-	openModalAtendimento() {
-		this.modalAtendimentoActions.emit({ action: 'modal', params: ['open'] });
 	}
 
 	onSaveAtendimento() {

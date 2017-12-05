@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Escola } from '../escola.model';
-import { NavbarService } from '../../nav/navbar/navbar.service';
 import { EscolaService } from '../escola.service';
+import { NavbarService } from '../../nav/navbar/navbar.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-escola-list',
@@ -11,18 +12,23 @@ import { EscolaService } from '../escola.service';
 export class EscolaListComponent implements OnInit, OnDestroy {
 
 	keyword = '';
+	keywordObservable: Subscription;
 	selectedEscolaId = '';
 	escolas: Escola[] = [];
 
 	constructor(private service: EscolaService, private navProps: NavbarService) { }
 
 	ngOnInit(): void {
-		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
+		this.keywordObservable = this.navProps.keyword.subscribe(keyword => {
+			this.selectedEscolaId = null;
+			this.keyword = keyword;
+		});
 		this.navProps.changeNavbarSearch(true);
 		this.loadEscolas();
 	}
 
 	ngOnDestroy(): void {
+		this.keywordObservable.unsubscribe();
 		this.navProps.changeNavbarSearch(false);
 	}
 
@@ -38,5 +44,9 @@ export class EscolaListComponent implements OnInit, OnDestroy {
 		this.selectedEscolaId = this.selectedEscolaId !== escolaId
 			? escolaId
 			: null;
+	}
+
+	getEscolaLink() {
+		return `escola/${this.selectedEscolaId}`;
 	}
 }

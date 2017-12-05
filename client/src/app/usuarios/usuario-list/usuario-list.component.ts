@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Usuario } from '../usuario.model';
 import { NavbarService } from '../../nav/navbar/navbar.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-usuario-list',
@@ -10,18 +11,23 @@ import { NavbarService } from '../../nav/navbar/navbar.service';
 export class UsuarioListComponent implements OnInit, OnDestroy {
 
 	keyword = '';
+	keywordObservable: Subscription;
 	selectedUsuarioId = '';
 	usuarios: Usuario[] = [];
 
 	constructor(private navProps: NavbarService) { }
 
 	ngOnInit(): void {
-		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
+		this.keywordObservable = this.navProps.keyword.subscribe(keyword => {
+			this.selectedUsuarioId = null;
+			this.keyword = keyword;
+		});
 		this.navProps.changeNavbarSearch(true);
 		this.loadUsuarios();
 	}
 
 	ngOnDestroy(): void {
+		this.keywordObservable.unsubscribe();
 		this.navProps.changeNavbarSearch(false);
 	}
 
@@ -43,5 +49,9 @@ export class UsuarioListComponent implements OnInit, OnDestroy {
 		this.selectedUsuarioId = this.selectedUsuarioId !== usuarioId
 			? usuarioId
 			: null;
+	}
+
+	getUsuarioLink() {
+		return `usuario/${this.selectedUsuarioId}`;
 	}
 }

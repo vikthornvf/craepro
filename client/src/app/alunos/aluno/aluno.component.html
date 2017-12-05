@@ -1,27 +1,40 @@
-<h2>{{ aluno.nome }}</h2>
-<form materialize>
-	<div class="row">
-		<div class="input-field col m6 s12">
-			<app-select
-				id="selectEscola"
-				[options]="escolas"
-				[initialValue]="aluno.escola._id"
-				(change)="onSelectEscola($event)">Escola</app-select>
+<div class="row">
+	<form materialize>
+		<h4 *ngIf="!edit; else editNome">{{ aluno.nome }}
+			<i class="material-icons small black-text" (click)="this.edit=true">edit</i>
+		</h4>
+		<div class="input-field col s12">
+			<input
+				id="nome"
+				name="nome"
+				class="validate"
+				[(ngModel)]="aluno.nome">
+			<label class="active" for="nome">Nome</label>
 		</div>
-		<div class="input-field col m3 s6">
-			<app-select
-				id="selectSerie"
-				[options]="series"
-				[initialValue]="aluno.serie"
-				(change)="onSelectSerie($event)">Série</app-select>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<!-- <app-select
+					id="selectEscola"
+					[options]="escolas"
+					[initialValue]="aluno?aluno.escola._id:null"
+					(change)="onSelectEscola($event)">Escola</app-select> -->
+			</div>
+			<div class="input-field col m3 s6">
+				<!-- <app-select
+					id="selectSerie"
+					[options]="series"
+					[initialValue]="aluno?aluno.serie:null"
+					(change)="onSelectSerie($event)">Série</app-select> -->
+			</div>
+			<div class="input-field col m3 s6">
+				<!-- <app-select
+					id="selectTurno"
+					[options]="turnos"
+					[initialValue]="aluno?aluno.turno:null"
+					(change)="onSelectTurno($event)">Turno</app-select> -->
+			</div>
 		</div>
-		<div class="input-field col m3 s6">
-			<app-select
-				id="selectTurno"
-				[options]="turnos"
-				[initialValue]="aluno.turno"
-				(change)="onSelectTurno($event)">Turno</app-select>
-		</div>
-	</div>
-	<!-- <p>{{ 'Initial value: ' + aluno.escola.nome }}</p> -->
-</form>
+		<!-- <p>{{ 'Initial value: ' + aluno.escola.nome }}</p> -->
+		<a class="waves-effect waves-light btn-large" (click)="print()">print aluno</a>
+	</form>
+</div>
