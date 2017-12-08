@@ -39,6 +39,19 @@ form {
 					animation-name: slidein;
 }
 
+.input-field .postfix ~ input { width: 80%; width:calc(100% - 3rem);  margin-left:0px; margin-right: 3rem!important; }
+.input-field .postfix {
+    position: absolute;
+    width: 3rem;
+    right: 0px;
+    font-size: 2rem;
+    -webkit-transition: color .2s;
+    transition: color .2s;
+}
+.input-field .postfix.active {
+    color: #26a69a;
+}
+
 .collapsible {
 	-webkit-animation-duration: .3s;
 	-webkit-animation-name: fadein;
@@ -130,6 +143,20 @@ form {
 	position: absolute;
 	top: 50%;
 	left: 50%;
+}
+
+.slide-in {
+	-webkit-animation-duration: .3s;
+	-webkit-animation-name: slidein;
+					animation-duration: .3s;
+					animation-name: slidein;
+}
+
+.fade-in {
+	-webkit-animation-duration: .3s;
+	-webkit-animation-name: fadein;
+					animation-duration: .3s;
+					animation-name: fadein;
 }
 
 @keyframes slidein {

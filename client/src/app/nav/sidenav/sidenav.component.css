@@ -1,7 +1,7 @@
 .logo {
 	transition: all .25s;
 	padding-top: 20px;
-	padding-left: 65px;
+	padding-left: 58px;
 	transform: scale(1);
 	-o-transform: scale(1);
 	-ms-transform: scale(1);
@@ -10,12 +10,12 @@
 }
 
 .logo:hover {
-	transition: all .5s;
-	transform: scale(1.05);
-	-o-transform: scale(1.05);
-	-ms-transform: scale(1.05);
-	-moz-transform: scale(1.05);
-	-webkit-transform: scale(1.05);
+	transition: all .6s;
+	transform: scale(1.03);
+	-o-transform: scale(1.03);
+	-ms-transform: scale(1.03);
+	-moz-transform: scale(1.03);
+	-webkit-transform: scale(1.03);
 }
 
 .heart-pane a {
@@ -36,11 +36,10 @@
 }
 
 .heart {
-	color: firebrick;
-	padding-left: 3px;
+	color: crimson;
+	padding-left: 4px;
 	animation: heartbeat 1.5s infinite;
 }
-
 
 a.button-collapse.top-nav {
 	position: absolute;

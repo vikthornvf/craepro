@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlunoService } from '../aluno.service';
+import { EscolaService } from '../../escolas/escola.service';
 import { Aluno } from '../aluno.model';
 import { Escola } from '../../escolas/escola.model';
 import { Professor } from '../../professores/professor.model';
@@ -8,38 +9,52 @@ import { Atendimento } from '../../atendimentos/atendimento.model';
 
 @Component({
 	selector: 'app-aluno',
-	templateUrl: './aluno.component.html'
+	templateUrl: './aluno.component.html',
 })
 export class AlunoComponent implements OnInit {
 
-	edit = false;
+	edit = true;
 	aluno: Aluno = new Aluno();
 	escolas: Escola[] = [];
 	atendimentos: Atendimento[] = [];
-	selectedAtendimento: Atendimento = new Atendimento();
 
 	series: {}[];
 	turnos: {}[];
 
 	isDisabled = false;
 
-	constructor(private service: AlunoService, private route: ActivatedRoute) { }
+	constructor(
+		private service: AlunoService,
+		private escolaService: EscolaService,
+		private route: ActivatedRoute) { }
 
-	print() {
-		console.log(this.aluno);
+	print(print: any) {
+		console.log(print);
+		console.log(print.escola._id);
 	}
 
 	ngOnInit() {
+		this.loadEscolas();
 		this.loadSeries();
 		this.loadTurnos();
 		this.route.params.subscribe(params => {
-			const _id = params['id'];
-			if (_id) {
-				this.loadAluno(_id);
-				this.loadAtendimentos(_id);
+			const id = params['id'];
+			if (id) {
+				this.loadAluno(id);
+				this.loadAtendimentos(id);
 			}
-			this.loadEscolas();
+			this.edit = false;
 		});
+	}
+
+	toggleEdit() {
+		this.edit = !this.edit;
+	}
+
+	onEdtitName(key: string) {
+		if (key === 'Enter' || key === 'Escape') {
+			this.toggleEdit();
+		}
 	}
 
 	loadSeries() {
@@ -66,21 +81,8 @@ export class AlunoComponent implements OnInit {
 		this.aluno = this.service.findById(_id);
 	}
 
-	onSelectEscola(_id: string) {
-		this.aluno.escola = {};
-		this.aluno.escola._id = _id;
-	}
-
 	loadEscolas() {
-		// TODO
-		this.escolas = [
-			this.aluno.escola,
-			{ _id: '2', nome: 'A Escola', qtdAlunos: 5 },
-			{ _id: '3', nome: 'Colégio', qtdAlunos: 2 },
-			{ _id: '4', nome: 'Educanddo', qtdAlunos: 1 },
-			{ _id: '5', nome: 'Óia o Estudo', qtdAlunos: 3 },
-			{ _id: '6', nome: 'Vamstudá', qtdAlunos: 6 }
-		];
+		this.escolas = this.escolaService.list();
 	}
 
 	loadAtendimentos(_id: string) {
