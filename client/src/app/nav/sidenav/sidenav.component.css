@@ -36,7 +36,7 @@
 }
 
 .heart {
-	color: crimson;
+	color: firebrick;
 	padding-left: 4px;
 	animation: heartbeat 1.5s infinite;
 }
