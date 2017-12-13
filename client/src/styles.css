@@ -100,17 +100,42 @@ form {
 }
 
 .btn-add {
-	margin-top: 8px;
-	cursor: pointer;
+	margin-top: 5px;
+	background-color: transparent;
+}
+.btn-add:active {
+	background-color: #eeeeee;
+}
+
+.label-add {
+	color: grey !important;
+	transition: all .25s;
+	transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+}
+.label-add:hover {
+	color: white !important;
+	transition: all .25s;
+	transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+}
+
+.btn-custom {
 	border: none;
 	border-radius: 50%;
 	background-color: transparent;
 	padding: 0px 3px;
 }
-.btn-add:active {
+.btn-custom:active {
 	background-color: #eeeeee;
 }
-.btn-add:focus {
+.btn-custom:focus {
 	background-color: #eeeeee;
 }
 
