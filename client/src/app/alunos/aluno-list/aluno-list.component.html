@@ -23,15 +23,15 @@
 				[id]="aluno._id"
 				[checked]="aluno._id === selectedAlunoId">
 			<label [for]="aluno._id"></label>
-			<div class="flex nome truncate">{{ aluno.nome }}
-				<i
-					class="material-icons right status tooltipped"
+			<div class="flex nome truncate">
+				<span class="flex-container status">{{ aluno.nome }}<i
+					class="material-icons flex status tooltipped"
 					materialize="tooltip"
 					data-position="left"
 					data-ldelay="50"
-					style="display: inline"
 					[attr.data-tooltip]="aluno.statusFormatted"
 					[ngClass]="aluno.status.toLowerCase()">more</i>
+				</span>
 			</div>
 			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
 			<div class="flex serie-turno truncate">{{ aluno.serieTurno }}</div>
