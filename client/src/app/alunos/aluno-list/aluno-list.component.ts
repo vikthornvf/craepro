@@ -49,6 +49,12 @@ export class AlunoListComponent implements OnInit, OnDestroy {
 		this.alunos = this.service.list();
 	}
 
+	onSelect(alunoId: string) {
+		this.selectedAlunoId = this.selectedAlunoId !== alunoId
+			? alunoId
+			: null;
+	}
+
 	onSelectAluno(alunoId: string) {
 		if (this.selectedAlunoId !== alunoId) {
 			this.selectedAlunoId = alunoId;
@@ -56,7 +62,6 @@ export class AlunoListComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.selectedAlunoId = null;
-		setTimeout(() => this.atendimentos = [], 300);
 	}
 
 	getAlunoLink() {

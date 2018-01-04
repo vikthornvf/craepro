@@ -14,14 +14,9 @@ import { Atendimento } from '../../atendimentos/atendimento.model';
 export class AlunoComponent implements OnInit {
 
 	edit = true;
-	aluno: Aluno = new Aluno();
-	escolas: Escola[] = [];
-	atendimentos: Atendimento[] = [];
-
-	series: {}[];
-	turnos: {}[];
-
-	isDisabled = false;
+	aluno: Aluno;
+	atendimentos: Atendimento[];
+	escolas: Escola[];
 
 	constructor(
 		private service: AlunoService,
@@ -42,9 +37,16 @@ export class AlunoComponent implements OnInit {
 			if (id) {
 				this.loadAluno(id);
 				this.loadAtendimentos(id);
+				this.edit = false;
+			} else {
+				this.initAluno();
 			}
-			this.edit = false;
 		});
+	}
+
+	initAluno() {
+		this.aluno = new Aluno();
+		this.aluno.escola = new Escola();
 	}
 
 	toggleEdit() {
@@ -53,18 +55,14 @@ export class AlunoComponent implements OnInit {
 
 	onEdtitName(key: string) {
 		if (key === 'Enter' || key === 'Escape') {
-			this.toggleEdit();
+			if (this.aluno.nome) {
+				this.toggleEdit();
+			}
 		}
 	}
 
 	loadSeries() {
-		// const series: { _id: number; nome: string}[] = [];
-		// for (const e in SerieEnum) {
-		// 	if (typeof SerieEnum[e] === 'number') {
-		// 		series.push({ _id: <any>SerieEnum[e], nome: e});
-		// 	}
-		// }
-		// this.series = series;
+
 	}
 
 	loadTurnos() {

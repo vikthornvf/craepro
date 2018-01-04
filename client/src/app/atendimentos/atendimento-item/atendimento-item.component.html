@@ -1,5 +1,5 @@
 <div
-	[id]="atendimento._id + 'div'"
+	[id]="'div'+atendimento._id"
 	class="collapsible-header flex-container selectable"
 	[ngClass]="{ 'active': atendimento._id === selectedId }"
 	(dblclick)="onDoubleClick()"
@@ -10,7 +10,7 @@
 		class="filled-in"
 		[id]="atendimento._id"
 		[checked]="atendimento._id === selectedId"
-		(click)="$event.preventDefault()">
+		(click)="onSelect()">
 	<label [for]="atendimento._id"></label>
 	<div class="flex-item"><ng-content></ng-content></div>
 	<div class="flex-item">{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</div>

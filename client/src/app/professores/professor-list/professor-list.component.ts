@@ -44,22 +44,35 @@ export class ProfessorListComponent implements OnInit, OnDestroy {
 		this.navProps.changeNavbarSearch(false);
 	}
 
-	loadProfessores() {
-		this.professores = this.service.list();
+	onSelect(professorId: string, headerEl: any) {
+		this.selectedProfessorId = this.selectedProfessorId !== professorId
+			? professorId
+			: null;
 	}
 
-	onSelectProfessor(professorId: string) {
+	onSelectProfessor(professorId: string, headerEl: any) {
 		if (this.selectedProfessorId !== professorId) {
 			this.selectedProfessorId = professorId;
 			this.loadAtendimentos(professorId);
 			return;
 		}
 		this.selectedProfessorId = null;
-		setTimeout(() => this.atendimentos = [], 300);
 	}
 
-	getProfessorLink() {
-		return `professor/${this.selectedProfessorId}`;
+	onSelectAtendimento(atendimentoId: string) {
+		this.selectedAtendimentoId = this.selectedAtendimentoId !== atendimentoId
+			? atendimentoId
+			: null;
+	}
+
+	loadProfessores() {
+		this.professores = this.service.list();
+	}
+
+	onSaveAtendimento() {
+		// TODO
+		// if (this.selectedAtendimentoId) save
+		// else create;
 	}
 
 	loadAtendimentos(professorId: string) {
@@ -70,19 +83,11 @@ export class ProfessorListComponent implements OnInit, OnDestroy {
 		this.isAtendimentosLoaded = true;
 	}
 
-	onSelectAtendimento(atendimentoId: string) {
-		this.selectedAtendimentoId = this.selectedAtendimentoId !== atendimentoId
-			? atendimentoId
-			: null;
-	}
-
 	openModalAtendimento() {
 		this.modalAtendimentoActions.emit({ action: 'modal', params: ['open'] });
 	}
 
-	onSaveAtendimento() {
-		// TODO
-		// if (this.selectedAtendimentoId) save
-		// else create;
+	getProfessorLink() {
+		return `professor/${this.selectedProfessorId}`;
 	}
 }

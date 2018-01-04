@@ -15,12 +15,13 @@
 		<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
 	</div>
 	<li *ngFor="let professor of professores | navFilter: keyword:'nome'">
-		<div class="collapsible-header flex-container selectable" (click)="onSelectProfessor(professor._id)">
+		<div class="collapsible-header flex-container selectable" (click)="onSelectProfessor(professor._id, headerEl)" #headerEl>
 			<input
 				type="checkbox"
 				class="filled-in"
 				[id]="professor._id"
-				[checked]="professor._id === selectedProfessorId">
+				[checked]="professor._id === selectedProfessorId"
+				(click)="onSelect(professor._id, headerEl)">
 			<label [for]="professor._id"></label>
 			<div class="flex nome truncate">{{ professor.nome }}</div>
 			<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>

@@ -21,7 +21,8 @@
 				type="checkbox"
 				class="filled-in"
 				[id]="aluno._id"
-				[checked]="aluno._id === selectedAlunoId">
+				[checked]="aluno._id === selectedAlunoId"
+				(click)="onSelectAluno(aluno._id)">
 			<label [for]="aluno._id"></label>
 			<div class="flex nome truncate">
 				<span class="flex-container status">{{ aluno.nome }}<i
