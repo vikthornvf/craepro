@@ -101,7 +101,7 @@ export class AtendimentoService {
 				status: 'Desligado',
 				aluno: this.serviceAluno.findById('6'),
 				profissional: this.serviceProfessor.findById('4'),
-				parecer: 'Perdeu o semestre, arrombado do caralho',
+				parecer: 'Tudo ok',
 				solicitacao: new Date(),
 				inicio: new Date(),
 				alta: new Date()
@@ -111,7 +111,7 @@ export class AtendimentoService {
 				status: 'Ativo',
 				aluno: this.serviceAluno.findById('6'),
 				profissional: this.serviceProfessor.findById('3'),
-				parecer: 'Ainda não descobri se é surdo ou só mudo mesmo',
+				parecer: 'Recebendo bem o tratamento',
 				solicitacao: new Date(),
 				inicio: new Date(),
 				alta: new Date()
@@ -131,7 +131,7 @@ export class AtendimentoService {
 				status: 'Ativo',
 				aluno: this.serviceAluno.findById('7'),
 				profissional: this.serviceProfessor.findById('3'),
-				parecer: 'Só pro Vikthor não ficar sozinho',
+				parecer: 'Teste',
 				solicitacao: new Date(),
 				inicio: new Date(),
 				alta: new Date()
