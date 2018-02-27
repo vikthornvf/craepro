@@ -39,6 +39,14 @@ form {
 					animation-name: slidein;
 }
 
+th {
+	min-width: 90px;
+}
+
+th.extended {
+	min-width: 200px;
+}
+
 .input-field .postfix ~ input { width: 80%; width:calc(100% - 3rem);  margin-left:0px; margin-right: 3rem!important; }
 .input-field .postfix {
     position: absolute;
@@ -155,16 +163,6 @@ form {
 	display: -ms-flexbox;
 	display: flex;
 	width:100%;
-}
-
-.flex-item {
-	width: 12%;
-	min-width: 80px;
-}
-
-.flex-item-extended {
-	width: 28%;
-	min-width: 180px;
 }
 
 .disabled {
