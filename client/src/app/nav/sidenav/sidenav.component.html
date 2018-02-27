@@ -1,15 +1,17 @@
 <a
-	href="#"
-	class="button-collapse top-nav hide-on-large-only"
-	data-activates="sidenav"
-	materialize="sideNav"
-	[materializeParams]="[{edge:'left'}]">
+		href="#"
+		class="button-collapse top-nav hide-on-large-only"
+		data-activates="sidenav"
+		materialize="sideNav"
+		[materializeParams]="[{edge:'left'}]">
 	<i class="material-icons">menu</i>
 </a>
-<ul id="sidenav" class="side-nav fixed z-depth-2">
+<ul id="sidenav" class="side-nav fixed z-depth-3">
 	<li><img src="../assets/img/logo-min-bot180x135.png" class="logo"></li>
 	<li class="divider"></li>
-	<li *ngFor="let route of routes" routerLinkActive="active">
+	<li *ngFor="let route of routes"
+			routerLinkActive="active"
+			class="{{route.name}}">
 		<a class="waves-effect waves-teal" [routerLink]="[route.name]">{{ route.label }}</a>
 	</li>
 </ul>
