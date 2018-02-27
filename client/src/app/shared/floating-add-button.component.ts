@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 	selector: 'app-floating-add-button',
 	template: `
 	<div class="fixed-action-btn horizontal">
-		<a class="btn btn-floating btn-large z-depth-2" ngClass={{color}} [routerLink]="link">
+		<a class="btn btn-floating btn-large z-depth-2 darken-1" ngClass={{color}} [routerLink]="link">
 			<i class="large material-icons">add</i>
 		</a>
 	</div>`
