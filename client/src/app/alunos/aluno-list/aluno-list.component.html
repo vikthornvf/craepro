@@ -1,13 +1,6 @@
-<h4 class="grey-text">Alunos
-	<button
-		class="btn-add btn-floating lighten-2 z-depth-0 right tooltipped"
-		materialize="tooltip"
-		data-position="top"
-		data-ldelay="50"
-		data-tooltip="Novo Aluno"
-		[routerLink]="'aluno'"><i class="material-icons label-add small">add</i></button>
-</h4>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+<h4 class="grey-text">Alunos</h4>
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
+
 	<div class="collapsible-header flex-container disabled">
 			<input type="checkbox" disabled>
 			<label class="disabled"></label>
@@ -16,13 +9,14 @@
 			<div class="flex serie-turno"><b class="truncate">Série (Turno)</b></div>
 	</div>
 	<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
-		<div class="collapsible-header flex-container selectable" (click)="onSelectAluno(aluno._id)">
+
+		<div class="collapsible-header flex-container selectable" (click)="onSelect(aluno._id)">
 			<input
 				type="checkbox"
 				class="filled-in"
 				[id]="aluno._id"
-				[checked]="aluno._id === selectedAlunoId"
-				(click)="onSelectAluno(aluno._id)">
+				[checked]="selected && aluno._id === selectedId"
+				(click)="toggleSelect($event, aluno._id)">
 			<label [for]="aluno._id"></label>
 			<div class="flex nome truncate">
 				<span class="flex-container status">{{ aluno.nome }}<i
@@ -37,43 +31,18 @@
 			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
 			<div class="flex serie-turno truncate">{{ aluno.serieTurno }}</div>
 		</div>
+
 		<div class="collapsible-body">
-			<div class="progress" *ngIf="!isAtendimentosLoaded">
-					<div class="indeterminate"></div>
+			<div class="v-scroll">
+				<app-atendimento-list
+						*ngIf="selectedId === aluno._id"
+						[property]="'profissional'"
+						[selectedId]="selectedId"></app-atendimento-list>
 			</div>
-			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length; else semAtendimentos">
-				<div class="collapsible-header flex-container disabled">
-					<input type="checkbox" disabled>
-					<label class="disabled"></label>
-					<div class="flex-item"><b>Profissional</b></div>
-					<div class="flex-item"><b>Solicitação</b></div>
-					<div class="flex-item"><b>Tipo</b></div>
-					<div class="flex-item"><b>Status</b></div>
-					<div class="flex-item"><b>Início</b></div>
-					<div class="flex-item"><b>Alta</b></div>
-					<div class="flex-item-extended"><b>Parecer</b></div>
-				</div>
-				<app-atendimento-item
-					[atendimento]="atendimento"
-					[selectedId]="selectedAtendimentoId"
-					(select)="onSelectAtendimento(atendimento._id)"
-					(openModal)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)"
-					*ngFor="let atendimento of atendimentos">{{ atendimento.profissional.nome }}</app-atendimento-item>
-			</ul>
-			<ng-template #semAtendimentos>
-				<p>Sem Atendimentos</p>
-			</ng-template>
 			<br>
-			<a class="waves-effect waves-light btn btn-large teal lighten-2" (click)="atendimentoModal.open(selectedAlunoId)">
+			<a class="waves-effect waves-light btn btn-large teal lighten-2" (click)="atendimentoModal.open(selectedId)">
 				<i class="material-icons left">add_box</i> Novo Atendimento</a>
 		</div>
 	</li>
 </ul>
-<app-floating-edit-button [link]="getAlunoLink()" [active]="selectedAlunoId">
-	<ul *ngIf="selectedAtendimentoId">
-		<li><a class="waves-effect waves-light btn btn-floating teal lighten-2 z-depth-2" (click)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)">
-			<i class="material-icons">assignment</i></a>
-		</li>
-	</ul>
-</app-floating-edit-button>
-<app-atendimento-modal #atendimentoModal></app-atendimento-modal>
+<app-floating-add-button [link]="'aluno'" [color]="'red'"></app-floating-add-button>

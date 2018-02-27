@@ -34,6 +34,10 @@ export class AlunoService {
 	}
 
 	list(): Aluno[] {
+		// this.service.list()
+		// 	.subscribe(
+		// 		alunos => this.alunos = alunos,
+		// 		err => console.log(err));
 		return [
 			new Aluno('1', 'Adão', 'D', '9', 'Tarde', this.serviceEscola.findById('1')),
 			new Aluno('2', 'Rosângela', 'P', '9', 'Manha', this.serviceEscola.findById('2')),
