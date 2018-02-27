@@ -2,11 +2,11 @@
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
 
 	<div class="collapsible-header flex-container disabled">
-			<input type="checkbox" disabled>
-			<label class="disabled"></label>
-			<div class="flex nome"><b class="truncate">Nome (Status)</b></div>
-			<div class="flex escola"><b class="truncate">Escola</b></div>
-			<div class="flex serie-turno"><b class="truncate">Série (Turno)</b></div>
+		<input type="checkbox" disabled>
+		<label class="disabled"></label>
+		<div class="flex nome"><b class="truncate">Nome (Status)</b></div>
+		<div class="flex escola"><b class="truncate">Escola</b></div>
+		<div class="flex serie-turno"><b class="truncate">Série (Turno)</b></div>
 	</div>
 	<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
 
