@@ -1,0 +1,47 @@
+<table class="highlight" *ngIf="atendimentos; else semAtendimentos">
+	<thead>
+		<tr>
+			<th>{{ property | capitalizeFirst }}</th>
+			<th>Solicitação</th>
+			<th>Tipo</th>
+			<th>Status</th>
+			<th>Início</th>
+			<th>Alta</th>
+			<th class="extended">Parecer</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr
+				*ngFor="let atendimento of atendimentos"
+				(click)="onClick()"
+				(dblclick)="onDoubleClick(); atendimentoModal.open(selectedId, atendimento._id)"
+				(press)="onPress(); atendimentoModal.open(selectedId, atendimento._id)">
+			<td>
+				<input
+						type="checkbox"
+						class="filled-in"
+						[id]="atendimento._id"
+						[checked]="atendimento._id === selectedAtendimentoId"
+						(click)="onSelect()">
+				<label for="atendimento._id" style="color:black!important">{{ atendimento[property].nome }}</label>
+			</td>
+			<td>{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ atendimento.tipo }}</td>
+			<td>{{ atendimento.status }}</td>
+			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ atendimento.parecer }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="progress" *ngIf="!isAtendimentosLoaded">
+	<div class="indeterminate"></div>
+</div>
+
+<ng-template #semAtendimentos>
+	<p>Sem Atendimentos</p>
+</ng-template>
+
+<app-atendimento-modal #atendimentoModal></app-atendimento-modal>
