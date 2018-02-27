@@ -27,36 +27,20 @@
 			<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>
 		</div>
 		<div class="collapsible-body">
-			<ul materialize="collapsible" class="v-scroll" *ngIf="atendimentos.length; else semAtendimentos">
-				<div class="collapsible-header flex-container disabled">
-					<input type="checkbox" disabled>
-					<label class="disabled"></label>
-					<div class="flex-item"><b>Aluno</b></div>
-					<div class="flex-item"><b>Solicitação</b></div>
-					<div class="flex-item"><b>Tipo</b></div>
-					<div class="flex-item"><b>Status</b></div>
-					<div class="flex-item"><b>Início</b></div>
-					<div class="flex-item"><b>Alta</b></div>
-					<div class="flex-item-extended"><b>Parecer</b></div>
-				</div>
-				<app-atendimento-item
+			<div class="v-scroll">
+				<!-- <app-atendimento-list
 					[atendimento]="atendimento"
 					[selectedId]="selectedAtendimentoId"
+					[property]="'aluno'"
 					(select)="onSelectAtendimento(atendimento._id)"
-					(openModal)="atendimentoModal.open(selectedProfessorId, selectedAtendimentoId)"
-					*ngFor="let atendimento of atendimentos">{{ atendimento.aluno.nome }}</app-atendimento-item>
-			</ul>
+					(openModal)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)"
+					*ngFor="let atendimento of atendimentos">{{ atendimento.aluno.nome }}</app-atendimento-list> -->
+			</div>
 			<ng-template #semAtendimentos>
 				<p>Sem Atendimentos</p>
 			</ng-template>
 		</div>
 	</li>
 </ul>
-<app-floating-edit-button [link]="getProfessorLink()" [active]="selectedProfessorId">
-	<ul *ngIf="selectedAtendimentoId">
-		<li><a class="waves-effect waves-light btn btn-floating teal lighten-2 z-depth-2" (click)="atendimentoModal.open(selectedProfessorId, selectedAtendimentoId)">
-			<i class="material-icons">assignment</i></a>
-		</li>
-	</ul>
-</app-floating-edit-button>
+<app-floating-add-button [link]="'professor'" [color]="'blue'"></app-floating-add-button>
 <app-atendimento-modal #atendimentoModal></app-atendimento-modal>

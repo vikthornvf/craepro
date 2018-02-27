@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Professor } from './professor.model';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 		.put(controller.update)
 		.delete(controller.deleteById);
  */
+@Injectable()
 export class ProfessorService {
 
 	readonly url = 'api/professor';
