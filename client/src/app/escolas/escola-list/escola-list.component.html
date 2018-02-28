@@ -1,30 +1,25 @@
-<h4 class="grey-text">Escolas
-	<button
-		class="btn-add btn-floating lighten-2 z-depth-0 right tooltipped"
-		materialize="tooltip"
-		data-position="top"
-		data-ldelay="50"
-		data-tooltip="Nova Escola"
-		[routerLink]="'escola'"><i class="material-icons label-add small">add</i></button>
-</h4>
+<h4 class="grey-text">Escolas</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-		<div class="collapsible-header flex-container disabled">
-				<input type="checkbox" disabled>
-				<label class="disabled"></label>
-				<div class="flex nome"><b class="truncate">Nome</b></div>
-				<div class="flex alunos"><b class="truncate">Nº de Alunos</b></div>
+
+	<div class="collapsible-header flex-container disabled">
+		<input type="checkbox" disabled>
+		<label class="disabled"></label>
+		<div class="flex nome"><b class="truncate">Nome</b></div>
+		<div class="flex alunos"><b class="truncate">Nº de Alunos</b></div>
+	</div>
+	<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
+
+		<div class="collapsible-header flex-container selectable" (click)="onSelect(escola._id)">
+			<input
+				type="checkbox"
+				class="filled-in"
+				[id]="escola._id"
+				[checked]="escola._id === selectedId"
+				(click)="onSelect(escola._id)">
+			<label [for]="escola._id"></label>
+			<div class="flex nome truncate">{{ escola.nome }}</div>
+			<div class="flex alunos truncate">{{ escola.qtdAlunos }}</div>
 		</div>
-		<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
-			<div class="collapsible-header flex-container selectable" (click)="onSelectEscola(escola._id)">
-				<input
-					type="checkbox"
-					class="filled-in"
-					[id]="escola._id"
-					[checked]="escola._id === selectedEscolaId">
-				<label [for]="escola._id"></label>
-				<div class="flex nome truncate">{{ escola.nome }}</div>
-				<div class="flex alunos truncate">{{ escola.qtdAlunos }}</div>
-			</div>
-		</li>
+	</li>
 </ul>
 <app-floating-add-button [link]="'escola'" [color]="'green'"></app-floating-add-button>

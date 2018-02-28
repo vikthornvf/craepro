@@ -1,57 +1,35 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Usuario } from '../usuario.model';
+import { Component, NgZone } from '@angular/core';
+import { ListViewComponent } from '../../shared/list-view.component';
 import { NavbarService } from '../../nav/navbar/navbar.service';
-import { Subscription } from 'rxjs/Subscription';
+import { UsuarioService } from '../usuario.service';
+import { Usuario } from '../usuario.model';
 
 @Component({
 	selector: 'app-usuario-list',
 	templateUrl: './usuario-list.component.html',
 	styleUrls: ['./usuario-list.component.css']
 })
-export class UsuarioListComponent implements OnInit, OnDestroy {
+export class UsuarioListComponent extends ListViewComponent {
 
-	keyword = '';
-	keywordObservable: Subscription;
-	selectedUsuarioId = '';
 	usuarios: Usuario[] = [];
+	selected = true;
 
-	constructor(private navProps: NavbarService) { }
+	constructor(
+		zone: NgZone,
+		navProps: NavbarService,
+		private service: UsuarioService) { super(zone, navProps); }
 
-	ngOnInit(): void {
-		this.keywordObservable = this.navProps.keyword.subscribe(keyword => {
-			this.selectedUsuarioId = null;
-			this.keyword = keyword;
-		});
-		this.navProps.changeNavbarSearch(true);
-		this.loadUsuarios();
+	loadList(): void {
+		this.usuarios = this.service.list();
 	}
 
-	ngOnDestroy(): void {
-		this.keywordObservable.unsubscribe();
-		this.navProps.changeNavbarSearch(false);
+	getLink() {
+		return 'usuario';
 	}
 
-	onChangeKeyword(keyword: string) {
-		this.keyword = keyword;
-	}
-
-	loadUsuarios() {
-		this.usuarios = [
-			new Usuario('1', 'abel', 'Escolinha', 'abel@email.com'),
-			new Usuario('2', 'cris', 'CRAE', 'cris@email.com'),
-			new Usuario('3', 'dudu', 'Colégio', 'dudu@email.com'),
-			new Usuario('4', 'luca', 'Óia o Estudo', 'luca@email.com'),
-			new Usuario('5', 'zelda', 'Vamstudá', 'zelda@email.com'),
-		];
-	}
-
-	onSelectUsuario(usuarioId: string) {
-		this.selectedUsuarioId = this.selectedUsuarioId !== usuarioId
-			? usuarioId
-			: null;
-	}
-
-	getUsuarioLink() {
-		return `usuario/${this.selectedUsuarioId}`;
+	onSelect(id: string): void {
+		this.selectedId = this.selectedId === id
+			? null
+			: id;
 	}
 }

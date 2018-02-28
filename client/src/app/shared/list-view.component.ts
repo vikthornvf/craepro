@@ -38,29 +38,38 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		private navProps: NavbarService) {}
 
 	abstract loadList(): void;
+	abstract getLink(): string;
 
 	ngOnInit(): void {
+		this.loadList();
 		this.keywordObservable = this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
 		this.navProps.changeState(this.navProps.state.SEARCHBAR);
-		this.navProps.changeNavbarSearch(true);
-		this.loadList();
 	}
 
 	ngOnDestroy(): void {
+		this.navProps.changeState(this.navProps.state.NAVBAR);
 		this.keywordObservable.unsubscribe();
 	}
 
-	toggleSelect($event: any, alunoId: string): void {
+	onSelect(id: string) {
+		this.selectedId = id;
+	}
+
+	toggleSelect($event: any, id: string): void {
 		$event.preventDefault();
 		$event.stopPropagation();
-		if (this.selectedId !== alunoId) {
-			this.selectedId = alunoId;
+		if (this.selectedId !== id) {
+			this.selectedId = id;
 		}
 	}
 
 	clearSelection(): void {
 		$('.collapsible-header').removeClass(() => 'active');
 		this.selected = false;
+	}
+
+	getEditLink(): string {
+		return `${this.getLink()}/${this.selectedId}`;
 	}
 
 	private changeNavbar(state: string) {

@@ -1,13 +1,6 @@
-<h4 class="grey-text">Professores
-	<button
-		class="btn-add btn-floating lighten-2 z-depth-0 right tooltipped"
-		materialize="tooltip"
-		data-position="top"
-		data-ldelay="50"
-		data-tooltip="Novo Professor"
-		[routerLink]="'professor'"><i class="material-icons label-add small">add</i></button>
-</h4>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+<h4 class="grey-text">Professores</h4>
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
+
 	<div class="collapsible-header flex-container disabled">
 		<input type="checkbox" disabled>
 		<label class="disabled"></label>
@@ -15,32 +8,27 @@
 		<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
 	</div>
 	<li *ngFor="let professor of professores | navFilter: keyword:'nome'">
-		<div class="collapsible-header flex-container selectable" (click)="onSelectProfessor(professor._id, headerEl)" #headerEl>
+
+		<div class="collapsible-header flex-container selectable" (click)="onSelect(professor._id)">
 			<input
 				type="checkbox"
 				class="filled-in"
 				[id]="professor._id"
-				[checked]="professor._id === selectedProfessorId"
-				(click)="onSelect(professor._id, headerEl)">
+				[checked]="selected && professor._id === selectedProfessorId"
+				(click)="toggleSelect($event, professor._id)">
 			<label [for]="professor._id"></label>
 			<div class="flex nome truncate">{{ professor.nome }}</div>
 			<div class="flex atendimentos truncate">{{ professor.atendimentoTiposFormatted }}</div>
 		</div>
+
 		<div class="collapsible-body">
 			<div class="v-scroll">
-				<!-- <app-atendimento-list
-					[atendimento]="atendimento"
-					[selectedId]="selectedAtendimentoId"
-					[property]="'aluno'"
-					(select)="onSelectAtendimento(atendimento._id)"
-					(openModal)="atendimentoModal.open(selectedAlunoId, selectedAtendimentoId)"
-					*ngFor="let atendimento of atendimentos">{{ atendimento.aluno.nome }}</app-atendimento-list> -->
+				<app-atendimento-list
+						*ngIf="selectedId === professor._id"
+						[property]="'aluno'"
+						[selectedId]="selectedId"></app-atendimento-list>
 			</div>
-			<ng-template #semAtendimentos>
-				<p>Sem Atendimentos</p>
-			</ng-template>
 		</div>
 	</li>
 </ul>
 <app-floating-add-button [link]="'professor'" [color]="'deep-purple'"></app-floating-add-button>
-<app-atendimento-modal #atendimentoModal></app-atendimento-modal>

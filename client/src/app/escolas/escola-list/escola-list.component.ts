@@ -1,52 +1,35 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Escola } from '../escola.model';
-import { EscolaService } from '../escola.service';
+import { Component, NgZone } from '@angular/core';
+import { ListViewComponent } from '../../shared/list-view.component';
 import { NavbarService } from '../../nav/navbar/navbar.service';
-import { Subscription } from 'rxjs/Subscription';
+import { EscolaService } from '../escola.service';
+import { Escola } from '../escola.model';
 
 @Component({
 	selector: 'app-escola-list',
 	templateUrl: './escola-list.component.html',
 	styleUrls: ['./escola-list.component.css']
 })
-export class EscolaListComponent implements OnInit, OnDestroy {
+export class EscolaListComponent extends ListViewComponent {
 
-	keyword = '';
-	keywordObservable: Subscription;
-	selectedEscolaId = '';
 	escolas: Escola[] = [];
+	selected = true;
 
-	constructor(private service: EscolaService, private navProps: NavbarService) { }
+	constructor(
+		zone: NgZone,
+		navProps: NavbarService,
+		private service: EscolaService) { super(zone, navProps); }
 
-	ngOnInit(): void {
-		this.keywordObservable = this.navProps.keyword.subscribe(keyword => {
-			this.selectedEscolaId = null;
-			this.keyword = keyword;
-		});
-		this.navProps.changeNavbarSearch(true);
-		this.loadEscolas();
-	}
-
-	ngOnDestroy(): void {
-		this.keywordObservable.unsubscribe();
-		this.navProps.changeNavbarSearch(false);
-	}
-
-	onChangeKeyword(keyword: string) {
-		this.keyword = keyword;
-	}
-
-	loadEscolas() {
+	loadList(): void {
 		this.escolas = this.service.list();
 	}
 
-	onSelectEscola(escolaId: string) {
-		this.selectedEscolaId = this.selectedEscolaId !== escolaId
-			? escolaId
-			: null;
+	getLink(): string {
+		return 'escola';
 	}
 
-	getEscolaLink() {
-		return `escola/${this.selectedEscolaId}`;
+	onSelect(id: string): void {
+		this.selectedId = this.selectedId === id
+			? null
+			: id;
 	}
 }

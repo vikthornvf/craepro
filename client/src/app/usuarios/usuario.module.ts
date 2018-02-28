@@ -7,6 +7,7 @@ import { FloatingAddButtonModule } from '../shared/floating-add-button.module';
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioSenhaComponent } from './usuario/usuario-senha.component';
+import { UsuarioService } from './usuario.service';
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,8 @@ import { UsuarioSenhaComponent } from './usuario/usuario-senha.component';
 		NavModule,
 		FloatingAddButtonModule
 	],
-	providers: []
+	providers: [
+		UsuarioService
+	]
 })
 export class UsuarioModule { }

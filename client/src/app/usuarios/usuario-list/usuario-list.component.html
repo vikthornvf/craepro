@@ -1,34 +1,27 @@
-<h4 class="grey-text">Usuários
-	<button
-			class="btn-add btn-floating lighten-2 z-depth-0 right tooltipped"
-			materialize="tooltip"
-			data-position="top"
-			data-ldelay="50"
-			data-tooltip="Novo Usuário"
-			[routerLink]="'usuario'">
-		<i class="material-icons label-add small">add</i>
-	</button>
-</h4>
+<h4 class="grey-text">Usuários</h4>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-		<div class="collapsible-header flex-container disabled">
-				<input type="checkbox" disabled>
-				<label class="disabled"></label>
-				<div class="flex nome"><b class="truncate">Nome</b></div>
-				<div class="flex email"><b class="truncate">E-mail</b></div>
-				<div class="flex escola"><b class="truncate">Escola</b></div>
+
+	<div class="collapsible-header flex-container disabled">
+		<input type="checkbox" disabled>
+		<label class="disabled"></label>
+		<div class="flex nome"><b class="truncate">Nome</b></div>
+		<div class="flex email"><b class="truncate">E-mail</b></div>
+		<div class="flex escola"><b class="truncate">Escola</b></div>
+	</div>
+	<li *ngFor="let usuario of usuarios | navFilter: keyword:'nome'">
+
+		<div class="collapsible-header flex-container selectable" (click)="onSelect(usuario._id)">
+			<input
+				type="checkbox"
+				class="filled-in"
+				[id]="usuario._id"
+				[checked]="usuario._id === selectedId"
+				(click)="onSelect(usuario._id)">
+			<label [for]="usuario._id"></label>
+			<div class="flex nome truncate">{{ usuario.nome }}</div>
+			<div class="flex email truncate">{{ usuario.email }}</div>
+			<div class="flex escola truncate">{{ usuario.escola }}</div>
 		</div>
-		<li *ngFor="let usuario of usuarios | navFilter: keyword:'nome'">
-			<div class="collapsible-header flex-container selectable" (click)="onSelectUsuario(usuario._id)">
-				<input
-					type="checkbox"
-					class="filled-in"
-					[id]="usuario._id"
-					[checked]="usuario._id === selectedUsuarioId">
-				<label [for]="usuario._id"></label>
-				<div class="flex nome truncate">{{ usuario.nome }}</div>
-				<div class="flex email truncate">{{ usuario.email }}</div>
-				<div class="flex escola truncate">{{ usuario.escola }}</div>
-			</div>
-		</li>
+	</li>
 </ul>
 <app-floating-add-button [link]="'usuario'" [color]="'amber'"></app-floating-add-button>
