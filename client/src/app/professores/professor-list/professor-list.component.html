@@ -14,7 +14,7 @@
 				type="checkbox"
 				class="filled-in"
 				[id]="professor._id"
-				[checked]="selected && professor._id === selectedProfessorId"
+				[checked]="selected && professor._id === selectedId"
 				(click)="toggleSelect($event, professor._id)">
 			<label [for]="professor._id"></label>
 			<div class="flex nome truncate">{{ professor.nome }}</div>

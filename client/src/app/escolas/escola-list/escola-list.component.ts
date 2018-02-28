@@ -12,7 +12,6 @@ import { Escola } from '../escola.model';
 export class EscolaListComponent extends ListViewComponent {
 
 	escolas: Escola[] = [];
-	selected = true;
 
 	constructor(
 		zone: NgZone,
@@ -25,11 +24,5 @@ export class EscolaListComponent extends ListViewComponent {
 
 	getLink(): string {
 		return 'escola';
-	}
-
-	onSelect(id: string): void {
-		this.selectedId = this.selectedId === id
-			? null
-			: id;
 	}
 }

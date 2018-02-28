@@ -19,7 +19,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		{
 			onOpen: (el) => {
 				this.currentElementId = el[0].firstElementChild.firstElementChild;
-				this.zone.run(() => this.selected = true);
+				this.zone.run(() => this.onOpen());
 			},
 			onClose: (el) => {
 				let elementId;
@@ -27,7 +27,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 					elementId = el[0].firstElementChild.firstElementChild;
 				} catch (err) {}
 				if (this.currentElementId === elementId) {
-					this.zone.run(() => this.selected = false);
+					this.zone.run(() => this.onClose());
 				}
 			}
 		}
@@ -51,6 +51,16 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		this.keywordObservable.unsubscribe();
 	}
 
+	onSimpleSelect(id: string) {
+		if (this.selectedId === id) {
+			this.selectedId = null;
+			this.onClose();
+		} else {
+			this.selectedId = id;
+			this.onOpen();
+		}
+	}
+
 	onSelect(id: string) {
 		this.selectedId = id;
 	}
@@ -59,8 +69,22 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		$event.preventDefault();
 		$event.stopPropagation();
 		if (this.selectedId !== id) {
-			this.selectedId = id;
+			this.onSelect(id);
 		}
+	}
+
+	onOpen() {
+		this.selected = true;
+		this.changeNavbar(this.navProps.state.TOOLBAR);
+	}
+
+	onClose() {
+		this.selected = false;
+		this.changeNavbar(this.navProps.state.SEARCHBAR);
+	}
+
+	changeNavbar(state: string) {
+		this.navProps.changeState(state);
 	}
 
 	clearSelection(): void {
@@ -70,9 +94,5 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	getEditLink(): string {
 		return `${this.getLink()}/${this.selectedId}`;
-	}
-
-	private changeNavbar(state: string) {
-		// TODO
 	}
 }

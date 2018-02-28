@@ -9,13 +9,13 @@
 	</div>
 	<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
 
-		<div class="collapsible-header flex-container selectable" (click)="onSelect(escola._id)">
+		<div class="collapsible-header flex-container selectable" (click)="onSimpleSelect(escola._id)">
 			<input
 				type="checkbox"
 				class="filled-in"
 				[id]="escola._id"
 				[checked]="escola._id === selectedId"
-				(click)="onSelect(escola._id)">
+				(click)="onSimpleSelect(escola._id)">
 			<label [for]="escola._id"></label>
 			<div class="flex nome truncate">{{ escola.nome }}</div>
 			<div class="flex alunos truncate">{{ escola.qtdAlunos }}</div>
