@@ -11,7 +11,7 @@
 				(click)="toggleEdit()"><i class="material-icons">edit</i></button>
 		</h4>
 		<ng-template #editNome>
-			<div class="input-field col s12" [ngClass]="{ 'slide-in': edit }">
+			<div class="input-field col s12" [ngClass]="{ 'slide-in-effect': edit }">
 				<button class="btn-custom postfix" [disabled]="!aluno.nome" (click)="toggleEdit()">
 					<i class="material-icons grey-text">close</i>
 				</button>

@@ -5,7 +5,7 @@
 			<div class="col s10" [ngSwitch]="state">
 				<app-navbar-search *ngSwitchCase="'searchbar'"></app-navbar-search>
 				<ng-container *ngSwitchCase="'navbar'">
-					<ul class="left">
+					<ul class="left slide-in-right-effect">
 						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
 					</ul>
 				</ng-container>

@@ -95,16 +95,9 @@ th.extended {
 	z-index: -1;
 }
 
-.z-depth-2:hover {
+.btn.z-depth-2:hover {
 	-webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
 					box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-}
-
-.btn-floating.btn-large {
-	-webkit-animation-name: showup;
-	-webkit-animation-duration: .3s;
-					animation-name: showup;
-					animation-duration: .3s;
 }
 
 .btn-add {
@@ -179,18 +172,36 @@ th.extended {
 	left: 50%;
 }
 
-.slide-in {
+.slide-in-right-effect {
+	-webkit-animation-duration: .3s;
+	-webkit-animation-name: slideinright;
+					animation-duration: .3s;
+					animation-name: slideinright;
+}
+.slide-in-effect {
 	-webkit-animation-duration: .3s;
 	-webkit-animation-name: slidein;
 					animation-duration: .3s;
 					animation-name: slidein;
 }
 
-.fade-in {
+.fade-in-effect {
 	-webkit-animation-duration: .3s;
 	-webkit-animation-name: fadein;
 					animation-duration: .3s;
 					animation-name: fadein;
+}
+
+@keyframes slideinright {
+  from {
+    opacity: 0;
+		transform: translate3d(200px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+		transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes slidein {
