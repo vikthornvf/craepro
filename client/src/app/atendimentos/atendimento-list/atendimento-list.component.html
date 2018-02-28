@@ -14,8 +14,9 @@
 	<tbody>
 		<tr
 				*ngFor="let atendimento of atendimentos"
+				[ngClass]="{ 'active': atendimento._id === atendimentoId }"
 				(click)="onClick(atendimento._id)"
-				(dblclick)="onDoubleClick(); atendimentoModal.open(selectedId, atendimento._id)"
+				(dblclick)="onDoubleClick(atendimento._id); atendimentoModal.open(selectedId, atendimento._id)"
 				(press)="atendimentoModal.open(selectedId, atendimento._id)">
 			<td>
 				<input

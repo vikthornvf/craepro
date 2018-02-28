@@ -26,10 +26,17 @@ export class AtendimentoListComponent implements OnChanges {
 		this.loadAtendimentos();
 	}
 
-	loadAtendimentos() {
+	onLoad(): void {
 		this.atendimentos = [];
 		this.isAtendimentosLoaded = false;
-		// TODO load here
+	}
+
+	loaded(): void {
+		this.isAtendimentosLoaded = true;
+	}
+
+	loadAtendimentos(): void {
+		this.onLoad();
 		setTimeout(() => {
 			if (this.property === 'profissional') {
 				this.atendimentos = this.service.listByAluno(this.selectedId);
@@ -37,11 +44,11 @@ export class AtendimentoListComponent implements OnChanges {
 			if (this.property === 'aluno') {
 				this.atendimentos = this.service.listByProfessor(this.selectedId);
 			}
-			this.isAtendimentosLoaded = true;
+			this.loaded();
 		}, 500);
 	}
 
-	onClick(id: string) {
+	onClick(id: string): void {
 		this.preventSimpleClick = false;
 		this.timer = setTimeout(() => {
 			if (!this.preventSimpleClick) {
@@ -50,16 +57,21 @@ export class AtendimentoListComponent implements OnChanges {
 		}, this.delay);
 	}
 
-	onDoubleClick() {
+	onDoubleClick(id: string): void {
 		this.preventSimpleClick = true;
 		clearTimeout(this.timer);
+		if (this.atendimentoId !== id) {
+			this.onSelect(id);
+		}
 	}
 
-	onSelect(id: string) {
-		this.atendimentoId = id;
+	onSelect(id: string): void {
+		this.atendimentoId = this.atendimentoId === id
+			? null
+			: id;
 	}
 
-	onSaveAtendimento() {
+	onSaveAtendimento(): void {
 		// TODO
 		// if (this.atendimentoId) save
 		// else create;
