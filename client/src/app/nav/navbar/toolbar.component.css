@@ -1,0 +1,13 @@
+.spacing-left {
+	margin-left: 15px;
+}
+
+@media only screen and (max-width: 992px) {
+	.spacing-left {
+		margin-left: 10px;
+	}
+
+	.spacing-left-on-med-and-down {
+		margin-left: 10px;
+	}
+}
