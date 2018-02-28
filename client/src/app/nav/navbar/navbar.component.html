@@ -1,9 +1,10 @@
 <nav class="navbar" ngClass="{{ state }}">
-	<div class="nav-wrapper">
+	<div class="nav-wrapper sidenav-wrapper">
 		<div class="row">
 
-			<div class="col s10" [ngSwitch]="state">
-				<app-navbar-search *ngSwitchCase="'searchbar'"></app-navbar-search>
+			<div class="col s9" [ngSwitch]="state">
+				<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
+				<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
 				<ng-container *ngSwitchCase="'navbar'">
 					<ul class="left slide-in-right-effect">
 						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
@@ -11,7 +12,7 @@
 				</ng-container>
 			</div>
 
-			<div class="col s2">
+			<div class="col s3">
 				<ul class="right" id="navbar">
 					<li>
 						<a class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>

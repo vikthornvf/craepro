@@ -5,9 +5,15 @@ nav {
 	-o-transition: background-color .4s linear;
 }
 
+@media only screen and (max-width: 429px) {
+	.toolbar {
+		height: auto;
+	}
+}
+
 @media only screen and (max-width: 992px) {
-	ul li {
-			margin-left: 42px;
+	.sidenav-wrapper {
+		margin-left: 42px !important;
 	}
 }
 
