@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from './navbar.service';
 
 @Component({
-	selector: 'app-navbar-search',
-	templateUrl: './navbar-search.component.html',
-	styleUrls: ['./navbar-search.component.css']
+	selector: 'app-searchbar',
+	templateUrl: './searchbar.component.html',
+	styleUrls: ['./searchbar.component.css']
 })
-export class NavbarSearchComponent implements OnInit {
+export class SearchbarComponent implements OnInit {
 
 	keyword = '';
 

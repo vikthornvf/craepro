@@ -6,7 +6,8 @@ import { AppRoutingModule } from '../app.routes';
 
 import { NavComponent } from './nav.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NavbarSearchComponent } from './navbar/navbar-search.component';
+import { SearchbarComponent } from './navbar/searchbar.component';
+import { ToolbarComponent } from './navbar/toolbar.component';
 import { NavFilter } from './nav.pipe';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NavbarService } from './navbar/navbar.service';
@@ -15,7 +16,8 @@ import { NavbarService } from './navbar/navbar.service';
 	declarations: [
 		NavComponent,
 		NavbarComponent,
-		NavbarSearchComponent,
+		SearchbarComponent,
+		ToolbarComponent,
 		NavFilter,
 		SidenavComponent
 	],
@@ -29,7 +31,8 @@ import { NavbarService } from './navbar/navbar.service';
 		AppRoutingModule,
 		NavComponent,
 		NavbarComponent,
-		NavbarSearchComponent,
+		SearchbarComponent,
+		ToolbarComponent,
 		NavFilter,
 		SidenavComponent
 	],
