@@ -11,12 +11,12 @@ declare var $: any;
 })
 export class NavbarComponent implements OnInit, AfterContentChecked {
 
-	navbarSearch = false;
+	state: string = this.navProps.state.NAVBAR;
 
 	constructor(private navProps: NavbarService, private _location: Location) { }
 
 	ngOnInit() {
-		this.navProps.navbarSearch.subscribe(navbarSearch => this.navbarSearch = navbarSearch);
+		this.navProps.barState.subscribe(barState => this.state = barState);
 	}
 
 	ngAfterContentChecked() {

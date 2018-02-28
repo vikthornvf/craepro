@@ -1,15 +1,17 @@
-<nav class="navbar" [ngClass]="{ 'navbar-search': navbarSearch }">
+<nav class="navbar" ngClass="{{ state }}">
 	<div class="nav-wrapper">
 		<div class="row">
-			<div class="col s9">
-				<app-navbar-search *ngIf="navbarSearch; else navbarReturn"></app-navbar-search>
-				<ng-template #navbarReturn>
+
+			<div class="col s10" [ngSwitch]="state">
+				<app-navbar-search *ngSwitchCase="'searchbar'"></app-navbar-search>
+				<ng-container *ngSwitchCase="'navbar'">
 					<ul class="left">
 						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
 					</ul>
-				</ng-template>
+				</ng-container>
 			</div>
-			<div class="col s3">
+
+			<div class="col s2">
 				<ul class="right" id="navbar">
 					<li>
 						<a class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
