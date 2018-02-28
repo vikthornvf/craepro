@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Atendimento } from '../atendimento.model';
 import { Aluno } from '../../alunos/aluno.model';
 import { AtendimentoService } from '../atendimento.service';
@@ -13,7 +13,7 @@ export class AtendimentoListComponent implements OnChanges {
 	@Input() selectedId: string;
 
 	atendimentos: Atendimento[] = [];
-	selectedAtendimentoId: string;
+	atendimentoId: string;
 	isAtendimentosLoaded = false;
 
 	timer;
@@ -31,20 +31,21 @@ export class AtendimentoListComponent implements OnChanges {
 		this.isAtendimentosLoaded = false;
 		// TODO load here
 		setTimeout(() => {
-			if (this.property !== 'aluno') {
+			if (this.property === 'profissional') {
 				this.atendimentos = this.service.listByAluno(this.selectedId);
-			} else {
+			} else
+			if (this.property === 'aluno') {
 				this.atendimentos = this.service.listByProfessor(this.selectedId);
 			}
 			this.isAtendimentosLoaded = true;
 		}, 500);
 	}
 
-	onClick() {
+	onClick(id: string) {
 		this.preventSimpleClick = false;
 		this.timer = setTimeout(() => {
 			if (!this.preventSimpleClick) {
-				this.onSelect();
+				this.onSelect(id);
 			}
 		}, this.delay);
 	}
@@ -52,24 +53,15 @@ export class AtendimentoListComponent implements OnChanges {
 	onDoubleClick() {
 		this.preventSimpleClick = true;
 		clearTimeout(this.timer);
-		this.onOpenModal();
 	}
 
-	onPress() {
-		this.onOpenModal();
-	}
-
-	onSelect() {
-		// TODO
-	}
-
-	onOpenModal() {
-		// TODO
+	onSelect(id: string) {
+		this.atendimentoId = id;
 	}
 
 	onSaveAtendimento() {
 		// TODO
-		// if (this.selectedAtendimentoId) save
+		// if (this.atendimentoId) save
 		// else create;
 		console.log('save');
 	}

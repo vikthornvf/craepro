@@ -14,17 +14,17 @@
 	<tbody>
 		<tr
 				*ngFor="let atendimento of atendimentos"
-				(click)="onClick()"
+				(click)="onClick(atendimento._id)"
 				(dblclick)="onDoubleClick(); atendimentoModal.open(selectedId, atendimento._id)"
-				(press)="onPress(); atendimentoModal.open(selectedId, atendimento._id)">
+				(press)="atendimentoModal.open(selectedId, atendimento._id)">
 			<td>
 				<input
 						type="checkbox"
 						class="filled-in"
 						[id]="atendimento._id"
-						[checked]="atendimento._id === selectedAtendimentoId"
-						(click)="onSelect()">
-				<label for="atendimento._id" style="color:black!important">{{ atendimento[property].nome }}</label>
+						[checked]="atendimento._id === atendimentoId"
+						(click)="onSelect(atendimento._id)">
+				<label for="atendimento._id" style="color: black !important">{{ atendimento[property].nome }}</label>
 			</td>
 			<td>{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</td>
 			<td>{{ atendimento.tipo }}</td>
