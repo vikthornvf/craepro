@@ -12,5 +12,5 @@ export class Atendimento {
 		public parecer?: string,
 		public solicitacao?: Date,
 		public inicio?: Date,
-		public alta?: Date) { }
+		public alta?: Date) {}
 }

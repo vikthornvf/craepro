@@ -8,7 +8,7 @@ export class Aluno {
 		public status?: string, // TENTAR RESOLVER NO SERVER
 		public serie?: string,
 		public turno?: string,
-		public escola?: Escola) { }
+		public escola?: Escola) {}
 
 	get statusFormatted() {
 		switch (this.status) {

@@ -21,7 +21,7 @@ export class AlunoComponent implements OnInit {
 	constructor(
 		private service: AlunoService,
 		private escolaService: EscolaService,
-		private route: ActivatedRoute) { }
+		private route: ActivatedRoute) {}
 
 	print(print: any) {
 		console.log(print);

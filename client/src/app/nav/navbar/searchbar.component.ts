@@ -10,7 +10,7 @@ export class SearchbarComponent implements OnInit {
 
 	keyword = '';
 
-	constructor(private navProps: NavbarService) { }
+	constructor(private navProps: NavbarService) {}
 
 	ngOnInit() {
 		this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
