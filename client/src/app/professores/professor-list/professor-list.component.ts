@@ -15,8 +15,8 @@ export class ProfessorListComponent extends ListViewComponent {
 
 	constructor(
 		zone: NgZone,
-		navProps: NavbarService,
-		private service: ProfessorService) { super(zone, navProps); }
+		navService: NavbarService,
+		private service: ProfessorService) { super(zone, navService); }
 
 	loadList(): void {
 		this.professores = this.service.list();

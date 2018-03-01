@@ -16,8 +16,8 @@ export class UsuarioListComponent extends ListViewComponent {
 
 	constructor(
 		zone: NgZone,
-		navProps: NavbarService,
-		private service: UsuarioService) { super(zone, navProps); }
+		navService: NavbarService,
+		private service: UsuarioService) { super(zone, navService); }
 
 	loadList(): void {
 		this.usuarios = this.service.list();

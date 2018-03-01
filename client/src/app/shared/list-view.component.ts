@@ -9,6 +9,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	keyword: string;
 	keywordObservable: Subscription;
+	toolbarObservable: Subscription;
 
 	selectedId: string;
 	selected = false;
@@ -35,20 +36,41 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private zone: NgZone,
-		private navProps: NavbarService) {}
+		private navService: NavbarService) {}
 
 	abstract loadList(): void;
 	abstract getLink(): string;
 
 	ngOnInit(): void {
 		this.loadList();
-		this.keywordObservable = this.navProps.keyword.subscribe(keyword => this.keyword = keyword);
-		this.navProps.changeState(this.navProps.state.SEARCHBAR);
+		this.navService.changeState(this.navService.state.SEARCHBAR);
+		this.keywordObservable = this.navService.keyword.subscribe(keyword => this.keyword = keyword);
+		this.toolbarObservable = this.navService.toolbar.subscribe(code => this.toolbarFunctions(code));
 	}
 
 	ngOnDestroy(): void {
-		this.navProps.changeState(this.navProps.state.NAVBAR);
+		this.navService.changeState(this.navService.state.NAVBAR);
 		this.keywordObservable.unsubscribe();
+		this.toolbarObservable.unsubscribe();
+	}
+
+	toolbarFunctions(code: number) {
+		const tools = this.navService.tools;
+		switch (code) {
+			case tools.SELECTION: {
+				this.clearSelection();
+				break;
+			}
+			case tools.EDIT: {
+				this.navService.onNavigate(this.getEditLink());
+				break;
+			}
+			case tools.DELETE: {
+				console.log('DELETE');
+				// TODO
+				break;
+			}
+		}
 	}
 
 	onSimpleSelect(id: string) {
@@ -75,24 +97,24 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	onOpen() {
 		this.selected = true;
-		this.changeNavbar(this.navProps.state.TOOLBAR);
+		this.changeNavbar(this.navService.state.TOOLBAR);
 	}
 
 	onClose() {
 		this.selected = false;
-		this.changeNavbar(this.navProps.state.SEARCHBAR);
+		this.changeNavbar(this.navService.state.SEARCHBAR);
 	}
 
 	changeNavbar(state: string) {
-		this.navProps.changeState(state);
+		this.navService.changeState(state);
 	}
 
 	clearSelection(): void {
 		$('.collapsible-header').removeClass(() => 'active');
-		this.selected = false;
+		this.onClose();
 	}
 
 	getEditLink(): string {
-		return `${this.getLink()}/${this.selectedId}`;
+		return `/${this.getLink()}/${this.selectedId}`;
 	}
 }

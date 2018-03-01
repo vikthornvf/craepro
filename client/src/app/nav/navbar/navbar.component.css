@@ -5,9 +5,10 @@ nav {
 	-o-transition: background-color .4s linear;
 }
 
-@media only screen and (max-width: 459px) {
+@media only screen and (max-width: 456px) {
 	.toolbar {
 		height: auto;
+		line-height: 56px;
 	}
 }
 

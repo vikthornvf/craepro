@@ -4,7 +4,8 @@
 			materialize="tooltip"
 			data-position="bottom"
 			data-ldelay="50"
-			data-tooltip="Remover Seleção">
+			data-tooltip="Remover Seleção"
+			(click)="onEmitTool(tool.SELECTION)">
 		<a class="hide-on-small-only">Selecionado<i class="material-icons right">check_box</i></a>
 		<a class="hide-on-med-and-up"><i class="material-icons">check_box</i></a>
 	</li>
@@ -13,7 +14,8 @@
 			materialize="tooltip"
 			data-position="bottom"
 			data-ldelay="50"
-			data-tooltip="Alterar Dados">
+			data-tooltip="Alterar Dados"
+			(click)="onEmitTool(tool.EDIT)">
 		<a><i class="material-icons">mode_edit</i></a>
 	</li>
 	<li
@@ -21,23 +23,28 @@
 			materialize="tooltip"
 			data-position="bottom"
 			data-ldelay="50"
-			data-tooltip="Apagar Registro">
+			data-tooltip="Apagar Registro"
+			(click)="onEmitTool(tool.DELETE)">
 		<a><i class="material-icons">delete</i></a>
 	</li>
-	<li
-			class="tooltipped spacing-left"
-			materialize="tooltip"
-			data-position="bottom"
-			data-ldelay="50"
-			data-tooltip="Verificar Atendimento">
-		<a><i class="material-icons">assignment_turned_in</i></a>
-	</li>
-	<li
-			class="tooltipped"
-			materialize="tooltip"
-			data-position="bottom"
-			data-ldelay="50"
-			data-tooltip="Excluir Atendimento">
-		<a><i class="material-icons">assignment_late</i></a>
-	</li>
+	<span class="break-line-on-small" *ngIf="hasAtt">
+		<li
+				class="tooltipped fade-in-effect spacing-left"
+				materialize="tooltip"
+				data-position="bottom"
+				data-ldelay="50"
+				data-tooltip="Modificar Atendimento"
+				(click)="onEmitTool(tool.EDIT_ATT)">
+			<a><i class="material-icons">event_note</i></a>
+		</li>
+		<li
+				class="tooltipped fade-in-effect"
+				materialize="tooltip"
+				data-position="bottom"
+				data-ldelay="50"
+				data-tooltip="Excluir Atendimento"
+				(click)="onEmitTool(tool.DELETE_ATT)">
+			<a><i class="material-icons">event_busy</i></a>
+		</li>
+	</span>
 </ul>

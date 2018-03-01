@@ -1,4 +1,4 @@
-<nav class="navbar" ngClass="{{ state }}">
+<nav class="nav-extended" ngClass="{{ state }}">
 	<div class="nav-wrapper sidenav-wrapper">
 		<div class="row">
 
@@ -6,7 +6,7 @@
 				<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
 				<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
 				<ng-container *ngSwitchCase="'navbar'">
-					<ul class="left slide-in-right-effect">
+					<ul class="slide-in-right-effect">
 						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
 					</ul>
 				</ng-container>

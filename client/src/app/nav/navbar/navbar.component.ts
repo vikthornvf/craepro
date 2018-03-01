@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavbarService } from './navbar.service';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var $: any;
 
@@ -9,14 +10,19 @@ declare var $: any;
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, AfterContentChecked {
+export class NavbarComponent implements OnInit, OnDestroy, AfterContentChecked {
 
-	state: string = this.navProps.state.NAVBAR;
+	state: string = this.navService.state.NAVBAR;
+	stateObservable: Subscription;
 
-	constructor(private navProps: NavbarService, private _location: Location) { }
+	constructor(private navService: NavbarService) {}
 
 	ngOnInit() {
-		this.navProps.barState.subscribe(barState => this.state = barState);
+		this.stateObservable = this.navService.barState.subscribe(barState => this.state = barState);
+	}
+
+	ngOnDestroy() {
+		this.stateObservable.unsubscribe();
 	}
 
 	ngAfterContentChecked() {
@@ -24,6 +30,6 @@ export class NavbarComponent implements OnInit, AfterContentChecked {
 	}
 
 	onBack() {
-		this._location.back();
+		this.navService.onNavigateBack();
 	}
 }

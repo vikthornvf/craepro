@@ -15,8 +15,8 @@ export class AlunoListComponent extends ListViewComponent {
 
 	constructor(
 		zone: NgZone,
-		navProps: NavbarService,
-		private service: AlunoService) { super(zone, navProps); }
+		navService: NavbarService,
+		private service: AlunoService) { super(zone, navService); }
 
 	loadList(): void {
 		this.alunos = this.service.list();

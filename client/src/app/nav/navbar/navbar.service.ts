@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { deprecate } from 'util';
 
 @Injectable()
 export class NavbarService {
@@ -11,17 +12,57 @@ export class NavbarService {
 		TOOLBAR: 'toolbar'
 	};
 
-	private keywordSource  = new BehaviorSubject<string>('');
-	keyword = this.keywordSource.asObservable();
+	readonly tools = {
+		SELECTION: 0,
+		EDIT: 1,
+		DELETE: 2,
+		ADD_ATT: 3,
+		EDIT_ATT: 4,
+		DELETE_ATT: 5
+	};
 
-	private barStateSource = new BehaviorSubject<string>(this.state.NAVBAR);
-	barState = this.barStateSource.asObservable();
+	private keyword$ = new BehaviorSubject<string>('');
+	keyword = this.keyword$.asObservable();
+
+	private barState$ = new BehaviorSubject<string>(this.state.NAVBAR);
+	barState = this.barState$.asObservable();
+
+	private toolbar$ = new BehaviorSubject<number>(-1);
+	toolbar = this.toolbar$.asObservable();
+
+	private hasAtt$ = new BehaviorSubject<boolean>(false);
+	hasAtt = this.hasAtt$.asObservable();
+
+	constructor(
+		private router: Router,
+		private _location: Location) {}
+
+	onNavigate(url: string): void {
+		if (url) {
+			// this.router.navigate(['alunos', 'aluno', '1']);
+			this.router.navigateByUrl(this.router.url + url);
+			console.log('QUE ISSO');
+		}
+	}
+
+	onNavigateBack(): void {
+		this._location.back();
+		console.log('WAT');
+	}
 
 	changeKeyword(keyword: string) {
-		this.keywordSource.next(keyword);
+		this.keyword$.next(keyword);
 	}
 
 	changeState(state: string) {
-		this.barStateSource.next(state);
+		this.barState$.next(state);
+	}
+
+	emitTool(tool: number) {
+		this.toolbar$.next(tool);
+	}
+
+	changeHasAtt(hasAtt: boolean) {
+		this.hasAtt$.next(hasAtt);
 	}
 }

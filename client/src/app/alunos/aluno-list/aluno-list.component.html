@@ -37,7 +37,9 @@
 				<app-atendimento-list
 						*ngIf="selectedId === aluno._id"
 						[property]="'profissional'"
-						[selectedId]="selectedId"></app-atendimento-list>
+						[selectedId]="selectedId"
+						[editLink]="getEditLink()"
+						(select)="onOpen()"></app-atendimento-list>
 			</div>
 			<br>
 			<a class="waves-effect waves-light btn btn-large teal lighten-2" (click)="atendimentoModal.open(selectedId)">
@@ -46,3 +48,4 @@
 	</li>
 </ul>
 <app-floating-add-button [link]="'aluno'" [color]="'red'"></app-floating-add-button>
+<app-atendimento-modal #atendimentoModal></app-atendimento-modal>
