@@ -45,4 +45,10 @@
 	<p>Sem Atendimentos</p>
 </ng-template>
 
+<a
+		class="waves-effect waves-light btn btn-large teal lighten-2"
+		style="margin: 15px 0 15px 0;"
+		(click)="atendimentoModal.open(selectedId)">
+	<i class="material-icons left">add_box</i> Novo Atendimento</a>
+
 <app-atendimento-modal #atendimentoModal></app-atendimento-modal>

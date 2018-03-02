@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { AtendimentoService } from '../atendimento.service';
 import { Atendimento } from '../atendimento.model';
@@ -12,8 +12,8 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	@Input() property: string;
 	@Input() selectedId: string;
-	@Input() editLink: string;
 	@Output() select: EventEmitter<any> = new EventEmitter();
+	@ViewChild('atendimentoModal') modal;
 
 	atendimentos: Atendimento[] = [];
 	atendimentoId: string;
@@ -35,6 +35,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	ngOnDestroy(): void {
 		this.navService.changeHasAtt(false);
+		this.toolbarObservable.unsubscribe();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -51,8 +52,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 				break;
 			}
 			case tools.EDIT_ATT: {
-				console.log('EDIT ATENDIMENTO');
-				// TODO
+				this.modal.open(this.selectedId, this.atendimentoId);
 				break;
 			}
 			case tools.DELETE_ATT: {
