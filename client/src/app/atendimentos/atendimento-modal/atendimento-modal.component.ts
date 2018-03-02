@@ -14,7 +14,7 @@ export class AtendimentoModalComponent {
 	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
 	modalAtendimentoParams = [{ dismissible: false }];
 
-	open(selectedId: string, atendimentoId: string) {
+	open(selectedId: string, atendimentoId?: string) {
 		this.selectedId = selectedId;
 		this.atendimentoId = atendimentoId;
 		this.modalAtendimentoActions.emit({ action: 'modal', params: ['open'] });
