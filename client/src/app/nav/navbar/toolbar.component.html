@@ -14,9 +14,8 @@
 			materialize="tooltip"
 			data-position="bottom"
 			data-ldelay="50"
-			data-tooltip="Alterar Dados"
-			(click)="onEmitTool(tool.EDIT)">
-		<a><i class="material-icons">mode_edit</i></a>
+			data-tooltip="Alterar Dados">
+		<a [routerLink]="link"><i class="material-icons">mode_edit</i></a>
 	</li>
 	<li
 			class="tooltipped"
