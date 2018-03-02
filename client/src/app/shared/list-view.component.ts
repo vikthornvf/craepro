@@ -20,7 +20,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		{
 			onOpen: (el) => {
 				this.currentElementId = el[0].firstElementChild.firstElementChild;
-				this.zone.run(() => this.onOpen());
+				this._zone.run(() => this.onOpen());
 			},
 			onClose: (el) => {
 				let elementId;
@@ -28,18 +28,19 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 					elementId = el[0].firstElementChild.firstElementChild;
 				} catch (err) {}
 				if (this.currentElementId === elementId) {
-					this.zone.run(() => this.onClose());
+					this._zone.run(() => this.onClose());
 				}
 			}
 		}
 	];
 
+	abstract link: string;
+
 	constructor(
-		private zone: NgZone,
+		private _zone: NgZone,
 		private navService: NavbarService) {}
 
 	abstract loadList(): void;
-	abstract getLink(): string;
 
 	ngOnInit(): void {
 		this.loadList();
@@ -59,10 +60,6 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		switch (code) {
 			case tools.SELECTION: {
 				this.clearSelection();
-				break;
-			}
-			case tools.EDIT: {
-				this.navService.onNavigate(this.getEditLink());
 				break;
 			}
 			case tools.DELETE: {
@@ -85,6 +82,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	onSelect(id: string) {
 		this.selectedId = id;
+		this.navService.changeLink(this.getEditLink());
 	}
 
 	toggleSelect($event: any, id: string): void {
@@ -114,7 +112,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		this.onClose();
 	}
 
-	getEditLink(): string {
-		return `/${this.getLink()}/${this.selectedId}`;
+	getEditLink(): string[] {
+		return [this.link, this.selectedId];
 	}
 }

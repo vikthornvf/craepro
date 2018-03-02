@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -33,21 +33,17 @@ export class NavbarService {
 	private hasAtt$ = new BehaviorSubject<boolean>(false);
 	hasAtt = this.hasAtt$.asObservable();
 
-	constructor(
-		private router: Router,
-		private _location: Location) {}
+	private link$ = new BehaviorSubject<string[]>([]);
+	link = this.link$.asObservable();
 
-	onNavigate(url: string): void {
-		if (url) {
-			// this.router.navigate(['alunos', 'aluno', '1']);
-			this.router.navigateByUrl(this.router.url + url);
-			console.log('QUE ISSO');
-		}
+	constructor(private _location: Location) {}
+
+	path(): string {
+		return this._location.path();
 	}
 
 	onNavigateBack(): void {
 		this._location.back();
-		console.log('WAT');
 	}
 
 	changeKeyword(keyword: string) {
@@ -64,5 +60,9 @@ export class NavbarService {
 
 	changeHasAtt(hasAtt: boolean) {
 		this.hasAtt$.next(hasAtt);
+	}
+
+	changeLink(link: string[]) {
+		this.link$.next(link);
 	}
 }
