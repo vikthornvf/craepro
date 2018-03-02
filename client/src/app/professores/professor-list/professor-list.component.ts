@@ -11,6 +11,7 @@ import { Professor } from '../professor.model';
 })
 export class ProfessorListComponent extends ListViewComponent {
 
+	link = 'professor';
 	professores: Professor[] = [];
 
 	constructor(
@@ -20,9 +21,5 @@ export class ProfessorListComponent extends ListViewComponent {
 
 	loadList(): void {
 		this.professores = this.service.list();
-	}
-
-	getLink(): string {
-		return 'professor';
 	}
 }

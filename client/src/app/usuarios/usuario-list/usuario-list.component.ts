@@ -11,8 +11,8 @@ import { Usuario } from '../usuario.model';
 })
 export class UsuarioListComponent extends ListViewComponent {
 
+	link = 'usuario';
 	usuarios: Usuario[] = [];
-	selected = true;
 
 	constructor(
 		zone: NgZone,
@@ -21,15 +21,5 @@ export class UsuarioListComponent extends ListViewComponent {
 
 	loadList(): void {
 		this.usuarios = this.service.list();
-	}
-
-	getLink() {
-		return 'usuario';
-	}
-
-	onSelect(id: string): void {
-		this.selectedId = this.selectedId === id
-			? null
-			: id;
 	}
 }

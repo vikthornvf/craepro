@@ -11,6 +11,7 @@ import { Aluno } from '../aluno.model';
 })
 export class AlunoListComponent extends ListViewComponent {
 
+	link = 'aluno';
 	alunos: Aluno[] = [];
 
 	constructor(
@@ -20,9 +21,5 @@ export class AlunoListComponent extends ListViewComponent {
 
 	loadList(): void {
 		this.alunos = this.service.list();
-	}
-
-	getLink(): string {
-		return 'aluno';
 	}
 }
