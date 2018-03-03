@@ -22,4 +22,8 @@ export class ProfessorListComponent extends ListViewComponent {
 	loadList(): void {
 		this.professores = this.service.list();
 	}
+
+	onDelete(): void {
+		this.service.delete(this.selectedId);
+	}
 }

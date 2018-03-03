@@ -27,7 +27,8 @@ export class NavbarService {
 	private barState$ = new BehaviorSubject<string>(this.state.NAVBAR);
 	barState = this.barState$.asObservable();
 
-	private toolbar$ = new BehaviorSubject<number>(-1);
+	private readonly normalizedTool = -1;
+	private toolbar$ = new BehaviorSubject<number>(this.normalizedTool);
 	toolbar = this.toolbar$.asObservable();
 
 	private hasAtt$ = new BehaviorSubject<boolean>(false);
@@ -56,6 +57,7 @@ export class NavbarService {
 
 	emitTool(tool: number) {
 		this.toolbar$.next(tool);
+		this.toolbar$.next(this.normalizedTool);
 	}
 
 	changeHasAtt(hasAtt: boolean) {

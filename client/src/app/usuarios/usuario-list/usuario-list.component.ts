@@ -22,4 +22,8 @@ export class UsuarioListComponent extends ListViewComponent {
 	loadList(): void {
 		this.usuarios = this.service.list();
 	}
+
+	onDelete(): void {
+		this.service.delete(this.selectedId);
+	}
 }

@@ -27,5 +27,16 @@ export class UsuarioService {
 		return this.list().find(
 			usuario => usuario._id === _id);
 	}
+
+	delete(_id: string): boolean {
+		// TODO
+		console.log('Deleted usuario id: ' + _id);
+		return true;
+	}
+
+	logout(): void {
+		// TODO
+		console.log('logout');
+	}
 }
 

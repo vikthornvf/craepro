@@ -54,4 +54,10 @@ export class AlunoService {
 	findById(_id: string): Aluno {
 		return this.list().find(a => a._id === _id);
 	}
+
+	delete(_id: string): boolean {
+		// TODO
+		console.log('Delete aluno id:' + _id);
+		return true;
+	}
 }

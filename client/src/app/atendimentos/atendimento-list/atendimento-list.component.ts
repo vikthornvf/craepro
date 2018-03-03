@@ -45,6 +45,9 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	toolbarFunctions(code: number) {
+		if (code < 0) {
+			return;
+		}
 		const tools = this.navService.tools;
 		switch (code) {
 			case tools.SELECTION: {
@@ -56,8 +59,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 				break;
 			}
 			case tools.DELETE_ATT: {
-				console.log('DELETE ATENDIMENTO');
-				// TODO
+				this.onDelete();
 				break;
 			}
 		}
@@ -118,10 +120,8 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		this.navService.changeHasAtt(!!this.atendimentoId);
 	}
 
-	onSaveAtendimento(): void {
-		// TODO
-		// if (this.atendimentoId) save
-		// else create;
-		console.log('save');
+	onDelete() {
+		// TODO open confirmation panel
+		this.service.delete(this.atendimentoId);
 	}
 }

@@ -40,4 +40,10 @@ export class ProfessorService {
 	findById(_id: string): Professor {
 		return this.list().find(p => p._id === _id);
 	}
+
+	delete(_id: string): boolean {
+		// TODO
+		console.log('Deleted professor id: ' + _id);
+		return true;
+	}
 }

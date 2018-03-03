@@ -8,7 +8,9 @@
 		<app-atendimento [atendimentoId]="selectedAtendimentoId" [selectedId]="selectedId"></app-atendimento>
 	</div>
 	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onSaveAtendimento()">Salvar</a>
-		<a class="waves-effect modal-close waves-effect waves-red btn-flat">Cancelar</a>
+		<a class="waves-effect modal-close waves-effect waves-red btn-flat"><b class="light-blue-text">Cancelar</b></a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="onSaveAtendimento()">
+			<b class="light-blue-text">Salvar</b>
+		</a>
 	</div>
 </div>

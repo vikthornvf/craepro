@@ -22,4 +22,8 @@ export class AlunoListComponent extends ListViewComponent {
 	loadList(): void {
 		this.alunos = this.service.list();
 	}
+
+	onDelete(): void {
+		this.service.delete(this.selectedId);
+	}
 }

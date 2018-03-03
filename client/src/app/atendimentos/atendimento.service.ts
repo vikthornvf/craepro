@@ -168,4 +168,10 @@ export class AtendimentoService {
 		const atendimentos = this.list();
 		return atendimentos.filter(a => a.aluno ? (a.profissional._id === professorId) : false);
 	}
+
+	delete(_id: string): boolean {
+		// TODO
+		console.log('Delete atendimento id: ' + _id);
+		return true;
+	}
 }

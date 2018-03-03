@@ -32,5 +32,11 @@ export class EscolaService {
 		return this.list().find(
 			escola => escola._id === _id);
 	}
+
+	delete(_id: string): boolean {
+		// TODO
+		console.log('Deleted escola id: ' + _id);
+		return true;
+	}
 }
 
