@@ -2,7 +2,7 @@ import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
-import { FloatingAddButtonModule } from '../shared/floating-add-button.module';
+import { AddButtonModule } from '../add-button/add-button.module';
 
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioComponent } from './usuario/usuario.component';
@@ -24,7 +24,7 @@ import { UsuarioService } from './usuario.service';
 		MaterializeSharedModule,
 		BrowserModule,
 		NavModule,
-		FloatingAddButtonModule
+		AddButtonModule
 	],
 	providers: [
 		UsuarioService

@@ -1,0 +1,19 @@
+<div
+		id="modalAtendimento"
+		class="modal modal-fixed-footer"
+		materialize="modal"
+		[materializeParams]="modalAtendimentoParams"
+		[materializeActions]="modalAtendimentoActions">
+	<div class="modal-content">
+		<h4>Excluir Registro</h4>
+		<p>Desejas realmente excluir o registro de {{ text }}.</p>
+	</div>
+	<div class="modal-footer">
+		<a class="waves-effect modal-close waves-effect btn-flat" (click)="onResponse(true)">
+			<b class="light-blue-text">Cancelar</b>
+		</a>
+		<a class="modal-action modal-close waves-effect btn-flat" (click)="onResponse(true)">
+			<b class="light-blue-text">Excluir</b>
+		</a>
+	</div>
+</div>

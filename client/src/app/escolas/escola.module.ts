@@ -2,7 +2,7 @@ import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
-import { FloatingAddButtonModule } from '../shared/floating-add-button.module';
+import { AddButtonModule } from '../add-button/add-button.module';
 
 import { EscolaListComponent } from './escola-list/escola-list.component';
 
@@ -17,7 +17,7 @@ import { EscolaService } from './escola.service';
 		MaterializeSharedModule,
 		BrowserModule,
 		NavModule,
-		FloatingAddButtonModule
+		AddButtonModule
 	],
 	providers: [EscolaService]
 })

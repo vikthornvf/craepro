@@ -6,7 +6,7 @@ import { AtendimentoListComponent } from './atendimento-list/atendimento-list.co
 import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { AtendimentoService } from './atendimento.service';
 import { AtendimentoModalComponent } from './atendimento-modal/atendimento-modal.component';
-import { CapitalizeFirstPipe } from '../shared/capitalize-first.pipe';
+import { CapitalizeFirstPipe } from './capitalize-first.pipe';
 
 @NgModule({
 	declarations: [
