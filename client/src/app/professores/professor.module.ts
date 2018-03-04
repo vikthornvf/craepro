@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
 import { AddButtonModule } from '../add-button/add-button.module';
+import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 
 import { ProfessorListComponent } from './professor-list/professor-list.component';
 
@@ -23,7 +24,8 @@ import { ProfessorService } from './professor.service';
 		FormsModule,
 		NavModule,
 		AtendimentoModule,
-		AddButtonModule
+		AddButtonModule,
+		DeleteConfirmationModule
 	],
 	providers: [ProfessorService]
 })

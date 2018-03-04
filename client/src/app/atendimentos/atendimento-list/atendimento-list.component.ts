@@ -14,6 +14,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() selectedId: string;
 	@Output() select: EventEmitter<any> = new EventEmitter();
 	@ViewChild('atendimentoModal') modal;
+	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	atendimentos: Atendimento[] = [];
 	atendimentoId: string;
@@ -59,7 +60,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 				break;
 			}
 			case tools.DELETE_ATT: {
-				this.onDelete();
+				this.onConfirmDelete();
 				break;
 			}
 		}
@@ -120,8 +121,17 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		this.navService.changeHasAtt(!!this.atendimentoId);
 	}
 
+	onDeleteSelected(confirm: boolean) {
+		if (confirm) {
+			this.onDelete();
+		}
+	}
+
+	onConfirmDelete() {
+		this.deleteConfirmModal.open();
+	}
+
 	onDelete() {
-		// TODO open confirmation panel
 		this.service.delete(this.atendimentoId);
 	}
 }

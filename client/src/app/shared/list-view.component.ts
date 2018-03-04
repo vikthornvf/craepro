@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Injectable, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable, NgZone, ViewChild } from '@angular/core';
 import { NavbarService } from '../nav/navbar/navbar.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -6,6 +6,8 @@ declare var $;
 
 @Injectable()
 export abstract class ListViewComponent implements OnInit, OnDestroy {
+
+	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	keyword: string;
 	keywordObservable: Subscription;
@@ -68,7 +70,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 				break;
 			}
 			case tools.DELETE: {
-				this.onDeleteSelected();
+				this.onConfirmDelete();
 				break;
 			}
 		}
@@ -107,9 +109,14 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		this.changeNavbar(this.navService.state.SEARCHBAR);
 	}
 
-	onDeleteSelected() {
-		// TODO open confirmation panel
-		this.onDelete(this.selectedId);
+	onDeleteSelected(confirm: boolean) {
+		if (confirm) {
+			this.onDelete(this.selectedId);
+		}
+	}
+
+	onConfirmDelete() {
+		this.deleteConfirmModal.open();
 	}
 
 	changeNavbar(state: string) {

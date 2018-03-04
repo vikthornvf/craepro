@@ -1,6 +1,7 @@
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 
 import { AtendimentoListComponent } from './atendimento-list/atendimento-list.component';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
@@ -22,7 +23,8 @@ import { CapitalizeFirstPipe } from './capitalize-first.pipe';
 	],
 	imports: [
 		BrowserModule,
-		MaterializeSharedModule],
+		MaterializeSharedModule,
+		DeleteConfirmationModule],
 	providers: [AtendimentoService]
 })
 export class AtendimentoModule { }

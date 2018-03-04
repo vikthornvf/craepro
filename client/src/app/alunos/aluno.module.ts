@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
+import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
+import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
 
-import { DirectivesModule } from '../shared/directives.module';
 import { AlunoService } from './aluno.service';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AlunoService } from './aluno.service';
 		NavModule,
 		AtendimentoModule,
 		DirectivesModule,
-		AddButtonModule
+		AddButtonModule,
+		DeleteConfirmationModule
 	],
 	providers: [AlunoService]
 })

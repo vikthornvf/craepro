@@ -52,3 +52,5 @@
 	<i class="material-icons left">add_box</i> Novo Atendimento</a>
 
 <app-atendimento-modal #atendimentoModal></app-atendimento-modal>
+
+<app-delete-confirmation #deleteConfirmModal [text]="link" (response)="onDeleteSelected($event)"></app-delete-confirmation>

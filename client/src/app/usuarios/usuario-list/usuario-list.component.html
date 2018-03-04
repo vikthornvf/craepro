@@ -25,3 +25,5 @@
 	</li>
 </ul>
 <app-floating-add-button [link]="link" [color]="'amber'"></app-floating-add-button>
+
+<app-delete-confirmation #deleteConfirmModal [text]="link" (response)="onDeleteSelected($event)"></app-delete-confirmation>
