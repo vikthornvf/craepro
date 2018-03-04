@@ -1,18 +1,19 @@
 <div
-		id="modalAtendimento"
-		class="modal modal-fixed-footer"
+		id="modalDeleteConfirmation"
+		class="modal"
 		materialize="modal"
-		[materializeParams]="modalAtendimentoParams"
-		[materializeActions]="modalAtendimentoActions">
+		[materializeActions]="modalActions"
+		[materializeParams]="modalParams">
 	<div class="modal-content">
-		<h4>Excluir Registro</h4>
-		<p>Desejas realmente excluir o registro de {{ text }}.</p>
+		<h4 class="red-text">Excluir Registro</h4>
+		<p>Quando um registro é excluido permanentemente, não será mais possível acessá-lo.<br>
+			Desejas realmente excluir o registro de {{ text }} selecionado?</p>
 	</div>
 	<div class="modal-footer">
-		<a class="waves-effect modal-close waves-effect btn-flat" (click)="onResponse(true)">
+		<a class="waves-effect modal-close waves-effect btn-flat" (click)="res = false">
 			<b class="light-blue-text">Cancelar</b>
 		</a>
-		<a class="modal-action modal-close waves-effect btn-flat" (click)="onResponse(true)">
+		<a class="modal-action modal-close waves-effect btn-flat" (click)="res = true">
 			<b class="light-blue-text">Excluir</b>
 		</a>
 	</div>

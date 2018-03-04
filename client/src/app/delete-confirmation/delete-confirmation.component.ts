@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'app-delete-confirmation',
@@ -7,4 +8,17 @@ import { Component, Input } from '@angular/core';
 export class DeleteConfirmationComponent {
 
 	@Input() text;
+	@Output() response: EventEmitter<boolean> = new EventEmitter<false>();
+
+	modalActions = new EventEmitter<string|MaterializeAction>();
+	modalParams = [{ complete: () => this.onModalClose() }];
+	res = false;
+
+	open() {
+		this.modalActions.emit({ action: 'modal', params: ['open'] });
+	}
+
+	onModalClose() {
+		this.response.emit(this.res);
+	}
 }
