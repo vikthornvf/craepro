@@ -35,7 +35,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnDestroy(): void {
-		this.navService.changeHasAtt(false);
+		this.navService.hasAtt.emit(false);
 		this.toolbarObservable.unsubscribe();
 	}
 
@@ -118,7 +118,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		} else {
 			this.atendimentoId = null;
 		}
-		this.navService.changeHasAtt(!!this.atendimentoId);
+		this.navService.hasAtt.emit(!!this.atendimentoId);
 	}
 
 	onDeleteSelected(confirm: boolean) {

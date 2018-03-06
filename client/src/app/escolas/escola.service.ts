@@ -8,28 +8,27 @@ export class EscolaService {
 
 	readonly url = 'api/escolas';
 	headers: Headers;
-	http: Http;
 
-	constructor(http: Http) {
+	private escolas: Escola[] = [
+		{ _id: '1', nome: 'Escolinha', qtdAlunos: 4 },
+		{ _id: '2', nome: 'A Escola', qtdAlunos: 5 },
+		{ _id: '3', nome: 'Colégio', qtdAlunos: 2 },
+		{ _id: '4', nome: 'Educanddo', qtdAlunos: 1 },
+		{ _id: '5', nome: 'Óia o Estudo', qtdAlunos: 3 },
+		{ _id: '6', nome: 'Vamstudá', qtdAlunos: 6 }
+	];
 
-		this.http = http;
+	constructor(private http: Http) {
 		this.headers = new Headers();
 		this.headers.append('Content-type', 'application/json');
 	}
 
 	list(): Escola[] {
-		return [
-			{ _id: '1', nome: 'Escolinha', qtdAlunos: 4 },
-			{ _id: '2', nome: 'A Escola', qtdAlunos: 5 },
-			{ _id: '3', nome: 'Colégio', qtdAlunos: 2 },
-			{ _id: '4', nome: 'Educanddo', qtdAlunos: 1 },
-			{ _id: '5', nome: 'Óia o Estudo', qtdAlunos: 3 },
-			{ _id: '6', nome: 'Vamstudá', qtdAlunos: 6 }
-		];
+		return this.escolas.slice();
 	}
 
 	findById(_id: string): Escola {
-		return this.list().find(
+		return this.escolas.find(
 			escola => escola._id === _id);
 	}
 

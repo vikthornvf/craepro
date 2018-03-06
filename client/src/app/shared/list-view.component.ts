@@ -60,9 +60,6 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 	}
 
 	toolbarFunctions(code: number) {
-		if (code < 0) {
-			return;
-		}
 		const tools = this.navService.tools;
 		switch (code) {
 			case tools.SELECTION: {

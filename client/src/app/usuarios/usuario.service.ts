@@ -8,23 +8,25 @@ export class UsuarioService {
 	readonly url = 'api/usuarios';
 	headers: Headers;
 
+	private usuarios: Usuario[] = [
+		new Usuario('1', 'abel', 'Escolinha', 'abel@email.com'),
+		new Usuario('2', 'cris', 'CRAE', 'cris@email.com'),
+		new Usuario('3', 'dudu', 'Colégio', 'dudu@email.com'),
+		new Usuario('4', 'luca', 'Óia o Estudo', 'luca@email.com'),
+		new Usuario('5', 'zelda', 'Vamstudá', 'zelda@email.com'),
+	];
+
 	constructor() {
 		this.headers = new Headers();
 		this.headers.append('Content-type', 'application/json');
 	}
 
 	list(): Usuario[] {
-		return [
-			new Usuario('1', 'abel', 'Escolinha', 'abel@email.com'),
-			new Usuario('2', 'cris', 'CRAE', 'cris@email.com'),
-			new Usuario('3', 'dudu', 'Colégio', 'dudu@email.com'),
-			new Usuario('4', 'luca', 'Óia o Estudo', 'luca@email.com'),
-			new Usuario('5', 'zelda', 'Vamstudá', 'zelda@email.com'),
-		];
+		return this.usuarios.slice();
 	}
 
 	findById(_id: string): Usuario {
-		return this.list().find(
+		return this.usuarios.find(
 			usuario => usuario._id === _id);
 	}
 

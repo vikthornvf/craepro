@@ -31,6 +31,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 	}
 
 	onEmitTool(tool: number) {
-		this.navService.emitTool(tool);
+		this.navService.toolbar.emit(tool);
 	}
 }
