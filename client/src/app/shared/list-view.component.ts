@@ -44,8 +44,6 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	abstract loadList(): void;
 
-	abstract onDelete(id: string): void;
-
 	ngOnInit(): void {
 		this.loadList();
 		this.navService.changeState(this.navService.state.SEARCHBAR);
@@ -66,10 +64,6 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 				this.clearSelection();
 				break;
 			}
-			case tools.DELETE: {
-				this.onConfirmDelete();
-				break;
-			}
 		}
 	}
 
@@ -78,7 +72,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 			this.selectedId = null;
 			this.onClose();
 		} else {
-			this.selectedId = id;
+			this.onSelect(id);
 			this.onOpen();
 		}
 	}
@@ -104,16 +98,6 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 	onClose() {
 		this.selected = false;
 		this.changeNavbar(this.navService.state.SEARCHBAR);
-	}
-
-	onDeleteSelected(confirm: boolean) {
-		if (confirm) {
-			this.onDelete(this.selectedId);
-		}
-	}
-
-	onConfirmDelete() {
-		this.deleteConfirmModal.open();
 	}
 
 	changeNavbar(state: string) {

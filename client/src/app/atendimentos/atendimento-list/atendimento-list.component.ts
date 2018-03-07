@@ -35,7 +35,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnDestroy(): void {
-		this.navService.hasAtt.emit(false);
+		this.navService.hasAtt.next(false);
 		this.toolbarObservable.unsubscribe();
 	}
 
@@ -118,7 +118,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		} else {
 			this.atendimentoId = null;
 		}
-		this.navService.hasAtt.emit(!!this.atendimentoId);
+		this.navService.hasAtt.next(!!this.atendimentoId);
 	}
 
 	onDeleteSelected(confirm: boolean) {
@@ -133,5 +133,6 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	onDelete() {
 		this.service.delete(this.atendimentoId);
+		this.atendimentos = this.atendimentos.filter(a => a._id !== this.atendimentoId);
 	}
 }

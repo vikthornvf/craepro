@@ -22,8 +22,4 @@ export class EscolaListComponent extends ListViewComponent {
 	loadList(): void {
 		this.escolas = this.service.list();
 	}
-
-	onDelete(): void {
-		this.service.delete(this.selectedId);
-	}
 }

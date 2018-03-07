@@ -1,7 +1,8 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class NavbarService {
@@ -15,10 +16,8 @@ export class NavbarService {
 	readonly tools = {
 		SELECTION: 0,
 		EDIT: 1,
-		DELETE: 2,
-		ADD_ATT: 3,
-		EDIT_ATT: 4,
-		DELETE_ATT: 5
+		EDIT_ATT: 2,
+		DELETE_ATT: 3
 	};
 
 	private keyword$ = new BehaviorSubject<string>('');
@@ -28,11 +27,9 @@ export class NavbarService {
 	barState = this.barState$.asObservable();
 
 	// control the toolbar functions
-	toolbar = new EventEmitter<number>();
-	hasAtt = new EventEmitter<boolean>();
-
+	toolbar = new Subject<number>();
+	hasAtt = new Subject<boolean>();
 	private link$ = new BehaviorSubject<string[]>([]);
-	link = this.link$.asObservable();
 
 	constructor(private _location: Location) {}
 
@@ -54,5 +51,9 @@ export class NavbarService {
 
 	changeLink(link: string[]) {
 		this.link$.next(link);
+	}
+
+	linkObservable(): Observable<string[]> {
+		return this.link$.asObservable();
 	}
 }

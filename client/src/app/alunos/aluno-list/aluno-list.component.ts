@@ -4,6 +4,8 @@ import { NavbarService } from '../../nav/navbar/navbar.service';
 import { AlunoService } from '../aluno.service';
 import { Aluno } from '../aluno.model';
 
+declare var $;
+
 @Component({
 	selector: 'app-aluno-list',
 	templateUrl: './aluno-list.component.html',
@@ -21,9 +23,5 @@ export class AlunoListComponent extends ListViewComponent {
 
 	loadList(): void {
 		this.alunos = this.service.list();
-	}
-
-	onDelete(): void {
-		this.service.delete(this.selectedId);
 	}
 }

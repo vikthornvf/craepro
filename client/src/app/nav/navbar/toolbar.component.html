@@ -17,15 +17,6 @@
 			data-tooltip="Alterar Dados">
 		<a [routerLink]="link"><i class="material-icons">mode_edit</i></a>
 	</li>
-	<li
-			class="tooltipped"
-			materialize="tooltip"
-			data-position="bottom"
-			data-ldelay="50"
-			data-tooltip="Apagar Registro"
-			(click)="onEmitTool(tool.DELETE)">
-		<a><i class="material-icons">delete</i></a>
-	</li>
 	<span class="break-line-on-small" *ngIf="hasAtt">
 		<li
 				class="tooltipped fade-in-effect spacing-left"
@@ -41,7 +32,7 @@
 				materialize="tooltip"
 				data-position="bottom"
 				data-ldelay="50"
-				data-tooltip="Excluir Atendimento"
+				data-tooltip="Remover Atendimento"
 				(click)="onEmitTool(tool.DELETE_ATT)">
 			<a><i class="material-icons">event_busy</i></a>
 		</li>

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarService } from './navbar.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'app-toolbar',
@@ -10,27 +11,30 @@ import { Subscription } from 'rxjs/Subscription';
 export class ToolbarComponent implements OnInit, OnDestroy {
 
 	hasAtt = false;
-	hasAttObservable: Subscription;
+	hasAttSubscription: Subscription;
 
 	link: string[];
-	linkObservable: Subscription;
+	linkSubscription: Subscription;
+	link$: Observable<string[]>;
 
 	tool = this.navService.tools;
 
 	constructor(private navService: NavbarService) {}
 
 	ngOnInit(): void {
+		this.hasAttSubscription = this.navService.hasAtt.subscribe(hasAtt => this.hasAtt = hasAtt);
+
 		const path = this.navService.path();
-		this.hasAttObservable = this.navService.hasAtt.subscribe(hasAtt => this.hasAtt = hasAtt);
-		this.linkObservable = this.navService.link.subscribe(link => this.link = [path].concat(link));
+		this.link$ = this.navService.linkObservable();
+		this.linkSubscription = this.link$.subscribe(link => this.link = [path].concat(link));
 	}
 
 	ngOnDestroy(): void {
-		this.hasAttObservable.unsubscribe();
-		this.linkObservable.unsubscribe();
+		this.hasAttSubscription.unsubscribe();
+		this.linkSubscription.unsubscribe();
 	}
 
 	onEmitTool(tool: number) {
-		this.navService.toolbar.emit(tool);
+		this.navService.toolbar.next(tool);
 	}
 }

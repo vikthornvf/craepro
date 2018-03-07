@@ -55,7 +55,7 @@ export class AlunoService {
 	}
 
 	delete(_id: string): boolean {
-		// TODO
+		this.alunos = this.alunos.filter(e => e._id !== _id);
 		console.log('Delete aluno id:' + _id);
 		return true;
 	}
