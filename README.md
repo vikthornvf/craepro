@@ -1,2 +1,2 @@
 # craepro
-Crae Pro project for business services automation of CRAE school.
+Crae Pro project is being developed for business services automation of [CRAE](https://crae.pro/) school.
