@@ -13,7 +13,7 @@ import { EscolaService } from './escola.service';
 	declarations: [
 		EscolaListComponent
 	],
-	exports: [EscolaListComponent],
+	exports: [],
 	imports: [
 		MaterializeSharedModule,
 		BrowserModule,

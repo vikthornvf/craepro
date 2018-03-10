@@ -1,6 +1,6 @@
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
@@ -12,20 +12,19 @@ import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
 
 import { AlunoService } from './aluno.service';
+import { ResponsavelComponent } from './aluno/responsavel.component';
 
 @NgModule({
 	declarations: [
 		AlunoListComponent,
-		AlunoComponent
+		AlunoComponent,
+		ResponsavelComponent
 	],
-	exports: [
-		AlunoListComponent,
-		AlunoComponent
-	],
+	exports: [],
 	imports: [
 		MaterializeSharedModule,
 		BrowserModule,
-		FormsModule,
+		ReactiveFormsModule,
 		NavModule,
 		AtendimentoModule,
 		DirectivesModule,

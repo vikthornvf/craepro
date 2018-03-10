@@ -16,11 +16,7 @@ import { UsuarioService } from './usuario.service';
 		UsuarioComponent,
 		UsuarioSenhaComponent
 	],
-	exports: [
-		UsuarioListComponent,
-		UsuarioComponent,
-		UsuarioSenhaComponent
-	],
+	exports: [],
 	imports: [
 		MaterializeSharedModule,
 		BrowserModule,

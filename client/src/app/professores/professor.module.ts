@@ -1,6 +1,6 @@
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
@@ -15,13 +15,11 @@ import { ProfessorService } from './professor.service';
 	declarations: [
 		ProfessorListComponent
 	],
-	exports: [
-		ProfessorListComponent
-	],
+	exports: [],
 	imports: [
 		MaterializeSharedModule,
 		BrowserModule,
-		FormsModule,
+		ReactiveFormsModule,
 		NavModule,
 		AtendimentoModule,
 		AddButtonModule,
