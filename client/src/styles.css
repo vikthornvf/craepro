@@ -55,17 +55,11 @@ tr.active {
 	background-color: #f5f5f5;
 }
 
-.input-field .postfix ~ input { width: 80%; width:calc(100% - 3rem);  margin-left:0px; margin-right: 3rem!important; }
+.input-field .postfix ~ input { width: 80%; width:calc(100% - 40px); margin-left:0px; margin-right: 40px !important; }
 .input-field .postfix {
     position: absolute;
-    width: 3rem;
+    width: 40px;
     right: 0px;
-    font-size: 2rem;
-    -webkit-transition: color .2s;
-    transition: color .2s;
-}
-.input-field .postfix.active {
-    color: #26a69a;
 }
 
 .collapsible {
@@ -108,55 +102,20 @@ tr.active {
 					box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
 }
 
-.btn-add {
-	margin-top: 5px;
+.btn-floating.simple {
 	background-color: transparent;
-}
-
-.label-add {
 	color: grey !important;
-	transition: all .25s;
-	transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-webkit-transform: rotate(0deg);
+	-webkit-box-shadow: none;
+					box-shadow: none;
 }
-.label-add:hover {
-	color: white !important;
-	transition: all .25s;
-	transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-webkit-transform: rotate(90deg);
-}
-
-.btn-custom {
-	border: none;
-	display: inline-block;
-  width: 40px;
-  height: 40px;
-  max-width: 40px;
-  max-height: 40px;
-  line-height: 40px;
-  padding: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  vertical-align: middle;
-	background-color: transparent;
-}
-.btn-custom:active {
+.btn-floating.simple:active {
 	background-color: #eeeeee;
 }
-.btn-custom:focus {
+.btn-floating.simple:focus {
 	background-color: #eeeeee;
 }
-.btn-custom:disabled {
-	cursor: not-allowed;
-}
-.btn-custom:disabled:active {
-	background-color: transparent;
+button.simple > i.material-icons {
+	color: #9e9e9e !important;
 }
 
 .flex-container {
