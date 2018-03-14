@@ -174,6 +174,10 @@ export class AtendimentoService {
 			: false);
 	}
 
+	findById(_id: string): Atendimento {
+		return this.atendimentos.find(a => a._id === _id);
+	}
+
 	delete(_id: string): boolean {
 		// TODO
 		console.log('Delete atendimento id: ' + _id);
