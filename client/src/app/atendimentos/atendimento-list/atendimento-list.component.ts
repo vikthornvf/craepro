@@ -123,16 +123,13 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	onDeleteSelected(confirm: boolean) {
 		if (confirm) {
-			this.onDelete();
+			this.service.delete(this.atendimentoId);
+			this.atendimentos = this.atendimentos.filter(a => a._id !== this.atendimentoId);
+			this.onSelect(null);
 		}
 	}
 
 	onConfirmDelete() {
 		this.deleteConfirmModal.open();
-	}
-
-	onDelete() {
-		this.service.delete(this.atendimentoId);
-		this.atendimentos = this.atendimentos.filter(a => a._id !== this.atendimentoId);
 	}
 }

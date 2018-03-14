@@ -7,13 +7,13 @@ export class Enums {
 	];
 
 	static readonly Dias = [
-		{ value: 'Dom', name: 'Domingo' },
-		{ value: 'Seg', name: 'Segunda' },
-		{ value: 'Ter', name: 'Terça' },
-		{ value: 'Qua', name: 'Quarta' },
-		{ value: 'Qui', name: 'Quinta' },
-		{ value: 'Sex', name: 'Sexta' },
-		{ value: 'Sab', name: 'Sábado' }
+		{ value: 0, name: 'Domingo', short: 'Dom' },
+		{ value: 1, name: 'Segunda', short: 'Seg' },
+		{ value: 2, name: 'Terça', short: 'Ter' },
+		{ value: 3, name: 'Quarta', short: 'Qua' },
+		{ value: 4, name: 'Quinta', short: 'Qui' },
+		{ value: 5, name: 'Sexta', short: 'Sex' },
+		{ value: 6, name: 'Sábado', short: 'Sab' }
 	];
 
 	static readonly Series = [

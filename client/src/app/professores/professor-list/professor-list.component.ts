@@ -15,15 +15,11 @@ export class ProfessorListComponent extends ListViewComponent {
 	professores: Professor[] = [];
 
 	constructor(
-		zone: NgZone,
-		navService: NavbarService,
-		private service: ProfessorService) { super(zone, navService); }
+		z: NgZone,
+		ns: NavbarService,
+		private service: ProfessorService) { super(z, ns); }
 
 	loadList(): void {
 		this.professores = this.service.list();
-	}
-
-	onDelete(): void {
-		this.service.delete(this.selectedId);
 	}
 }

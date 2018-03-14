@@ -15,9 +15,9 @@ export class EscolaListComponent extends ListViewComponent {
 	escolas: Escola[] = [];
 
 	constructor(
-		zone: NgZone,
-		navService: NavbarService,
-		private service: EscolaService) { super(zone, navService); }
+		z: NgZone,
+		ns: NavbarService,
+		private service: EscolaService) { super(z, ns); }
 
 	loadList(): void {
 		this.escolas = this.service.list();

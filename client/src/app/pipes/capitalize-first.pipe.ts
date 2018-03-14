@@ -19,5 +19,5 @@ export class CapitalizeFirstPipe implements PipeTransform {
 			return 'Not assigned';
 		}
 		return value.charAt(0).toUpperCase() + value.slice(1);
-}
+	}
 }

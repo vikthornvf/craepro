@@ -9,10 +9,7 @@ export class SeriePipe implements PipeTransform {
 		if (value === null) {
 			return '';
 		}
-		const serie = Enums.Series.find(s => {
-			console.log(value);
-			return s.value === value
-		});
+		const serie = Enums.Series.find(s => s.value === value);
 		return serie ? serie.name : '';
 	}
 }

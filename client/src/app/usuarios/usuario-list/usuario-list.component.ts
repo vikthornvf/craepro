@@ -15,15 +15,11 @@ export class UsuarioListComponent extends ListViewComponent {
 	usuarios: Usuario[] = [];
 
 	constructor(
-		zone: NgZone,
-		navService: NavbarService,
-		private service: UsuarioService) { super(zone, navService); }
+		z: NgZone,
+		ns: NavbarService,
+		private service: UsuarioService) { super(z, ns); }
 
 	loadList(): void {
 		this.usuarios = this.service.list();
-	}
-
-	onDelete(): void {
-		this.service.delete(this.selectedId);
 	}
 }

@@ -4,8 +4,6 @@ import { NavbarService } from '../../nav/navbar/navbar.service';
 import { AlunoService } from '../aluno.service';
 import { Aluno } from '../aluno.model';
 
-declare var $;
-
 @Component({
 	selector: 'app-aluno-list',
 	templateUrl: './aluno-list.component.html',
@@ -17,9 +15,9 @@ export class AlunoListComponent extends ListViewComponent {
 	alunos: Aluno[] = [];
 
 	constructor(
-		zone: NgZone,
-		navService: NavbarService,
-		private service: AlunoService) { super(zone, navService); }
+		z: NgZone,
+		ns: NavbarService,
+		private service: AlunoService) { super(z, ns); }
 
 	loadList(): void {
 		this.alunos = this.service.list();
