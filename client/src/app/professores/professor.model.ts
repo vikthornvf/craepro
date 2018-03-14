@@ -5,16 +5,7 @@ export class Professor {
 		public atendimentoTipos?: string[]) {}
 
 	get atendimentoTiposFormatted() {
-		let str = '';
-		if (this.atendimentoTipos.length) {
-			this.atendimentoTipos.forEach((atendimentoTipo, i) => {
-				if (i === 0) {
-					str = atendimentoTipo;
-					return;
-				}
-				str += ` - ${atendimentoTipo}`;
-			});
-		}
-		return str;
+		return this.atendimentoTipos.toString()
+			.replace(',', ', ');
 	}
 }
