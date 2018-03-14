@@ -6,6 +6,16 @@ export class Enums {
 		{ value: 'F', name: 'Fonoaudiológico' }
 	];
 
+	static readonly Dias = [
+		{ value: 'Dom', name: 'Domingo' },
+		{ value: 'Seg', name: 'Segunda' },
+		{ value: 'Ter', name: 'Terça' },
+		{ value: 'Qua', name: 'Quarta' },
+		{ value: 'Qui', name: 'Quinta' },
+		{ value: 'Sex', name: 'Sexta' },
+		{ value: 'Sab', name: 'Sábado' }
+	];
+
 	static readonly Series = [
 		{ value: 'E3', name: '3º ano' },
 		{ value: 'E2', name: '2º ano' },
