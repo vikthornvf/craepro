@@ -7,6 +7,7 @@ import { AtendimentoModule } from '../atendimentos/atendimento.module';
 import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
 import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
@@ -29,7 +30,8 @@ import { ResponsavelComponent } from './aluno/responsavel.component';
 		AtendimentoModule,
 		DirectivesModule,
 		AddButtonModule,
-		DeleteConfirmationModule
+		DeleteConfirmationModule,
+		PipesModule
 	],
 	providers: [AlunoService]
 })

@@ -6,7 +6,7 @@
 		<label class="disabled"></label>
 		<div class="flex nome"><b class="truncate">Nome (Status)</b></div>
 		<div class="flex escola"><b class="truncate">Escola</b></div>
-		<div class="flex serie-turno"><b class="truncate">Série (Turno)</b></div>
+		<div class="flex serie-turno"><b class="truncate">Série</b></div>
 	</div>
 	<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
 
@@ -24,12 +24,17 @@
 					materialize="tooltip"
 					data-position="left"
 					data-ldelay="50"
-					[attr.data-tooltip]="aluno.statusFormatted"
+					[attr.data-tooltip]="aluno.status | statusPipe"
 					[ngClass]="aluno.status.toLowerCase()">more</i>
 				</span>
 			</div>
 			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
-			<div class="flex serie-turno truncate">{{ aluno.serieTurno }}</div>
+			<div
+					class="flex serie-turno truncate tooltipped"
+					materialize="tooltip"
+					data-position="left"
+					data-ldelay="50"
+					[attr.data-tooltip]="aluno.turno | turnoPipe">{{ aluno.serie | seriePipe }}</div>
 		</div>
 
 		<div class="collapsible-body">

@@ -26,15 +26,14 @@ export class AlunoService {
 	headers: Headers;
 
 	private alunos: Aluno[] = [
-		new Aluno('1', 'Adão', 'D', '9', 'Tarde', this.serviceEscola.findById('1')),
-		new Aluno('2', 'Rosângela', 'P', '9', 'Manha', this.serviceEscola.findById('2')),
-		new Aluno('3', 'Allan', 'A', '6', 'Manha', this.serviceEscola.findById('3')),
-		new Aluno('4', 'Yuri', 'A', '5', 'Noite', this.serviceEscola.findById('6')),
-		new Aluno('5', 'Thiagus', 'A', '4', 'Tarde', this.serviceEscola.findById('3')),
-		new Aluno('6', 'Vikthor', 'A', '2', 'Tarde', this.serviceEscola.findById('4')),
-		new Aluno('7', 'Deisi', 'A', '2', 'Tarde', this.serviceEscola.findById('5')),
-		new Aluno('8', 'Isaac', 'E', '1', 'Manha', this.serviceEscola.findById('6')),
-		new Aluno('9', 'Ícaro', 'E', '1', 'Manha', this.serviceEscola.findById('2'))
+		new Aluno('1', 'Adão', 'D', 'E3', 'T', this.serviceEscola.findById('1')),
+		new Aluno('2', 'Rosângela', 'P', 'E1', 'M', this.serviceEscola.findById('2')),
+		new Aluno('3', 'Allan', 'A', 'F9', 'M', this.serviceEscola.findById('3')),
+		new Aluno('4', 'Yuri', 'A', 'F8', 'N', this.serviceEscola.findById('6')),
+		new Aluno('5', 'Thiagus', 'A', 'F7', 'T', this.serviceEscola.findById('3')),
+		new Aluno('6', 'Vikthor', 'A', 'F5', 'T', this.serviceEscola.findById('4')),
+		new Aluno('7', 'Isaac', 'E', 'F2', 'M', this.serviceEscola.findById('6')),
+		new Aluno('8', 'Ícaro', 'E', 'PB', 'M', this.serviceEscola.findById('2'))
 	];
 
 	constructor(private http: Http, private serviceEscola: EscolaService) {

@@ -28,7 +28,7 @@
 				<label for="atendimento._id" style="color: black !important">{{ atendimento[property].nome }}</label>
 			</td>
 			<td>{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ atendimento.tipo }}</td>
+			<td>{{ atendimento.tipo | atendimentoPipe }}</td>
 			<td>{{ atendimento.status }}</td>
 			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
 			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
@@ -46,11 +46,11 @@
 </ng-template>
 
 <a
-		class="waves-effect waves-light btn btn-large teal lighten-2"
+		class="waves-effect waves-light btn teal lighten-2"
 		style="margin: 15px 0 15px 0;"
 		(click)="atendimentoModal.open(selectedId)">
 	<i class="material-icons left">add_box</i> Novo Atendimento</a>
 
 <app-atendimento-modal #atendimentoModal></app-atendimento-modal>
 
-<app-delete-confirmation #deleteConfirmModal [text]="'atendimento'" (response)="onDeleteSelected($event)"></app-delete-confirmation>
+<app-delete-confirmation #deleteConfirmModal text="atendimento selecionado" (response)="onDeleteSelected($event)"></app-delete-confirmation>

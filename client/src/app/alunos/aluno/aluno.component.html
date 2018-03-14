@@ -1,70 +1,84 @@
-<form materialize>
+<form materialize [formGroup]="form" (ngSubmit)="onSave()">
 	<div class="row">
-		<h4 *ngIf="!edit; else editNome">{{ aluno.nome }}
-			<button
-				class="btn-custom grey-text tooltipped"
-				style="margin-bottom: 12px"
-				materialize="tooltip"
-				data-position="top"
-				data-ldelay="50"
-				data-tooltip="Alterar o nome"
-				(click)="toggleEdit()"><i class="material-icons">edit</i></button>
-		</h4>
-		<ng-template #editNome>
+		<h3 class="col s12 light fade-in-effect" *ngIf="!editNome; else editNomeTemplate">{{ this.form.get('nome').value }}<button
+			class="btn-floating simple tooltipped"
+			style="margin-bottom:12px"
+			materialize="tooltip"
+			data-position="top"
+			data-ldelay="50"
+			data-tooltip="Alterar o nome"
+			(click)="toggleEditNome()"><i class="material-icons">edit</i></button>
+		</h3>
+		<ng-template #editNomeTemplate>
 			<div class="input-field col s12" [ngClass]="{ 'slide-in-effect': edit }">
-				<button class="btn-custom postfix" [disabled]="!aluno.nome" (click)="toggleEdit()">
-					<i class="material-icons grey-text">close</i>
+				<button class="btn-floating simple postfix" [disabled]="!form.get('nome').valid" (click)="toggleEditNome()">
+					<i class="material-icons">done</i>
 				</button>
 				<input
 					id="nome"
-					name="nome"
-					class="validate"
+					formControlName="nome"
 					autocomplete="false"
+					[ngClass]="{ 'invalid': !form.get('nome').valid && form.get('nome').touched }"
 					[focus]="this.edit"
-					(keyup)="onEdtitName($event.key)"
-					[(ngModel)]="aluno.nome">
+					(keyup)="onEdtitNome($event.key)">
 				<label class="active" for="nome">Nome</label>
 			</div>
 		</ng-template>
 	</div>
+
 	<div class="row">
 		<div class="input-field col m6 s12">
 			<select
-				id="selectEscola"
-				name="escola"
-				materialize="material_select"
-				[materializeSelectOptions]="escolas"
-				[(ngModel)]="this.aluno.escola._id">
+					id="selectEscola"
+					formControlName="escola"
+					materialize="material_select"
+					[ngClass]="{ 'invalid': !form.get('escola').valid && form.get('nome').touched }">
 				<option value="" disabled selected>Selecione a Escola</option>
 				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
 			</select>
 			<label>Escola<span *ngIf="aluno.nome"> de {{ aluno.nome }}</span></label>
 		</div>
+
 		<div class="input-field col m3 s6">
 			<select
-				id="selectSerie"
-				name="serie"
-				materialize="material_select"
-				[materializeSelectOptions]="series"
-				[(ngModel)]="this.aluno.serie">
+					id="selectSerie"
+					formControlName="serie"
+					materialize="material_select"
+					[ngClass]="{ 'invalid': !form.get('serie').valid && form.get('nome').touched }">
 				<option value="" disabled selected>Selecione a Serie</option>
-				<option *ngFor="let serie of series" [value]="serie">{{ serie }}</option>
+				<option *ngFor="let serie of series" [value]="serie.value">{{ serie.name }}</option>
 			</select>
-			<label>Serie<span *ngIf="aluno.nome"> de {{ aluno.nome }}</span></label>
+			<label for="selectSerie">Serie<span *ngIf="aluno.nome"> de {{ aluno.nome }}</span></label>
 		</div>
+
 		<div class="input-field col m3 s6">
 			<select
-				id="selectTurno"
-				name="turno"
-				materialize="material_select"
-				[materializeSelectOptions]="turnos"
-				[(ngModel)]="this.aluno.serie">
+					id="selectTurno"
+					formControlName="turno"
+					materialize="material_select"
+					[ngClass]="{ 'invalid': !form.get('turno').valid && form.get('nome').touched }"
+					(click)="wasTouched('turno')">
 				<option value="" disabled selected>Selecione o Turno</option>
-				<option *ngFor="let turno of turnos" [value]="turno">{{ turno }}</option>
+				<option *ngFor="let turno of turnos" [value]="turno.value">{{ turno.name }}</option>
 			</select>
 			<label>Turno</label>
 		</div>
 	</div>
-	<!-- <p>{{ 'Initial value: ' + aluno.escola.nome }}</p> -->
-	<a class="waves-effect waves-light btn-large" (click)="print(aluno)">print aluno</a>
+
+	<button
+			type="submit"
+			class="btn waves-effect waves-light teal lighten-2"
+			style="margin: 15px 15px 15px 0;"
+			[disabled]="form.invalid || !form.dirty">
+		<i class="material-icons left">save</i>Salvar Alterações</button>
+
+	<a
+			*ngIf="true"
+			class="btn waves-effect waves-light red"
+			style="margin: 15px 0 15px 0;"
+			[ngClass]="{ 'hide': !aluno._id }"
+			(click)="onConfirmDelete()">
+		<i class="material-icons left">delete</i>Excluir Aluno</a>
 </form>
+
+<app-delete-confirmation #deleteConfirmModal [text]="aluno.nome" (response)="onDelete($event)"></app-delete-confirmation>
