@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { Atendimento } from '../atendimento.model';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, OnInit, Input } from '@angular/core';
 import { AtendimentoService } from '../atendimento.service';
-import { AlunoService } from '../../alunos/aluno.service';
 import { ProfessorService } from '../../professores/professor.service';
+import { AlunoService } from '../../alunos/aluno.service';
+import { Atendimento } from '../atendimento.model';
+import { Professor } from '../../professores/professor.model';
+import { Aluno } from '../../alunos/aluno.model';
 
 @Component({
 	selector: 'app-atendimento',
@@ -11,11 +12,22 @@ import { ProfessorService } from '../../professores/professor.service';
 })
 export class AtendimentoComponent implements OnInit {
 
-	@Input() atendimentoId: string;
+	@Input() create = false;
+	@Input() showAluno = true;
 	@Input() selectedId: string;
-	@Input() isFromAluno = true;
-	atendimento: Atendimento;
-	professores: string[];
+	@Input() atendimento: Atendimento;
+
+	professor: Professor;
+	aluno: Aluno;
+
+	datepickerParams = [{
+		monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+		weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+		format: 'dd/mm/yyyy',
+		today: 'Hoje',
+		clear: 'Limpar',
+		close: 'Ok',
+	}];
 
 	constructor(
 		private service: AtendimentoService,
@@ -23,24 +35,22 @@ export class AtendimentoComponent implements OnInit {
 		private alunoService: AlunoService) {}
 
 	ngOnInit(): void {
-		this.loadAtendimento();
-		if (this.isFromAluno) {
-			this.loadProfessor();
-			return;
+		if (this.create) {
+			this.atendimento = null;
+			this.loadParent();
 		}
-		this.loadAluno();
+		// if (this.create) {
+		// 	this.loadProfessores();
+		// 	return;
+		// }
 	}
 
-	loadAtendimento() {
-		this.atendimento = this.service.findById(this.atendimentoId);
-	}
-
-	loadAluno() {
-		// TODO
-	}
-
-	loadProfessor() {
-		// TODO
+	loadParent(): void {
+		if (this.showAluno) {
+			this.aluno = this.alunoService.findById(this.selectedId);
+		} else {
+			this.professor = this.professorService.findById(this.selectedId);
+		}
 	}
 
 	loadProfessores() {
@@ -50,5 +60,11 @@ export class AtendimentoComponent implements OnInit {
 
 	onSave() {
 		// TODO
+		console.log('Save ' + this.atendimento._id);
+	}
+
+	onDelete() {
+		// TODO
+		console.log('Delete ' + this.atendimento._id);
 	}
 }

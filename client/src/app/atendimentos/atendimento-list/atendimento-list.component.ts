@@ -17,8 +17,9 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	atendimentos: Atendimento[] = [];
-	atendimentoId: string;
+	atendimentoSelected: Atendimento;
 	isAtendimentosLoaded = false;
+	showAluno: boolean;
 
 	toolbarObservable: Subscription;
 
@@ -31,6 +32,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		private service: AtendimentoService) {}
 
 	ngOnInit(): void {
+		this.showAluno = this.property === 'profissional';
 		this.toolbarObservable = this.navService.toolbar.subscribe(code => this.toolbarFunctions(code));
 	}
 
@@ -52,11 +54,11 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		const tools = this.navService.tools;
 		switch (code) {
 			case tools.SELECTION: {
-				this.atendimentoId = null;
+				this.atendimentoSelected = null;
 				break;
 			}
 			case tools.EDIT_ATT: {
-				this.modal.open(this.selectedId, this.atendimentoId);
+				this.modal.open(this.atendimentoSelected);
 				break;
 			}
 			case tools.DELETE_ATT: {
@@ -88,43 +90,43 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		}, 500);
 	}
 
-	onClick(id: string): void {
+	onClick(atendimento: Atendimento): void {
 		this.preventSimpleClick = false;
 		this.timer = setTimeout(() => {
 			if (!this.preventSimpleClick) {
-				this.onSelect(id);
+				this.onSelect(atendimento);
 			}
 		}, this.delay);
 	}
 
-	onDoubleClick(id: string): void {
+	onDoubleClick(atendimento: Atendimento): void {
 		this.preventSimpleClick = true;
 		clearTimeout(this.timer);
-		if (this.atendimentoId !== id) {
-			this.onSelect(id);
+		if (this.atendimentoSelected !== atendimento) {
+			this.onSelect(atendimento);
 		}
 	}
 
-	onPress(id: string): void {
-		if (this.atendimentoId !== id) {
-			this.onSelect(id);
+	onPress(atendimento: Atendimento): void {
+		if (this.atendimentoSelected !== atendimento) {
+			this.onSelect(atendimento);
 		}
 	}
 
-	onSelect(id: string): void {
-		if (this.atendimentoId !== id) {
-			this.atendimentoId = id;
+	onSelect(atendimento: Atendimento): void {
+		if (this.atendimentoSelected !== atendimento) {
+			this.atendimentoSelected = atendimento;
 			this.select.emit();
 		} else {
-			this.atendimentoId = null;
+			this.atendimentoSelected = null;
 		}
-		this.navService.hasAtt.next(!!this.atendimentoId);
+		this.navService.hasAtt.next(!!this.atendimentoSelected);
 	}
 
 	onDeleteSelected(confirm: boolean) {
 		if (confirm) {
-			this.service.delete(this.atendimentoId);
-			this.atendimentos = this.atendimentos.filter(a => a._id !== this.atendimentoId);
+			this.service.delete(this.atendimentoSelected._id);
+			this.atendimentos = this.atendimentos.filter(a => a !== this.atendimentoSelected);
 			this.onSelect(null);
 		}
 	}

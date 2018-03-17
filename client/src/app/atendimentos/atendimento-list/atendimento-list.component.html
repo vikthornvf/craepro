@@ -14,17 +14,17 @@
 	<tbody>
 		<tr
 				*ngFor="let atendimento of atendimentos"
-				[ngClass]="{ 'active': atendimento._id === atendimentoId }"
-				(click)="onClick(atendimento._id)"
-				(dblclick)="onDoubleClick(atendimento._id); atendimentoModal.open(selectedId, atendimento._id)"
-				(press)="onPress(atendimento._id); atendimentoModal.open(selectedId, atendimento._id)">
+				[ngClass]="{ 'active': atendimento === atendimentoSelected }"
+				(click)="onClick(atendimento)"
+				(dblclick)="onDoubleClick(atendimento); atendimentoModal.open()"
+				(press)="onPress(atendimento); atendimentoModal.open()">
 			<td>
 				<input
 						type="checkbox"
 						class="filled-in"
 						[id]="atendimento._id"
-						[checked]="atendimento._id === atendimentoId"
-						(click)="onSelect(atendimento._id)">
+						[checked]="atendimento === atendimentoSelected"
+						(click)="onSelect(atendimento)">
 				<label for="atendimento._id" style="color: black !important">{{ atendimento[property].nome }}</label>
 			</td>
 			<td>{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</td>
@@ -48,9 +48,13 @@
 <a
 		class="waves-effect waves-light btn teal lighten-2"
 		style="margin: 15px 0 15px 0;"
-		(click)="atendimentoModal.open(selectedId)">
+		(click)="atendimentoModal.openCreate()">
 	<i class="material-icons left">add_box</i> Novo Atendimento</a>
 
-<app-atendimento-modal #atendimentoModal></app-atendimento-modal>
+<app-atendimento-modal
+		[showAluno]="showAluno"
+		[selectedId]="selectedId"
+		[atendimento]="atendimentoSelected"
+		#atendimentoModal></app-atendimento-modal>
 
 <app-delete-confirmation #deleteConfirmModal text="atendimento selecionado" (response)="onDeleteSelected($event)"></app-delete-confirmation>

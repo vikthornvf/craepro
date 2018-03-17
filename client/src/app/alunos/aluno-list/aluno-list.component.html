@@ -41,7 +41,7 @@
 			<div class="v-scroll">
 				<app-atendimento-list
 						*ngIf="selectedId === aluno._id"
-						[property]="'profissional'"
+						property="profissional"
 						[selectedId]="selectedId"
 						(select)="onOpen()"></app-atendimento-list>
 			</div>

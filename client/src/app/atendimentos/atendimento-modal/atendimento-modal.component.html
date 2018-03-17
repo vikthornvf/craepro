@@ -5,11 +5,19 @@
 		[materializeParams]="modalAtendimentoParams"
 		[materializeActions]="modalAtendimentoActions">
 	<div class="modal-content">
-		<app-atendimento [atendimentoId]="selectedAtendimentoId" [selectedId]="selectedId"></app-atendimento>
+		<app-atendimento
+				*ngIf="!closed"
+				[create]="create"
+				[showAluno]="showAluno"
+				[selectedId]="selectedId"
+				[atendimento]="atendimento"
+				#atendimentoElement></app-atendimento>
 	</div>
 	<div class="modal-footer">
-		<a class="waves-effect modal-close waves-effect btn-flat"><b class="light-blue-text">Cancelar</b></a>
-		<a class="modal-action modal-close waves-effect btn-flat" (click)="onSaveAtendimento()">
+		<a class="modal-close waves-effect btn-flat" (click)="closed = true">
+			<b class="light-blue-text">Cancelar</b>
+		</a>
+		<a class="modal-close waves-effect btn-flat" (click)="closed = true; atendimentoElement.onSave()">
 			<b class="light-blue-text">Salvar</b>
 		</a>
 	</div>

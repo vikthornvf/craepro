@@ -8,7 +8,5 @@ export class Aluno {
 		public status?: string, // TENTAR RESOLVER NO SERVER
 		public serie?: string,
 		public turno?: string,
-		public escola?: Escola) {
-			this.escola = escola ? escola : new Escola();
-		}
+		public escola?: Escola) {}
 }

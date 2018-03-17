@@ -25,10 +25,11 @@
 			<div class="v-scroll">
 				<app-atendimento-list
 						*ngIf="selectedId === professor._id"
-						[property]="'aluno'"
-						[selectedId]="selectedId"></app-atendimento-list>
+						property="aluno"
+						[selectedId]="selectedId"
+						(select)="onOpen()"></app-atendimento-list>
 			</div>
 		</div>
 	</li>
 </ul>
-<app-floating-add-button [link]="link" [color]="'deep-purple'"></app-floating-add-button>
+<app-floating-add-button color="deep-purple" [link]="link"></app-floating-add-button>
