@@ -4,7 +4,7 @@
 	<div class="collapsible-header flex-container disabled">
 		<input type="checkbox" disabled>
 		<label class="disabled"></label>
-		<div class="flex nome"><b class="truncate">Nome (Status)</b></div>
+		<div class="flex nome"><b class="truncate">Nome (Situação)</b></div>
 		<div class="flex escola"><b class="truncate">Escola</b></div>
 		<div class="flex serie-turno"><b class="truncate">Série</b></div>
 	</div>
@@ -19,13 +19,13 @@
 				(click)="toggleSelect($event, aluno._id)">
 			<label [for]="aluno._id"></label>
 			<div class="flex nome truncate">
-				<span class="flex-container status">{{ aluno.nome }}<i
-					class="material-icons flex status tooltipped"
+				<span class="flex-container situacao">{{ aluno.nome }}<i
+					class="material-icons flex situacao tooltipped"
 					materialize="tooltip"
 					data-position="left"
 					data-ldelay="50"
-					[attr.data-tooltip]="aluno.status | statusPipe"
-					[ngClass]="aluno.status.toLowerCase()">more</i>
+					[attr.data-tooltip]="aluno.situacao | situacaoPipe"
+					[ngClass]="aluno.situacao.toLowerCase()">more</i>
 				</span>
 			</div>
 			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
@@ -43,7 +43,8 @@
 						*ngIf="selectedId === aluno._id"
 						property="profissional"
 						[selectedId]="selectedId"
-						(select)="onOpen()"></app-atendimento-list>
+						(select)="onOpen()"
+						#atendimentoList></app-atendimento-list>
 			</div>
 		</div>
 	</li>

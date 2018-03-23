@@ -2,14 +2,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Enums } from '../shared/enums';
 
 @Pipe({
-	name: 'statusPipe'
+	name: 'situacaoPipe'
 })
-export class StatusPipe implements PipeTransform {
+export class SituacaoPipe implements PipeTransform {
 	transform(value: string, args: any[]): string {
 		if (value === null) {
 			return '';
 		}
-		const status = Enums.Status.find(s => s.value === value);
-		return status ? status.name : '';
+		const situacao = Enums.Situacao.find(s => s.value === value);
+		return situacao ? situacao.name : '';
 	}
 }

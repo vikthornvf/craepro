@@ -38,7 +38,7 @@ export class Enums {
 		{ value: 'M1', name: 'Maternal' }
 	];
 
-	static readonly Status = [
+	static readonly Situacao = [
 		{ value: 'A', name: 'Ativo' },
 		{ value: 'P', name: 'Parcialmente Ativo' },
 		{ value: 'E', name: 'Em espera' },

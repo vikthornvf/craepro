@@ -14,22 +14,22 @@
 	width: 20%;
 }
 
-.flex-container.status {
+.flex-container.situacao {
 	justify-content: space-between;
 }
 
-.status.a {
+.situacao.a {
 	color: #2196f3;
 }
 
-.status.p {
+.situacao.p {
 	color: #4caf50;
 }
 
-.status.e {
+.situacao.e {
 	color: #ffc107;
 }
 
-.status.d {
+.situacao.d {
 	color: #9e9e9e;
 }

@@ -1,38 +1,34 @@
 <table class="highlight" *ngIf="atendimentos; else semAtendimentos">
 	<thead>
 		<tr>
-			<th>{{ property | capitalizeFirst }}</th>
+			<th>{{ property | titlecase }}</th>
+			<th>Atendimento</th>
 			<th>Solicitação</th>
-			<th>Tipo</th>
-			<th>Status</th>
-			<th>Início</th>
-			<th>Egresso</th>
-			<th class="extended">Parecer</th>
+			<th>Estado</th>
+			<th class="extended">Parecer Atualizado</th>
 		</tr>
 	</thead>
 
 	<tbody>
 		<tr
-				*ngFor="let atendimento of atendimentos"
-				[ngClass]="{ 'active': atendimento === atendimentoSelected }"
-				(click)="onClick(atendimento)"
-				(dblclick)="onDoubleClick(atendimento); atendimentoModal.open()"
-				(press)="onPress(atendimento); atendimentoModal.open()">
+				*ngFor="let att of atendimentos"
+				[ngClass]="{ 'active': att === atendimentoSelected }"
+				(click)="onClick(att)"
+				(dblclick)="onDoubleClick(att); atendimentoModal.open()"
+				(press)="onPress(att); atendimentoModal.open()">
 			<td>
 				<input
 						type="checkbox"
 						class="filled-in"
-						[id]="atendimento._id"
-						[checked]="atendimento === atendimentoSelected"
-						(click)="onSelect(atendimento)">
-				<label for="atendimento._id" style="color: black !important">{{ atendimento[property].nome }}</label>
+						[id]="att._id"
+						[checked]="att === atendimentoSelected"
+						(click)="onSelect(att)">
+				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : 'INDEFINIDO' }}</label>
 			</td>
-			<td>{{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ atendimento.tipo | atendimentoPipe }}</td>
-			<td>{{ atendimento.status }}</td>
-			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ atendimento.inicio | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ atendimento.parecer }}</td>
+			<td>{{ att.tipo | atendimentoPipe }}</td>
+			<td>{{ att.solicitacao | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }}</td>
+			<td>{{ (att.pareceres.length > 1) ? att.pareceres[att.pareceres.length-1].texto : 'Sem parecer' }}</td>
 		</tr>
 	</tbody>
 </table>
@@ -46,7 +42,7 @@
 </ng-template>
 
 <a
-		class="waves-effect waves-light btn teal lighten-2"
+		class="waves-effect waves-light btn-large teal lighten-2"
 		style="margin: 15px 0 15px 0;"
 		(click)="atendimentoModal.openCreate()">
 	<i class="material-icons left">add_box</i> Novo Atendimento</a>

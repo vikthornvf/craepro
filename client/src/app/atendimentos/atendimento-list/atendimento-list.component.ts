@@ -123,6 +123,10 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		this.navService.hasAtt.next(!!this.atendimentoSelected);
 	}
 
+	onDeselect() {
+		this.atendimentoSelected = null;
+	}
+
 	onDeleteSelected(confirm: boolean) {
 		if (confirm) {
 			this.service.delete(this.atendimentoSelected._id);
