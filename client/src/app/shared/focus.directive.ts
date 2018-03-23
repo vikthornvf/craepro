@@ -4,11 +4,13 @@ import { Directive, OnChanges, Input, ElementRef, Inject } from '@angular/core';
 })
 export class FocusDirective implements OnChanges {
 
-	@Input() focus: boolean;
+	@Input() focus = true;
 
 	constructor(@Inject(ElementRef) private element: ElementRef) {}
 
 	ngOnChanges() {
+		if (this.focus) {
 			this.element.nativeElement.focus();
+		}
 	}
 }

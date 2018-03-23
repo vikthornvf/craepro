@@ -27,7 +27,8 @@
 						*ngIf="selectedId === professor._id"
 						property="aluno"
 						[selectedId]="selectedId"
-						(select)="onOpen()"></app-atendimento-list>
+						(select)="onOpen()"
+						#atendimentoList></app-atendimento-list>
 			</div>
 		</div>
 	</li>

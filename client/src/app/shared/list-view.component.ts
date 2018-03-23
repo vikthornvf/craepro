@@ -7,6 +7,7 @@ declare var $;
 @Injectable()
 export abstract class ListViewComponent implements OnInit, OnDestroy {
 
+	@ViewChild('atendimentoList') atendimentoList;
 	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	keyword: string;
@@ -98,6 +99,9 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 	onClose() {
 		this.selected = false;
 		this.changeNavbar(this.navService.state.SEARCHBAR);
+		if (this.atendimentoList) {
+			this.atendimentoList.onDeselect();
+		}
 	}
 
 	changeNavbar(state: string) {
