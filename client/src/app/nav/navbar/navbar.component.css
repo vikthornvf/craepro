@@ -7,7 +7,7 @@ nav {
 }
 
 .dropdown-content {
-	left: 0;
+	left: 0 !important;
 	right: 0;
 }
 
@@ -33,6 +33,10 @@ a.user-icon > i {
 @media only screen and (min-width: 993px) {
 	a.user-icon {
 		position: fixed;
+	}
+
+	nav {
+		max-width: calc(100% - 300px);
 	}
 }
 
