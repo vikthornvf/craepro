@@ -79,7 +79,7 @@ export class AlunoComponent implements OnInit {
 
 	onEdtitNome(key: string) {
 		if (key === 'Enter' || key === 'Escape') {
-			if (this.aluno.nome) {
+			if (this.form.get('nome').value) {
 				this.toggleEditNome();
 			}
 		}
@@ -99,7 +99,7 @@ export class AlunoComponent implements OnInit {
 			'serie': a.serie,
 			'turno': a.turno
 		});
-		this.loadAtendimentos(_id);
+		this.loadAtendimentos();
 		this.loading = false;
 	}
 
@@ -107,7 +107,8 @@ export class AlunoComponent implements OnInit {
 		this.escolas = this.escolaService.list();
 	}
 
-	loadAtendimentos(_id: string) {
+	loadAtendimentos() {
+		const _id = this.aluno._id;
 		this.loadingAtendimentos = true; // TODO resolve async
 		this.atendimentos = this.atendimentoService.listByAluno(_id);
 		this.loadingAtendimentos = false;
@@ -125,7 +126,8 @@ export class AlunoComponent implements OnInit {
 		console.log(this.form.get('serie'));
 		const value = this.form.value;
 		// this.form.reset(value);
-		ToastService.toastSuccess(`Aluno ${value.nome} salvo com sucesso!`);
+		// TODO
+		this.service.save(this.aluno);
 	}
 
 	onDelete(confirm: boolean) {
@@ -137,5 +139,9 @@ export class AlunoComponent implements OnInit {
 
 	onConfirmDelete() {
 		this.deleteConfirmModal.open();
+	}
+
+	cancel() {
+		this.navService.onNavigateBack();
 	}
 }

@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import { Aluno } from './aluno.model';
 import { Observable } from 'rxjs/Observable';
 import { EscolaService } from '../escolas/escola.service';
+import { ToastService } from '../shared/toast.service';
 
 /**
 	ROUTES
@@ -35,6 +36,7 @@ export class AlunoService {
 		new Aluno('7', 'Isaac', 'E', 'F2', 'M', this.serviceEscola.findById('6')),
 		new Aluno('8', 'Ícaro', 'E', 'PB', 'M', this.serviceEscola.findById('2'))
 	];
+	idCount = 9; // TODO delete
 
 	constructor(private http: Http, private serviceEscola: EscolaService) {
 		this.headers = new Headers();
@@ -53,9 +55,27 @@ export class AlunoService {
 		return this.alunos.find(a => a._id === _id);
 	}
 
+	save(aluno: Aluno): Aluno {
+		let msg: string;
+
+		if (aluno._id) {
+			const attIndex = this.alunos.find(a => a._id === aluno._id);
+			const index = this.alunos.indexOf(attIndex);
+			this.alunos[index] = aluno;
+			msg = `Dados de aluno(a) ${aluno.nome} salvos com sucesso!`;
+		} else {
+			aluno._id = this.idCount + '';
+			this.alunos.push(aluno);
+			this.idCount++;
+			msg = `Aluno(a) ${aluno.nome} salvo com sucesso!`;
+		}
+		ToastService.toastSuccess(msg);
+		return aluno;
+	}
+
 	delete(_id: string): boolean {
 		this.alunos = this.alunos.filter(e => e._id !== _id);
-		console.log('Delete aluno id:' + _id);
+		ToastService.toastSuccess('Aluno excluído com sucesso!');
 		return true;
 	}
 }

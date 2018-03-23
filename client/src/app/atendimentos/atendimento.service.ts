@@ -4,6 +4,8 @@ import { Atendimento } from './atendimento.model';
 import { Observable } from 'rxjs/Observable';
 import { AlunoService } from '../alunos/aluno.service';
 import { ProfessorService } from '../professores/professor.service';
+import { Parecer } from './parecer.model';
+import { ToastService } from '../shared/toast.service';
 
 /**
 	ROUTES
@@ -26,128 +28,116 @@ export class AtendimentoService {
 	headers: Headers;
 
 	private atendimentos: Atendimento[] = [
-		{
-			_id: '1',
-			tipo: 'A',
-			status: 'Ativo',
-			aluno: this.serviceAluno.findById('1'),
-			profissional: this.serviceProfessor.findById('4'),
-			parecer: 'Ta bacana',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '2',
-			tipo: 'P',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('2'),
-			profissional: this.serviceProfessor.findById('2'),
-			parecer: 'So esperando mesmo...',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '3',
-			tipo: 'F',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('1'),
-			profissional: this.serviceProfessor.findById('3'),
-			parecer: 'So esperando mesmo...',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '4',
-			tipo: 'A',
-			status: 'Ativo',
-			aluno: this.serviceAluno.findById('3'),
-			profissional: this.serviceProfessor.findById('4'),
-			parecer: 'Show de bola',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '5',
-			tipo: 'P',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('4'),
-			profissional: this.serviceProfessor.findById('2'),
-			parecer: 'So esperando mesmo...',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '6',
-			tipo: 'P',
-			status: 'Ativo',
-			aluno: this.serviceAluno.findById('5'),
-			profissional: this.serviceProfessor.findById('2'),
-			parecer: 'Bombando',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '7',
-			tipo: 'A',
-			status: 'Desligado',
-			aluno: this.serviceAluno.findById('6'),
-			profissional: this.serviceProfessor.findById('4'),
-			parecer: 'Tudo ok',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '8',
-			tipo: 'F',
-			status: 'Ativo',
-			aluno: this.serviceAluno.findById('6'),
-			profissional: this.serviceProfessor.findById('3'),
-			parecer: 'Recebendo bem o tratamento',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '9',
-			tipo: 'P',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('7'),
-			profissional: this.serviceProfessor.findById('2'),
-			parecer: 'Tem que morar mais perto da escola :(',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '10',
-			tipo: 'F',
-			status: 'Ativo',
-			aluno: this.serviceAluno.findById('7'),
-			profissional: this.serviceProfessor.findById('3'),
-			parecer: 'Teste',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '11',
-			tipo: 'A',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('8'),
-			profissional: this.serviceProfessor.findById('1'),
-			parecer: 'Mora muito longe',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}, {
-			_id: '12',
-			tipo: 'A',
-			status: 'Em espera',
-			aluno: this.serviceAluno.findById('9'),
-			profissional: this.serviceProfessor.findById('1'),
-			parecer: 'Mora muito longe',
-			solicitacao: new Date(),
-			inicio: new Date(),
-			alta: new Date()
-		}
+		new Atendimento(
+			'1',
+			'A',
+			this.serviceAluno.findById('1'),
+			this.serviceProfessor.findById('4'),
+			[new Parecer('Ta bacana1'), new Parecer('Ta bacana2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'2',
+			'P',
+			this.serviceAluno.findById('2'),
+			this.serviceProfessor.findById('2'),
+			[new Parecer('So esperando mesmo...'), new Parecer('So esperando mesmo...2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'3',
+			'F',
+			this.serviceAluno.findById('1'),
+			this.serviceProfessor.findById('3'),
+			[new Parecer('So esperando mesmo...3'), new Parecer('So esperando mesmo...4')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'4',
+			'A',
+			this.serviceAluno.findById('3'),
+			this.serviceProfessor.findById('4'),
+			[new Parecer('Show de bola'), new Parecer('Show de bola2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'5',
+			'P',
+			this.serviceAluno.findById('4'),
+			this.serviceProfessor.findById('2'),
+			[new Parecer('So esperando mesmo...5'), new Parecer('So esperando mesmo...6')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'6',
+			'P',
+			this.serviceAluno.findById('5'),
+			this.serviceProfessor.findById('2'),
+			[new Parecer('Bombando'), new Parecer('Bombando2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'7',
+			'A',
+			this.serviceAluno.findById('6'),
+			this.serviceProfessor.findById('4'),
+			[new Parecer('Tudo ok'), new Parecer('Tudo ok2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'8',
+			'F',
+			this.serviceAluno.findById('6'),
+			this.serviceProfessor.findById('3'),
+			[new Parecer('Recebendo bem o tratamento'), new Parecer('Recebendo bem o tratamento2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'9',
+			'P',
+			this.serviceAluno.findById('7'),
+			this.serviceProfessor.findById('2'),
+			[new Parecer('Tem que morar mais perto da escola :('), new Parecer('Tem que morar mais perto da escola2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'10',
+			'F',
+			this.serviceAluno.findById('7'),
+			this.serviceProfessor.findById('3'),
+			[new Parecer('Teste'), new Parecer('Teste2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'11',
+			'A',
+			this.serviceAluno.findById('8'),
+			this.serviceProfessor.findById('1'),
+			[new Parecer('Mora muito longe'), new Parecer('Mora muito longe2')],
+			new Date(),
+			new Date(),
+			new Date()),
+		new Atendimento(
+			'12',
+			'A',
+			this.serviceAluno.findById('9'),
+			this.serviceProfessor.findById('1'),
+			[new Parecer('Mora muito longe3'), new Parecer('Mora muito longe4')],
+			new Date(),
+			new Date(),
+			new Date())
 	];
+	idCount = 13; // TODO delete
 
 	constructor(
 		private http: Http,
@@ -178,9 +168,38 @@ export class AtendimentoService {
 		return this.atendimentos.find(a => a._id === _id);
 	}
 
+	save(atendimento: Atendimento): Atendimento {
+		let msg: string;
+
+		if (atendimento._id) {
+			const attIndex = this.atendimentos.find(a => a._id === atendimento._id);
+			const index = this.atendimentos.indexOf(attIndex);
+			this.atendimentos[index] = atendimento;
+			msg = 'Dados do atendimento alterados com sucesso!';
+		} else {
+			atendimento._id = this.idCount + '';
+			this.atendimentos.push(atendimento);
+			this.idCount++;
+			msg = 'Atendimento salvo com sucesso!';
+		}
+		ToastService.toastSuccess(msg);
+		return atendimento;
+	}
+
 	delete(_id: string): boolean {
 		// TODO
-		console.log('Delete atendimento id: ' + _id);
+		this.atendimentos = this.atendimentos.filter(a => a._id !== _id);
+		ToastService.toastSuccess('Atendimento excluído com sucesso!');
 		return true;
+	}
+
+	toDate(str: any): Date {
+		if (str) {
+			if (typeof str === 'string') {
+				const from = str.split('/');
+				return new Date(+from[2], (+from[1] - 1), +from[0]);
+			}
+		}
+		return str;
 	}
 }

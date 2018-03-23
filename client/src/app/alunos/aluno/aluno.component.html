@@ -17,10 +17,10 @@
 				</button>
 				<input
 					id="nome"
+					focus="1"
 					formControlName="nome"
 					autocomplete="false"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
-					[focus]="this.edit"
 					(keyup)="onEdtitNome($event.key)">
 				<label class="active" for="nome">Nome</label>
 			</div>
@@ -70,16 +70,17 @@
 		<h4 class="col s12 grey-text">Atendimentos</h4>
 		<div class="col m6 s12" *ngFor="let atendimento of atendimentos">
 			<div class="card depth blue-grey darken-1">
-				<div class="card-content white-text fade-in-effect" style="padding-top:12px">
+				<div class="card-content white-text fade-in-effect" style="padding-top:12px;padding-bottom:0">
 					<app-atendimento
 							[showAluno]="false"
 							[selectedId]="aluno._id"
 							[atendimento]="atendimento"
+							(delete)="loadAtendimentos()"
 							#atendimentoElement></app-atendimento>
 				</div>
 				<div class="card-action" style="padding:5pxpx">
 					<a (click)="atendimentoElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
-					<a (click)="atendimentoElement.onDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+					<a (click)="atendimentoElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
 				</div>
 			</div>
 		</div>
@@ -92,23 +93,36 @@
 
 	<div class="row">
 		<div class="col m12">
+			<a
+					class="btn-large waves-effect waves-light white black-text"
+					style="margin: 10px 10px 10px 0; width: 190px;"
+					(click)="cancel()">
+				<i class="material-icons left">close</i>Cancelar</a>
+
 			<button
 					id="submitbtn"
 					type="submit"
-					class="btn waves-effect waves-light teal lighten-2"
-					style="margin: 10px 10px 10px 0;">
-				<i class="material-icons left">save</i>Salvar Alterações</button>
+					class="btn-large waves-effect waves-light teal lighten-2"
+					style="width: 190px;">
+				<i class="material-icons left">save</i>Salvar</button>
 
+		</div>
+	</div>
+
+	<div class="row" *ngIf="form.invalid">
+			<label for="submitbtn" class="col">* Campos obrigatórios</label>
+	</div>
+
+	<hr>
+	<div class="row">
+		<div class="col">
 			<a
-					*ngIf="true"
-					class="btn waves-effect waves-light red"
-					[ngClass]="{ 'hide': !aluno._id }"
+					*ngIf="aluno._id"
+					class="btn-large waves-effect waves-light red"
+					style="margin: 15px 0 0 0; width: 190px;"
 					(click)="onConfirmDelete()">
 				<i class="material-icons left">delete</i>Excluir Aluno</a>
 		</div>
-	</div>
-	<div class="row" *ngIf="form.invalid">
-			<label for="submitbtn" class="col">* Campos obrigatórios</label>
 	</div>
 
 </form>
