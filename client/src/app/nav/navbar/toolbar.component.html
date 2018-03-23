@@ -6,8 +6,7 @@
 			data-ldelay="50"
 			data-tooltip="Remover Seleção"
 			(click)="onEmitTool(tool.SELECTION)">
-		<a class="hide-on-small-only">Selecionado<i class="material-icons right">check_box</i></a>
-		<a class="hide-on-med-and-up"><i class="material-icons">check_box</i></a>
+		<a><i class="material-icons">check_box</i></a>
 	</li>
 	<li
 			class="tooltipped"
@@ -17,7 +16,7 @@
 			data-tooltip="Alterar Dados">
 		<a [routerLink]="link"><i class="material-icons">mode_edit</i></a>
 	</li>
-	<span class="break-line-on-small" *ngIf="hasAtt">
+	<span *ngIf="hasAtt">
 		<li
 				class="tooltipped fade-in-effect spacing-left"
 				materialize="tooltip"
@@ -29,6 +28,7 @@
 		</li>
 		<li
 				class="tooltipped fade-in-effect"
+				style="display: inline-block;"
 				materialize="tooltip"
 				data-position="bottom"
 				data-ldelay="50"

@@ -1,15 +1,19 @@
+ul {
+	display: block;
+	white-space: nowrap;
+	font-size: 0;
+	max-width: calc(100% - 90.5) !important;
+	overflow-x: auto;
+	float: none !important;
+}
+
+li {
+	display: inline-block;
+	float: none;
+}
+
 .spacing-left {
 	margin-left: 15px;
-}
-
-.break-line-on-small {
-	display: inline;
-}
-
-@media only screen and (max-width: 456px) {
-	.break-line-on-small {
-		display: block;
-	}
 }
 
 @media only screen and (min-width: 300px) and (max-width: 992px) {
@@ -19,11 +23,5 @@
 
 	.spacing-left-on-med-and-down {
 		margin-left: 10px;
-	}
-}
-
-@media only screen and (max-width: 299px) {
-	.spacing-left {
-		margin-left: 0px;
 	}
 }

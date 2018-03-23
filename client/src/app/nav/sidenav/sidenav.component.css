@@ -58,7 +58,7 @@ li.active.usuarios {
 }
 
 a.button-collapse.top-nav {
-	position: absolute;
+	position: fixed;
 	text-align: center;
 	height: 48px;
 	width: 48px;
@@ -67,7 +67,7 @@ a.button-collapse.top-nav {
 	margin-left: -10px;
 	color: #fff;
 	font-size: 36px;
-	z-index: 2;
+	z-index: 999;
 }
 
 @media only screen and (min-width: 601px) {

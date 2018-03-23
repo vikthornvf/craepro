@@ -1,30 +1,28 @@
-<nav class="nav-extended" ngClass="{{ state }}">
-	<div class="nav-wrapper sidenav-wrapper">
-		<div class="row">
-
-			<div class="col s9" [ngSwitch]="state">
-				<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
-				<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
-				<ng-container *ngSwitchCase="'navbar'">
-					<ul class="slide-in-right-effect">
-						<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
-					</ul>
-				</ng-container>
-			</div>
-
-			<div class="col s3">
-				<ul class="right" id="navbar">
-					<li>
-						<a class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
-							<i class="material-icons">account_circle</i>
-						</a>
-					</li>
-				</ul>
-				<ul id='user-dropdown' class='dropdown-content'>
-					<li><a routerLink="/usuarios/usuario"><i class="material-icons left">person</i>Minha conta</a></li>
-					<li><a (click)="onLoggout()"><i class="material-icons left">power_settings_new</i>Sair</a></li>
-				</ul>
+<div class="navbar-fixed">
+	<nav ngClass="{{ state }}">
+		<div class="nav-wrapper sidenav-wrapper">
+			<div class="row">
+				<div class="col s12" [ngSwitch]="state">
+					<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
+					<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
+					<ng-container *ngSwitchCase="'navbar'">
+						<ul class="slide-in-right-effect">
+							<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
+						</ul>
+					</ng-container>
+				</div>
 			</div>
 		</div>
-	</div>
-</nav>
+		<ul>
+			<li>
+				<a class='user-icon dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
+					<i class="material-icons">account_circle</i>
+				</a>
+			</li>
+		</ul>
+		<ul id='user-dropdown' class='dropdown-content'>
+			<li><a routerLink="/usuarios/usuario"><i class="material-icons left">person</i>Minha conta</a></li>
+			<li><a (click)="onLoggout()"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+		</ul>
+	</nav>
+</div>

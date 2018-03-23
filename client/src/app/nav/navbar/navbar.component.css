@@ -1,15 +1,47 @@
 nav {
-	-webkit-transition: background-color .4s linear;
-		 -moz-transition: background-color .4s linear;
-			 -o-transition: background-color .4s linear;
-					transition: background-color .4s linear;
+	max-width: 100%;
+	-webkit-transition: background-color .4s ease-out;
+		 -moz-transition: background-color .4s ease-out;
+			 -o-transition: background-color .4s ease-out;
+					transition: background-color .4s ease-out;
 }
 
-@media only screen and (max-width: 456px) {
-	.toolbar {
-		height: auto;
-		line-height: 56px;
+.dropdown-content {
+	left: 0;
+	right: 0;
+}
+
+a.user-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+	float: none !important;
+	z-index: 999;
+}
+a.user-icon > i {
+	height: 64px;
+	padding-top: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+	a.user-icon > i {
+		height: 56px;
+		padding-top: 0;
 	}
+}
+
+@media only screen and (min-width: 993px) {
+	a.user-icon {
+		position: fixed;
+	}
+
+	nav {
+		max-width: calc(100% - 300px);
+	}
+}
+
+.sidenav-wrapper {
+	margin-right: 42px !important;
 }
 
 @media only screen and (max-width: 992px) {
