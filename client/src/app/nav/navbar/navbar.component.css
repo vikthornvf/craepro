@@ -34,10 +34,6 @@ a.user-icon > i {
 	a.user-icon {
 		position: fixed;
 	}
-
-	nav {
-		max-width: calc(100% - 300px);
-	}
 }
 
 .sidenav-wrapper {
