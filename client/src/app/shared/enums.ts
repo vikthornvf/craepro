@@ -43,7 +43,7 @@ export class Enums {
 		{ value: 'P', name: 'Parcialmente Ativo' },
 		{ value: 'E', name: 'Em espera' },
 		{ value: 'D', name: 'Desligado' }
-	]
+	];
 
 	static readonly Turnos = [
 		{ value: 'M', name: 'Manhã' },
