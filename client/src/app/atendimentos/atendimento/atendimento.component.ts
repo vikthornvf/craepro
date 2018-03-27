@@ -50,6 +50,12 @@ export class AtendimentoComponent implements OnInit {
 		clear: 'Limpar',
 		container: 'body'
 	}];
+	autocompleteInit = {
+		'data': {'Apple': null, 'Google': null},
+		onAutocomplete: (val) => {
+			console.log(val);
+		},
+	};
 
 	constructor(
 		private service: AtendimentoService,
