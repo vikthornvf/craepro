@@ -113,15 +113,16 @@
 			<label for="submitbtn" class="col">* Campos obrigatórios</label>
 	</div>
 
-	<hr>
-	<div class="row">
-		<div class="col">
-			<a
-					*ngIf="aluno._id"
-					class="btn-large waves-effect waves-light red"
-					style="margin: 15px 0 0 0; width: 190px;"
-					(click)="onConfirmDelete()">
-				<i class="material-icons left">delete</i>Excluir Aluno</a>
+	<div *ngIf="aluno._id">
+		<hr>
+		<div class="row">
+			<div class="col">
+				<a
+						class="btn-large waves-effect waves-light red"
+						style="margin: 15px 0 0 0; width: 190px;"
+						(click)="onConfirmDelete()">
+					<i class="material-icons left">delete</i>Excluir Aluno</a>
+			</div>
 		</div>
 	</div>
 
