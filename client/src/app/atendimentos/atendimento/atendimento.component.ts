@@ -1,3 +1,4 @@
+import { MaterializeAction } from 'angular2-materialize';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AtendimentoService } from '../atendimento.service';
@@ -32,14 +33,22 @@ export class AtendimentoComponent implements OnInit {
 
 	form: FormGroup;
 	tipos: {}[] = Enums.Atts;
+	dias: {}[] = Enums.Dias;
 
+	horarioActions = new EventEmitter<string|MaterializeAction>();
+	timepickerParams = [{
+		twelvehour: false,
+		cleartext: 'Limpar',
+		canceltext: 'Cancelar',
+		container: 'body'
+	}];
 	datepickerParams = [{
 		monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
 		weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
 		format: 'dd/mm/yyyy',
 		today: 'Hoje',
 		clear: 'Limpar',
-		close: 'Ok',
+		container: 'body'
 	}];
 
 	constructor(
@@ -62,20 +71,25 @@ export class AtendimentoComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			tipo: this.fb.control(null, Validators.required),
-			solicitacao: this.fb.control(null, Validators.required),
-			inicio: '',
-			egresso: '',
-			pareceres: this.pareceres
+			'tipo': new FormControl(null, Validators.required),
+			'solicitacao': new FormControl(new Date(), Validators.required),
+			'inicio': null,
+			'egresso': null,
+			'horario': this.fb.group({
+				'dia': null,
+				'horario': null,
+			}),
+			'pareceres': this.pareceres
 		});
 
 		const a = this.atendimento;
 		if (a) {
 			this.form.patchValue({
-				tipo: a.tipo,
-				solicitacao: a.solicitacao,
-				inicio: a.inicio,
-				egresso: a.egresso,
+				'tipo': a.tipo,
+				'solicitacao': a.solicitacao,
+				'inicio': a.inicio,
+				'egresso': a.egresso,
+				'horario': a.horario,
 			});
 			this.pareceres = this.form.get('pareceres') as FormArray;
 			a.pareceres.forEach(parecer => this.pareceres.insert(0, this.createParecer(parecer)));
@@ -126,9 +140,11 @@ export class AtendimentoComponent implements OnInit {
 		att.solicitacao = this.service.toDate(this.form.get('solicitacao').value);
 		att.inicio = this.service.toDate(this.form.get('inicio').value);
 		att.egresso = this.service.toDate(this.form.get('egresso').value);
+		att.horario = this.form.get('horario').value;
 		att.pareceres = this.form.get('pareceres').value;
 
 		this.atendimento = this.service.save(att);
+		this.save.emit(this.atendimento);
 	}
 
 	onDelete(confirm: boolean): void {

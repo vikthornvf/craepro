@@ -6,6 +6,7 @@ import { AlunoService } from '../alunos/aluno.service';
 import { ProfessorService } from '../professores/professor.service';
 import { Parecer } from './parecer.model';
 import { ToastService } from '../shared/toast.service';
+import { Horario } from './horario.model';
 
 /**
 	ROUTES
@@ -36,7 +37,8 @@ export class AtendimentoService {
 			[new Parecer('Ta bacana1'), new Parecer('Ta bacana2')],
 			new Date(),
 			new Date(),
-			new Date()),
+			new Date(),
+			new Horario(1, '16:30')),
 		new Atendimento(
 			'2',
 			'P',

@@ -12,6 +12,17 @@
 
 <form materialize [formGroup]="form" (ngSubmit)="onSave()">
 	<div class="row">
+		<div class="input-field col s12">
+			<input id="autoComplete"
+				type="text"
+				formContolName="autoComplete"
+				materialize="autocomplete"
+				[materializeParams]="[autocompleteInit]">
+			<label for="autoComplete">Autocomplete</label>
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="col s12 l6">
 			<div class="input-field">
 				<select
@@ -62,52 +73,33 @@
 			</div>
 		</div>
 
-		<div *ngIf="form.get('inicio').value">
+		<div formGroupName="horario" *ngIf="form.get('inicio').value">
 			<div class="col s12 l6">
 				<div class="input-field">
-					<select
-							id="selectAtendimento"
-							formControlName="tipo"
-							materialize="material_select"
-							[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }">
-						<option value="" disabled selected>Tipo de Atendimento</option>
-						<option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.name }}</option>
+					<select id="selectAtendimento"
+							formControlName="dia"
+							materialize="material_select">
+						<option value="" disabled selected>Selecionar</option>
+						<option *ngFor="let dia of dias" [value]="dia.value">{{ dia.name }}</option>
 					</select>
-					<label>Turno</label>
+					<label>Dia da Semana</label>
 				</div>
 			</div>
 
-		</div>
-		<div *ngIf="form.get('turno')">
-			<div class="col s6 l3">
+			<div class="col s12 l6">
 				<div class="input-field">
-					<select
-							id="selectAtendimento"
-							formControlName="tipo"
-							materialize="material_select"
-							[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }">
-						<option value="" disabled selected>Tipo de Atendimento</option>
-						<option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.name }}</option>
-					</select>
-					<label>Hora</label>
-				</div>
-			</div>
-
-			<div class="col s6 l3">
-				<div class="input-field">
-					<select
-							id="selectAtendimento"
-							formControlName="tipo"
-							materialize="material_select"
-							[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }">
-						<option value="" disabled selected>Tipo de Atendimento</option>
-						<option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.name }}</option>
-					</select>
-					<label>Minutos</label>
+					<label for="birthtime">Horário</label>
+					<input id="birthtime"
+							name="birthtime"
+							type="text"
+							formControlName="horario"
+							materialize="pickatime"
+							[ngClass]="{ 'invalid' : form.get('horario').invalid && form.get('horario').touched }"
+							[materializeActions]="horarioActions"
+							[materializeParams]="timepickerParams">
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div class="row">
