@@ -46,6 +46,11 @@
 						(select)="onOpen()"
 						#atendimentoList></app-atendimento-list>
 			</div>
+			<a id="create-att"
+					class="waves-effect waves-light btn-large teal lighten-2"
+					style="margin: 15px 0 15px 0;"
+					(click)="atendimentoList.onCreate()">
+				<i class="material-icons right">add_circle</i> Novo Atendimento</a>
 		</div>
 	</li>
 </ul>
