@@ -18,7 +18,10 @@ export class AtendimentoModalComponent {
 	closed = true;
 	create: boolean;
 	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
-	modalAtendimentoParams = [{ dismissible: false }];
+	modalAtendimentoParams = [{
+		dismissible: false,
+		complete: () => this.closed = true
+	}];
 
 	emitLoad() {
 		this.load.emit(true);
