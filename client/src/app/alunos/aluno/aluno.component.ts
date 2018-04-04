@@ -16,8 +16,7 @@ declare var $;
 
 @Component({
 	selector: 'app-aluno',
-	templateUrl: './aluno.component.html',
-	styleUrls: ['./aluno.component.css']
+	templateUrl: './aluno.component.html'
 })
 export class AlunoComponent implements OnInit {
 
