@@ -72,10 +72,9 @@
 			<div class="card hoverable blue-grey darken-1">
 				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
 					<app-atendimento
-							[showAluno]="false"
 							[selectedId]="aluno._id"
 							[atendimento]="atendimento"
-							[innerComponent]="true"
+							[innerAlunoComponent]="true"
 							(delete)="loadAtendimentos()"
 							#atendimentoElement></app-atendimento>
 				</div>

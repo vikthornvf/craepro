@@ -22,13 +22,16 @@
 						[id]="att._id"
 						[checked]="att === atendimentoSelected"
 						(click)="onSelect(att)">
-				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : '(INDEFINIDO)' }}</label>
+				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : '(indefinido)' }}</label>
 			</td>
-			<td>{{ att.tipo | atendimentoPipe }}</td>
+			<td>
+				<span *ngIf="att.tipo; else tipoIndefinidoEl">{{ att.tipo | atendimentoPipe }}</span>
+				<ng-template #tipoIndefinidoEl>(indefinido)</ng-template>
+			</td>
 			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }} (
 					{{ (att.inicio ? (att.egresso ? att.egresso : att.inicio ) : att.solicitacao) | date: 'dd/MM/yyyy' }} )
 			</td>
-			<td>{{ (att.pareceres.length > 1) ? att.pareceres[att.pareceres.length-1].texto : 'Sem parecer' }}</td>
+			<td>{{ (att.pareceres.length > 1) ? att.pareceres[att.pareceres.length-1].texto : '(sem parecer)' }}</td>
 		</tr>
 	</tbody>
 </table>
@@ -42,7 +45,6 @@
 </ng-template>
 
 <app-atendimento-modal
-		[showAluno]="showAluno"
 		[selectedId]="selectedId"
 		[atendimento]="atendimentoSelected"
 		(load)="loadAtendimentos()"

@@ -19,7 +19,6 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	atendimentos: Atendimento[] = [];
 	atendimentoSelected: Atendimento;
 	isAtendimentosLoaded = false;
-	showAluno: boolean;
 
 	toolbarObservable: Subscription;
 
@@ -32,7 +31,6 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		private service: AtendimentoService) {}
 
 	ngOnInit(): void {
-		this.showAluno = this.property === 'profissional';
 		this.toolbarObservable = this.navService.toolbar.subscribe(code => this.toolbarFunctions(code));
 	}
 

@@ -21,8 +21,7 @@ export class AtendimentoComponent implements OnInit {
 
 	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 	@Input() create = false;
-	@Input() showAluno = true;
-	@Input() innerComponent = false;
+	@Input() innerAlunoComponent = false;
 	@Input() selectedId: string;
 	@Input() atendimento: Atendimento;
 	@Output() save = new EventEmitter<Atendimento>();
@@ -82,7 +81,7 @@ export class AtendimentoComponent implements OnInit {
 	initForm(): void {
 		this.form = this.fb.group({
 			'nome': null,
-			'tipo': new FormControl(null, Validators.required),
+			'tipo': null,
 			'horario': this.fb.group({
 				'dia': null,
 				'horario': null,
@@ -93,7 +92,7 @@ export class AtendimentoComponent implements OnInit {
 		const a = this.atendimento;
 		if (a) {
 			this.form.patchValue({
-				'nome': null,
+				'nome': this.professor ? this.professor.nome : null,
 				'autoComplete': null,
 				'tipo': a.tipo,
 				'horario': a.horario,
@@ -153,11 +152,7 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	loadParent(): void {
-		if (this.showAluno) {
-			this.aluno = this.alunoService.findById(this.selectedId);
-		} else {
-			this.professor = this.professorService.findById(this.selectedId);
-		}
+		this.aluno = this.alunoService.findById(this.selectedId);
 	}
 
 	loadProfessores(): void {
@@ -179,16 +174,10 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	onSave(): void {
-		let att = this.atendimento;
-		if (!att) {
-			att = new Atendimento();
-			if (this.showAluno) {
-				att.aluno = this.alunoService.findById(this.selectedId);
-			} else {
-				att.profissional = this.professorService.findById(this.selectedId);
-			}
-		}
+		const att = this.atendimento;
 
+		att.aluno = this.aluno;
+		att.profissional = this.professor;
 		att.tipo = this.form.get('tipo').value;
 		att.horario = this.form.get('horario').value;
 		att.pareceres = this.form.get('pareceres').value;

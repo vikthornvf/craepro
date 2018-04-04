@@ -1,5 +1,5 @@
 <div class="row">
-	<h5 class="light" *ngIf="!innerComponent">{{ aluno ? aluno.nome : '' }}</h5>
+	<h5 class="light" *ngIf="!innerAlunoComponent">{{ aluno.nome }}</h5>
 	<p>Atendimento
 		<span *ngIf="atendimento.egresso; else iniciadoEl">Finalizado em {{ atendimento.egresso | date: 'dd/MM/yyyy' }}</span>
 		<ng-template #iniciadoEl>
@@ -23,7 +23,7 @@
 				<option value="" disabled selected>Tipo de Atendimento</option>
 				<option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.name }}</option>
 			</select>
-			<label>Atendimento*</label>
+			<label>Atendimento</label>
 		</div>
 
 		<div *ngIf="atendimento.inicio && !atendimento.egresso">
@@ -39,7 +39,7 @@
 						[focus]="atendimento.inicio && !atendimento.egresso"
 						(keydown.tab)="selectProfessor()"
 						(keyup)="onShowDropdown($event.key)">
-				<label for="nome_att">{{ showAluno ? 'Profissional' : 'Aluno' }}</label>
+				<label for="nome_att">Profissional</label>
 			</div>
 			<ul id='professor-dropdown' class='dropdown-content'>
 				<li *ngFor="let p of professores"><a (click)="selectProfessor(p)">{{ p.nome }}</a></li>
@@ -144,7 +144,7 @@
 			</ng-template>
 		</div>
 		<div class="col s10 offset-s1 center-align" *ngIf="pareceres.length > 1">
-			<a class="btn-flat center-align" [ngClass]="{ 'white-text': innerComponent }" (click)="toggleShowParecer()">
+			<a class="btn-flat center-align" [ngClass]="{ 'white-text': innerAlunoComponent }" (click)="toggleShowParecer()">
 				<span *ngIf="!showPareceres"><i class="material-icons right">keyboard_arrow_down</i>mostrar mais</span>
 				<span *ngIf="showPareceres"><i class="material-icons right">keyboard_arrow_up</i>mostrar menos</span>
 			</a>

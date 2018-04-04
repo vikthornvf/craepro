@@ -10,7 +10,6 @@ import { Atendimento } from '../atendimento.model';
 export class AtendimentoModalComponent {
 
 	@Input() selectedId: string;
-	@Input() showAluno: boolean;
 	@Input() atendimento: Atendimento;
 	@Output() load = new EventEmitter<boolean>();
 	@ViewChild('atendimentoElement') atendimentoElement;
