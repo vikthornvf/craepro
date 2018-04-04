@@ -3,8 +3,7 @@
 		<tr>
 			<th>{{ property | titlecase }}</th>
 			<th>Atendimento</th>
-			<th>Solicitação</th>
-			<th>Estado</th>
+			<th class="extended">Estado</th>
 			<th class="extended">Parecer Atualizado</th>
 		</tr>
 	</thead>
@@ -23,11 +22,12 @@
 						[id]="att._id"
 						[checked]="att === atendimentoSelected"
 						(click)="onSelect(att)">
-				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : 'INDEFINIDO' }}</label>
+				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : '(INDEFINIDO)' }}</label>
 			</td>
 			<td>{{ att.tipo | atendimentoPipe }}</td>
-			<td>{{ att.solicitacao | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }}</td>
+			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }} (
+					{{ (att.inicio ? (att.egresso ? att.egresso : att.inicio ) : att.solicitacao) | date: 'dd/MM/yyyy' }} )
+			</td>
 			<td>{{ (att.pareceres.length > 1) ? att.pareceres[att.pareceres.length-1].texto : 'Sem parecer' }}</td>
 		</tr>
 	</tbody>
@@ -40,12 +40,6 @@
 <ng-template #semAtendimentos>
 	<p>Sem Atendimentos</p>
 </ng-template>
-
-<a
-		class="waves-effect waves-light btn-large teal lighten-2"
-		style="margin: 15px 0 15px 0;"
-		(click)="atendimentoModal.openCreate()">
-	<i class="material-icons left">add_box</i> Novo Atendimento</a>
 
 <app-atendimento-modal
 		[showAluno]="showAluno"

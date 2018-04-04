@@ -138,4 +138,8 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	onConfirmDelete() {
 		this.deleteConfirmModal.open();
 	}
+
+	onCreate() {
+		this.modal.openCreate();
+	}
 }

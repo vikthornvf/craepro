@@ -1,7 +1,7 @@
 <h4 class="grey-text" *ngIf="!aluno._id">Novo Aluno</h4>
 <form materialize [formGroup]="form" (ngSubmit)="onSave()">
 	<div class="row">
-		<h3 class="col s12 light fade-in-effect" *ngIf="!editNome; else editNomeTemplate">{{ this.form.get('nome').value }}<button
+		<h3 class="col s12 light fade-in-effect" *ngIf="!editNome; else editNomeTemplate">{{ this.form.get('nome').value }} <button
 			class="btn-floating simple tooltipped"
 			style="margin-bottom:12px"
 			materialize="tooltip"
@@ -69,12 +69,13 @@
 	<div class="row">
 		<h4 class="col s12 grey-text">Atendimentos</h4>
 		<div class="col m6 s12" *ngFor="let atendimento of atendimentos">
-			<div class="card depth blue-grey darken-1">
-				<div class="card-content white-text fade-in-effect" style="padding-top:12px;padding-bottom:0">
+			<div class="card hoverable blue-grey darken-1">
+				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
 					<app-atendimento
 							[showAluno]="false"
 							[selectedId]="aluno._id"
 							[atendimento]="atendimento"
+							[innerComponent]="true"
 							(delete)="loadAtendimentos()"
 							#atendimentoElement></app-atendimento>
 				</div>
@@ -97,14 +98,14 @@
 					class="btn-large waves-effect waves-light white black-text"
 					style="margin: 10px 10px 10px 0; width: 190px;"
 					(click)="cancel()">
-				<i class="material-icons left">close</i>Cancelar</a>
+				<i class="material-icons right">close</i>Cancelar</a>
 
 			<button
 					id="submitbtn"
 					type="submit"
 					class="btn-large waves-effect waves-light teal lighten-2"
 					style="width: 190px;">
-				<i class="material-icons left">save</i>Salvar</button>
+				<i class="material-icons right">save</i>Salvar</button>
 
 		</div>
 	</div>
@@ -121,7 +122,7 @@
 						class="btn-large waves-effect waves-light red"
 						style="margin: 15px 0 0 0; width: 190px;"
 						(click)="onConfirmDelete()">
-					<i class="material-icons left">delete</i>Excluir Aluno</a>
+					<i class="material-icons right">delete</i>Excluir Aluno</a>
 			</div>
 		</div>
 	</div>
