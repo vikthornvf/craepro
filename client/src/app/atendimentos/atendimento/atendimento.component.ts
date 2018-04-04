@@ -22,19 +22,28 @@ export class AtendimentoComponent implements OnInit {
 	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 	@Input() create = false;
 	@Input() showAluno = true;
+	@Input() innerComponent = false;
 	@Input() selectedId: string;
 	@Input() atendimento: Atendimento;
 	@Output() save = new EventEmitter<Atendimento>();
 	@Output() delete = new EventEmitter<string>();
 
+	professores: Professor[];
 	professor: Professor;
 	aluno: Aluno;
 	pareceres: FormArray = this.fb.array([]);
+	showPareceres = false;
 
 	form: FormGroup;
 	tipos: {}[] = Enums.Atts;
 	dias: {}[] = Enums.Dias;
 
+	nomeTimeout;
+	nomeActions = new EventEmitter<string|MaterializeAction>();
+	nomeParams = [{
+		belowOrigin: true,
+		hover: false
+	}];
 	horarioActions = new EventEmitter<string|MaterializeAction>();
 	timepickerParams = [{
 		twelvehour: false,
@@ -50,12 +59,6 @@ export class AtendimentoComponent implements OnInit {
 		clear: 'Limpar',
 		container: 'body'
 	}];
-	autocompleteInit = {
-		'data': {'Apple': null, 'Google': null},
-		onAutocomplete: (val) => {
-			console.log(val);
-		},
-	};
 
 	constructor(
 		private service: AtendimentoService,
@@ -65,22 +68,21 @@ export class AtendimentoComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.create) {
-			this.atendimento = null;
+			this.atendimento = new Atendimento();
+			this.atendimento.solicitacao = new Date();
+			this.atendimento.pareceres = [];
 			this.loadParent();
+		} else {
+			this.aluno = this.atendimento.aluno;
+			this.professor = this.atendimento.profissional;
 		}
 		this.initForm();
-		// if (this.create) {
-		// 	this.loadProfessores();
-		// 	return;
-		// }
 	}
 
 	initForm(): void {
 		this.form = this.fb.group({
+			'nome': null,
 			'tipo': new FormControl(null, Validators.required),
-			'solicitacao': new FormControl(new Date(), Validators.required),
-			'inicio': null,
-			'egresso': null,
 			'horario': this.fb.group({
 				'dia': null,
 				'horario': null,
@@ -91,15 +93,41 @@ export class AtendimentoComponent implements OnInit {
 		const a = this.atendimento;
 		if (a) {
 			this.form.patchValue({
+				'nome': null,
+				'autoComplete': null,
 				'tipo': a.tipo,
-				'solicitacao': a.solicitacao,
-				'inicio': a.inicio,
-				'egresso': a.egresso,
 				'horario': a.horario,
 			});
 			this.pareceres = this.form.get('pareceres') as FormArray;
 			a.pareceres.forEach(parecer => this.pareceres.insert(0, this.createParecer(parecer)));
 		}
+	}
+
+	onShowDropdown(key: string): void {
+		if (key === 'Enter') {
+			this.selectProfessor();
+		}
+		clearTimeout(this.nomeTimeout);
+		this.nomeTimeout = setTimeout(() => {
+			this.loadProfessores();
+		}, 350);
+		$('#nome_att').dropdown('open');
+	}
+
+	selectProfessor(professor?: Professor): void {
+		if (!professor && this.professores.length === 1) {
+			professor = this.professores[0];
+		}
+		this.professor = professor;
+		this.professores = null;
+		this.form.patchValue({ nome: professor.nome });
+		$('#nome_att').dropdown('close');
+	}
+
+	onSelectDiaSemana(dia: number): void {
+		const inicio = new Date();
+		inicio.setDate(inicio.getDate() + (((dia - 1) - inicio.getDay()) + 7) % 7 + 1);
+		this.atendimento.inicio = inicio;
 	}
 
 	createParecer(parecer?: Parecer): FormGroup {
@@ -112,10 +140,16 @@ export class AtendimentoComponent implements OnInit {
 	addParecer(): void {
 		this.pareceres = this.form.get('pareceres') as FormArray;
 		this.pareceres.insert(0, this.createParecer(new Parecer()));
+		this.showPareceres = true;
 	}
 
 	removeParecer(i: number): void {
 		this.pareceres.removeAt(i);
+		this.showPareceres = true;
+	}
+
+	toggleShowParecer(): void {
+		this.showPareceres = !this.showPareceres;
 	}
 
 	loadParent(): void {
@@ -127,8 +161,21 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	loadProfessores(): void {
-		// TODO
-		// loadProfessoresByTipoAtendimento
+		const nome = this.form.get('nome').value;
+		const tipo = this.form.get('tipo').value;
+		this.professores = this.professorService.listByNomeAndTipoAtendimento(nome, tipo);
+	}
+
+	iniciarAtendimento(): void {
+		this.atendimento.inicio = new Date();
+	}
+
+	finalizarAtendimento(): void {
+		this.atendimento.egresso = new Date();
+	}
+
+	continuarAtendimento(): void {
+		this.atendimento.egresso = null;
 	}
 
 	onSave(): void {
@@ -143,11 +190,9 @@ export class AtendimentoComponent implements OnInit {
 		}
 
 		att.tipo = this.form.get('tipo').value;
-		att.solicitacao = this.service.toDate(this.form.get('solicitacao').value);
-		att.inicio = this.service.toDate(this.form.get('inicio').value);
-		att.egresso = this.service.toDate(this.form.get('egresso').value);
 		att.horario = this.form.get('horario').value;
 		att.pareceres = this.form.get('pareceres').value;
+		att.pareceres.reverse();
 
 		this.atendimento = this.service.save(att);
 		this.save.emit(this.atendimento);
