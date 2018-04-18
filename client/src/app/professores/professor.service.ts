@@ -21,10 +21,10 @@ export class ProfessorService {
 	headers: Headers;
 
 	private professores: Professor[] = [
-		new Professor('1', 'Cris', ['AEE', 'Psicológico']),
-		new Professor('2', 'Fernando', ['Psicológico']),
-		new Professor('3', 'Luciano', ['AEE', 'Fonoaudiológico']),
-		new Professor('4', 'Ramon', ['AEE']),
+		new Professor('1', 'Cris', ['A', 'P']),
+		new Professor('2', 'Fernando', ['P']),
+		new Professor('3', 'Luciano', ['A', 'F']),
+		new Professor('4', 'Ramon', ['A']),
 	];
 
 	constructor(private http: Http) {
@@ -32,8 +32,13 @@ export class ProfessorService {
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list() {
+	list(): Professor[] {
 		return this.professores.slice();
+	}
+
+	listByNomeAndTipoAtendimento(nome: string, tipo: string): Professor[] {
+		nome = nome.toLowerCase();
+		return this.professores.filter(p => (p.nome.toLowerCase().includes(nome) && p.atendimentoTipos.includes(tipo)));
 	}
 
 	findById(_id: string): Professor {
