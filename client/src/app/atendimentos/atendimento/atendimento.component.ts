@@ -27,6 +27,7 @@ export class AtendimentoComponent implements OnInit {
 	@Output() save = new EventEmitter<Atendimento>();
 	@Output() delete = new EventEmitter<string>();
 
+	att: Atendimento;
 	professores: Professor[];
 	professor: Professor;
 	aluno: Aluno;
@@ -67,13 +68,14 @@ export class AtendimentoComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.create) {
-			this.atendimento = new Atendimento();
-			this.atendimento.solicitacao = new Date();
-			this.atendimento.pareceres = [];
+			this.att = new Atendimento();
+			this.att.solicitacao = new Date();
+			this.att.pareceres = [];
 			this.loadParent();
 		} else {
-			this.aluno = this.atendimento.aluno;
-			this.professor = this.atendimento.profissional;
+			this.att = Object.assign({}, this.atendimento);
+			this.aluno = this.att.aluno;
+			this.professor = this.att.profissional;
 		}
 		this.initForm();
 	}
@@ -89,7 +91,7 @@ export class AtendimentoComponent implements OnInit {
 			'pareceres': this.pareceres
 		});
 
-		const a = this.atendimento;
+		const a = this.att;
 		if (a) {
 			this.form.patchValue({
 				'nome': this.professor ? this.professor.nome : null,
@@ -126,7 +128,7 @@ export class AtendimentoComponent implements OnInit {
 	onSelectDiaSemana(dia: number): void {
 		const inicio = new Date();
 		inicio.setDate(inicio.getDate() + (((dia - 1) - inicio.getDay()) + 7) % 7 + 1);
-		this.atendimento.inicio = inicio;
+		this.att.inicio = inicio;
 	}
 
 	createParecer(parecer?: Parecer): FormGroup {
@@ -162,18 +164,19 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	iniciarAtendimento(): void {
-		this.atendimento.inicio = new Date();
+		this.att.inicio = new Date();
 	}
 
 	finalizarAtendimento(): void {
-		this.atendimento.egresso = new Date();
+		this.att.egresso = new Date();
 	}
 
 	continuarAtendimento(): void {
-		this.atendimento.egresso = null;
+		this.att.egresso = null;
 	}
 
 	onSave(): void {
+		this.atendimento = this.att;
 		const att = this.atendimento;
 
 		att.aluno = this.aluno;

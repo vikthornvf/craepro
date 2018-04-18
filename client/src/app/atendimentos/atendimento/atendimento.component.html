@@ -1,11 +1,11 @@
 <div class="row">
 	<h5 class="light" *ngIf="!innerAlunoComponent">{{ aluno.nome }}</h5>
 	<p>Atendimento
-		<span *ngIf="atendimento.egresso; else iniciadoEl">Finalizado em {{ atendimento.egresso | date: 'dd/MM/yyyy' }}</span>
+		<span *ngIf="att.egresso; else iniciadoEl">Finalizado em {{ att.egresso | date: 'dd/MM/yyyy' }}</span>
 		<ng-template #iniciadoEl>
-			<span *ngIf="atendimento.inicio; else solicitadoEl">Iniciado em {{ atendimento.inicio | date: 'dd/MM/yyyy' }}</span>
+			<span *ngIf="att.inicio; else solicitadoEl">Iniciado em {{ att.inicio | date: 'dd/MM/yyyy' }}</span>
 			<ng-template #solicitadoEl>
-					Solicitado em {{ atendimento.solicitacao | date: 'dd/MM/yyyy' }}
+					Solicitado em {{ att.solicitacao | date: 'dd/MM/yyyy' }}
 			</ng-template>
 		</ng-template>
 	</p>
@@ -26,7 +26,7 @@
 			<label>Atendimento</label>
 		</div>
 
-		<div *ngIf="atendimento.inicio && !atendimento.egresso">
+		<div *ngIf="att.inicio && !att.egresso">
 			<div class="input-field col s12">
 				<input id="nome_att"
 						formControlName="nome"
@@ -36,7 +36,7 @@
 						data-activates="professor-dropdown"
 						[materializeActions]="nomeActions"
 						[materializeParams]="nomeParams"
-						[focus]="atendimento.inicio && !atendimento.egresso"
+						[focus]="att.inicio && !att.egresso"
 						(keydown.tab)="selectProfessor()"
 						(keyup)="onShowDropdown($event.key)">
 				<label for="nome_att">Profissional</label>
@@ -74,7 +74,7 @@
 			</div>
 		</div>
 
-		<div *ngIf="atendimento.egresso; else finalizarAttEl">
+		<div *ngIf="att.egresso; else finalizarAttEl">
 			<div class="col">
 				<a class="btn waves-effect waves-light" (click)="continuarAtendimento()">
 					<i class="material-icons right">event_note</i>Continuar
@@ -82,7 +82,7 @@
 			</div>
 		</div>
 		<ng-template #finalizarAttEl>
-			<div class="col" *ngIf="atendimento.inicio; else iniciarAttEl">
+			<div class="col" *ngIf="att.inicio; else iniciarAttEl">
 				<a class="btn waves-effect waves-light" (click)="finalizarAtendimento()">
 					<i class="material-icons right">event_busy</i>Encerrar
 				</a>
