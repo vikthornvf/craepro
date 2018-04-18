@@ -24,6 +24,7 @@ export class AtendimentoModalComponent {
 
 	emitLoad() {
 		this.load.emit(true);
+		this.modalAtendimentoActions.emit({ action: 'modal', params: ['close'] });
 	}
 
 	open() {
