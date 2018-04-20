@@ -18,8 +18,7 @@
 			<select
 					id="selectAtendimento"
 					formControlName="tipo"
-					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }">
+					materialize="material_select">
 				<option value="" disabled selected>Tipo de Atendimento</option>
 				<option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.name }}</option>
 			</select>
@@ -34,42 +33,40 @@
 						type="text"
 						materialize="dropdown"
 						data-activates="professor-dropdown"
+						[ngClass]="{ 'invalid': form.get('nome').invalid && submitted }"
 						[materializeActions]="nomeActions"
 						[materializeParams]="nomeParams"
 						[focus]="att.inicio && !att.egresso"
 						(keydown.tab)="selectProfessor()"
 						(keyup)="onShowDropdown($event.key)">
-				<label for="nome_att">Profissional</label>
+				<label for="nome_att">Profissional*</label>
 			</div>
 			<ul id='professor-dropdown' class='dropdown-content'>
 				<li *ngFor="let p of professores"><a (click)="selectProfessor(p)">{{ p.nome }}</a></li>
 			</ul>
 
 			<div formGroupName="horario">
-				<div class="col s12 l6">
-					<div class="input-field">
-						<select id="selectAtendimento"
-								formControlName="dia"
-								materialize="material_select"
-								(change)="onSelectDiaSemana($event.target.value)">
-							<option value="" disabled selected>Selecionar</option>
-							<option *ngFor="let dia of dias" [value]="dia.value">{{ dia.name }}</option>
-						</select>
-						<label>Dia da Semana</label>
-					</div>
+				<div class="input-field col s12 l6">
+					<select id="selectDia"
+							formControlName="dia"
+							materialize="material_select"
+							[ngClass]="{ 'invalid': form.get('horario.dia').invalid && submitted }">
+						<option value="" disabled selected>Selecionar</option>
+						<option *ngFor="let dia of dias" [value]="dia.value">{{ dia.name }}</option>
+					</select>
+					<label>Dia da Semana*</label>
 				</div>
 
-				<div class="col s12 l6">
-					<div class="input-field">
-						<label for="birthtime">Horário</label>
-						<input id="birthtime"
-								name="birthtime"
-								type="text"
-								formControlName="horario"
-								materialize="pickatime"
-								[materializeActions]="horarioActions"
-								[materializeParams]="timepickerParams">
-					</div>
+				<div class="input-field col s12 l6">
+					<label for="birthtime">Horário*</label>
+					<input id="birthtime"
+							name="birthtime"
+							type="text"
+							formControlName="hora"
+							materialize="pickatime"
+							[ngClass]="{ 'invalid': form.get('horario.hora').invalid && submitted }"
+							[materializeActions]="horarioActions"
+							[materializeParams]="timepickerParams">
 				</div>
 			</div>
 		</div>
@@ -98,7 +95,7 @@
 	</div>
 
 	<div class="row">
-		<p>Pareceres
+		<p>Pareceres <span class="green-text" *ngIf="!pareceres.length">- Explique a situação do aluno criando um parecer aqui.</span>
 			<button
 					type="button"
 					class="btn-floating simple"
@@ -110,7 +107,7 @@
 		<div formArrayName="pareceres">
 			<div *ngIf="pareceres.length && !showPareceres; else showPareceresEl">
 				<div [formGroupName]="0">
-					<div class="input-field col s12" style="margin: 0px;">
+					<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
 						<button type="button" class="btn-floating simple postfix" (click)="removeParecer(0)">
 							<i class="material-icons">close</i>
 						</button>
@@ -127,7 +124,7 @@
 			<ng-template #showPareceresEl>
 				<div *ngFor="let parecer of pareceres.controls; let i = index;">
 					<div [formGroupName]="i">
-						<div class="input-field col s12" style="margin: 0px;">
+						<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
 							<button type="button" class="btn-floating simple postfix" (click)="removeParecer(i)">
 								<i class="material-icons">close</i>
 							</button>

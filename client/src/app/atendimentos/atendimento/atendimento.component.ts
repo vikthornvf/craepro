@@ -33,6 +33,7 @@ export class AtendimentoComponent implements OnInit {
 	aluno: Aluno;
 	pareceres: FormArray = this.fb.array([]);
 	showPareceres = false;
+	submitted = false;
 
 	form: FormGroup;
 	tipos: {}[] = Enums.Atts;
@@ -78,15 +79,22 @@ export class AtendimentoComponent implements OnInit {
 			this.professor = this.att.profissional;
 		}
 		this.initForm();
+		this.onChanges();
+	}
+
+	onChanges(): void {
+		this.form.get('horario.dia').valueChanges.subscribe(dia => {
+			this.onSelectDiaSemana(dia);
+		});
 	}
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': null,
+			'nome': new FormControl(null, this.validateIfInicio.bind(this)),
 			'tipo': null,
 			'horario': this.fb.group({
-				'dia': null,
-				'horario': null,
+				'dia': new FormControl(null, this.validateIfInicio.bind(this)),
+				'hora': new FormControl(null, this.validateIfInicio.bind(this)),
 			}),
 			'pareceres': this.pareceres
 		});
@@ -116,13 +124,15 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	selectProfessor(professor?: Professor): void {
-		if (!professor && this.professores.length === 1) {
+		if (this.professores && this.professores.length === 1) {
 			professor = this.professores[0];
 		}
-		this.professor = professor;
-		this.professores = null;
-		this.form.patchValue({ nome: professor.nome });
-		$('#nome_att').dropdown('close');
+		if (professor) {
+			this.professor = professor;
+			this.professores = null;
+			this.form.patchValue({ nome: professor.nome });
+			$('#nome_att').dropdown('close');
+		}
 	}
 
 	onSelectDiaSemana(dia: number): void {
@@ -176,6 +186,15 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	onSave(): void {
+		if (this.form.invalid) {
+			this.submitted = true;
+			// update dropdown state
+			$(document).ready(function() {
+				$('select').material_select();
+			});
+			return;
+		}
+
 		this.atendimento = this.att;
 		const att = this.atendimento;
 
@@ -201,5 +220,14 @@ export class AtendimentoComponent implements OnInit {
 
 	onConfirmDelete(): void {
 		this.deleteConfirmModal.open();
+	}
+
+	validateIfInicio(control: FormControl): {[s: string]: boolean} {
+		if (this.att.inicio) {
+			if (!control.value) {
+				return {'required': true};
+			}
+		}
+		return null;
 	}
 }
