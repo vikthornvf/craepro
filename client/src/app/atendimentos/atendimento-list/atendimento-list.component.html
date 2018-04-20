@@ -31,7 +31,7 @@
 			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }} (
 					{{ (att.inicio ? (att.egresso ? att.egresso : att.inicio ) : att.solicitacao) | date: 'dd/MM/yyyy' }} )
 			</td>
-			<td>{{ (att.pareceres.length > 1) ? att.pareceres[att.pareceres.length-1].texto : '(sem parecer)' }}</td>
+			<td>{{ (att.pareceres.length > 0) ? att.pareceres[att.pareceres.length-1].texto : '(sem parecer)' }}</td>
 		</tr>
 	</tbody>
 </table>
