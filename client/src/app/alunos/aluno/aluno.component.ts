@@ -84,11 +84,6 @@ export class AlunoComponent implements OnInit {
 		}
 	}
 
-	wasTouched(control: string) {
-		this.form.get(control).setErrors({ 'wasTouched': true });
-		console.log(this.form.get(control).errors.wasTouched);
-	}
-
 	loadAluno(_id: string) {
 		this.loading = true; // TODO resolve async
 		const a = this.aluno = this.service.findById(_id);

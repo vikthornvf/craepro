@@ -57,8 +57,7 @@
 					id="selectTurno"
 					formControlName="turno"
 					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('turno').invalid && submitted }"
-					(click)="wasTouched('turno')">
+					[ngClass]="{ 'invalid': form.get('turno').invalid && submitted }">
 				<option value="" disabled selected>Selecione o Turno</option>
 				<option *ngFor="let turno of turnos" [value]="turno.value">{{ turno.name }}</option>
 			</select>
