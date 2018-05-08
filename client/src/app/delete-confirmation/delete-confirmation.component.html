@@ -4,12 +4,17 @@
 		materialize="modal"
 		[materializeActions]="modalActions"
 		[materializeParams]="modalParams">
-	<div class="modal-content">
-		<h4 class="red-text">Excluir Registro</h4>
-		<p>
-			Desejas realmente excluir o registro de {{ labeled ? label : text }}?<br>
-			Quando um registro é excluido permanentemente, não será mais possível acessá-lo.
-		</p>
+	<div class="modal-content center">
+		<div class="row red-text">
+			<i class="medium material-icons">delete</i>
+			<h4>Excluir Registro</h4>
+		</div>
+		<div class="row">
+			<p class="black-text center">
+				Desejas realmente excluir o registro de {{ labeled ? label : text }}?<br>
+				Quando um registro é excluido permanentemente, não é mais possível acessá-lo.
+			</p>
+		</div>
 	</div>
 	<div class="modal-footer">
 		<a class="waves-effect modal-close waves-effect btn-flat" (click)="res = false">
