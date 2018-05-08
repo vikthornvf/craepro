@@ -11,6 +11,7 @@ import { Professor } from '../../professores/professor.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { ToastService } from '../../shared/toast.service';
 import { Enums } from '../../shared/enums';
+import { Responsavel } from '../responsavel.model';
 
 declare var $;
 
@@ -40,9 +41,9 @@ export class AlunoComponent implements OnInit {
 		private escolaService: EscolaService,
 		private atendimentoService: AtendimentoService,
 		private navService: NavbarService,
-		private _route: ActivatedRoute) { }
+		private _route: ActivatedRoute) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.initForm();
 		this.loadEscolas();
 		this._route.params.subscribe(params => {
@@ -56,7 +57,7 @@ export class AlunoComponent implements OnInit {
 		});
 	}
 
-	initForm() {
+	initForm(): void {
 		this.form = new FormGroup({
 			'nome': new FormControl(null, Validators.required),
 			'escola': new FormControl(null, Validators.required),
@@ -67,16 +68,17 @@ export class AlunoComponent implements OnInit {
 		});
 	}
 
-	initAluno() {
+	initAluno(): void {
 		this.aluno = new Aluno();
 		this.aluno.escola = new Escola();
+		this.aluno.responsaveis = [];
 	}
 
-	toggleEditNome() {
+	toggleEditNome(): void {
 		this.editNome = !this.editNome;
 	}
 
-	onEdtitNome(key: string) {
+	onEdtitNome(key: string): void {
 		if (key === 'Enter' || key === 'Escape') {
 			if (this.form.get('nome').value) {
 				this.toggleEditNome();
@@ -84,7 +86,7 @@ export class AlunoComponent implements OnInit {
 		}
 	}
 
-	loadAluno(_id: string) {
+	loadAluno(_id: string): void {
 		this.loading = true; // TODO resolve async
 		const a = this.aluno = this.service.findById(_id);
 		this.form.patchValue({
@@ -97,18 +99,50 @@ export class AlunoComponent implements OnInit {
 		this.loading = false;
 	}
 
-	loadEscolas() {
+	loadEscolas(): void {
 		this.escolas = this.escolaService.list();
 	}
 
-	loadAtendimentos() {
+	addResponsavel(): void {
+		$('#buttonCreateResponsavel').tooltip('remove');
+
+		if (!this.aluno.responsaveis) {
+			this.aluno.responsaveis = [];
+		}
+
+		const newResponsavel = new Responsavel();
+		newResponsavel.telefones = [];
+		newResponsavel.enderecos = [];
+		this.aluno.responsaveis.unshift(newResponsavel);
+	}
+
+	onRemoveReponsavel(responsavel: Responsavel): void {
+		const responsaveis = this.aluno.responsaveis.filter((r) => r !== responsavel);
+		this.aluno.responsaveis = responsaveis;
+	}
+
+	addAtendimento(): void {
+		$('#buttonCreateAtt').tooltip('remove');
+
+		const newAtendimento = new Atendimento();
+		newAtendimento.aluno = this.aluno;
+		newAtendimento.pareceres = [];
+		newAtendimento.solicitacao = new Date();
+
+		if (!this.atendimentos) {
+			this.atendimentos = [];
+		}
+		this.atendimentos.unshift(newAtendimento);
+	}
+
+	loadAtendimentos(): void {
 		const _id = this.aluno._id;
 		this.loadingAtendimentos = true; // TODO resolve async
 		this.atendimentos = this.atendimentoService.listByAluno(_id);
 		this.loadingAtendimentos = false;
 	}
 
-	onSave() {
+	onSave(): void {
 		if (this.form.invalid) {
 			this.submitted = true;
 			// update dropdown state
@@ -117,25 +151,22 @@ export class AlunoComponent implements OnInit {
 			});
 			return;
 		}
-		console.log(this.form.get('serie'));
-		const value = this.form.value;
-		// this.form.reset(value);
-		// TODO
 		this.service.save(this.aluno);
+		this.submitted = false;
 	}
 
-	onDelete(confirm: boolean) {
+	onDelete(confirm: boolean): void {
 		if (confirm) {
 			this.service.delete(this.aluno._id);
 			this.navService.onNavigateBack();
 		}
 	}
 
-	onConfirmDelete() {
+	onConfirmDelete(): void {
 		this.deleteConfirmModal.open();
 	}
 
-	cancel() {
+	cancel(): void {
 		this.navService.onNavigateBack();
 	}
 }

@@ -4,6 +4,7 @@ import { Aluno } from './aluno.model';
 import { Observable } from 'rxjs/Observable';
 import { EscolaService } from '../escolas/escola.service';
 import { ToastService } from '../shared/toast.service';
+import { Responsavel } from './responsavel.model';
 
 /**
 	ROUTES
@@ -77,5 +78,53 @@ export class AlunoService {
 		this.alunos = this.alunos.filter(e => e._id !== _id);
 		ToastService.toastSuccess('Aluno excluído com sucesso!');
 		return true;
+	}
+
+	removeResponsavel(alunoId: string, responsavel: Responsavel): boolean {
+		let success = false;
+		this.alunos.find(aluno => {
+			if (aluno._id === alunoId) {
+				const responsaveis = aluno.responsaveis.filter((r) => r !== responsavel);
+				aluno.responsaveis = responsaveis;
+				success = true;
+				return true;
+			}
+			return false;
+		});
+		if (success) {
+			ToastService.toastSuccess('Responsável excluído com sucesso!');
+			return true;
+		}
+		else {
+			ToastService.toastFail('Ocorreu um erro, tente novamente mais tarde!');
+			return false;
+		}
+	}
+
+	saveResponsavel(alunoId: string, responsavel: Responsavel, index: number) {
+		let success = false;
+		this.alunos.find(aluno => {
+			if (aluno._id === alunoId) {
+				const responsaveis = aluno.responsaveis;
+				if (responsaveis.length - 1 >= index) {
+					responsaveis[index] = responsavel;
+				}
+				else {
+					responsaveis.push(responsavel);
+				}
+				aluno.responsaveis = responsaveis;
+				success = true;
+				return true;
+			}
+			return false;
+		});
+		if (success) {
+			ToastService.toastSuccess('Responsável salvo com sucesso!');
+			return true;
+		}
+		else {
+			ToastService.toastFail('Ocorreu um erro, tente novamente mais tarde!');
+			return false;
+		}
 	}
 }

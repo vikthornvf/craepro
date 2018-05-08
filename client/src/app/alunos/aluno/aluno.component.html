@@ -16,13 +16,14 @@
 					<i class="material-icons">done</i>
 				</button>
 				<input
-					id="nome"
+					id="inputNome"
+					type="text"
 					focus="1"
 					formControlName="nome"
 					autocomplete="false"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
 					(keyup)="onEdtitNome($event.key)">
-				<label class="active" for="nome">Nome</label>
+				<label class="active" for="inputNome">Nome</label>
 			</div>
 		</ng-template>
 	</div>
@@ -37,7 +38,7 @@
 				<option value="" disabled selected>Selecione a Escola</option>
 				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
 			</select>
-			<label>Escola<span *ngIf="form.get('nome').value"> de {{ form.get('nome').value }}</span>*</label>
+			<label for="selectEscola">Escola<span *ngIf="form.get('nome').value"> de {{ form.get('nome').value }}</span>*</label>
 		</div>
 
 		<div class="input-field col m3 s6">
@@ -49,7 +50,7 @@
 				<option value="" disabled selected>Selecione a Serie</option>
 				<option *ngFor="let serie of series" [value]="serie.value">{{ serie.name }}</option>
 			</select>
-			<label>Serie*</label>
+			<label for="selectSerie">Serie*</label>
 		</div>
 
 		<div class="input-field col m3 s6">
@@ -61,12 +62,29 @@
 				<option value="" disabled selected>Selecione o Turno</option>
 				<option *ngFor="let turno of turnos" [value]="turno.value">{{ turno.name }}</option>
 			</select>
-			<label>Turno*</label>
+			<label for="selectTurno">Turno*</label>
 		</div>
 	</div>
 
-	<div class="row">
-		<h4 class="col s12 grey-text">Atendimentos</h4>
+	<div class="row" *ngIf="aluno._id">
+		<h4 class="col s12 grey-text">Atendimentos
+			<button id="buttonCreateAtt"
+					type="button"
+					class="btn-floating amber right tooltipped"
+					materialize="tooltip"
+					data-position="left"
+					data-ldelay="50"
+					data-tooltip="Novo Atendimento"
+					[disabled]="atendimentos ? !atendimentos[0]._id : false"
+					(click)="addAtendimento()">
+				<i class="material-icons">add</i>
+			</button>
+		</h4>
+
+		<div class="col s12 right-align" *ngIf="atendimentos ? !atendimentos[0]._id : false">
+			<label for="buttonCreateAtt">Salve o atendimento criado antes de adicionar novos.</label>
+		</div>
+
 		<div class="col m6 s12" *ngFor="let atendimento of atendimentos">
 			<div class="card hoverable blue-grey darken-1">
 				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
@@ -75,9 +93,10 @@
 							[atendimento]="atendimento"
 							[innerAlunoComponent]="true"
 							(delete)="loadAtendimentos()"
+							(save)="atendimento._id = $event._id"
 							#atendimentoElement></app-atendimento>
 				</div>
-				<div class="card-action" style="padding:5pxpx">
+				<div class="card-action" style="padding:5px0px">
 					<a (click)="atendimentoElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
 					<a (click)="atendimentoElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
 				</div>
@@ -85,9 +104,44 @@
 		</div>
 	</div>
 
-	<div class="row" *ngIf="responsaveis">
-		<h4 class="col s12 grey-text">responsáveis</h4>
-		<!-- RESPONSAVEIS -->
+	<div class="row">
+		<h4 class="col s12 grey-text">Responsáveis
+			<button id="buttonCreateResponsavel"
+					type="button"
+					class="btn-floating light-blue right tooltipped"
+					materialize="tooltip"
+					data-position="left"
+					data-ldelay="50"
+					data-tooltip="Adicionar Responsável"
+					(click)="addResponsavel()">
+				<i class="material-icons">add</i>
+			</button>
+		</h4>
+
+		<div class="col s12" *ngFor="let responsavel of aluno.responsaveis; index as i">
+			<div class="card hoverable blue-grey darken-1">
+				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
+					<app-responsavel
+						[alunoId]="aluno._id"
+						[responsavel]="responsavel"
+						(delete)="onRemoveReponsavel(responsavel)"
+						#responsavelElement></app-responsavel>
+				</div>
+				<div class="card-action" style="padding:5px0px">
+					<a
+							*ngIf="form.valid || aluno._id"
+							class="waves-effect teal-text text-accent-3"
+							(click)="responsavelElement.onSave(i)">
+						<b>Salvar</b>
+					</a>
+					<a (click)="responsavelElement.onConfirmRemove()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s12" *ngIf="!aluno._id && form.invalid && aluno.responsaveis.length">
+			<label for="buttonCreateAtt" class="red-text">É necessário preencher todos os dados obrigatórios do aluno para salvar.</label>
+		</div>
 	</div>
 
 	<div class="row">
@@ -99,7 +153,7 @@
 				<i class="material-icons right">close</i>Cancelar</a>
 
 			<button
-					id="submitbtn"
+					id="buttonSubmit"
 					type="submit"
 					class="btn-large waves-effect waves-light teal lighten-2"
 					style="width: 190px;">
@@ -109,7 +163,7 @@
 	</div>
 
 	<div class="row" *ngIf="form.invalid">
-			<label for="submitbtn" class="col">* Campos obrigatórios</label>
+		<label for="buttonSubmit" class="col red-text">* Campos obrigatórios</label>
 	</div>
 
 	<div *ngIf="aluno._id">
