@@ -37,8 +37,11 @@ export class ProfessorService {
 	}
 
 	listByNomeAndTipoAtendimento(nome: string, tipo: string): Professor[] {
-		nome = nome.toLowerCase();
-		return this.professores.filter(p => (p.nome.toLowerCase().includes(nome) && p.atendimentoTipos.includes(tipo)));
+		if (nome) {
+			nome = nome.toLowerCase();
+			return this.professores.filter(p => (p.nome.toLowerCase().includes(nome) && p.atendimentoTipos.includes(tipo)));
+		}
+		return this.professores.filter(p => p.atendimentoTipos.includes(tipo));
 	}
 
 	findById(_id: string): Professor {
