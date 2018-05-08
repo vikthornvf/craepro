@@ -122,20 +122,20 @@
 				</div>
 			</div>
 			<ng-template #showPareceresEl>
-				<div *ngFor="let parecer of pareceres.controls; let i = index;">
+				<div *ngFor="let parecer of pareceres.controls; index as i">
 					<div [formGroupName]="i">
 						<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
 							<button type="button" class="btn-floating simple postfix" (click)="removeParecer(i)">
 								<i class="material-icons">close</i>
 							</button>
 							<textarea
-									[id]="'texto' + i"
+									[id]="'inputTexto' + i"
 									formControlName="texto"
 									class="materialize-textarea"
 									style="margin: 0;"
 									autocomplete="false"></textarea>
 						</div>
-						<label class="col s12" [for]="'texto' + i">{{ parecer.get('data').value | date: 'dd/MM/yyyy' }}</label>
+						<label class="col s12" [for]="'inputTexto' + i">{{ parecer.get('data').value | date: 'dd/MM/yyyy' }}</label>
 					</div>
 				</div>
 			</ng-template>

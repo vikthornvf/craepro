@@ -178,11 +178,12 @@ export class AtendimentoService {
 			const index = this.atendimentos.indexOf(attIndex);
 			this.atendimentos[index] = atendimento;
 			msg = 'Dados do atendimento alterados com sucesso!';
-		} else {
+		}
+		else {
 			atendimento._id = this.idCount + '';
-			this.atendimentos.push(atendimento);
+			this.atendimentos.unshift(atendimento);
 			this.idCount++;
-			msg = 'Atendimento salvo com sucesso!';
+			msg = 'Atendimento criado com sucesso!';
 		}
 		ToastService.toastSuccess(msg);
 		return atendimento;

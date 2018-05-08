@@ -90,11 +90,11 @@ export class AtendimentoComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': new FormControl(null, this.validateIfInicio.bind(this)),
+			'nome': this.fb.control(null, this.validateIfInicio.bind(this)),
 			'tipo': null,
 			'horario': this.fb.group({
-				'dia': new FormControl(null, this.validateIfInicio.bind(this)),
-				'hora': new FormControl(null, this.validateIfInicio.bind(this)),
+				'dia': this.fb.control(null, this.validateIfInicio.bind(this)),
+				'hora': this.fb.control(null, this.validateIfInicio.bind(this)),
 			}),
 			'pareceres': this.pareceres
 		});
@@ -143,8 +143,8 @@ export class AtendimentoComponent implements OnInit {
 
 	createParecer(parecer?: Parecer): FormGroup {
 		return this.fb.group({
-			texto: parecer ? parecer.texto : null,
-			data: parecer ? parecer.data : null
+			'texto': parecer ? parecer.texto : null,
+			'data': parecer ? parecer.data : null
 		});
 	}
 
@@ -206,13 +206,13 @@ export class AtendimentoComponent implements OnInit {
 		att.pareceres.reverse();
 
 		this.atendimento = this.service.save(att);
+		this.att = this.atendimento;
 		this.save.emit(this.atendimento);
 	}
 
 	onDelete(confirm: boolean): void {
 		if (confirm) {
 			const _id = this.atendimento._id;
-			// TODO
 			this.service.delete(_id);
 			this.delete.emit(_id);
 		}
