@@ -31,10 +31,14 @@ export class NavFilter implements PipeTransform {
 
 	transform(list, keyword, property) {
 		keyword = this.standardizeChars(keyword.toLowerCase());
-		return list.filter(entity => this.standardizeChars(entity[property].toLowerCase()).includes(keyword));
+		return list.filter(entity => this.standardizeChars(entity[property]).includes(keyword));
 	}
 
 	standardizeChars(input: string): string {
+		if (!input) {
+			return '';
+		}
+		input = input.toLowerCase();
 		let output = '';
 		for (let i = 0; i < input.length; i++) {
 			output += this.accentMap[input.charAt(i)] || input.charAt(i);

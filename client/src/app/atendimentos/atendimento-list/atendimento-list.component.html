@@ -1,4 +1,4 @@
-<table class="highlight" *ngIf="atendimentos; else semAtendimentos">
+<table class="highlight" *ngIf="atendimentos.length; else semAtendimentos">
 	<thead>
 		<tr>
 			<th>{{ property | titlecase }}</th>
@@ -41,7 +41,7 @@
 </div>
 
 <ng-template #semAtendimentos>
-	<p>Sem Atendimentos</p>
+	<p *ngIf="isAtendimentosLoaded">Sem Atendimentos</p>
 </ng-template>
 
 <app-atendimento-modal

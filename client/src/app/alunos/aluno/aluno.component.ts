@@ -151,7 +151,15 @@ export class AlunoComponent implements OnInit {
 			});
 			return;
 		}
-		this.service.save(this.aluno);
+
+		const aluno = this.aluno;
+		aluno.nome = this.form.get('nome').value;
+		aluno.serie = this.form.get('serie').value;
+		aluno.turno = this.form.get('turno').value;
+		const escolaId = this.form.get('escola').value;
+		aluno.escola = this.escolaService.findById(escolaId);
+
+		this.service.save(aluno);
 		this.submitted = false;
 	}
 

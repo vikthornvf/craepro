@@ -20,12 +20,13 @@
 			<label [for]="aluno._id"></label>
 			<div class="flex nome truncate">
 				<span class="flex-container situacao">{{ aluno.nome }}<i
+					*ngIf="aluno.situacao"
 					class="material-icons flex situacao tooltipped"
 					materialize="tooltip"
 					data-position="left"
 					data-ldelay="50"
 					[attr.data-tooltip]="aluno.situacao | situacaoPipe"
-					[ngClass]="aluno.situacao.toLowerCase()">more</i>
+					[ngClass]="aluno.situacao ? aluno.situacao.toLowerCase() : null">more</i>
 				</span>
 			</div>
 			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
