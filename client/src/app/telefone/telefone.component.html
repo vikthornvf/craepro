@@ -1,0 +1,22 @@
+<p><span *ngIf="telefones.length">Telefones</span>
+	<span *ngIf="!telefones.length">Adicione um Telefone</span>
+	<button
+			type="button"
+			class="btn-floating simple"
+			(click)="addTelefone()">
+		<i class="material-icons">add</i>
+	</button>
+</p>
+<div *ngFor="let telefone of telefones; index as i; trackBy:customTrackBy">
+	<div class="input-field col s12">
+		<button type="button" class="btn-floating simple postfix" (click)="removeTelefone(i)">
+			<i class="material-icons">close</i>
+		</button>
+		<input [id]="'inputTelefone' + i"
+			type="tel"
+			autocomplete="false"
+			placeholder="Ex.: 51 98765-4321"
+			[(ngModel)]="telefones[i]">
+		<label [for]="'inputTelefone' + i">Número</label>
+	</div>
+</div>
