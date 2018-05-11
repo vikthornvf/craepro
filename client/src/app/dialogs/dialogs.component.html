@@ -1,0 +1,45 @@
+<div id="dialogs"
+		class="modal"
+		materialize="modal"
+		[materializeActions]="modalActions"
+		[materializeParams]="modalParams">
+	<div class="modal-content center">
+		<div [ngSwitch]="dialogType">
+			<ng-container *ngSwitchCase="1">
+				<div class="row light-blue-text">
+					<i class="medium material-icons">info</i>
+					<h4>Atenção</h4>
+				</div>
+				<div class="row">
+					<p class="black-text center">
+						<span *ngIf="!text">Desejas realmente realizar esta ação?</span>
+						<span *ngIf="text">{{ text }}</span>
+					</p>
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="2">
+				<div class="row red-text">
+					<i class="medium material-icons">delete_forever</i>
+					<h4>Excluir Registro</h4>
+				</div>
+				<div class="row">
+					<p class="black-text center">
+						Desejas realmente excluir o registro<span *ngIf="label"> de {{ label }}</span>?<br>
+						Quando um registro é excluido permanentemente, não é mais possível acessá-lo.
+					</p>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a class="waves-effect modal-close waves-effect btn-flat" (click)="confirm = false">
+			<b class="light-blue-text">Cancelar</b>
+		</a>
+		<a class="modal-action modal-close waves-effect btn-flat" (click)="confirm = true">
+			<b [ngSwitch]="dialogType"class="light-blue-text">
+				<span *ngSwitchCase="1">OK</span>
+				<span *ngSwitchCase="2">Excluir</span>
+			</b>
+		</a>
+	</div>
+</div>
