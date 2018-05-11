@@ -25,11 +25,7 @@ export class AlunoComponent implements OnInit {
 
 	form: FormGroup;
 	submitted = false;
-
 	editNome = true;
-	loading = false;
-	loadingAtendimentos = false;
-
 	aluno: Aluno;
 	escolas: Escola[];
 	atendimentos: Atendimento[];
@@ -87,7 +83,6 @@ export class AlunoComponent implements OnInit {
 	}
 
 	loadAluno(_id: string): void {
-		this.loading = true; // TODO resolve async
 		const a = this.aluno = this.service.findById(_id);
 		this.form.patchValue({
 			'nome': a.nome,
@@ -96,7 +91,6 @@ export class AlunoComponent implements OnInit {
 			'turno': a.turno
 		});
 		this.loadAtendimentos();
-		this.loading = false;
 	}
 
 	loadEscolas(): void {
@@ -137,9 +131,7 @@ export class AlunoComponent implements OnInit {
 
 	loadAtendimentos(): void {
 		const _id = this.aluno._id;
-		this.loadingAtendimentos = true; // TODO resolve async
 		this.atendimentos = this.atendimentoService.listByAluno(_id);
-		this.loadingAtendimentos = false;
 	}
 
 	onSave(): void {

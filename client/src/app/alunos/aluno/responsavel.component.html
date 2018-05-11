@@ -1,7 +1,7 @@
 <form materialize [formGroup]="form">
 	<div class="row">
 		<div class="input-field col s12">
-			<input id="inputNome"
+			<input id="inputNomeResponsavel"
 					type="text"
 					autocomplete="false"
 					formControlName="nome"
@@ -19,107 +19,9 @@
 			<label for="inputParentesco">Parentesco</label>
 		</div>
 
-		<p><span *ngIf="telefones.length">Telefones</span>
-		<span *ngIf="!telefones.length">Adicione um Telefone</span>
-			<button
-					type="button"
-					class="btn-floating simple"
-					(click)="addTelefone()">
-				<i class="material-icons">add</i>
-			</button>
-		</p>
-		<div formArrayName="telefones">
-			<div *ngFor="let telefone of telefones.controls; index as i">
-				<div class="input-field col s12">
-					<button type="button" class="btn-floating simple postfix" (click)="removeTelefone(i)">
-						<i class="material-icons">close</i>
-					</button>
-					<input [id]="'inputTelefone' + i"
-						type="tel"
-						autocomplete="false"
-						placeholder="Ex.: 51 98765-4321"
-						[formControlName]="i"
-						[ngClass]="{ 'invalid': telefone.invalid && telefone.touched }"
-						[(ngModel)]="responsavel.telefones[i]">
-					<label [for]="'inputTelefone' + i">Número*</label>
-				</div>
-			</div>
-		</div>
+		<app-telefone [telefones]="responsavel.telefones"></app-telefone>
 
-		<p><span *ngIf="enderecos.controls.length">Endereços</span>
-		<span *ngIf="!enderecos.controls.length">Adicione um Endereço</span>
-			<button
-					type="button"
-					class="btn-floating simple"
-					(click)="addEndereco()">
-				<i class="material-icons">add</i>
-			</button>
-		</p>
-		<div formArrayName="enderecos">
-			<div *ngFor="let endereco of enderecos.controls; index as i">
-				<div [formGroupName]="i" [ngClass]="{ 'm6': enderecos.controls.length > 1 }" class="col s12">
-					<div class="input-field col s12">
-						<input id="inputTipo"
-							type="text"
-							autocomplete="false"
-							formControlName="tipo"
-							[ngClass]="{ 'invalid': endereco.get('tipo').invalid && endereco.get('tipo').touched }"
-							[(ngModel)]="responsavel.enderecos[i].tipo">
-						<label for="inputTipo">Tipo de Endereço*</label>
-					</div>
-					<div class="input-field col s9">
-						<input id="inputRua"
-							type="text"
-							autocomplete="false"
-							formControlName="rua"
-							[ngClass]="{ 'invalid': endereco.get('rua').invalid && endereco.get('rua').touched }"
-							[(ngModel)]="responsavel.enderecos[i].rua">
-						<label for="inputRua">Rua*</label>
-					</div>
-					<div class="input-field col s3">
-						<input id="inputNumero"
-							type="number"
-							autocomplete="false"
-							formControlName="numero"
-							[ngClass]="{ 'invalid': endereco.get('numero').invalid && endereco.get('numero').touched }"
-							[(ngModel)]="responsavel.enderecos[i].numero">
-						<label for="inputNumero">Número*</label>
-					</div>
-					<div class="input-field col s12">
-						<input id="inputComplemento"
-							type="text"
-							autocomplete="false"
-							formControlName="complemento"
-							[(ngModel)]="responsavel.enderecos[i].complemento">
-						<label for="inputComplemento">Complemento</label>
-					</div>
-					<div class="input-field col s12">
-						<input id="inputCidade"
-							type="text"
-							autocomplete="false"
-							formControlName="cidade"
-							[ngClass]="{ 'invalid': endereco.get('cidade').invalid && endereco.get('cidade').touched }"
-							[(ngModel)]="responsavel.enderecos[i].cidade">
-						<label for="inputCidade">Cidade*</label>
-					</div>
-					<div class="input-field col s12">
-						<input id="inputBairro"
-							type="text"
-							autocomplete="false"
-							formControlName="bairro"
-							[ngClass]="{ 'invalid': endereco.get('bairro').invalid && endereco.get('bairro').touched }"
-							[(ngModel)]="responsavel.enderecos[i].bairro">
-						<label for="inputBairro">Bairro*</label>
-					</div>
-
-					<div class="col s12 center-align">
-						<a class="btn-flat waves-effect waves-red white-text" (click)="removeEndereco(i)">
-							<i class="material-icons right">delete</i>Apagar Endereço
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		<app-endereco [enderecos]="responsavel.enderecos" whiteButton="1"></app-endereco>
 	</div>
 </form>
 

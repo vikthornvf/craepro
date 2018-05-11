@@ -8,12 +8,14 @@ import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
 import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { TelefoneModule } from '../telefone/telefone.module';
+import { EnderecoModule } from '../endereco/endereco.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
+import { ResponsavelComponent } from './aluno/responsavel.component';
 
 import { AlunoService } from './aluno.service';
-import { ResponsavelComponent } from './aluno/responsavel.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +33,9 @@ import { ResponsavelComponent } from './aluno/responsavel.component';
 		DirectivesModule,
 		AddButtonModule,
 		DeleteConfirmationModule,
-		PipesModule
+		PipesModule,
+		TelefoneModule,
+		EnderecoModule
 	],
 	providers: [AlunoService]
 })
