@@ -5,8 +5,9 @@
 					type="text"
 					autocomplete="false"
 					formControlName="nome"
+					[focus]="!resp._id"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
-					[(ngModel)]="responsavel.nome">
+					[(ngModel)]="resp.nome">
 			<label for="inputNome">Nome*</label>
 		</div>
 
@@ -15,14 +16,12 @@
 					type="text"
 					autocomplete="false"
 					formControlName="parentesco"
-					[(ngModel)]="responsavel.parentesco">
+					[(ngModel)]="resp.parentesco">
 			<label for="inputParentesco">Parentesco</label>
 		</div>
 
-		<app-telefone [telefones]="responsavel.telefones"></app-telefone>
+		<app-telefone [telefones]="resp.telefones"></app-telefone>
 
-		<app-endereco [enderecos]="responsavel.enderecos" whiteButton="1"></app-endereco>
+		<app-endereco [enderecos]="resp.enderecos" whiteButton="1"></app-endereco>
 	</div>
 </form>
-
-<app-delete-confirmation #deleteConfirmModal [text]="form.get('nome').value"></app-delete-confirmation>

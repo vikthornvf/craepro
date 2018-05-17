@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { Professor } from './professor.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Professor } from './professor.model';
+import { DialogsService } from '../dialogs/dialogs.service';
 
 /**
 	ROUTES
@@ -18,17 +19,22 @@ import { Observable } from 'rxjs/Observable';
 export class ProfessorService {
 
 	readonly url = 'api/professor';
-	headers: Headers;
+	headers: HttpHeaders;
+
+	idCount = 5; // TODO delete
 
 	private professores: Professor[] = [
-		new Professor('1', 'Cris', ['A', 'P']),
-		new Professor('2', 'Fernando', ['P']),
-		new Professor('3', 'Luciano', ['A', 'F']),
-		new Professor('4', 'Ramon', ['A']),
+		new Professor('1', 'Cris', ['A', 'P'], [], []),
+		new Professor('2', 'Fernando', ['P'], [], []),
+		new Professor('3', 'Luciano', ['A', 'F'], [], []),
+		new Professor('4', 'Ramon', ['A'], [], []),
 	];
 
-	constructor(private http: Http) {
-		this.headers = new Headers();
+	constructor(
+		private http: HttpClient,
+		private dialogs: DialogsService) {
+
+		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
@@ -48,9 +54,27 @@ export class ProfessorService {
 		return this.professores.find(p => p._id === _id);
 	}
 
+	save(professor: Professor) {
+		let msg: string;
+
+		if (professor._id) {
+			const attIndex = this.professores.find(a => a._id === professor._id);
+			const index = this.professores.indexOf(attIndex);
+			this.professores[index] = professor;
+			msg = `Dados de professor(a) ${professor.nome} salvos com sucesso!`;
+		} else {
+			professor._id = this.idCount + '';
+			this.professores.push(professor);
+			this.idCount++;
+			msg = `professor(a) ${professor.nome} salvo com sucesso!`;
+		}
+		this.dialogs.toastSuccess(msg);
+		return professor;
+	}
+
 	delete(_id: string): boolean {
-		// TODO
-		console.log('Deleted professor id: ' + _id);
+		this.professores.filter(e => e._id !== _id);
+		this.dialogs.toastSuccess('Professor excluído com sucesso!');
 		return true;
 	}
 }

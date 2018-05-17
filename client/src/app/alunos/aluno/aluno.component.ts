@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlunoService } from '../aluno.service';
 import { EscolaService } from '../../escolas/escola.service';
 import { AtendimentoService } from '../../atendimentos/atendimento.service';
+import { ResponsavelService } from '../../responsaveis/responsavel.service';
 import { NavbarService } from '../../nav/navbar/navbar.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { Aluno } from '../aluno.model';
 import { Escola } from '../../escolas/escola.model';
 import { Professor } from '../../professores/professor.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
-import { ToastService } from '../../shared/toast.service';
+import { Responsavel } from '../../responsaveis/responsavel.model';
 import { Enums } from '../../shared/enums';
-import { Responsavel } from '../responsavel.model';
 
 declare var $;
 
@@ -21,14 +22,13 @@ declare var $;
 })
 export class AlunoComponent implements OnInit {
 
-	@ViewChild('deleteConfirmModal') deleteConfirmModal;
-
 	form: FormGroup;
 	submitted = false;
 	editNome = true;
 	aluno: Aluno;
 	escolas: Escola[];
-	atendimentos: Atendimento[];
+	atendimentos: Atendimento[] = [];
+	responsaveis: Responsavel[] = [];
 	series: {}[] = Enums.Series;
 	turnos: {}[] = Enums.Turnos;
 
@@ -36,7 +36,10 @@ export class AlunoComponent implements OnInit {
 		private service: AlunoService,
 		private escolaService: EscolaService,
 		private atendimentoService: AtendimentoService,
+		private responsavelService: ResponsavelService,
 		private navService: NavbarService,
+		private dialogs: DialogsService,
+		private _zone: NgZone,
 		private _route: ActivatedRoute) {}
 
 	ngOnInit(): void {
@@ -67,7 +70,6 @@ export class AlunoComponent implements OnInit {
 	initAluno(): void {
 		this.aluno = new Aluno();
 		this.aluno.escola = new Escola();
-		this.aluno.responsaveis = [];
 	}
 
 	toggleEditNome(): void {
@@ -91,6 +93,7 @@ export class AlunoComponent implements OnInit {
 			'turno': a.turno
 		});
 		this.loadAtendimentos();
+		this.loadResponsaveis();
 	}
 
 	loadEscolas(): void {
@@ -100,19 +103,24 @@ export class AlunoComponent implements OnInit {
 	addResponsavel(): void {
 		$('#buttonCreateResponsavel').tooltip('remove');
 
-		if (!this.aluno.responsaveis) {
-			this.aluno.responsaveis = [];
-		}
-
 		const newResponsavel = new Responsavel();
+		newResponsavel.aluno = this.aluno;
 		newResponsavel.telefones = [];
 		newResponsavel.enderecos = [];
-		this.aluno.responsaveis.unshift(newResponsavel);
+
+		this.responsaveis.unshift(newResponsavel);
 	}
 
-	onRemoveReponsavel(responsavel: Responsavel): void {
-		const responsaveis = this.aluno.responsaveis.filter((r) => r !== responsavel);
-		this.aluno.responsaveis = responsaveis;
+	loadResponsaveis(): void {
+		const _id = this.aluno._id;
+		this.responsaveis = this.responsavelService.listByAluno(_id);
+	}
+
+	removeResponsavel(responsavel: Responsavel): void {
+		this._zone.run(() => {
+			const index = this.responsaveis.indexOf(responsavel);
+			this.responsaveis.splice(index, 1);
+		});
 	}
 
 	addAtendimento(): void {
@@ -123,15 +131,19 @@ export class AlunoComponent implements OnInit {
 		newAtendimento.pareceres = [];
 		newAtendimento.solicitacao = new Date();
 
-		if (!this.atendimentos) {
-			this.atendimentos = [];
-		}
 		this.atendimentos.unshift(newAtendimento);
 	}
 
 	loadAtendimentos(): void {
 		const _id = this.aluno._id;
 		this.atendimentos = this.atendimentoService.listByAluno(_id);
+	}
+
+	removeAtendimento(atendimento: Atendimento): void {
+		this._zone.run(() => {
+			const index = this.atendimentos.indexOf(atendimento);
+			this.atendimentos.splice(index, 1);
+		});
 	}
 
 	onSave(): void {
@@ -163,7 +175,8 @@ export class AlunoComponent implements OnInit {
 	}
 
 	onConfirmDelete(): void {
-		this.deleteConfirmModal.open();
+		const label = this.aluno.nome ? this.aluno.nome : 'Aluno';
+		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
 	}
 
 	cancel(): void {

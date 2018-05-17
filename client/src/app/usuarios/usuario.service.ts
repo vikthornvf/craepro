@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from './usuario.model';
 
 @Injectable()
 export class UsuarioService {
 
 	readonly url = 'api/usuarios';
-	headers: Headers;
+	headers: HttpHeaders;
 
 	private usuarios: Usuario[] = [
 		new Usuario('1', 'abel', 'Escolinha', 'abel@email.com'),
@@ -17,7 +17,7 @@ export class UsuarioService {
 	];
 
 	constructor() {
-		this.headers = new Headers();
+		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 

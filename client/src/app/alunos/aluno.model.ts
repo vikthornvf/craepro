@@ -1,5 +1,5 @@
 import { Escola } from '../escolas/escola.model';
-import { Responsavel } from './responsavel.model';
+import { Responsavel } from '../responsaveis/responsavel.model';
 
 export class Aluno {
 
@@ -9,6 +9,5 @@ export class Aluno {
 		public situacao?: string,
 		public serie?: string,
 		public turno?: string,
-		public escola?: Escola,
-		public responsaveis?: Responsavel[]) {}
+		public escola?: Escola) {}
 }

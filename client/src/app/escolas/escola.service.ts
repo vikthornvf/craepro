@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Escola } from './escola.model';
 
@@ -7,7 +7,7 @@ import { Escola } from './escola.model';
 export class EscolaService {
 
 	readonly url = 'api/escolas';
-	headers: Headers;
+	headers: HttpHeaders;
 
 	private escolas: Escola[] = [
 		{ _id: '1', nome: 'Escolinha', qtdAlunos: 4 },
@@ -18,8 +18,8 @@ export class EscolaService {
 		{ _id: '6', nome: 'Vamstudá', qtdAlunos: 6 }
 	];
 
-	constructor(private http: Http) {
-		this.headers = new Headers();
+	constructor(private http: HttpClient) {
+		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
@@ -30,6 +30,10 @@ export class EscolaService {
 	findById(_id: string): Escola {
 		return this.escolas.find(
 			escola => escola._id === _id);
+	}
+
+	save(escola: Escola): void {
+		// TODO
 	}
 
 	delete(_id: string): boolean {

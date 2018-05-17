@@ -4,12 +4,12 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
 import { AtendimentoService } from '../atendimento.service';
 import { ProfessorService } from '../../professores/professor.service';
 import { AlunoService } from '../../alunos/aluno.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
 import { Professor } from '../../professores/professor.model';
 import { Aluno } from '../../alunos/aluno.model';
-import { Enums } from '../../shared/enums';
 import { Parecer } from '../parecer.model';
-import { ToastService } from '../../shared/toast.service';
+import { Enums } from '../../shared/enums';
 
 declare var $;
 
@@ -19,7 +19,6 @@ declare var $;
 })
 export class AtendimentoComponent implements OnInit {
 
-	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 	@Input() create = false;
 	@Input() innerAlunoComponent = false;
 	@Input() selectedId: string;
@@ -62,6 +61,7 @@ export class AtendimentoComponent implements OnInit {
 	}];
 
 	constructor(
+		private dialogs: DialogsService,
 		private service: AtendimentoService,
 		private professorService: ProfessorService,
 		private alunoService: AlunoService,
@@ -90,11 +90,11 @@ export class AtendimentoComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': this.fb.control(null, this.validateIfInicio.bind(this)),
+			'nome': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 			'tipo': null,
 			'horario': this.fb.group({
-				'dia': this.fb.control(null, this.validateIfInicio.bind(this)),
-				'hora': this.fb.control(null, this.validateIfInicio.bind(this)),
+				'dia': this.fb.control(null, this.validateIfHasInicio.bind(this)),
+				'hora': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 			}),
 			'pareceres': this.pareceres
 		});
@@ -192,6 +192,8 @@ export class AtendimentoComponent implements OnInit {
 			$(document).ready(function() {
 				$('select').material_select();
 			});
+
+			this.dialogs.toastFail('Preencha todos os campos obrigatórios para salvar.');
 			return;
 		}
 
@@ -219,10 +221,10 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	onConfirmDelete(): void {
-		this.deleteConfirmModal.open();
+		this.dialogs.modalDelete(confirm => this.onDelete(confirm), 'atendimento');
 	}
 
-	validateIfInicio(control: FormControl): {[s: string]: boolean} {
+	validateIfHasInicio(control: FormControl): {[s: string]: boolean} {
 		if (this.att.inicio) {
 			if (!control.value) {
 				return {'required': true};

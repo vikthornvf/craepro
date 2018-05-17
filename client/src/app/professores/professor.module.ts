@@ -3,17 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
+import { DirectivesModule } from '../shared/directives.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
 import { AddButtonModule } from '../add-button/add-button.module';
-import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
+import { TelefoneModule } from '../telefone/telefone.module';
+import { EnderecoModule } from '../endereco/endereco.module';
 
 import { ProfessorListComponent } from './professor-list/professor-list.component';
+import { ProfessorComponent } from './professor/professor.component';
 
 import { ProfessorService } from './professor.service';
 
 @NgModule({
 	declarations: [
-		ProfessorListComponent
+		ProfessorListComponent,
+		ProfessorComponent
 	],
 	exports: [],
 	imports: [
@@ -21,9 +25,11 @@ import { ProfessorService } from './professor.service';
 		BrowserModule,
 		ReactiveFormsModule,
 		NavModule,
+		DirectivesModule,
 		AtendimentoModule,
 		AddButtonModule,
-		DeleteConfirmationModule
+		TelefoneModule,
+		EnderecoModule,
 	],
 	providers: [ProfessorService]
 })

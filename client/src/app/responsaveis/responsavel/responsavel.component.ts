@@ -1,0 +1,68 @@
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
+import { ResponsavelService } from '../responsavel.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
+import { Responsavel } from '../responsavel.model';
+import { Endereco } from '../../shared/endereco.model';
+import { Aluno } from '../../alunos/aluno.model';
+
+declare var Materialize: any;
+
+@Component({
+	selector: 'app-responsavel',
+	templateUrl: './responsavel.component.html'
+})
+export class ResponsavelComponent implements OnInit {
+
+	@Input() index: number;
+	@Input() aluno: Aluno;
+	@Input() responsavel: Responsavel;
+	@Output() save = new EventEmitter<Responsavel>();
+	@Output() delete = new EventEmitter<string>();
+
+	form: FormGroup;
+	resp: Responsavel;
+
+	constructor(
+		private service: ResponsavelService,
+		private dialogs: DialogsService,
+		private fb: FormBuilder) {}
+
+	ngOnInit(): void {
+		this.resp = this.responsavel;
+		this.form = this.fb.group({
+			'nome': new FormControl(null, Validators.required),
+			'parentesco': null
+		});
+	}
+
+	onSave(): void {
+		if (this.form.invalid) {
+			this.dialogs.toastFail('Preencha todos os campos obrigatórios para salvar.');
+			return;
+		}
+
+		this.responsavel = this.resp;
+		const resp = this.responsavel;
+
+		resp.aluno = this.aluno;
+		resp.nome = this.form.get('nome').value;
+		resp.parentesco = this.form.get('parentesco').value;
+
+		this.resp = this.responsavel = this.service.save(resp);
+		this.save.emit(this.responsavel);
+	}
+
+	onDelete(confirm: boolean): void {
+		if (confirm) {
+			const _id = this.responsavel._id;
+			this.service.delete(_id);
+			this.delete.emit(_id);
+		}
+	}
+
+	onConfirmDelete(): void {
+		const label = this.responsavel.nome ? this.responsavel.nome : 'Responsável';
+		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
+	}
+}

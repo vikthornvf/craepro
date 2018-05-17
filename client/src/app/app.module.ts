@@ -1,6 +1,6 @@
 import { MaterializeSharedModule } from './shared/materialize-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { UsuarioModule } from './usuarios/usuario.module';
 	imports: [
 		MaterializeSharedModule,
 		BrowserModule,
-		HttpModule,
+		HttpClientModule,
 		NavModule,
 		DialogsModule,
 		AlunoModule,

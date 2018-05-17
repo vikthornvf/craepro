@@ -92,7 +92,7 @@
 							[selectedId]="aluno._id"
 							[atendimento]="atendimento"
 							[innerAlunoComponent]="true"
-							(delete)="loadAtendimentos()"
+							(delete)="removeAtendimento(atendimento)"
 							(save)="atendimento._id = $event._id"
 							#atendimentoElement></app-atendimento>
 				</div>
@@ -104,7 +104,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" *ngIf="aluno._id">
 		<h4 class="col s12 grey-text">Responsáveis
 			<button id="buttonCreateResponsavel"
 					type="button"
@@ -113,34 +113,39 @@
 					data-position="left"
 					data-ldelay="50"
 					data-tooltip="Adicionar Responsável"
+					[disabled]="responsaveis[0] ? !responsaveis[0]._id : false"
 					(click)="addResponsavel()">
 				<i class="material-icons">add</i>
 			</button>
 		</h4>
 
-		<div class="col s12" *ngFor="let responsavel of aluno.responsaveis; index as i">
+		<div class="col s12 right-align" *ngIf="responsaveis[0] ? !responsaveis[0]._id : false">
+			<label for="buttonCreateAtt">Salve o responsável criado antes de adicionar novos.</label>
+		</div>
+
+		<div class="col s12" *ngFor="let responsavel of responsaveis; index as i">
 			<div class="card hoverable blue-grey darken-1">
 				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
 					<app-responsavel
-						[alunoId]="aluno._id"
+						[index]="i"
+						[aluno]="aluno"
 						[responsavel]="responsavel"
-						(delete)="onRemoveReponsavel(responsavel)"
-						#responsavelElement></app-responsavel>
+						(delete)="removeResponsavel(responsavel)"
+						(save)="responsavel._id = $event._id"
+						#responsavelElement>
+					</app-responsavel>
 				</div>
 				<div class="card-action" style="padding:5px0px">
-					<a
-							*ngIf="form.valid || aluno._id"
-							class="waves-effect teal-text text-accent-3"
-							(click)="responsavelElement.onSave(i)">
-						<b>Salvar</b>
-					</a>
-					<a (click)="responsavelElement.onConfirmRemove()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+					<a (click)="responsavelElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
+					<a (click)="responsavelElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="col s12" *ngIf="!aluno._id && form.invalid && aluno.responsaveis.length">
-			<label for="buttonCreateAtt" class="red-text">É necessário preencher todos os dados obrigatórios do aluno para salvar.</label>
+	<div class="row">
+		<div class="col s12" *ngIf="!aluno._id">
+			<label>É necessário salvar o registro do aluno para criar os atendimentos e responsáveis.</label>
 		</div>
 	</div>
 
@@ -180,5 +185,3 @@
 	</div>
 
 </form>
-
-<app-delete-confirmation #deleteConfirmModal [text]="form.get('nome').value" (response)="onDelete($event)"></app-delete-confirmation>

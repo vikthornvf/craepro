@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { Aluno } from './aluno.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { EscolaService } from '../escolas/escola.service';
-import { ToastService } from '../shared/toast.service';
-import { Responsavel } from './responsavel.model';
+import { DialogsService } from '../dialogs/dialogs.service';
+import { Aluno } from './aluno.model';
+import { Responsavel } from '../responsaveis/responsavel.model';
 
 /**
 	ROUTES
@@ -25,7 +25,7 @@ import { Responsavel } from './responsavel.model';
 export class AlunoService {
 
 	readonly url = 'api/aluno';
-	headers: Headers;
+	headers: HttpHeaders;
 
 	private alunos: Aluno[] = [
 		new Aluno('1', 'Adão', 'D', 'E3', 'T', this.serviceEscola.findById('1')),
@@ -39,8 +39,11 @@ export class AlunoService {
 	];
 	idCount = 9; // TODO delete
 
-	constructor(private http: Http, private serviceEscola: EscolaService) {
-		this.headers = new Headers();
+	constructor(
+		private http: HttpClient,
+		private serviceEscola: EscolaService,
+		private dialogs: DialogsService) {
+		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
@@ -70,61 +73,13 @@ export class AlunoService {
 			this.idCount++;
 			msg = `Aluno(a) ${aluno.nome} salvo com sucesso!`;
 		}
-		ToastService.toastSuccess(msg);
+		this.dialogs.toastSuccess(msg);
 		return aluno;
 	}
 
 	delete(_id: string): boolean {
 		this.alunos = this.alunos.filter(e => e._id !== _id);
-		ToastService.toastSuccess('Aluno excluído com sucesso!');
+		this.dialogs.toastSuccess('Aluno excluído com sucesso!');
 		return true;
-	}
-
-	removeResponsavel(alunoId: string, responsavel: Responsavel): boolean {
-		let success = false;
-		this.alunos.find(aluno => {
-			if (aluno._id === alunoId) {
-				const responsaveis = aluno.responsaveis.filter((r) => r !== responsavel);
-				aluno.responsaveis = responsaveis;
-				success = true;
-				return true;
-			}
-			return false;
-		});
-		if (success) {
-			ToastService.toastSuccess('Responsável excluído com sucesso!');
-			return true;
-		}
-		else {
-			ToastService.toastFail('Ocorreu um erro, tente novamente mais tarde!');
-			return false;
-		}
-	}
-
-	saveResponsavel(alunoId: string, responsavel: Responsavel, index: number) {
-		let success = false;
-		this.alunos.find(aluno => {
-			if (aluno._id === alunoId) {
-				const responsaveis = aluno.responsaveis;
-				if (responsaveis.length - 1 >= index) {
-					responsaveis[index] = responsavel;
-				}
-				else {
-					responsaveis.push(responsavel);
-				}
-				aluno.responsaveis = responsaveis;
-				success = true;
-				return true;
-			}
-			return false;
-		});
-		if (success) {
-			ToastService.toastSuccess('Responsável salvo com sucesso!');
-			return true;
-		}
-		else {
-			ToastService.toastFail('Ocorreu um erro, tente novamente mais tarde!');
-			return false;
-		}
 	}
 }

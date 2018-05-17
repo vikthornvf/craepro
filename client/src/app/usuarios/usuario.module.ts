@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AddButtonModule } from '../add-button/add-button.module';
-import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioComponent } from './usuario/usuario.component';
@@ -22,7 +21,6 @@ import { UsuarioService } from './usuario.service';
 		BrowserModule,
 		NavModule,
 		AddButtonModule,
-		DeleteConfirmationModule
 	],
 	providers: [
 		UsuarioService

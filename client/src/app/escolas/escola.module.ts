@@ -3,15 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
 import { AddButtonModule } from '../add-button/add-button.module';
-import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 
 import { EscolaListComponent } from './escola-list/escola-list.component';
+import { EscolaComponent } from './escola/escola.component';
 
 import { EscolaService } from './escola.service';
 
 @NgModule({
 	declarations: [
-		EscolaListComponent
+		EscolaListComponent,
+		EscolaComponent
 	],
 	exports: [],
 	imports: [
@@ -19,7 +20,6 @@ import { EscolaService } from './escola.service';
 		BrowserModule,
 		NavModule,
 		AddButtonModule,
-		DeleteConfirmationModule
 	],
 	providers: [EscolaService]
 })

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { Atendimento } from './atendimento.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AlunoService } from '../alunos/aluno.service';
 import { ProfessorService } from '../professores/professor.service';
+import { DialogsService } from '../dialogs/dialogs.service';
+import { Atendimento } from './atendimento.model';
 import { Parecer } from './parecer.model';
-import { ToastService } from '../shared/toast.service';
 import { Horario } from './horario.model';
 
 /**
@@ -26,7 +26,7 @@ import { Horario } from './horario.model';
 export class AtendimentoService {
 
 	readonly url = 'api/atendimento';
-	headers: Headers;
+	headers: HttpHeaders;
 
 	private atendimentos: Atendimento[] = [
 		new Atendimento(
@@ -142,11 +142,12 @@ export class AtendimentoService {
 	idCount = 13; // TODO delete
 
 	constructor(
-		private http: Http,
+		private http: HttpClient,
 		private serviceAluno: AlunoService,
-		private serviceProfessor: ProfessorService) {
+		private serviceProfessor: ProfessorService,
+		private dialogs: DialogsService) {
 
-		this.headers = new Headers();
+		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
@@ -161,7 +162,7 @@ export class AtendimentoService {
 	}
 
 	listByProfessor(professorId: string): Atendimento[] {
-		return this.atendimentos.filter(a => a.aluno
+		return this.atendimentos.filter(a => a.profissional
 			? (a.profissional._id === professorId)
 			: false);
 	}
@@ -185,14 +186,14 @@ export class AtendimentoService {
 			this.idCount++;
 			msg = 'Atendimento criado com sucesso!';
 		}
-		ToastService.toastSuccess(msg);
+		this.dialogs.toastSuccess(msg);
 		return atendimento;
 	}
 
 	delete(_id: string): boolean {
 		// TODO
 		this.atendimentos = this.atendimentos.filter(a => a._id !== _id);
-		ToastService.toastSuccess('Atendimento excluído com sucesso!');
+		this.dialogs.toastSuccess('Atendimento excluído com sucesso!');
 		return true;
 	}
 

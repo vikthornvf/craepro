@@ -6,22 +6,18 @@ import { NavModule } from '../nav/nav.module';
 import { AtendimentoModule } from '../atendimentos/atendimento.module';
 import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
-import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { TelefoneModule } from '../telefone/telefone.module';
-import { EnderecoModule } from '../endereco/endereco.module';
+import { ResponsavelModule } from '../responsaveis/responsavel.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
-import { ResponsavelComponent } from './aluno/responsavel.component';
 
 import { AlunoService } from './aluno.service';
 
 @NgModule({
 	declarations: [
 		AlunoListComponent,
-		AlunoComponent,
-		ResponsavelComponent
+		AlunoComponent
 	],
 	exports: [],
 	imports: [
@@ -32,10 +28,8 @@ import { AlunoService } from './aluno.service';
 		AtendimentoModule,
 		DirectivesModule,
 		AddButtonModule,
-		DeleteConfirmationModule,
 		PipesModule,
-		TelefoneModule,
-		EnderecoModule
+		ResponsavelModule,
 	],
 	providers: [AlunoService]
 })

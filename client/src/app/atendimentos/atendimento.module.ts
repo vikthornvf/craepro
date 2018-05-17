@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
-import { DeleteConfirmationModule } from '../delete-confirmation/delete-confirmation.module';
 import { DirectivesModule } from '../shared/directives.module';
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -27,7 +26,6 @@ import { AtendimentoService } from './atendimento.service';
 		BrowserModule,
 		ReactiveFormsModule,
 		MaterializeSharedModule,
-		DeleteConfirmationModule,
 		DirectivesModule,
 		PipesModule
 	],
