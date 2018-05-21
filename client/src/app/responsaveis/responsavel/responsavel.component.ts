@@ -29,7 +29,7 @@ export class ResponsavelComponent implements OnInit {
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
-		this.resp = this.responsavel;
+		this.resp = Object.assign({}, this.responsavel);
 		this.form = this.fb.group({
 			'nome': new FormControl(null, Validators.required),
 			'parentesco': null
