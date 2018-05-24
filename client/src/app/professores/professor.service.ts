@@ -50,11 +50,11 @@ export class ProfessorService {
 		return this.professores.filter(p => p.atendimentoTipos.includes(tipo));
 	}
 
-	findById(_id: string): Professor {
-		return this.professores.find(p => p._id === _id);
+	findById(id: string): Professor {
+		return this.professores.find(p => p._id === id);
 	}
 
-	save(professor: Professor) {
+	save(professor: Professor): Professor {
 		let msg: string;
 
 		if (professor._id) {
@@ -66,14 +66,14 @@ export class ProfessorService {
 			professor._id = this.idCount + '';
 			this.professores.push(professor);
 			this.idCount++;
-			msg = `professor(a) ${professor.nome} salvo com sucesso!`;
+			msg = `Professor(a) ${professor.nome} salvo com sucesso!`;
 		}
 		this.dialogs.toastSuccess(msg);
 		return professor;
 	}
 
-	delete(_id: string): boolean {
-		this.professores.filter(e => e._id !== _id);
+	delete(id: string): boolean {
+		this.professores = this.professores.filter(e => e._id !== id);
 		this.dialogs.toastSuccess('Professor excluído com sucesso!');
 		return true;
 	}

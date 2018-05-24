@@ -77,8 +77,8 @@ export class AlunoService {
 		return aluno;
 	}
 
-	delete(_id: string): boolean {
-		this.alunos = this.alunos.filter(e => e._id !== _id);
+	delete(id: string): boolean {
+		this.alunos = this.alunos.filter(e => e._id !== id);
 		this.dialogs.toastSuccess('Aluno excluído com sucesso!');
 		return true;
 	}

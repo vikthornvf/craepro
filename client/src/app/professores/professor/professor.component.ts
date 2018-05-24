@@ -87,7 +87,7 @@ export class ProfessorComponent implements OnInit {
 		professor.nome = this.form.get('nome').value;
 		professor.atendimentoTipos = this.buildAtendimentoTiposArray();
 
-		this.service.save(professor);
+		this.professor = this.service.save(professor);
 		this.submitted = false;
 	}
 

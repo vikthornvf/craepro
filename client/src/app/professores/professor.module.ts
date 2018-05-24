@@ -29,7 +29,7 @@ import { ProfessorService } from './professor.service';
 		AtendimentoModule,
 		AddButtonModule,
 		TelefoneModule,
-		EnderecoModule,
+		EnderecoModule
 	],
 	providers: [ProfessorService]
 })

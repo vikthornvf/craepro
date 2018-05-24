@@ -17,27 +17,27 @@
 		<div class="col s12 m6">
 			<p style="min-height:40px;padding-top:6px;">Tipos de Atendimento Realizados:</p>
 			<div class="switch">
-				<label>
+				<label class="black-text" style="font-size: 1rem">
 					<input id="checkAee" type="checkbox" formControlName="hasAee">
 					<span class="lever"></span>
+					AEE
 				</label>
-				AEE
 			</div>
 			<br>
 			<div class="switch">
-				<label>
+				<label class="black-text" style="font-size: 1rem">
 					<input id="checkFono" type="checkbox" formControlName="hasFono">
 					<span class="lever"></span>
+					Fonoaudiológico
 				</label>
-				Fonoaudiológico
 			</div>
 			<br>
 			<div class="switch">
-				<label>
+				<label class="black-text" style="font-size: 1rem">
 					<input id="checkPsico" type="checkbox" formControlName="hasPsico">
 					<span class="lever"></span>
+					Psicológico
 				</label>
-				Psicológico
 			</div>
 		</div>
 		<app-telefone class="col s12 m6" [telefones]="professor.telefones"></app-telefone>
@@ -75,7 +75,7 @@
 						class="btn-large waves-effect waves-light red"
 						style="margin: 15px 0 0 0; width: 190px;"
 						(click)="onConfirmDelete()">
-					<i class="material-icons right">delete</i>Excluir Aluno</a>
+					<i class="material-icons right">delete</i>Excluir</a>
 			</div>
 		</div>
 	</div>

@@ -163,7 +163,7 @@ export class AlunoComponent implements OnInit {
 		const escolaId = this.form.get('escola').value;
 		aluno.escola = this.escolaService.findById(escolaId);
 
-		this.service.save(aluno);
+		this.aluno = this.service.save(aluno);
 		this.submitted = false;
 	}
 
