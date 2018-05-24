@@ -22,4 +22,9 @@ export class EscolaListComponent extends ListViewComponent {
 	loadList(): void {
 		this.escolas = this.service.list();
 	}
+
+	clearSelection(): void {
+		this.selectedId = null;
+		this.onClose();
+	}
 }

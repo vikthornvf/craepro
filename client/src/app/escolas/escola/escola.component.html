@@ -1,3 +1,58 @@
-<blockquote>
-	<h4 claass="grey-text">Escola teste</h4>
-</blockquote>
+<h4 class="grey-text" *ngIf="!escola._id">Nova Escola</h4>
+<form materialize [formGroup]="form" (ngSubmit)="onSave()">
+	<div class="row">
+		<div class="input-field col s12">
+			<input
+				id="inputNomeEscola"
+				type="text"
+				focus="1"
+				formControlName="nome"
+				autocomplete="false"
+				[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
+			<label class="active" for="inputNomeEscola">Nome*</label>
+		</div>
+	</div>
+
+	<div class="row">
+		<app-telefone class="col s12" [telefones]="escola.telefones"></app-telefone>
+	</div>
+	<div class="row">
+		<app-endereco class="col s12" [enderecos]="escola.enderecos"></app-endereco>
+	</div>
+
+	<div class="row">
+		<div class="col m12">
+			<a
+					class="btn-large waves-effect waves-light white black-text"
+					style="margin: 10px 10px 10px 0; width: 190px;"
+					(click)="cancel()">
+				<i class="material-icons right">close</i>Cancelar</a>
+
+			<button
+					id="buttonSubmit"
+					type="submit"
+					class="btn-large waves-effect waves-light teal lighten-2"
+					style="width: 190px;">
+				<i class="material-icons right">save</i>Salvar</button>
+
+		</div>
+	</div>
+
+	<div class="row" *ngIf="form.invalid">
+		<label for="buttonSubmit" class="col red-text">* Campos obrigatórios</label>
+	</div>
+
+	<div *ngIf="escola._id">
+		<hr>
+		<div class="row">
+			<div class="col">
+				<a
+						class="btn-large waves-effect waves-light red"
+						style="margin: 15px 0 0 0; width: 190px;"
+						(click)="onConfirmDelete()">
+					<i class="material-icons right">delete</i>Excluir</a>
+			</div>
+		</div>
+	</div>
+
+</form>
