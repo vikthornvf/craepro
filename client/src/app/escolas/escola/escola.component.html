@@ -5,9 +5,9 @@
 			<input
 				id="inputNomeEscola"
 				type="text"
-				focus="1"
 				formControlName="nome"
 				autocomplete="false"
+				[focus]="!escola._id"
 				[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
 			<label class="active" for="inputNomeEscola">Nome*</label>
 		</div>

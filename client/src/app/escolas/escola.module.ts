@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NavModule } from '../nav/nav.module';
+import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
 import { TelefoneModule } from '../telefone/telefone.module';
 import { EnderecoModule } from '../endereco/endereco.module';
@@ -23,6 +24,7 @@ import { EscolaService } from './escola.service';
 		BrowserModule,
 		ReactiveFormsModule,
 		NavModule,
+		DirectivesModule,
 		AddButtonModule,
 		TelefoneModule,
 		EnderecoModule

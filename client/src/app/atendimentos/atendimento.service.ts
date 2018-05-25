@@ -132,7 +132,7 @@ export class AtendimentoService {
 		new Atendimento(
 			'12',
 			'A',
-			this.serviceAluno.findById('9'),
+			this.serviceAluno.findById('1'),
 			this.serviceProfessor.findById('1'),
 			[new Parecer('Mora muito longe3'), new Parecer('Mora muito longe4')],
 			new Date(),
