@@ -9,7 +9,8 @@ import { EscolaListComponent } from './escolas/escola-list/escola-list.component
 import { EscolaComponent } from './escolas/escola/escola.component';
 import { UsuarioListComponent } from './usuarios/usuario-list/usuario-list.component';
 import { UsuarioComponent } from './usuarios/usuario/usuario.component';
-import { UsuarioSenhaComponent } from './usuarios/usuario/usuario-senha.component';
+import { UsuarioProfileComponent } from './usuarios/usuario-profile/usuario-profile.component';
+import { UsuarioPasswordComponent } from './usuarios/usuario-password/usuario-password.component';
 
 const appRoutes: Routes = [
 	{ path: '', redirectTo: 'alunos', pathMatch: 'full' },
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
 	{ path: 'usuarios', component: UsuarioListComponent },
 	{ path: 'usuarios/usuario', component: UsuarioComponent },
 	{ path: 'usuarios/usuario/:id', component: UsuarioComponent },
-	{ path: 'usuarios/usuario-senha', component: UsuarioSenhaComponent },
+	{ path: 'usuarios/usuario-profile', component: UsuarioProfileComponent },
+	{ path: 'usuarios/usuario-senha', component: UsuarioPasswordComponent },
 	// { path: '**', redirectTo: 'alunos' }
 ];
 
