@@ -6,6 +6,17 @@ export class Enums {
 		{ value: 'F', name: 'Fonoaudiológico' }
 	];
 
+	static readonly Permissoes = [
+		{ value: 'A1', name: 'Visualização dos Alunos' },
+		{ value: 'A2', name: 'Edição dos Alunos' },
+		{ value: 'P1', name: 'Visualização dos Professores' },
+		{ value: 'P2', name: 'Edição dos Professores' },
+		{ value: 'E1', name: 'Visualização das Escolas' },
+		{ value: 'E2', name: 'Edição das Escolas' },
+		{ value: 'U1', name: 'Visualização dos Usuários' },
+		{ value: 'U2', name: 'Edição das permissões dos Usuários' },
+	];
+
 	static readonly Dias = [
 		{ value: 0, name: 'Domingo', short: 'Dom' },
 		{ value: 1, name: 'Segunda', short: 'Seg' },

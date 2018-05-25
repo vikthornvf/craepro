@@ -1,0 +1,76 @@
+<h3 class="light">{{ form.get('nome').value || usuario.email }}</h3>
+<form materialize [formGroup]="form" (ngSubmit)="onSave()">
+	<div class="row">
+		<div class="input-field col s12">
+			<input
+				id="inputNomeUsuario"
+				type="text"
+				formControlName="nome"
+				autocomplete="false"
+				[focus]="!usuario.nome"
+				[ngClass]="{ 'invalid': form.get('nome').invalid && (form.get('nome').touched || submitted) }">
+			<label class="active" for="inputNomeUsuario">Nome</label>
+		</div>
+
+		<div class="input-field col s12">
+			<input
+				id="inputEmailUsuario"
+				type="email"
+				formControlName="email"
+				[ngClass]="{ 'invalid': form.get('email').invalid && (form.get('email').touched || submitted) }">
+			<label class="active" for="inputEmailUsuario">Email*</label>
+		</div>
+		<div class="col 12" *ngIf="form.get('email').invalid && (form.get('email').touched || submitted)">
+			<label for="buttonSubmit" class="red-text">Por favor, insira um email válido.</label>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col m12">
+			<a id="cancelButton"
+					class="btn-large waves-effect waves-light blue-grey darken-1"
+					style="margin: 10px 10px 10px 0; width: 190px;"
+					(click)="cancel()">
+				<i class="material-icons right">close</i>Cancelar</a>
+			<button id="buttonSubmit"
+					type="submit"
+					class="btn-large waves-effect waves-light teal lighten-2"
+					style="width: 190px;">
+				<i class="material-icons right">save</i>Salvar</button>
+		</div>
+	</div>
+</form>
+<h4 class="grey-text">Permissões</h4>
+<div class="row">
+	<div class="col s12">
+		<div class="card-panel hoverable blue-grey darken-1 fade-in-effect" style="padding-bottom:10px">
+			<div class="row">
+				<div *ngFor="let permissao of usuario.permissoes" class="col s12 m6 valign-wrapper">
+					<i class="material-icons small left light-green-text text-accent-4">check_circle</i>
+					<p class="white-text">{{ permissoes[permissao] }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h4 class="grey-text">Segurança</h4>
+<div class="row">
+	<div class="col s12">
+		<a id="passwordButton"
+				class="btn-large waves-effect waves-light teal lighten-2"
+				style="margin: 0 0 10px 0; width: 210px;"
+				routerLink="/usuarios/usuario-senha">
+			<i class="material-icons right">lock</i>Nova Senha</a>
+	</div>
+</div>
+<hr><br>
+<div class="row">
+	<div class="col s12">
+		<a id="passwordButton"
+				class="btn-large waves-effect waves-light blue-grey darken-1"
+				style="width: 210px;"
+				(click)="onLogout()">
+			<i class="material-icons right">power_settings_new</i>Sair</a>
+	</div>
+</div>

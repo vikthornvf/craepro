@@ -22,4 +22,9 @@ export class UsuarioListComponent extends ListViewComponent {
 	loadList(): void {
 		this.usuarios = this.service.list();
 	}
+
+	clearSelection(): void {
+		this.selectedId = null;
+		this.onClose();
+	}
 }
