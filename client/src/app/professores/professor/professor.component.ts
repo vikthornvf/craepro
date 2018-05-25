@@ -103,10 +103,6 @@ export class ProfessorComponent implements OnInit {
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
 	}
 
-	cancel(): void {
-		this.navService.onNavigateBack();
-	}
-
 	buildAtendimentoTiposArray(): string[] {
 		const str = [];
 		if (this.form.get('hasAee').value) {

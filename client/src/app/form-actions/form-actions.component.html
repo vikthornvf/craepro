@@ -2,12 +2,11 @@
 	<div class="col m12">
 		<a id="cancelButton"
 				class="btn-large default-size default-margin waves-effect waves-light blue-grey darken-1"
-				(click)="cancel()">
+				(click)="onCancel()">
 			<i class="material-icons right">close</i>Cancelar</a>
 		<button id="buttonSubmit"
 				type="submit"
-				class="btn-large default-size waves-effect waves-light teal lighten-2"
-				style="width: 190px;">
+				class="btn-large default-size waves-effect waves-light teal lighten-2">
 			<i class="material-icons right">save</i>Salvar</button>
 	</div>
 </div>
@@ -21,9 +20,8 @@
 	<div class="row">
 		<div class="col">
 			<a id="deleteButton"
-					class="btn-large default-size waves-effect waves-light red"
-					style="margin: 15px 0 0 0; width: 190px;"
-					(click)="onConfirmDelete()">
+					class="btn-large default-size default-margin waves-effect waves-light red"
+					(click)="onDelete()">
 				<i class="material-icons right">delete</i>Excluir</a>
 		</div>
 	</div>

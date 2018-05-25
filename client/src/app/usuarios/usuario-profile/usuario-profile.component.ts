@@ -11,6 +11,7 @@ import { Enums } from '../../shared/enums';
 export class UsuarioProfileComponent implements OnInit {
 
 	form: FormGroup;
+	submitted: boolean;
 	usuario: Usuario;
 	permissoes = [];
 
@@ -40,6 +41,20 @@ export class UsuarioProfileComponent implements OnInit {
 			'email': usuario.email
 		});
 		this.usuario = usuario;
+	}
+
+	onSave(): void {
+		if (this.form.invalid) {
+			this.submitted = true;
+			return;
+		}
+
+		const usuario = this.usuario;
+		usuario.nome = this.form.get('nome').value;
+		usuario.email = this.form.get('email').value;
+
+		this.usuario = this.service.save(usuario);
+		this.submitted = false;
 	}
 
 	onLogout(): void {

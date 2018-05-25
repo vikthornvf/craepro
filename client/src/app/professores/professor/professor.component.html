@@ -45,39 +45,9 @@
 
 	<app-endereco class="row" [enderecos]="professor.enderecos"></app-endereco>
 
-	<div class="row">
-		<div class="col m12">
-			<a
-					class="btn-large waves-effect waves-light white black-text"
-					style="margin: 10px 10px 10px 0; width: 190px;"
-					(click)="cancel()">
-				<i class="material-icons right">close</i>Cancelar</a>
-
-			<button
-					id="buttonSubmit"
-					type="submit"
-					class="btn-large waves-effect waves-light teal lighten-2"
-					style="width: 190px;">
-				<i class="material-icons right">save</i>Salvar</button>
-
-		</div>
-	</div>
-
-	<div class="row" *ngIf="form.invalid">
-		<label for="buttonSubmit" class="col red-text">* Campos obrigatórios</label>
-	</div>
-
-	<div *ngIf="professor._id">
-		<hr>
-		<div class="row">
-			<div class="col">
-				<a
-						class="btn-large waves-effect waves-light red"
-						style="margin: 15px 0 0 0; width: 190px;"
-						(click)="onConfirmDelete()">
-					<i class="material-icons right">delete</i>Excluir</a>
-			</div>
-		</div>
-	</div>
-
+	<app-form-actions
+		[invalid]="form.invalid"
+		[canDelete]="professor._id"
+		(delete)="onConfirmDelete()">
+	</app-form-actions>
 </form>

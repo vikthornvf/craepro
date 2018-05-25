@@ -93,10 +93,6 @@ export class UsuarioComponent implements OnInit {
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
 	}
 
-	cancel(): void {
-		this.navService.onNavigateBack();
-	}
-
 	buildPermissoesArray(): string[] {
 		const str = [];
 		this.permissoes.forEach(permissao => {

@@ -178,8 +178,4 @@ export class AlunoComponent implements OnInit {
 		const label = this.aluno.nome ? this.aluno.nome : 'Aluno';
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
 	}
-
-	cancel(): void {
-		this.navService.onNavigateBack();
-	}
 }

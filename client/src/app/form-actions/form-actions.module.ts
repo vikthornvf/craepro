@@ -11,4 +11,4 @@ import { FormActionsComponent } from './form-actions.component';
 		RouterModule
 	]
 })
-export class AddButtonModule {}
+export class FormActionsModule {}
