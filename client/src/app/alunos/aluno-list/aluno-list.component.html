@@ -18,7 +18,7 @@
 				[checked]="selected && aluno._id === selectedId"
 				(click)="toggleSelect($event, aluno._id)">
 			<label [for]="aluno._id"></label>
-			<div class="flex nome truncate">
+			<div class="flex nome">
 				<span class="flex-container situacao">{{ aluno.nome }}<i
 					*ngIf="aluno.situacao"
 					class="material-icons flex situacao tooltipped"
