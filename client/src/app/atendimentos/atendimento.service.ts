@@ -62,9 +62,7 @@ export class AtendimentoService {
 			'A',
 			this.serviceAluno.findById('3'),
 			this.serviceProfessor.findById('4'),
-			[new Parecer('Show de bola'), new Parecer('Show de bola2')],
-			new Date(),
-			new Date(),
+			[new Parecer('Esperando horário')],
 			new Date()),
 		new Atendimento(
 			'5',
@@ -96,10 +94,9 @@ export class AtendimentoService {
 		new Atendimento(
 			'8',
 			'F',
-			this.serviceAluno.findById('6'),
+			this.serviceAluno.findById('3'),
 			this.serviceProfessor.findById('3'),
-			[new Parecer('Recebendo bem o tratamento'), new Parecer('Recebendo bem o tratamento2')],
-			new Date(),
+			[new Parecer('Recebendo bem o tratamento'), new Parecer('Apresentando resultados')],
 			new Date(),
 			new Date()),
 		new Atendimento(
@@ -107,7 +104,7 @@ export class AtendimentoService {
 			'P',
 			this.serviceAluno.findById('7'),
 			this.serviceProfessor.findById('2'),
-			[new Parecer('Tem que morar mais perto da escola :('), new Parecer('Tem que morar mais perto da escola2')],
+			[new Parecer('Se mudou pra longe.')],
 			new Date(),
 			new Date(),
 			new Date()),

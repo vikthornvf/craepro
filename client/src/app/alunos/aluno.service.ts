@@ -28,14 +28,14 @@ export class AlunoService {
 	headers: HttpHeaders;
 
 	private alunos: Aluno[] = [
-		new Aluno('1', 'Adão', 'D', 'E3', 'T', this.serviceEscola.findById('1')),
-		new Aluno('2', 'Rosângela', 'P', 'E1', 'M', this.serviceEscola.findById('2')),
-		new Aluno('3', 'Allan', 'A', 'F9', 'M', this.serviceEscola.findById('3')),
-		new Aluno('4', 'Yuri', 'A', 'F8', 'N', this.serviceEscola.findById('6')),
-		new Aluno('5', 'Thiagus', 'A', 'F7', 'T', this.serviceEscola.findById('3')),
-		new Aluno('6', 'Vikthor', 'A', 'F5', 'T', this.serviceEscola.findById('4')),
-		new Aluno('7', 'Isaac', 'E', 'F2', 'M', this.serviceEscola.findById('6')),
-		new Aluno('8', 'Ícaro', 'E', 'PB', 'M', this.serviceEscola.findById('2'))
+		new Aluno('1', 'Alex dos Santos', 'D', 'E3', 'T', this.serviceEscola.findById('1')),
+		new Aluno('2', 'Ana Clara', 'P', 'E1', 'M', this.serviceEscola.findById('2')),
+		new Aluno('3', 'Betinho', 'A', 'F9', 'M', this.serviceEscola.findById('3')),
+		new Aluno('4', 'Carol Maria', 'A', 'F8', 'N', this.serviceEscola.findById('6')),
+		new Aluno('5', 'Carlinhos', 'A', 'F7', 'T', this.serviceEscola.findById('3')),
+		new Aluno('6', 'Joãozinho da Silva', 'A', 'F5', 'T', this.serviceEscola.findById('4')),
+		new Aluno('7', 'Karolzinha', 'E', 'F2', 'M', this.serviceEscola.findById('6')),
+		new Aluno('8', 'Zezinho', 'E', 'PB', 'M', this.serviceEscola.findById('2'))
 	];
 	idCount = 9; // TODO delete
 

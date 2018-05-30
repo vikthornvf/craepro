@@ -75,13 +75,13 @@
 					data-position="left"
 					data-ldelay="50"
 					data-tooltip="Novo Atendimento"
-					[disabled]="atendimentos ? !atendimentos[0]._id : false"
+					[disabled]="atendimentos.length ? !atendimentos[0]._id : false"
 					(click)="addAtendimento()">
 				<i class="material-icons">add</i>
 			</button>
 		</h4>
 
-		<div class="col s12 right-align" *ngIf="atendimentos ? !atendimentos[0]._id : false">
+		<div class="col s12 right-align" *ngIf="atendimentos.length ? !atendimentos[0]._id : false">
 			<label for="buttonCreateAtt">Salve o atendimento criado antes de adicionar novos.</label>
 		</div>
 
@@ -113,13 +113,13 @@
 					data-position="left"
 					data-ldelay="50"
 					data-tooltip="Adicionar Responsável"
-					[disabled]="responsaveis[0] ? !responsaveis[0]._id : false"
+					[disabled]="responsaveis.length ? !responsaveis[0]._id : false"
 					(click)="addResponsavel()">
 				<i class="material-icons">add</i>
 			</button>
 		</h4>
 
-		<div class="col s12 right-align" *ngIf="responsaveis[0] ? !responsaveis[0]._id : false">
+		<div class="col s12 right-align" *ngIf="responsaveis.length ? !responsaveis[0]._id : false">
 			<label for="buttonCreateAtt">Salve o responsável criado antes de adicionar novos.</label>
 		</div>
 
