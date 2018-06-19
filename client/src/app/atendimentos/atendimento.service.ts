@@ -158,6 +158,45 @@ export class AtendimentoService {
 			: false);
 	}
 
+	updateAlunoSituacaoById(id: string) {
+		const atendimento = this.findById(id);
+		this.updateAlunoSituacao(atendimento);
+	}
+
+	updateAlunoSituacao(atendimento: Atendimento) {
+		const aluno = atendimento.aluno;
+		const atendimentos = this.listByAluno(aluno._id);
+
+		let solicitado = false;
+		let ativo = false;
+		let finalzado = false;
+		let situacao = aluno.situacao;
+
+		atendimentos.forEach(a => {
+			if (a.egresso) {
+				finalzado = true;
+			} else if (a.inicio) {
+				ativo = true;
+			} else {
+				solicitado = true;
+			}
+		});
+
+		if (solicitado || ativo || finalzado) {
+			if (solicitado) {
+				situacao = ativo
+					? 'P'
+					: 'E';
+			} else if (ativo) {
+				situacao = 'A';
+			} else if (finalzado) {
+				situacao = 'D';
+			}
+			aluno.situacao = situacao;
+			this.serviceAluno.updateSituacao(aluno);
+		}
+	}
+
 	listByProfessor(professorId: string): Atendimento[] {
 		return this.atendimentos.filter(a => a.profissional
 			? (a.profissional._id === professorId)
@@ -183,12 +222,14 @@ export class AtendimentoService {
 			this.idCount++;
 			msg = 'Atendimento criado com sucesso!';
 		}
+		this.updateAlunoSituacao(atendimento);
 		this.dialogs.toastSuccess(msg);
 		return atendimento;
 	}
 
 	delete(_id: string): boolean {
 		// TODO
+		this.updateAlunoSituacaoById(_id);
 		this.atendimentos = this.atendimentos.filter(a => a._id !== _id);
 		this.dialogs.toastSuccess('Atendimento excluído com sucesso!');
 		return true;
