@@ -1,7 +1,9 @@
 <h4 class="grey-text" *ngIf="!usuario._id">Novo Usuário</h4>
 <h3 class="light">{{ usuario.nome || usuario.email }}</h3>
-<h5 class="grey-text" *ngIf="usuario.nome">{{ usuario.email }}</h5>
-<form materialize [formGroup]="form" (ngSubmit)="onSave()">
+<blockquote>
+	<h5 class="light" *ngIf="usuario.nome">{{ usuario.email }}</h5>
+</blockquote>
+<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
 	<div class="row">
 		<div *ngIf="!usuario._id">
 			<div class="input-field col s12">
@@ -31,16 +33,51 @@
 			</div>
 		</div>
 
-		<p class="col s12">Permissões de {{ usuario.nome || usuario.email }}:</p>
+		<div class="col s12" [class.m6]="form.get('tipo').value === 'E'">
+			<div class="input-field">
+				<select
+						id="selectTipoUsuario"
+						formControlName="tipo"
+						materialize="material_select"
+						[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }"
+						(change)="onSelectTipo($event.target.value)">
+					<option value="" disabled selected>Selecione o Tipo de Usuário</option>
+					<option *ngFor="let tipo of tiposUsuario" [value]="tipo.value">{{ tipo.name }}</option>
+				</select>
+				<label for="selectTipoUsuario">Tipo de Usuário*</label>
+			</div>
+		</div>
+
+		<div class="input-field col m6 s12" *ngIf="form.get('tipo').value === 'E'">
+			<select
+					id="selectEscola"
+					formControlName="escola"
+					materialize="material_select"
+					[ngClass]="{ 'invalid': form.get('escola').invalid && submitted }">
+				<option value="" disabled selected>Selecione a Escola</option>
+				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
+			</select>
+			<label for="selectEscola">Escola*</label>
+		</div>
+
+		<h4 class="col s12 grey-text">Permissões</h4>
 		<div *ngFor="let permissao of permissoes" class="col s12 m6">
 			<div class="switch">
 				<label class="black-text" style="font-size: 1rem;">
-					<input [id]="'check' + permissao.value" type="checkbox" [formControlName]="'has' + permissao.value">
+					<input [id]="'check' + permissao.value"
+							type="checkbox"
+							[formControlName]="'has' + permissao.value"
+							(change)="onChangePermissions()">
 					<span class="lever"></span>
 					{{ permissao.name }}
 				</label>
 			</div>
 			<br>
+		</div>
+
+		<div class="col s12" *ngIf="usuario.solicitado">
+			<p class="red-text">Este usuário ainda não tem acesso ao sistema. Confirme-o para conceder as permissões.</p>
+			<a id="confirmUserButton" class="waves-effect" (click)="onConfirmUsuario()">CONFIRMAR USUÁRIO</a>
 		</div>
 	</div>
 

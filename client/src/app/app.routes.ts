@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { UsuarioLoginPaneComponent } from './usuarios/usuario-login-pane/usuario-login-pane.component';
 import { AlunoListComponent } from './alunos/aluno-list/aluno-list.component';
 import { AlunoComponent } from './alunos/aluno/aluno.component';
 import { ProfessorListComponent } from './professores/professor-list/professor-list.component';
@@ -12,22 +13,26 @@ import { UsuarioComponent } from './usuarios/usuario/usuario.component';
 import { UsuarioProfileComponent } from './usuarios/usuario-profile/usuario-profile.component';
 import { UsuarioPasswordComponent } from './usuarios/usuario-password/usuario-password.component';
 
+import { LoginGuardService } from './login-guard.service';
+import { AuthGuardService } from './auth-guard.service';
+
 const appRoutes: Routes = [
 	{ path: '', redirectTo: 'alunos', pathMatch: 'full' },
-	{ path: 'alunos', component: AlunoListComponent },
-	{ path: 'alunos/aluno', component: AlunoComponent },
-	{ path: 'alunos/aluno/:id', component: AlunoComponent },
-	{ path: 'professores', component: ProfessorListComponent },
-	{ path: 'professores/professor', component: ProfessorComponent },
-	{ path: 'professores/professor/:id', component: ProfessorComponent },
-	{ path: 'escolas', component: EscolaListComponent },
-	{ path: 'escolas/escola', component: EscolaComponent },
-	{ path: 'escolas/escola/:id', component: EscolaComponent },
-	{ path: 'usuarios', component: UsuarioListComponent },
-	{ path: 'usuarios/usuario', component: UsuarioComponent },
-	{ path: 'usuarios/usuario/:id', component: UsuarioComponent },
-	{ path: 'usuarios/usuario-profile', component: UsuarioProfileComponent },
-	{ path: 'usuarios/usuario-senha', component: UsuarioPasswordComponent },
+	{ path: 'login', component: UsuarioLoginPaneComponent, canActivate: [LoginGuardService] },
+	{ path: 'alunos', component: AlunoListComponent, canActivate: [AuthGuardService] },
+	{ path: 'alunos/aluno', component: AlunoComponent, canActivate: [AuthGuardService] },
+	{ path: 'alunos/aluno/:id', component: AlunoComponent, canActivate: [AuthGuardService] },
+	{ path: 'professores', component: ProfessorListComponent, canActivate: [AuthGuardService] },
+	{ path: 'professores/professor', component: ProfessorComponent, canActivate: [AuthGuardService] },
+	{ path: 'professores/professor/:id', component: ProfessorComponent, canActivate: [AuthGuardService] },
+	{ path: 'escolas', component: EscolaListComponent, canActivate: [AuthGuardService] },
+	{ path: 'escolas/escola', component: EscolaComponent, canActivate: [AuthGuardService] },
+	{ path: 'escolas/escola/:id', component: EscolaComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuarios/usuario', component: UsuarioComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuarios/usuario/:id', component: UsuarioComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuarios/usuario-profile', component: UsuarioProfileComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuarios/usuario-senha', component: UsuarioPasswordComponent, canActivate: [AuthGuardService] },
 	// { path: '**', redirectTo: 'alunos' }
 ];
 

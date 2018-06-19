@@ -7,6 +7,9 @@ import { AddButtonModule } from '../add-button/add-button.module';
 import { FormActionsModule } from '../form-actions/form-actions.module';
 import { DirectivesModule } from '../shared/directives.module';
 
+import { UsuarioRegistroComponent } from './usuario-registro/usuario-registro.component';
+import { UsuarioLoginComponent } from './usuario-login/usuario-login.component';
+import { UsuarioLoginPaneComponent } from './usuario-login-pane/usuario-login-pane.component';
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioPasswordComponent } from './usuario-password/usuario-password.component';
@@ -16,6 +19,9 @@ import { UsuarioService } from './usuario.service';
 
 @NgModule({
 	declarations: [
+		UsuarioRegistroComponent,
+		UsuarioLoginComponent,
+		UsuarioLoginPaneComponent,
 		UsuarioListComponent,
 		UsuarioComponent,
 		UsuarioPasswordComponent,

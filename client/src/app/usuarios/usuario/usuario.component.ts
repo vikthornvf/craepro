@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { UsuarioService } from '../usuario.service';
+import { EscolaService } from '../../escolas/escola.service';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { Usuario } from '../usuario.model';
+import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
+
+declare var $: any;
 
 @Component({
 	selector: 'app-usuario',
@@ -17,18 +21,22 @@ export class UsuarioComponent implements OnInit {
 	submitted: boolean;
 
 	usuario: Usuario;
+	escolas: Escola[];
+	tiposUsuario = Enums.TipoUsuario;
 	permissoes = Enums.Permissoes;
 
 	constructor(
 		private dialogs: DialogsService,
 		private service: UsuarioService,
+		private escolaService: EscolaService,
 		private navService: NavbarService,
-		private _route: ActivatedRoute,
-		private fb: FormBuilder) {}
+		private route: ActivatedRoute,
+		private fb: FormBuilder,
+		private _zone: NgZone) {}
 
 	ngOnInit(): void {
 		this.initForm();
-		this._route.params.subscribe(params => {
+		this.route.params.subscribe(params => {
 			const id = params['id'];
 			if (id) {
 				this.loadUsuario(id);
@@ -37,16 +45,36 @@ export class UsuarioComponent implements OnInit {
 				this.initUsuario();
 			}
 		});
+		this.loadEscolas();
+	}
+
+	onSelectTipo(value: string): void {
+		if (!value || value === 'O') {
+			return;
+		}
+		const tipoUsuario = this.tiposUsuario.find(t => t.value === value);
+		this.permissoes.forEach(p => this.form.get(`has${p.value}`).patchValue(false));
+		tipoUsuario.auth.forEach(a => this.form.get(`has${a}`).patchValue(true));
+	}
+
+	onChangePermissions(): void {
+		const permissoes = this.buildPermissoesArray();
+		const tipoUsuario = this.tiposUsuario.find(t => t.auth.length === permissoes.length && t.auth.every((v, i) => v === permissoes[i]));
+		this.form.patchValue({ 'tipo': tipoUsuario ? tipoUsuario.value : 'O' });
 	}
 
 	initForm(): void {
 		this.form = this.fb.group({
 			'nome': null,
-			'email': this.fb.control(null, [Validators.required, Validators.email])
+			'email': this.fb.control(null, [Validators.required, Validators.email]),
+			'tipo': null,
+			'escola': null
 		});
-		this.permissoes.forEach(
-			permissao => this.form.addControl(`has${permissao.value}`, this.fb.control(false))
-		);
+		this.permissoes.forEach(p => this.form.addControl(`has${p.value}`, this.fb.control(false)));
+	}
+
+	loadEscolas(): void {
+		this.escolas = this.escolaService.list();
 	}
 
 	loadUsuario(id: string): void {
@@ -54,11 +82,11 @@ export class UsuarioComponent implements OnInit {
 		this.usuario = usuario;
 		this.form.patchValue({
 			'nome': usuario.nome,
-			'email': usuario.email
+			'email': usuario.email,
+			'tipo': usuario.tipo,
+			'escola': usuario.escola
 		});
-		this.usuario.permissoes.forEach(permissao => {
-			this.form.get(`has${permissao}`).patchValue(true);
-		});
+		this.usuario.permissoes.forEach(p => this.form.get(`has${p}`).patchValue(true));
 	}
 
 	initUsuario(): void {
@@ -69,12 +97,17 @@ export class UsuarioComponent implements OnInit {
 	onSave(): void {
 		if (this.form.invalid) {
 			this.submitted = true;
+			$(document).ready(function() {
+				$('select').material_select();
+			});
 			return;
 		}
 
 		const usuario = this.usuario;
 		usuario.nome = this.form.get('nome').value;
 		usuario.email = this.form.get('email').value;
+		usuario.tipo = this.form.get('tipo').value;
+		usuario.escola = usuario.tipo !== 'E' ? null : this.escolaService.findById(this.form.get('escola').value);
 		usuario.permissoes = this.buildPermissoesArray();
 
 		this.usuario = this.service.save(usuario);
@@ -86,6 +119,14 @@ export class UsuarioComponent implements OnInit {
 			this.service.delete(this.usuario._id);
 			this.navService.onNavigateBack();
 		}
+	}
+
+	onConfirmUsuario(): void {
+		this.dialogs.modalConfirmation(confirm => {
+			if (confirm) {
+				this._zone.run(() => this.service.confirmUsuario(this.usuario));
+			}
+		}, 'Deseja realmente confirmar e permitir o acesso ao usuário?');
 	}
 
 	onConfirmDelete(): void {

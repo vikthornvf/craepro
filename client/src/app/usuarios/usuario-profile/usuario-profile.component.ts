@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Usuario } from '../usuario.model';
+import { AuthService } from '../../auth.service';
 import { UsuarioService } from '../usuario.service';
+import { EscolaService } from '../../escolas/escola.service';
+import { Usuario } from '../usuario.model';
+import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
 
 @Component({
@@ -16,7 +19,9 @@ export class UsuarioProfileComponent implements OnInit {
 	permissoes = [];
 
 	constructor(
+		private auth: AuthService,
 		private service: UsuarioService,
+		private escolaService: EscolaService,
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
@@ -41,6 +46,12 @@ export class UsuarioProfileComponent implements OnInit {
 			'email': usuario.email
 		});
 		this.usuario = usuario;
+		// const details = this.auth.getUsuarioDetails();
+		// this.form.patchValue({
+		// 	'nome': details.nome,
+		// 	'email': details.email
+		// });
+		// this.usuario = details;
 	}
 
 	onSave(): void {

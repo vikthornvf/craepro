@@ -9,6 +9,11 @@ import { ProfessorModule } from './professores/professor.module';
 import { EscolaModule } from './escolas/escola.module';
 import { UsuarioModule } from './usuarios/usuario.module';
 
+import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
+import { LoginGuardService } from './login-guard.service';
+import { StorageService } from './storage.service';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -24,7 +29,12 @@ import { AppComponent } from './app.component';
 		EscolaModule,
 		UsuarioModule
 	],
-	providers: [],
+	providers: [
+		AuthService,
+		AuthGuardService,
+		LoginGuardService,
+		StorageService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,5 +6,8 @@ export class Usuario {
 		public nome?: string,
 		public email?: string,
 		public escola?: Escola,
-		public permissoes?: string[]) {}
+		public tipo?: string,
+		public permissoes?: string[],
+		public solicitado?: boolean,
+		public senha?: string) {}
 }

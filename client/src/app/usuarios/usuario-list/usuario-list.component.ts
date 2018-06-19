@@ -3,6 +3,7 @@ import { ListViewComponent } from '../../shared/list-view.component';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { UsuarioService } from '../usuario.service';
 import { Usuario } from '../usuario.model';
+import { Enums } from '../../shared/enums';
 
 @Component({
 	selector: 'app-usuario-list',

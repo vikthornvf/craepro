@@ -1,0 +1,86 @@
+<form [formGroup]="form" (ngSubmit)="onSignup()">
+	<div class="row">
+		<div class="input-field col s12">
+			<input
+				id="nomeSignup"
+				type="text"
+				formControlName="nome"
+				[ngClass]="{ 'invalid': nome.invalid && (nome.touched || submitted) }">
+			<label class="active" for="nomeSignup">Nome</label>
+		</div>
+
+		<div class="input-field col s12">
+			<input
+				id="emailSignup"
+				type="email"
+				formControlName="email"
+				[ngClass]="{ 'invalid': email.invalid && (email.touched || submitted) }">
+			<label class="active" for="emailSignup">Email</label>
+		</div>
+		<span *ngIf="email.invalid && (email.touched || submitted)">
+			<div class="col" *ngIf="email.errors.email && !email.errors.required">
+				<label for="emailSignup" class="red-text">Por favor, insira um email válido.</label>
+			</div>
+		</span>
+
+		<div class="input-field col s12">
+			<input
+				id="senhaSignup"
+				type="password"
+				formControlName="senha"
+				[formGroup]="form"
+				[ngClass]="{ 'invalid': senha.invalid && (senha.touched || submitted) }"
+				(blur)="onBlurSenha()">
+			<label class="active" for="senhaSignup">Senha</label>
+		</div>
+		<span *ngIf="senha.invalid && (senha.touched || submitted)">
+			<div class="col" *ngIf="senha.errors.minlength && !senha.errors.required">
+				<label for="senhaSignup" class="red-text">A senha deve ter no mínimo 6 caracteres.</label>
+			</div>
+		</span>
+
+		<div *ngIf="senhaBlured" class="input-field col s12">
+			<input
+				id="senhaConfirmSignup"
+				type="password"
+				formControlName="senhaConfirm"
+				[focus]=senhaBlured
+				[formGroup]="form"
+				[ngClass]="{ 'invalid': form.errors?.senhaDiferente && (senhaConfirm.touched || submitted) }">
+			<label class="active" for="senhaConfirmSignup">Confirme a Senha</label>
+		</div>
+		<div *ngIf="form.errors?.senhaDiferente && (senhaConfirm.touched || submitted)" class="col">
+			<label for="senhaConfirmSignup" class="red-text">As senhas devem coincidir.</label>
+		</div>
+
+		<div class="col s12">
+			<div class="input-field">
+				<select id="tipoSingup"
+						formControlName="tipo"
+						materialize="material_select"
+						[ngClass]="{ 'invalid': tipo.invalid && submitted }">
+					<option value="" disabled selected>Selecione o Tipo de Usuário</option>
+					<option *ngFor="let tipo of tiposUsuario" [value]="tipo.value">{{ tipo.name }}</option>
+				</select>
+				<label for="tipoSingup">Tipo de Usuário</label>
+			</div>
+		</div>
+
+		<div class="input-field col s12" *ngIf="tipo.value === 'E'">
+			<select id="escolaSignup"
+					formControlName="escola"
+					materialize="material_select"
+					[ngClass]="{ 'invalid': escola.invalid && submitted }">
+				<option value="" disabled selected>Selecione a Escola</option>
+				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
+			</select>
+			<label for="escolaSignup">Escola</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12">
+			<button id="signupBtn" class="waves-effect waves-light btn-large center-align light-blue darken-2 col s12">CRIAR</button>
+			<label *ngIf="form.invalid && submitted" class="red-text">Preencha e valide todos os campos.</label>
+		</div>
+	</div>
+</form>

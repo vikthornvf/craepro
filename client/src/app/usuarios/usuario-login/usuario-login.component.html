@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="onLogin()">
+	<div class="row">
+		<div class="input-field col s12">
+			<input
+				id="emailLogin"
+				type="email"
+				formControlName="email"
+				[ngClass]="{ 'invalid': email.invalid && (email.touched || submitted) }">
+			<label class="active" for="emailLogin">Email</label>
+		</div>
+		<span *ngIf="email.invalid && (email.touched || submitted)">
+			<div class="col" *ngIf="email.errors.email && !email.errors.required">
+				<label for="emailLogin" class="red-text">Por favor, insira um email válido.</label>
+			</div>
+		</span>
+
+		<div class="input-field col s12">
+			<input
+				id="senhaLogin"
+				type="password"
+				formControlName="senha"
+				[ngClass]="{ 'invalid': senha.invalid && (senha.touched || submitted) }">
+			<label class="active" for="senhaLogin">Senha</label>
+		</div>
+
+		<div class="col s12">
+			<input id="lembrar"
+				type="checkbox"
+				formControlName="lembrar">
+			<label for="lembrar" class="black-text">Lembrar-me</label>
+			<a id="passwordForgotBtn"
+				class="waves-effect"
+				style="float: right;"
+				routerLink="/usuarios/usuario-senha">Esqueci minha senha</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12">
+			<button id="loginBtn" class="waves-effect waves-light btn-large center-align col s12">ENTRAR</button>
+			<label *ngIf="form.invalid && submitted" class="red-text">Preencha ambos os campos.</label>
+		</div>
+	</div>
+</form>

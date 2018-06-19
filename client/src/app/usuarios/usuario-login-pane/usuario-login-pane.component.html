@@ -1,0 +1,26 @@
+<div class="row main-pane valign-wrapper">
+	<div class="col" style="margin: auto;">
+		<div class="card">
+			<div class="card-image">
+				<a *ngIf="login"
+						class="btn-floating btn-large halfway-fab waves-effect waves-light lighetn-2"
+						(click)="toggleLogin()">
+					<i class="material-icons">person_add</i>
+				</a>
+				<a *ngIf="!login"
+						class="btn-floating btn-large halfway-fab waves-effect waves-light light-blue darken-2"
+						(click)="toggleLogin()">
+					<i class="material-icons">input</i>
+				</a>
+			</div>
+			<div class="card-content">
+				<span *ngIf="login" class="card-title">Bem-vindo!</span>
+				<span *ngIf="!login" class="card-title">Criar Usuário</span>
+				<app-usuario-login *ngIf="login; else signUpElement"></app-usuario-login>
+				<ng-template #signUpElement>
+					<app-usuario-registro></app-usuario-registro>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+</div>

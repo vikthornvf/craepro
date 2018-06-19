@@ -1,0 +1,9 @@
+.main-pane {
+	min-height:100vh;
+	margin-top: -30px;
+	margin-bottom: 0;
+}
+
+.card {
+	max-width: 400px;
+}

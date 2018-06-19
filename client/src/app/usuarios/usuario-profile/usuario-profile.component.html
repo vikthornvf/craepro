@@ -1,5 +1,9 @@
 <h3 class="light">{{ form.get('nome').value || usuario.email }}</h3>
-<form materialize [formGroup]="form" (ngSubmit)="onSave()">
+<blockquote>
+	<h5 class="light" *ngIf="usuario.tipo">{{ service.getUsuarioTipo(usuario.tipo) }}</h5>
+	<h5 class="light" *ngIf="usuario.escola">{{ usuario.escola?.nome }}</h5>
+</blockquote>
+<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
 	<div class="row">
 		<div class="input-field col s12">
 			<input
@@ -24,6 +28,9 @@
 			<label for="buttonSubmit" class="red-text">Por favor, insira um email válido.</label>
 		</div>
 	</div>
+
+	<a id="passwordButton" class="waves-effect" routerLink="/usuarios/usuario-senha">TROCAR A SENHA</a>
+
 	<app-form-actions [invalid]="form.invalid"></app-form-actions>
 </form>
 
@@ -42,17 +49,6 @@
 		</div>
 	</div>
 </span>
-
-<h4 class="grey-text">Segurança</h4>
-<div class="row">
-	<div class="col s12">
-		<a id="passwordButton"
-				class="btn-large waves-effect waves-light teal lighten-2"
-				style="margin: 0 0 10px 0; width: 210px;"
-				routerLink="/usuarios/usuario-senha">
-			<i class="material-icons right">lock</i>Nova Senha</a>
-	</div>
-</div>
 <hr>
 <div class="row">
 	<div class="col s12">
