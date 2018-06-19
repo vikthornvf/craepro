@@ -144,13 +144,18 @@ export class AtendimentoComponent implements OnInit {
 	createParecer(parecer?: Parecer): FormGroup {
 		return this.fb.group({
 			'texto': parecer ? parecer.texto : null,
+			'usuario': parecer ? parecer.usuario : null,
 			'data': parecer ? parecer.data : null
 		});
 	}
 
 	addParecer(): void {
+		const parecer = new Parecer();
+		const usuario = JSON.parse(localStorage.getItem('craepro-token'));
+		parecer.usuario = usuario.nome;
+
 		this.pareceres = this.form.get('pareceres') as FormArray;
-		this.pareceres.insert(0, this.createParecer(new Parecer()));
+		this.pareceres.insert(0, this.createParecer(parecer));
 		this.showPareceres = true;
 	}
 
