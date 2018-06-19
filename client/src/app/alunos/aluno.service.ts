@@ -77,6 +77,15 @@ export class AlunoService {
 		return aluno;
 	}
 
+	updateSituacao(aluno: Aluno): Aluno {
+		if (aluno._id) {
+			const attIndex = this.alunos.find(a => a._id === aluno._id);
+			const index = this.alunos.indexOf(attIndex);
+			this.alunos[index] = aluno;
+		}
+		return aluno;
+	}
+
 	delete(id: string): boolean {
 		this.alunos = this.alunos.filter(e => e._id !== id);
 		this.dialogs.toastSuccess('Aluno excluído com sucesso!');
