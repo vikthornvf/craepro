@@ -6,9 +6,17 @@ export class Enums {
 		{ value: 'F', name: 'Fonoaudiológico' }
 	];
 
+	static readonly TipoUsuario = [
+		{ value: 'A', name: 'Administração CRAE', auth: ['A1', 'A2', 'A3', 'P1', 'P2', 'E1', 'E2', 'U1', 'U2'] },
+		{ value: 'P', name: 'Profissional CRAE', auth: ['A1', 'A2', 'P1', 'E1'] },
+		{ value: 'E', name: 'Representante Escola', auth: ['A1', 'A2', 'A3', 'P1', 'E1'] },
+		{ value: 'O', name: 'Outro', auth: [] }
+	];
+
 	static readonly Permissoes = [
 		{ value: 'A1', name: 'Visualização dos Alunos' },
-		{ value: 'A2', name: 'Edição dos Alunos' },
+		{ value: 'A2', name: 'Edição dos Pareceres' },
+		{ value: 'A3', name: 'Edição dos Alunos' },
 		{ value: 'P1', name: 'Visualização dos Professores' },
 		{ value: 'P2', name: 'Edição dos Professores' },
 		{ value: 'E1', name: 'Visualização das Escolas' },

@@ -30,12 +30,12 @@ export class ProfessorComponent implements OnInit {
 		private service: ProfessorService,
 		private atendimentoService: AtendimentoService,
 		private navService: NavbarService,
-		private _route: ActivatedRoute,
+		private route: ActivatedRoute,
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
 		this.initForm();
-		this._route.params.subscribe(params => {
+		this.route.params.subscribe(params => {
 			const id = params['id'];
 			if (id) {
 				this.loadProfessor(id);

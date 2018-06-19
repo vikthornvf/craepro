@@ -90,8 +90,8 @@ export class AtendimentoComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 			'tipo': null,
+			'nome': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 			'horario': this.fb.group({
 				'dia': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 				'hora': this.fb.control(null, this.validateIfHasInicio.bind(this)),
@@ -179,10 +179,12 @@ export class AtendimentoComponent implements OnInit {
 
 	finalizarAtendimento(): void {
 		this.att.egresso = new Date();
+		this.updateDynamicValidators();
 	}
 
 	continuarAtendimento(): void {
 		this.att.egresso = null;
+		this.updateDynamicValidators();
 	}
 
 	onSave(): void {
@@ -224,8 +226,14 @@ export class AtendimentoComponent implements OnInit {
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), 'atendimento');
 	}
 
+	updateDynamicValidators(): void {
+		this.form.get('nome').updateValueAndValidity();
+		this.form.get('horario.dia').updateValueAndValidity();
+		this.form.get('horario.hora').updateValueAndValidity();
+	}
+
 	validateIfHasInicio(control: FormControl): {[s: string]: boolean} {
-		if (this.att.inicio) {
+		if (this.att.inicio && !this.att.egresso) {
 			if (!control.value) {
 				return {'required': true};
 			}

@@ -12,6 +12,7 @@ export class AtendimentoModalComponent {
 	@Input() selectedId: string;
 	@Input() atendimento: Atendimento;
 	@Output() load = new EventEmitter<boolean>();
+	@Output() close = new EventEmitter<boolean>();
 	@ViewChild('atendimentoElement') atendimentoElement;
 
 	closed = true;
@@ -19,7 +20,10 @@ export class AtendimentoModalComponent {
 	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
 	modalAtendimentoParams = [{
 		dismissible: false,
-		complete: () => this.closed = true
+		complete: () => {
+			this.closed = true;
+			this.close.emit(true);
+		}
 	}];
 
 	emitLoad() {

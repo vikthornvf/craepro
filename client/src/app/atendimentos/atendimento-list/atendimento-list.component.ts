@@ -1,6 +1,7 @@
-import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges, NgZone } from '@angular/core';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { AtendimentoService } from '../atendimento.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -13,8 +14,8 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() property: string;
 	@Input() selectedId: string;
 	@Output() select: EventEmitter<any> = new EventEmitter();
+	@Output() closeModal: EventEmitter<boolean> = new EventEmitter();
 	@ViewChild('atendimentoModal') modal;
-	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	atendimentos: Atendimento[] = [];
 	atendimentoSelected: Atendimento;
@@ -28,7 +29,9 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	constructor(
 		private navService: NavbarService,
-		private service: AtendimentoService) {}
+		private service: AtendimentoService,
+		private dialogs: DialogsService,
+		private _zone: NgZone) {}
 
 	ngOnInit(): void {
 		this.toolbarObservable = this.navService.toolbar.subscribe(code => this.toolbarFunctions(code));
@@ -127,17 +130,23 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	onDeleteSelected(confirm: boolean) {
 		if (confirm) {
-			this.service.delete(this.atendimentoSelected._id);
-			this.atendimentos = this.atendimentos.filter(a => a !== this.atendimentoSelected);
-			this.onSelect(null);
+			this._zone.run(() => {
+				this.service.delete(this.atendimentoSelected._id);
+				this.atendimentos = this.atendimentos.filter(a => a !== this.atendimentoSelected);
+				this.onSelect(null);
+			});
 		}
 	}
 
 	onConfirmDelete() {
-		this.deleteConfirmModal.open();
+		this.dialogs.modalDelete(confirm => this.onDeleteSelected(confirm), 'Atendimento');
 	}
 
 	onCreate() {
 		this.modal.openCreate();
+	}
+
+	onCloseModal() {
+		this.closeModal.emit(true);
 	}
 }

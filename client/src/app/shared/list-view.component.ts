@@ -8,7 +8,6 @@ declare var $;
 export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	@ViewChild('atendimentoList') atendimentoList;
-	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	keyword: string;
 	keywordObservable: Subscription;

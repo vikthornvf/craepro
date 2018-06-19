@@ -4,6 +4,8 @@ import { NavbarService } from '../../nav/navbar/navbar.service';
 import { AlunoService } from '../aluno.service';
 import { Aluno } from '../aluno.model';
 
+declare var $: any;
+
 @Component({
 	selector: 'app-aluno-list',
 	templateUrl: './aluno-list.component.html',
@@ -21,5 +23,11 @@ export class AlunoListComponent extends ListViewComponent {
 
 	loadList(): void {
 		this.alunos = this.service.list();
+	}
+
+	refreshTooltips(): void {
+		$(document).ready(function(){
+			$('.tooltipped').tooltip();
+		});
 	}
 }

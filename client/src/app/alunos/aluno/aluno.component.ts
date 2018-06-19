@@ -39,13 +39,13 @@ export class AlunoComponent implements OnInit {
 		private responsavelService: ResponsavelService,
 		private navService: NavbarService,
 		private dialogs: DialogsService,
-		private _zone: NgZone,
-		private _route: ActivatedRoute) {}
+		private route: ActivatedRoute,
+		private _zone: NgZone) {}
 
 	ngOnInit(): void {
 		this.initForm();
 		this.loadEscolas();
-		this._route.params.subscribe(params => {
+		this.route.params.subscribe(params => {
 			const id = params['id'];
 			if (id) {
 				this.loadAluno(id);

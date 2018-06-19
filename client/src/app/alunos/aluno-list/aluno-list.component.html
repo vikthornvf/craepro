@@ -45,6 +45,7 @@
 						property="profissional"
 						[selectedId]="selectedId"
 						(select)="onOpen()"
+						(closeModal)="refreshTooltips()"
 						#atendimentoList></app-atendimento-list>
 			</div>
 			<a id="create-att"

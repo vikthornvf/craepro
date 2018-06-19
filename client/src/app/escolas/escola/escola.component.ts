@@ -21,11 +21,11 @@ export class EscolaComponent implements OnInit {
 		private service: EscolaService,
 		private navService: NavbarService,
 		private dialogs: DialogsService,
-		private _route: ActivatedRoute) {}
+		private route: ActivatedRoute) {}
 
 	ngOnInit(): void {
 		this.initForm();
-		this._route.params.subscribe(params => {
+		this.route.params.subscribe(params => {
 			const id = params['id'];
 			if (id) {
 				this.loadEscola(id);
