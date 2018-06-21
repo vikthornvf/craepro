@@ -162,6 +162,9 @@ export class AlunoComponent implements OnInit {
 		aluno.turno = this.form.get('turno').value;
 		const escolaId = this.form.get('escola').value;
 		aluno.escola = this.escolaService.findById(escolaId);
+		if (!aluno.situacao) {
+			aluno.situacao = 'S';
+		}
 
 		this.aluno = this.service.save(aluno);
 		this.submitted = false;

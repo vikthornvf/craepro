@@ -12,7 +12,7 @@
 					type="text"
 					focus="1"
 					formControlName="nome"
-					autocomplete="false"
+					autocomplete="off"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
 				<label class="active" for="inputNomeUsuario">Nome</label>
 			</div>
@@ -23,7 +23,7 @@
 						id="inputEmailUsuario"
 						type="email"
 						formControlName="email"
-						autocomplete="false"
+						autocomplete="off"
 						[ngClass]="{ 'invalid': form.get('email').invalid && (form.get('email').touched || submitted) }">
 					<label class="active" for="inputEmailUsuario">Email*</label>
 				</div>

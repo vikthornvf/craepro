@@ -164,7 +164,13 @@ export class AtendimentoService {
 	}
 
 	updateAlunoSituacao(atendimento: Atendimento) {
+		if (!atendimento) {
+			return;
+		}
 		const aluno = atendimento.aluno;
+		if (!aluno) {
+			return;
+		}
 		const atendimentos = this.listByAluno(aluno._id);
 
 		let solicitado = false;

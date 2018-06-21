@@ -3,7 +3,7 @@
 		<div class="input-field col s12">
 			<input id="inputNomeResponsavel"
 					type="text"
-					autocomplete="false"
+					autocomplete="off"
 					formControlName="nome"
 					[focus]="!resp._id"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
@@ -14,7 +14,7 @@
 		<div class="input-field col s12">
 			<input id="inputParentesco"
 					type="text"
-					autocomplete="false"
+					autocomplete="off"
 					formControlName="parentesco"
 					[(ngModel)]="resp.parentesco">
 			<label for="inputParentesco">Parentesco</label>

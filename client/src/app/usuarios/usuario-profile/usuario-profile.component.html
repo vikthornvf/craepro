@@ -10,7 +10,7 @@
 				id="inputNomeUsuario"
 				type="text"
 				formControlName="nome"
-				autocomplete="false"
+				autocomplete="off"
 				[focus]="!usuario.nome"
 				[ngClass]="{ 'invalid': form.get('nome').invalid && (form.get('nome').touched || submitted) }">
 			<label class="active" for="inputNomeUsuario">Nome</label>

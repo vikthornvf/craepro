@@ -1,10 +1,9 @@
 <form class="transparent slide-in-effect">
 	<div class="input-field">
-	<input
+	<input id="searchInput"
 		type="search"
+		autocomplete="off"
 		placeholder="Buscar"
-		required id="search"
-		autocomplete="false"
 		(keyup)="onKeyup()"
 		[(ngModel)]="keyword"
 		[ngModelOptions]="{standalone: true}">

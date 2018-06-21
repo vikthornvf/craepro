@@ -29,7 +29,7 @@
 			<div class="input-field col s12">
 				<input id="nome_att"
 						formControlName="nome"
-						autocomplete="false"
+						autocomplete="off"
 						type="text"
 						materialize="dropdown"
 						data-activates="professor-dropdown"
@@ -116,7 +116,7 @@
 								formControlName="texto"
 								class="materialize-textarea"
 								style="margin: 0;"
-								autocomplete="false"></textarea>
+								autocomplete="off"></textarea>
 					</div>
 					<label class="col s12" [for]="'texto' + i">
 						{{ pareceres.controls[0].get('usuario').value }}, em
@@ -135,7 +135,7 @@
 								formControlName="texto"
 								class="materialize-textarea"
 								style="margin: 0;"
-								autocomplete="false">
+								autocomplete="off">
 							</textarea>
 						</div>
 						<label class="col s12" [for]="'inputTexto' + i">
