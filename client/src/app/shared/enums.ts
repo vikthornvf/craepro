@@ -59,9 +59,10 @@ export class Enums {
 
 	static readonly Situacao = [
 		{ value: 'A', name: 'Ativo' },
-		{ value: 'P', name: 'Parcialmente Ativo' },
+		{ value: 'P', name: 'Parcialmente ativo' },
 		{ value: 'E', name: 'Em espera' },
-		{ value: 'D', name: 'Desligado' }
+		{ value: 'D', name: 'Desligado' },
+		{ value: 'S', name: 'Sem atendimento' }
 	];
 
 	static readonly Turnos = [
