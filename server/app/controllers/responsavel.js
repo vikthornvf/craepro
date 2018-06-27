@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
-const Aluno = mongoose.model('Aluno');
+const Responsavel = mongoose.model('Responsavel');
 
 module.exports = {
 
 	list(req, res) {
-		Aluno.find({})
-			.populate('escola')
+		const aluno = { _id: req.params.alunoId };
+		let query = {};
+		if (aluno._id) {
+			query.aluno = aluno;
+		}
+
+		Responsavel.find(query)
 			.then((result) => {
 				res.json(result);
 			},
@@ -16,7 +21,7 @@ module.exports = {
 	},
 
 	add(req, res) {
-		Aluno.create(req.body)
+		Responsavel.create(req.body)
 			.then((result) => {
 				res.json(result);
 			},
@@ -27,10 +32,9 @@ module.exports = {
 	},
 
 	findById(req, res) {
-		Aluno.findById(req.params.id)
-			.populate('escola')
+		Responsavel.findById(req.params.id)
 			.then(function(result) {
-				if (!result) throw Error('Aluno não encontrado.');
+				if (!result) throw Error('Responsavel não encontrado.');
 				res.json(result);
 			},
 			function(err) {
@@ -40,7 +44,7 @@ module.exports = {
 	},
 
 	update(req, res) {
-		Aluno.findByIdAndUpdate(req.params.id, req.body)
+		Responsavel.findByIdAndUpdate(req.params.id, req.body)
 			.then(function(result) {
 				res.json(result);
 			},
@@ -48,24 +52,10 @@ module.exports = {
 				console.log(err);
 				res.status(500).json(err);
 			});
-	},
-
-	updateSituacao(req, res) {
-		const aluno = req.body;
-		if (aluno) {
-			Aluno.findByIdAndUpdate(req.params.id, { $set: { situacao: aluno.situacao }})
-			.then(function(result) {
-				res.json(result);
-			},
-			function(err) {
-				console.log(err);
-				res.status(500).json(err);
-			});
-		}
 	},
 
 	deleteById(req, res) {
-		Aluno.remove({_id: req.params.id})
+		Responsavel.remove({_id: req.params.id})
 			.then(function() {
 				res.sendStatus(204);
 			},

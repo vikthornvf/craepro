@@ -2,7 +2,7 @@ const controller = require('../controllers/usuario');
 
 module.exports = (app) => {
 
-	app.post('/api/authenticate', controller.auth);
+	app.post('/api/login', controller.login)
 
 	app.route('/api/usuario')
 		.get(controller.list)

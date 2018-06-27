@@ -2,9 +2,6 @@ const controller = require('../controllers/aluno');
 
 module.exports = (app) => {
 
-	app.get('/api/aluno/escola/:escolaId', controller.list);
-	app.get('/api/aluno/escola/:escolaId/desativados/:isDesativados', controller.list);
-
 	app.route('/api/aluno')
 		.get(controller.list)
 		.post(controller.add);
@@ -13,4 +10,6 @@ module.exports = (app) => {
 		.get(controller.findById)
 		.put(controller.update)
 		.delete(controller.deleteById);
+
+	app.put('/api/aluno/situacao/:id', controller.updateSituacao)
 }

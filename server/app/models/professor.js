@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const TelefoneSchema = require('./telefone_schema');
+const EnderecoSchema = require('./endereco_schema');
 
 const professorSchema = new Schema({
 	nome: { type: String, required: true },
-	tipoAtendimentos: [{ type: String }],
-	telefones: [TelefoneSchema],
+	atendimentoTipos: [{ type: String }],
+	telefones: [String],
+	enderecos: [EnderecoSchema],
 	atendimentos: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Atendimento'

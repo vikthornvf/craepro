@@ -1,47 +1,32 @@
+const passport = require('passport');
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
 
-	auth(req, res) {
-		Usuario.findOne({ nome: req.body.nome })
-			.populate('escola')
-			.then((usuario) => {
-				if (usuario) {
-					usuario.verifyPassword(req.body.senha, (err, valid) => {
-						if (err) console.log(err);
-						if (!valid) res.json({
-							success: false,
-							message: 'Falha na autenticação. Senha incorreta.'
-						});
-						else {
-							const payload = {
-								admin: usuario.admin,
-								escola: usuario.escola
-							}
-
-							var token = jwt.sign(payload, app.get('superSecret'), {
-								expiresInMinutes: 1440
-							});
-
-							res.json({
-								success: true,
-								message: 'Autenticado com sucesso.',
-								token: token
-							});
-						}
-					});
-				}
+	login(req, res) {
+		passport.authenticate('local', function(err, usuario, info) {
+			var token;
+			if (err) {
+				res.status(404).json(err);
+				return;
+			}
+			if(usuario) {
+				token = usuario.generateJwt();
+				res.status(200);
 				res.json({
-					success: false,
-					message: 'Falha na autenticação. Usuário não encontrado.'
+					"token" : token
 				});
-			});
+			} else {
+				res.status(401).json(info);
+			}
+		})(req, res);
 	},
 
 	list(req, res) {
 		Usuario.find({})
+			.populate('escola')
 			.then((result) => {
 				res.json(result);
 			},
@@ -52,8 +37,18 @@ module.exports = {
 	},
 
 	add(req, res) {
-		Usuario.create(req.body)
+		const usuario = new Usuario();
+		usuario.nome = req.body.nome;
+		usuario.email = req.body.email;
+		usuario.tipo = req.body.tipo;
+		usuario.escola = req.body.escola;
+		usuario.permissoes = req.body.permissoes;
+		usuario.solicitado = req.body.solicitado;
+		usuario.setPassword(req.body.senha);
+
+		Usuario.create(usuario)
 			.then((result) => {
+				console.log(result);
 				res.json(result);
 			},
 			err => {

@@ -5,17 +5,19 @@ module.exports = {
 
 	list(req, res) {
 		const aluno = { _id: req.params.alunoId };
-		const professor = { _id: req.params.professorId };
+		const profissional = { _id: req.params.professorId };
 
 		let query = {};
 		if (aluno._id) {
 			query.aluno = aluno;
 		}
-		if (professor._id) {
-			query.professor = professor;
+		if (profissional._id) {
+			query.profissional = profissional;
 		}
 
 		Atendimento.find(query)
+			.populate('aluno')
+			.populate('profissional')
 			.then((result) => {
 				res.json(result);
 			},
@@ -38,6 +40,8 @@ module.exports = {
 
 	findById(req, res) {
 		Atendimento.findById(req.params.id)
+			.populate('aluno')
+			.populate('profissional')
 			.then(function(result) {
 				if (!result) throw Error('Atendimento não encontrado.');
 				res.json(result);
