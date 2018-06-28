@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit {
 		{ name: 'usuarios', label: 'Usuários', auth: 'U1' }
 	];
 
-	private routes = [{}];
+	routes = [{}];
 
 	constructor(private auth: AuthService, private router: Router) {}
 
