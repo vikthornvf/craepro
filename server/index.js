@@ -8,8 +8,8 @@ const passport    = require('passport');
 const app = express();
 
 let dir = process.env.NODE_ENV === 'production'
-	? path.join(__dirname, '../..', 'client/dist')
-	: path.join(__dirname, '../..', 'client/src');
+	? path.join(__dirname, '/..', 'client/dist')
+	: path.join(__dirname, '/..', 'client/src');
 app.use(express.static(dir));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
