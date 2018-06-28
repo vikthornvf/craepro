@@ -1,25 +1,36 @@
 <h4 class="grey-text">Escolas</h4>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+<span *ngIf="loaded; else loading">
+	<ul *ngIf="escolas.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion">
 
-	<div class="collapsible-header flex-container disabled">
-		<input type="checkbox" disabled>
-		<label class="disabled"></label>
-		<div class="flex nome"><b class="truncate">Nome</b></div>
-		<div class="flex alunos"><b class="truncate">Nº de Alunos</b></div>
-	</div>
-	<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
-
-		<div class="collapsible-header flex-container selectable" (click)="onSimpleSelect(escola._id)">
-			<input
-				type="checkbox"
-				class="filled-in"
-				[id]="escola._id"
-				[checked]="escola._id === selectedId"
-				(click)="onSimpleSelect(escola._id)">
-			<label [for]="escola._id"></label>
-			<div class="flex nome truncate">{{ escola.nome }}</div>
-			<div class="flex alunos truncate">{{ escola.qtdAlunos }}</div>
+		<div class="collapsible-header flex-container disabled">
+			<input type="checkbox" disabled>
+			<label class="disabled"></label>
+			<div class="flex nome"><b class="truncate">Nome</b></div>
 		</div>
-	</li>
-</ul>
+		<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
+
+			<div class="collapsible-header flex-container selectable" (click)="onSimpleSelect(escola._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="escola._id"
+					[checked]="escola._id === selectedId"
+					(click)="onSimpleSelect(escola._id)">
+				<label [for]="escola._id"></label>
+				<div class="truncate">{{ escola.nome }}</div>
+			</div>
+		</li>
+	</ul>
+	<ng-template #noData>
+		<div class="row center">
+			<p>Ainda nenhuma escola foi registrada. Crie a primeira!</p>
+			<a class="waves-effect waves-light btn-large green darken-1" [routerLink]="link"><i class="material-icons right">add</i>CRIAR ESCOLA</a>
+		</div>
+	</ng-template>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
+	</div>
+</ng-template>
 <app-floating-add-button [link]="link" [color]="'green'"></app-floating-add-button>

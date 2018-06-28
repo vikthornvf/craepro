@@ -35,7 +35,7 @@
 		</div>
 		<span *ngIf="senha.invalid && (senha.touched || submitted)">
 			<div class="col" *ngIf="senha.errors.minlength && !senha.errors.required">
-				<label for="senhaSignup" class="red-text">A senha deve ter no mínimo 6 caracteres.</label>
+				<label for="senhaSignup" class="red-text">A senha deve ter no mínimo 4 caracteres.</label>
 			</div>
 		</span>
 
@@ -81,6 +81,7 @@
 		<div class="col s12">
 			<button id="signupBtn" class="waves-effect waves-light btn-large center-align light-blue darken-2 col s12">CRIAR</button>
 			<label *ngIf="form.invalid && submitted" class="red-text">Preencha e valide todos os campos.</label>
+			<label *ngIf="error" class="red-text">{{ error }}</label>
 		</div>
 	</div>
 </form>

@@ -8,6 +8,6 @@ export class Responsavel {
 		public aluno?: Aluno,
 		public nome?: string,
 		public parentesco?: string,
-		public telefones?: number[],
+		public telefones?: string[],
 		public enderecos?: Endereco[]) {}
 }

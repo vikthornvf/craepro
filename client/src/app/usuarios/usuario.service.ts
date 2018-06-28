@@ -1,47 +1,38 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../auth.service';
 import { StorageService } from '../storage.service';
 import { EscolaService } from '../escolas/escola.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Usuario } from './usuario.model';
 import { Enums } from '../shared/enums';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsuarioService {
 
-	private readonly url = 'api/usuarios';
+	private readonly url = '/api/usuario';
 	private headers: HttpHeaders;
 
-	idCount = 6; // TODO delete
-
-	private usuarios: Usuario[] = [
-		new Usuario('1', 'Vikthor Ferreira', 'vikthorferreira@gmail.com', this.escolaService.findById('1'), 'A', [], false, 'senha'),
-		new Usuario('2', 'abel', 'abel@email.com', this.escolaService.findById('1'), 'A', [], true, 'senha'),
-		new Usuario('3', 'cris', 'cris@email.com', this.escolaService.findById('1'), 'P', [], false, 'senha'),
-		new Usuario('4', 'dudu', 'dudu@email.com', this.escolaService.findById('3'), 'E', [], false, 'senha'),
-		new Usuario('5', 'luca', 'luca@email.com', this.escolaService.findById('4'), 'P', [], false, 'senha'),
-		new Usuario('6', 'zelda', 'zelda@email.com', this.escolaService.findById('2'), 'E', [], false, 'senha')
-	];
-
 	constructor(
-		private router: Router,
+		private http: HttpClient,
 		private auth: AuthService,
-		private storage: StorageService,
-		private escolaService: EscolaService,
-		private dialogs: DialogsService) {
+		private dialogs: DialogsService,
+		private router: Router) {
 
 		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list(): Usuario[] {
-		return this.usuarios.slice();
+	list(): Observable<Usuario[]> {
+		return this.http.get(this.url)
+			.map(res => res as Usuario[]);
 	}
 
-	findById(id: string): Usuario {
-		return this.usuarios.find(usuario => usuario._id === id);
+	findById(id: string): Observable<Usuario> {
+		return this.http.get(`${this.url}/${id}`);
 	}
 
 	getUsuarioTipo(tipo: string): string {
@@ -53,51 +44,66 @@ export class UsuarioService {
 	}
 
 	loadLoggedUsuario(): Usuario {
-		const usuarios = this.usuarios.slice();
-		return usuarios[0];
+		return this.auth.getUsuarioDetails();
 	}
 
 	confirmUsuario(usuario: Usuario): void {
-		usuario.solicitado = false;
-		this.dialogs.toastSuccess('Usuário confirmado com sucesso!');
+		if (usuario) {
+			usuario.solicitado = false;
+			this.save(usuario, `Usuario(a) ${usuario.nome || usuario.email} confirmado!`, false);
+		}
 	}
 
-	save(usuario: Usuario): Usuario {
-		let msg: string;
-
-		if (usuario._id) {
-			const attIndex = this.usuarios.find(a => a._id === usuario._id);
-			const index = this.usuarios.indexOf(attIndex);
-			this.usuarios[index] = usuario;
-			msg = `Dados de usuario(a) ${usuario.nome || usuario.email} salvos com sucesso!`;
-		} else {
-			usuario._id = this.idCount + '';
-			this.usuarios.push(usuario);
-			this.idCount++;
-			msg = `Usuario ${usuario.nome || usuario.email} salvo com sucesso!`;
+	save(usuario: Usuario, successMessage?: string, redirect: boolean = true): Usuario {
+		const id = usuario._id;
+		if (id) {
+			this.http.put(`${this.url}/${id}`, usuario, { headers: this.headers })
+				.subscribe(
+					res => {
+						if (!successMessage) {
+							successMessage = `Dados de usuario(a) ${usuario.nome || usuario.email} salvos com sucesso!`;
+						}
+						this.dialogs.toastSuccess(successMessage);
+						return usuario;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
 		}
-		this.dialogs.toastSuccess(msg);
+		else {
+			this.http.post(this.url, usuario, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Usuario ${usuario.nome || usuario.email} criado com sucesso!`);
+						usuario._id = res['_id'];
+						if (redirect) {
+							this.router.navigateByUrl('/usuarios/usuario/' + usuario._id);
+						}
+						return usuario;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
 		return usuario;
 	}
 
-	delete(id: string): boolean {
-		this.usuarios = this.usuarios.filter(e => e._id !== id);
-		this.dialogs.toastSuccess('Professor excluído com sucesso!');
-		return true;
-	}
-
-	login(usuario?: Usuario): void {
-		if (usuario) {
-			this.storage.setItem(usuario);
-		} else {
-			this.storage.setItem(this.loadLoggedUsuario());
+	onSave(usuario: Usuario): Observable<Usuario> {
+		const id = usuario._id;
+		if (id) {
+			return this.http.put(`${this.url}/${id}`, usuario, { headers: this.headers });
 		}
-		this.router.navigateByUrl('/');
+		return this.http.post(this.url, usuario, { headers: this.headers });
 	}
 
-	logout(): void {
-		console.log('logout');
-		this.storage.removeItem();
-		this.router.navigateByUrl('/login');
+	delete(id: string) {
+		this.http.delete(`${this.url}/${id}`).subscribe(
+			res => this.dialogs.toastSuccess('Usuário excluído com sucesso!'),
+			err => {
+				console.log(err);
+				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+			});
 	}
 }

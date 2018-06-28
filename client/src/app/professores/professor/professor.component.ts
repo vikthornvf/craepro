@@ -8,6 +8,7 @@ import { Professor } from '../professor.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { Endereco } from '../../shared/endereco.model';
 import { DialogsService } from '../../dialogs/dialogs.service';
+import { AuthService } from '../../auth.service';
 
 declare var Materialize: any;
 
@@ -19,6 +20,8 @@ export class ProfessorComponent implements OnInit {
 
 	form: FormGroup;
 	submitted: boolean;
+	loaded: boolean;
+	canEdit: boolean;
 
 	professor: Professor;
 	atendimentos: Atendimento[];
@@ -30,6 +33,7 @@ export class ProfessorComponent implements OnInit {
 		private service: ProfessorService,
 		private atendimentoService: AtendimentoService,
 		private navService: NavbarService,
+		private auth: AuthService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder) {}
 
@@ -43,6 +47,12 @@ export class ProfessorComponent implements OnInit {
 				this.initProfessor();
 			}
 		});
+		this.userAuth();
+	}
+
+	userAuth() {
+		const auth = this.auth.getUsuarioDetails().permissoes;
+		this.canEdit = auth.includes('P2');
 	}
 
 	initForm(): void {
@@ -55,15 +65,18 @@ export class ProfessorComponent implements OnInit {
 	}
 
 	loadProfessor(id: string): void {
-		const professor = this.service.findById(id);
-		this.professor = professor;
-		this.form.patchValue({
-			'nome': professor.nome,
-			'hasAee': professor.atendimentoTipos.includes('A'),
-			'hasFono': professor.atendimentoTipos.includes('F'),
-			'hasPsico': professor.atendimentoTipos.includes('P'),
-		});
-		this.loadAtendimentos();
+		this.service.findById(id).subscribe(
+			professor => {
+				this.professor = professor;
+				this.form.patchValue({
+					'nome': professor.nome,
+					'hasAee': professor.atendimentoTipos.includes('A'),
+					'hasFono': professor.atendimentoTipos.includes('F'),
+					'hasPsico': professor.atendimentoTipos.includes('P'),
+				});
+				this.loaded = true;
+			},
+			err => console.log(err));
 	}
 
 	initProfessor(): void {
@@ -71,10 +84,7 @@ export class ProfessorComponent implements OnInit {
 		this.professor.telefones = [];
 		this.professor.enderecos = [];
 		this.professor.atendimentoTipos = [];
-	}
-
-	loadAtendimentos(): void {
-		// TODO
+		this.loaded = true;
 	}
 
 	onSave(): void {

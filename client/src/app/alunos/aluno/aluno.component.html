@@ -1,157 +1,168 @@
-<h4 class="grey-text" *ngIf="!aluno._id">Novo Aluno</h4>
-<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
-	<div class="row">
-		<h3 class="col s12 light fade-in-effect" *ngIf="!editNome; else editNomeTemplate">{{ this.form.get('nome').value }} <button
-			class="btn-floating simple tooltipped"
-			style="margin-bottom:12px"
-			materialize="tooltip"
-			data-position="top"
-			data-ldelay="50"
-			data-tooltip="Alterar o nome"
-			(click)="toggleEditNome()"><i class="material-icons">edit</i></button>
-		</h3>
-		<ng-template #editNomeTemplate>
-			<div class="input-field col s12" [ngClass]="{ 'slide-in-effect': edit }">
-				<button class="btn-floating simple postfix" [disabled]="!form.get('nome').valid" (click)="toggleEditNome()">
-					<i class="material-icons">done</i>
+<span *ngIf="loaded; else loading">
+	<h4 class="grey-text" *ngIf="!aluno?._id">Novo Aluno</h4>
+	<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
+		<div class="row">
+			<h3 class="col s12 light fade-in-effect" *ngIf="!editNome; else editNomeTemplate">{{ this.form.get('nome').value }} <button
+				*ngIf="canEdit"
+				class="btn-floating simple tooltipped"
+				style="margin-bottom:12px"
+				materialize="tooltip"
+				data-position="top"
+				data-ldelay="50"
+				data-tooltip="Alterar o nome"
+				(click)="toggleEditNome()"><i class="material-icons">edit</i></button>
+			</h3>
+			<ng-template #editNomeTemplate>
+				<div class="input-field col s12" [ngClass]="{ 'slide-in-effect': edit }">
+					<button class="btn-floating simple postfix" [disabled]="!form.get('nome').valid" (click)="toggleEditNome()">
+						<i class="material-icons">done</i>
+					</button>
+					<input
+						id="inputNome"
+						type="text"
+						focus="1"
+						formControlName="nome"
+						autocomplete="off"
+						[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
+						(keyup)="onEdtitNome($event.key)">
+					<label class="active" for="inputNome">Nome</label>
+				</div>
+			</ng-template>
+		</div>
+
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<select
+						id="selectEscola"
+						formControlName="escola"
+						materialize="material_select"
+						[ngClass]="{ 'invalid': form.get('escola').invalid && submitted }">
+					<option value="" disabled selected>Selecione a Escola</option>
+					<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
+				</select>
+				<label for="selectEscola">Escola<span *ngIf="form.get('nome').value"> de {{ form.get('nome').value }}</span>*</label>
+			</div>
+
+			<div class="input-field col m3 s6">
+				<select
+						id="selectSerie"
+						formControlName="serie"
+						materialize="material_select"
+						[ngClass]="{ 'invalid': form.get('serie').invalid && submitted }">
+					<option value="" disabled selected>Selecione a Serie</option>
+					<option *ngFor="let serie of series" [value]="serie.value">{{ serie.name }}</option>
+				</select>
+				<label for="selectSerie">Serie*</label>
+			</div>
+
+			<div class="input-field col m3 s6">
+				<select
+						id="selectTurno"
+						formControlName="turno"
+						materialize="material_select"
+						[ngClass]="{ 'invalid': form.get('turno').invalid && submitted }">
+					<option value="" disabled selected>Selecione o Turno</option>
+					<option *ngFor="let turno of turnos" [value]="turno.value">{{ turno.name }}</option>
+				</select>
+				<label for="selectTurno">Turno*</label>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="aluno?._id">
+			<h4 class="col s12 grey-text">Atendimentos
+				<button id="buttonCreateAtt"
+						*ngIf="canCreateAtt"
+						type="button"
+						class="btn-floating amber right tooltipped"
+						materialize="tooltip"
+						data-position="left"
+						data-ldelay="50"
+						data-tooltip="Novo Atendimento"
+						[disabled]="atendimentos.length ? !atendimentos[0]._id : false"
+						(click)="addAtendimento()">
+					<i class="material-icons">add</i>
 				</button>
-				<input
-					id="inputNome"
-					type="text"
-					focus="1"
-					formControlName="nome"
-					autocomplete="off"
-					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }"
-					(keyup)="onEdtitNome($event.key)">
-				<label class="active" for="inputNome">Nome</label>
+			</h4>
+
+			<div class="col s12 right-align" *ngIf="atendimentos.length ? !atendimentos[0]._id : false">
+				<label for="buttonCreateAtt">Salve o atendimento criado antes de adicionar novos.</label>
 			</div>
-		</ng-template>
-	</div>
 
-	<div class="row">
-		<div class="input-field col m6 s12">
-			<select
-					id="selectEscola"
-					formControlName="escola"
-					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('escola').invalid && submitted }">
-				<option value="" disabled selected>Selecione a Escola</option>
-				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
-			</select>
-			<label for="selectEscola">Escola<span *ngIf="form.get('nome').value"> de {{ form.get('nome').value }}</span>*</label>
-		</div>
-
-		<div class="input-field col m3 s6">
-			<select
-					id="selectSerie"
-					formControlName="serie"
-					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('serie').invalid && submitted }">
-				<option value="" disabled selected>Selecione a Serie</option>
-				<option *ngFor="let serie of series" [value]="serie.value">{{ serie.name }}</option>
-			</select>
-			<label for="selectSerie">Serie*</label>
-		</div>
-
-		<div class="input-field col m3 s6">
-			<select
-					id="selectTurno"
-					formControlName="turno"
-					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('turno').invalid && submitted }">
-				<option value="" disabled selected>Selecione o Turno</option>
-				<option *ngFor="let turno of turnos" [value]="turno.value">{{ turno.name }}</option>
-			</select>
-			<label for="selectTurno">Turno*</label>
-		</div>
-	</div>
-
-	<div class="row" *ngIf="aluno._id">
-		<h4 class="col s12 grey-text">Atendimentos
-			<button id="buttonCreateAtt"
-					type="button"
-					class="btn-floating amber right tooltipped"
-					materialize="tooltip"
-					data-position="left"
-					data-ldelay="50"
-					data-tooltip="Novo Atendimento"
-					[disabled]="atendimentos.length ? !atendimentos[0]._id : false"
-					(click)="addAtendimento()">
-				<i class="material-icons">add</i>
-			</button>
-		</h4>
-
-		<div class="col s12 right-align" *ngIf="atendimentos.length ? !atendimentos[0]._id : false">
-			<label for="buttonCreateAtt">Salve o atendimento criado antes de adicionar novos.</label>
-		</div>
-
-		<div class="col m6 s12" *ngFor="let atendimento of atendimentos">
-			<div class="card hoverable blue-grey darken-1">
-				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
-					<app-atendimento
-							[selectedId]="aluno._id"
-							[atendimento]="atendimento"
-							[innerAlunoComponent]="true"
-							(delete)="removeAtendimento(atendimento)"
-							(save)="atendimento._id = $event._id"
-							#atendimentoElement></app-atendimento>
-				</div>
-				<div class="card-action" style="padding:5px0px">
-					<a (click)="atendimentoElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
-					<a (click)="atendimentoElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+			<div class="col m6 s12" *ngFor="let atendimento of atendimentos">
+				<div class="card hoverable blue-grey darken-1">
+					<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
+						<app-atendimento
+								[selectedId]="aluno?._id"
+								[atendimento]="atendimento"
+								[innerAlunoComponent]="true"
+								(delete)="removeAtendimento(atendimento)"
+								(save)="atendimento._id = $event._id"
+								#atendimentoElement></app-atendimento>
+					</div>
+					<div class="card-action" style="padding:5px0px">
+						<a *ngIf="canEditAtt || canCreateAtt || canEditParecer" (click)="atendimentoElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
+						<a *ngIf="canEditAtt" (click)="atendimentoElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row" *ngIf="aluno._id">
-		<h4 class="col s12 grey-text">Responsáveis
-			<button id="buttonCreateResponsavel"
-					type="button"
-					class="btn-floating light-blue right tooltipped"
-					materialize="tooltip"
-					data-position="left"
-					data-ldelay="50"
-					data-tooltip="Adicionar Responsável"
-					[disabled]="responsaveis.length ? !responsaveis[0]._id : false"
-					(click)="addResponsavel()">
-				<i class="material-icons">add</i>
-			</button>
-		</h4>
+		<div class="row" *ngIf="aluno?._id">
+			<h4 class="col s12 grey-text">Responsáveis
+				<button id="buttonCreateResponsavel"
+						*ngIf="canEdit"
+						type="button"
+						class="btn-floating light-blue right tooltipped"
+						materialize="tooltip"
+						data-position="left"
+						data-ldelay="50"
+						data-tooltip="Adicionar Responsável"
+						[disabled]="responsaveis.length ? !responsaveis[0]._id : false"
+						(click)="addResponsavel()">
+					<i class="material-icons">add</i>
+				</button>
+			</h4>
 
-		<div class="col s12 right-align" *ngIf="responsaveis.length ? !responsaveis[0]._id : false">
-			<label for="buttonCreateAtt">Salve o responsável criado antes de adicionar novos.</label>
-		</div>
+			<div class="col s12 right-align" *ngIf="responsaveis.length ? !responsaveis[0]._id : false">
+				<label for="buttonCreateAtt">Salve o responsável criado antes de adicionar novos.</label>
+			</div>
 
-		<div class="col s12" *ngFor="let responsavel of responsaveis; index as i">
-			<div class="card hoverable blue-grey darken-1">
-				<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
-					<app-responsavel
-						[index]="i"
-						[aluno]="aluno"
-						[responsavel]="responsavel"
-						(delete)="removeResponsavel(responsavel)"
-						(save)="responsavel._id = $event._id"
-						#responsavelElement>
-					</app-responsavel>
-				</div>
-				<div class="card-action" style="padding:5px0px">
-					<a (click)="responsavelElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
-					<a (click)="responsavelElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+			<div class="col s12" *ngFor="let responsavel of responsaveis; index as i">
+				<div class="card hoverable blue-grey darken-1">
+					<div class="card-content white-text fade-in-effect" style="padding-bottom:0">
+						<app-responsavel
+							[index]="i"
+							[aluno]="aluno"
+							[responsavel]="responsavel"
+							(delete)="removeResponsavel(responsavel)"
+							(save)="responsavel._id = $event._id"
+							#responsavelElement>
+						</app-responsavel>
+					</div>
+					<div *ngIf="canEdit" class="card-action" style="padding:5px0px">
+						<a (click)="responsavelElement.onSave()" class="waves-effect teal-text text-accent-3"><b>Salvar</b></a>
+						<a (click)="responsavelElement.onConfirmDelete()" class="waves-effect teal-text text-accent-3"><b>Excluir</b></a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row">
-		<div class="col s12" *ngIf="!aluno._id">
-			<label>É necessário salvar o registro do aluno para criar os atendimentos e responsáveis.</label>
+		<div class="row">
+			<div class="col s12" *ngIf="!aluno?._id">
+				<label>É necessário salvar o registro do aluno para criar os atendimentos e responsáveis.</label>
+			</div>
 		</div>
-	</div>
 
-	<app-form-actions
-		[invalid]="form.invalid"
-		[canDelete]="aluno._id"
-		(delete)="onConfirmDelete()">
-	</app-form-actions>
-</form>
+		<app-form-actions
+			[invalid]="form.invalid"
+			[canEdit]="canEdit"
+			[canDelete]="aluno?._id"
+			(delete)="onConfirmDelete()">
+		</app-form-actions>
+	</form>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
+	</div>
+</ng-template>

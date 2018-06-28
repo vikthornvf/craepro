@@ -26,7 +26,7 @@ export class UsuarioPasswordComponent implements OnInit {
 	initForm(): void {
 		this.form = this.fb.group({
 			'senhaCurrent': null,
-			'senha': this.fb.control(null, [Validators.required, Validators.minLength(6)]),
+			'senha': this.fb.control(null, [Validators.required, Validators.minLength(4)]),
 			'senhaConfirm': null,
 		});
 	}

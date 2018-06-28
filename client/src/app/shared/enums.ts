@@ -7,22 +7,24 @@ export class Enums {
 	];
 
 	static readonly TipoUsuario = [
-		{ value: 'A', name: 'Administração CRAE', auth: ['A1', 'A2', 'A3', 'P1', 'P2', 'E1', 'E2', 'U1', 'U2'] },
-		{ value: 'P', name: 'Profissional CRAE', auth: ['A1', 'A2', 'P1', 'E1'] },
-		{ value: 'E', name: 'Representante Escola', auth: ['A1', 'A2', 'A3', 'P1', 'E1'] },
+		{ value: 'A', name: 'Administração CRAE', auth: ['A1', 'A2', 'A3', 'A4', 'A5', 'P1', 'P2', 'E1', 'E2', 'U1', 'U2'] },
+		{ value: 'P', name: 'Profissional CRAE', auth: ['A1', 'A2', 'A3', 'A4', 'A5', 'P1', 'E1'] },
+		{ value: 'E', name: 'Representante Escola', auth: ['A1', 'A2', 'A3', 'A5', 'P1', 'E1'] },
 		{ value: 'O', name: 'Outro', auth: [] }
 	];
 
 	static readonly Permissoes = [
-		{ value: 'A1', name: 'Visualização dos Alunos' },
-		{ value: 'A2', name: 'Edição dos Pareceres' },
-		{ value: 'A3', name: 'Edição dos Alunos' },
-		{ value: 'P1', name: 'Visualização dos Professores' },
-		{ value: 'P2', name: 'Edição dos Professores' },
+		{ value: 'A1', name: 'Visualização dos Alunos e Atendimentos' },
+		{ value: 'A2', name: 'Solicitar Atendimento' },
+		{ value: 'A3', name: 'Manutenção dos Pareceres' },
+		{ value: 'A4', name: 'Manutenção dos Atendimentos' },
+		{ value: 'A5', name: 'Manutenção dos Alunos' },
+		{ value: 'P1', name: 'Visualização dos Professores e Atendimentos' },
+		{ value: 'P2', name: 'Manutenção dos Professores' },
 		{ value: 'E1', name: 'Visualização das Escolas' },
-		{ value: 'E2', name: 'Edição das Escolas' },
+		{ value: 'E2', name: 'Manutenção das Escolas' },
 		{ value: 'U1', name: 'Visualização dos Usuários' },
-		{ value: 'U2', name: 'Edição das permissões dos Usuários' },
+		{ value: 'U2', name: 'Alterar as permissões dos Usuários' },
 	];
 
 	static readonly Dias = [

@@ -1,80 +1,83 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Professor } from './professor.model';
 import { DialogsService } from '../dialogs/dialogs.service';
+import 'rxjs/add/operator/map';
 
-/**
-	ROUTES
-	app.route('/api/professor')
-		.get(controller.list)
-		.post(controller.add);
-
-	app.route('/api/professor/:id')
-		.get(controller.findById)
-		.put(controller.update)
-		.delete(controller.deleteById);
- */
 @Injectable()
 export class ProfessorService {
 
-	readonly url = 'api/professor';
+	readonly url = '/api/professor';
 	headers: HttpHeaders;
-
-	idCount = 5; // TODO delete
-
-	private professores: Professor[] = [
-		new Professor('1', 'Cris', ['A', 'P'], [], []),
-		new Professor('2', 'Fernando', ['P'], [], []),
-		new Professor('3', 'Luciano', ['A', 'F'], [], []),
-		new Professor('4', 'Ramon', ['A'], [], []),
-	];
 
 	constructor(
 		private http: HttpClient,
-		private dialogs: DialogsService) {
+		private dialogs: DialogsService,
+		private router: Router) {
 
 		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list(): Professor[] {
-		return this.professores.slice();
+	list(): Observable<Professor[]> {
+		return this.http.get(this.url)
+			.map(res => res as Professor[]);
 	}
 
-	listByNomeAndTipoAtendimento(nome: string, tipo: string): Professor[] {
+	listByNomeAndTipoAtendimento(professores: Professor[], nome: string, tipo: string): Professor[] {
 		if (nome) {
 			nome = nome.toLowerCase();
-			return this.professores.filter(p => (p.nome.toLowerCase().includes(nome) && p.atendimentoTipos.includes(tipo)));
+			return professores.filter(p => (p.nome.toLowerCase().includes(nome) && p.atendimentoTipos.includes(tipo)));
 		}
-		return this.professores.filter(p => p.atendimentoTipos.includes(tipo));
+		return professores.filter(p => p.atendimentoTipos.includes(tipo));
 	}
 
-	findById(id: string): Professor {
-		return this.professores.find(p => p._id === id);
+	findById(id: string): Observable<Professor> {
+		return this.http.get(`${this.url}/${id}`);
 	}
 
-	save(professor: Professor): Professor {
-		let msg: string;
-
-		if (professor._id) {
-			const attIndex = this.professores.find(a => a._id === professor._id);
-			const index = this.professores.indexOf(attIndex);
-			this.professores[index] = professor;
-			msg = `Dados de professor(a) ${professor.nome} salvos com sucesso!`;
-		} else {
-			professor._id = this.idCount + '';
-			this.professores.push(professor);
-			this.idCount++;
-			msg = `Professor(a) ${professor.nome} salvo com sucesso!`;
+	save(professor: Professor, redirect: boolean = true): Professor {
+		const id = professor._id;
+		if (id) {
+			this.http.put(`${this.url}/${id}`, professor, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Dados de professor(a) ${professor.nome} salvos com sucesso!`);
+						return professor;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
 		}
-		this.dialogs.toastSuccess(msg);
+		else {
+			this.http.post(this.url, professor, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Professor(a) ${professor.nome} salvo com sucesso!`);
+						professor._id = res['_id'];
+						if (redirect) {
+							console.log('redirect');
+							this.router.navigateByUrl('/professores/professor/' + professor._id);
+						}
+						return professor;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
 		return professor;
 	}
 
-	delete(id: string): boolean {
-		this.professores = this.professores.filter(e => e._id !== id);
-		this.dialogs.toastSuccess('Professor excluído com sucesso!');
-		return true;
+	delete(id: string) {
+		this.http.delete(`${this.url}/${id}`).subscribe(
+			res => this.dialogs.toastSuccess('Professor(a) excluído com sucesso!'),
+			err => {
+				console.log(err);
+				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+			});
 	}
 }

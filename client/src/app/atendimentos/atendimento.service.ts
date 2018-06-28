@@ -7,6 +7,7 @@ import { DialogsService } from '../dialogs/dialogs.service';
 import { Atendimento } from './atendimento.model';
 import { Parecer } from './parecer.model';
 import { Horario } from './horario.model';
+import 'rxjs/add/operator/map';
 
 /**
 	ROUTES
@@ -25,118 +26,8 @@ import { Horario } from './horario.model';
 @Injectable()
 export class AtendimentoService {
 
-	readonly url = 'api/atendimento';
+	readonly url = '/api/atendimento';
 	headers: HttpHeaders;
-
-	private atendimentos: Atendimento[] = [
-		new Atendimento(
-			'1',
-			'A',
-			this.serviceAluno.findById('1'),
-			this.serviceProfessor.findById('4'),
-			[new Parecer('Ta bacana1'), new Parecer('Ta bacana2')],
-			new Date(),
-			new Date(),
-			new Date(),
-			new Horario(1, '16:30')),
-		new Atendimento(
-			'2',
-			'P',
-			this.serviceAluno.findById('2'),
-			this.serviceProfessor.findById('2'),
-			[new Parecer('So esperando mesmo...'), new Parecer('So esperando mesmo...2')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'3',
-			'F',
-			this.serviceAluno.findById('1'),
-			this.serviceProfessor.findById('3'),
-			[new Parecer('So esperando mesmo...3'), new Parecer('So esperando mesmo...4')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'4',
-			'A',
-			this.serviceAluno.findById('3'),
-			this.serviceProfessor.findById('4'),
-			[new Parecer('Esperando horário')],
-			new Date()),
-		new Atendimento(
-			'5',
-			'P',
-			this.serviceAluno.findById('4'),
-			this.serviceProfessor.findById('2'),
-			[new Parecer('So esperando mesmo...5'), new Parecer('So esperando mesmo...6')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'6',
-			'P',
-			this.serviceAluno.findById('5'),
-			this.serviceProfessor.findById('2'),
-			[new Parecer('Bombando'), new Parecer('Bombando2')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'7',
-			'A',
-			this.serviceAluno.findById('6'),
-			this.serviceProfessor.findById('4'),
-			[new Parecer('Tudo ok'), new Parecer('Tudo ok2')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'8',
-			'F',
-			this.serviceAluno.findById('3'),
-			this.serviceProfessor.findById('3'),
-			[new Parecer('Recebendo bem o tratamento'), new Parecer('Apresentando resultados')],
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'9',
-			'P',
-			this.serviceAluno.findById('7'),
-			this.serviceProfessor.findById('2'),
-			[new Parecer('Se mudou pra longe.')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'10',
-			'F',
-			this.serviceAluno.findById('7'),
-			this.serviceProfessor.findById('3'),
-			[new Parecer('Teste'), new Parecer('Teste2')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'11',
-			'A',
-			this.serviceAluno.findById('8'),
-			this.serviceProfessor.findById('1'),
-			[new Parecer('Mora muito longe'), new Parecer('Mora muito longe2')],
-			new Date(),
-			new Date(),
-			new Date()),
-		new Atendimento(
-			'12',
-			'A',
-			this.serviceAluno.findById('1'),
-			this.serviceProfessor.findById('1'),
-			[new Parecer('Mora muito longe3'), new Parecer('Mora muito longe4')],
-			new Date(),
-			new Date(),
-			new Date())
-	];
-	idCount = 13; // TODO delete
 
 	constructor(
 		private http: HttpClient,
@@ -148,19 +39,62 @@ export class AtendimentoService {
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list(): Atendimento[] {
-		return this.atendimentos.slice();
+	list(): Observable<Atendimento[]> {
+		return this.http.get(this.url)
+			.map(res => res as Atendimento[]);
 	}
 
-	listByAluno(alunoId: string): Atendimento[] {
-		return this.atendimentos.filter(a => a.aluno
-			? (a.aluno._id === alunoId)
-			: false);
+	listByAluno(alunoId: string): Observable<Atendimento[]> {
+		return this.http.get(`${this.url}/aluno/${alunoId}`)
+			.map(res => res as Atendimento[]);
 	}
 
-	updateAlunoSituacaoById(id: string) {
-		const atendimento = this.findById(id);
-		this.updateAlunoSituacao(atendimento);
+	listByProfessor(professorId: string): Observable<Atendimento[]> {
+		return this.http.get(`${this.url}/professor/${professorId}`)
+			.map(res => res as Atendimento[]);
+	}
+
+	findById(id: string): Observable<Atendimento> {
+		return this.http.get(`${this.url}/${id}`);
+	}
+
+	save(atendimento: Atendimento): Atendimento {
+		const id = atendimento._id;
+		if (id) {
+			this.http.put(`${this.url}/${id}`, atendimento, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Dados do atendimento alterados com sucesso!`);
+						this.updateAlunoSituacao(atendimento);
+						return atendimento;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
+		else {
+			this.http.post(this.url, atendimento, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess('Atendimento criado com sucesso!');
+						atendimento._id = res['_id'];
+						this.updateAlunoSituacao(atendimento);
+						return atendimento;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
+		return atendimento;
+	}
+
+	onCreate(atendimento: Atendimento): Observable<Atendimento> {
+		const id = atendimento._id;
+		if (!id) {
+			return this.http.post(this.url, atendimento, { headers: this.headers });
+		}
 	}
 
 	updateAlunoSituacao(atendimento: Atendimento) {
@@ -171,83 +105,17 @@ export class AtendimentoService {
 		if (!aluno) {
 			return;
 		}
-		const atendimentos = this.listByAluno(aluno._id);
+		this.listByAluno(aluno._id).subscribe(
+			atendimentos => this.serviceAluno.updateSituacao(aluno, atendimentos),
+			err => console.log(err));
+	}
 
-		let solicitado = false;
-		let ativo = false;
-		let finalzado = false;
-		let situacao = aluno.situacao;
-
-		atendimentos.forEach(a => {
-			if (a.egresso) {
-				finalzado = true;
-			} else if (a.inicio) {
-				ativo = true;
-			} else {
-				solicitado = true;
-			}
+	delete(id: string) {
+		this.http.delete(`${this.url}/${id}`).subscribe(
+			res => this.dialogs.toastSuccess('Atendimento excluído com sucesso!'),
+			err => {
+				console.log(err);
+				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
 		});
-
-		if (solicitado || ativo || finalzado) {
-			if (solicitado) {
-				situacao = ativo
-					? 'P'
-					: 'E';
-			} else if (ativo) {
-				situacao = 'A';
-			} else if (finalzado) {
-				situacao = 'D';
-			}
-			aluno.situacao = situacao;
-			this.serviceAluno.updateSituacao(aluno);
-		}
-	}
-
-	listByProfessor(professorId: string): Atendimento[] {
-		return this.atendimentos.filter(a => a.profissional
-			? (a.profissional._id === professorId)
-			: false);
-	}
-
-	findById(_id: string): Atendimento {
-		return this.atendimentos.find(a => a._id === _id);
-	}
-
-	save(atendimento: Atendimento): Atendimento {
-		let msg: string;
-
-		if (atendimento._id) {
-			const attIndex = this.atendimentos.find(a => a._id === atendimento._id);
-			const index = this.atendimentos.indexOf(attIndex);
-			this.atendimentos[index] = atendimento;
-			msg = 'Dados do atendimento alterados com sucesso!';
-		}
-		else {
-			atendimento._id = this.idCount + '';
-			this.atendimentos.unshift(atendimento);
-			this.idCount++;
-			msg = 'Atendimento criado com sucesso!';
-		}
-		this.updateAlunoSituacao(atendimento);
-		this.dialogs.toastSuccess(msg);
-		return atendimento;
-	}
-
-	delete(_id: string): boolean {
-		// TODO
-		this.updateAlunoSituacaoById(_id);
-		this.atendimentos = this.atendimentos.filter(a => a._id !== _id);
-		this.dialogs.toastSuccess('Atendimento excluído com sucesso!');
-		return true;
-	}
-
-	toDate(str: any): Date {
-		if (str) {
-			if (typeof str === 'string') {
-				const from = str.split('/');
-				return new Date(+from[2], (+from[1] - 1), +from[0]);
-			}
-		}
-		return str;
 	}
 }

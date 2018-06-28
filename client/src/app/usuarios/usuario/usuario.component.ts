@@ -8,6 +8,7 @@ import { NavbarService } from '../../nav/navbar/navbar.service';
 import { Usuario } from '../usuario.model';
 import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
+import { AuthService } from '../../auth.service';
 
 declare var $: any;
 
@@ -19,9 +20,11 @@ export class UsuarioComponent implements OnInit {
 
 	form: FormGroup;
 	submitted: boolean;
+	loaded: boolean;
+	canEdit: boolean;
 
-	usuario: Usuario;
-	escolas: Escola[];
+	usuario: Usuario = {};
+	escolas: Escola[] = [];
 	tiposUsuario = Enums.TipoUsuario;
 	permissoes = Enums.Permissoes;
 
@@ -30,6 +33,7 @@ export class UsuarioComponent implements OnInit {
 		private service: UsuarioService,
 		private escolaService: EscolaService,
 		private navService: NavbarService,
+		private auth: AuthService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private _zone: NgZone) {}
@@ -46,6 +50,12 @@ export class UsuarioComponent implements OnInit {
 			}
 		});
 		this.loadEscolas();
+		this.userAuth();
+	}
+
+	userAuth() {
+		const auth = this.auth.getUsuarioDetails().permissoes;
+		this.canEdit = auth.includes('U2');
 	}
 
 	onSelectTipo(value: string): void {
@@ -65,41 +75,52 @@ export class UsuarioComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': null,
+			'nome': this.fb.control(null, Validators.required),
 			'email': this.fb.control(null, [Validators.required, Validators.email]),
-			'tipo': null,
+			'tipo': this.fb.control(null, Validators.required),
 			'escola': null
 		});
 		this.permissoes.forEach(p => this.form.addControl(`has${p.value}`, this.fb.control(false)));
 	}
 
 	loadEscolas(): void {
-		this.escolas = this.escolaService.list();
+		this.escolaService.list().subscribe(
+			escolas => {
+				this.escolas = escolas;
+				this.updateDropdownState();
+			},
+			err => console.log(err));
 	}
 
 	loadUsuario(id: string): void {
-		const usuario = this.service.findById(id);
-		this.usuario = usuario;
-		this.form.patchValue({
-			'nome': usuario.nome,
-			'email': usuario.email,
-			'tipo': usuario.tipo,
-			'escola': usuario.escola
-		});
-		this.usuario.permissoes.forEach(p => this.form.get(`has${p}`).patchValue(true));
+		this.service.findById(id).subscribe(
+			usuario => {
+				this.usuario = usuario;
+				this.form.patchValue({
+					'nome': usuario.nome,
+					'email': usuario.email,
+					'tipo': usuario.tipo,
+					'escola': usuario.escola
+				});
+				this.usuario.permissoes.forEach(p => this.form.get(`has${p}`).patchValue(true));
+				this.loaded = true;
+			},
+			err => console.log(err));
 	}
 
 	initUsuario(): void {
 		this.usuario = new Usuario();
 		this.usuario.permissoes = [];
+		this.loaded = true;
 	}
 
 	onSave(): void {
-		if (this.form.invalid) {
+		if (this.form.invalid || !this.buildPermissoesArray().length) {
+			if (!this.buildPermissoesArray().length) {
+				this.dialogs.toastFail('O Usuário deve ter ao menos uma permissão.');
+			}
 			this.submitted = true;
-			$(document).ready(function() {
-				$('select').material_select();
-			});
+			this.updateDropdownState();
 			return;
 		}
 
@@ -107,8 +128,11 @@ export class UsuarioComponent implements OnInit {
 		usuario.nome = this.form.get('nome').value;
 		usuario.email = this.form.get('email').value;
 		usuario.tipo = this.form.get('tipo').value;
-		usuario.escola = usuario.tipo !== 'E' ? null : this.escolaService.findById(this.form.get('escola').value);
+		usuario.escola = usuario.tipo !== 'E' ? null : new Escola(this.form.get('escola').value);
 		usuario.permissoes = this.buildPermissoesArray();
+		if (!usuario.permissoes) {
+			usuario.permissoes = [];
+		}
 
 		this.usuario = this.service.save(usuario);
 		this.submitted = false;
@@ -142,5 +166,11 @@ export class UsuarioComponent implements OnInit {
 			}
 		});
 		return str;
+	}
+
+	updateDropdownState() {
+		$(document).ready(function() {
+			$('select').material_select();
+		});
 	}
 }

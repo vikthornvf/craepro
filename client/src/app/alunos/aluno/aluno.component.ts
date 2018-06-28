@@ -7,6 +7,7 @@ import { AtendimentoService } from '../../atendimentos/atendimento.service';
 import { ResponsavelService } from '../../responsaveis/responsavel.service';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
+import { AuthService } from '../../auth.service';
 import { Aluno } from '../aluno.model';
 import { Escola } from '../../escolas/escola.model';
 import { Professor } from '../../professores/professor.model';
@@ -24,6 +25,7 @@ export class AlunoComponent implements OnInit {
 
 	form: FormGroup;
 	submitted = false;
+	loaded: boolean;
 	editNome = true;
 	aluno: Aluno;
 	escolas: Escola[];
@@ -32,6 +34,11 @@ export class AlunoComponent implements OnInit {
 	series: {}[] = Enums.Series;
 	turnos: {}[] = Enums.Turnos;
 
+	canCreateAtt: boolean;
+	canEditParecer: boolean;
+	canEditAtt: boolean;
+	canEdit: boolean;
+
 	constructor(
 		private service: AlunoService,
 		private escolaService: EscolaService,
@@ -39,6 +46,7 @@ export class AlunoComponent implements OnInit {
 		private responsavelService: ResponsavelService,
 		private navService: NavbarService,
 		private dialogs: DialogsService,
+		private auth: AuthService,
 		private route: ActivatedRoute,
 		private _zone: NgZone) {}
 
@@ -54,6 +62,15 @@ export class AlunoComponent implements OnInit {
 				this.initAluno();
 			}
 		});
+		this.userAuth();
+	}
+
+	userAuth() {
+		const auth = this.auth.getUsuarioDetails().permissoes;
+		this.canCreateAtt = auth.includes('A2');
+		this.canEditParecer = auth.includes('A3');
+		this.canEditAtt = auth.includes('A4');
+		this.canEdit = auth.includes('A5');
 	}
 
 	initForm(): void {
@@ -70,6 +87,7 @@ export class AlunoComponent implements OnInit {
 	initAluno(): void {
 		this.aluno = new Aluno();
 		this.aluno.escola = new Escola();
+		this.loaded = true;
 	}
 
 	toggleEditNome(): void {
@@ -84,24 +102,34 @@ export class AlunoComponent implements OnInit {
 		}
 	}
 
-	loadAluno(_id: string): void {
-		const a = this.aluno = this.service.findById(_id);
-		this.form.patchValue({
-			'nome': a.nome,
-			'escola': a.escola._id,
-			'serie': a.serie,
-			'turno': a.turno
-		});
-		this.loadAtendimentos();
-		this.loadResponsaveis();
+	loadAluno(id: string): void {
+		this.service.findById(id).subscribe(
+			aluno => {
+				this.aluno = aluno;
+				this.form.patchValue({
+					'nome': aluno.nome,
+					'serie': aluno.serie,
+					'escola': aluno.escola._id,
+					'turno': aluno.turno
+				});
+				this.loaded = true;
+			},
+			err => console.log(err));
+		this.loadAtendimentos(id);
+		this.loadResponsaveis(id);
 	}
 
 	loadEscolas(): void {
-		this.escolas = this.escolaService.list();
+		this.escolaService.list().subscribe(
+			escolas => {
+				this.escolas = escolas;
+				this.updateDropdownState();
+			},
+			err => console.log(err));
 	}
 
 	addResponsavel(): void {
-		$('#buttonCreateResponsavel').tooltip('remove');
+		this.updateTooltipState();
 
 		const newResponsavel = new Responsavel();
 		newResponsavel.aluno = this.aluno;
@@ -111,9 +139,12 @@ export class AlunoComponent implements OnInit {
 		this.responsaveis.unshift(newResponsavel);
 	}
 
-	loadResponsaveis(): void {
-		const _id = this.aluno._id;
-		this.responsaveis = this.responsavelService.listByAluno(_id);
+	loadResponsaveis(id: string): void {
+		if (id) {
+			this.responsavelService.listByAluno(id).subscribe(
+				responsaveis => this.responsaveis = responsaveis,
+				err => console.log(err));
+		}
 	}
 
 	removeResponsavel(responsavel: Responsavel): void {
@@ -124,7 +155,7 @@ export class AlunoComponent implements OnInit {
 	}
 
 	addAtendimento(): void {
-		$('#buttonCreateAtt').tooltip('remove');
+		this.updateTooltipState();
 
 		const newAtendimento = new Atendimento();
 		newAtendimento.aluno = this.aluno;
@@ -134,25 +165,26 @@ export class AlunoComponent implements OnInit {
 		this.atendimentos.unshift(newAtendimento);
 	}
 
-	loadAtendimentos(): void {
-		const _id = this.aluno._id;
-		this.atendimentos = this.atendimentoService.listByAluno(_id);
+	loadAtendimentos(id: string): void {
+		if (id) {
+			this.atendimentoService.listByAluno(id).subscribe(
+				atendimentos => this.atendimentos = atendimentos,
+				err => console.log(err));
+		}
 	}
 
 	removeAtendimento(atendimento: Atendimento): void {
 		this._zone.run(() => {
 			const index = this.atendimentos.indexOf(atendimento);
 			this.atendimentos.splice(index, 1);
+			this.service.updateSituacao(this.aluno, this.atendimentos);
 		});
 	}
 
 	onSave(): void {
 		if (this.form.invalid) {
 			this.submitted = true;
-			// update dropdown state
-			$(document).ready(function() {
-				$('select').material_select();
-			});
+			this.updateDropdownState();
 			return;
 		}
 
@@ -161,7 +193,7 @@ export class AlunoComponent implements OnInit {
 		aluno.serie = this.form.get('serie').value;
 		aluno.turno = this.form.get('turno').value;
 		const escolaId = this.form.get('escola').value;
-		aluno.escola = this.escolaService.findById(escolaId);
+		aluno.escola = new Escola(escolaId);
 		if (!aluno.situacao) {
 			aluno.situacao = 'S';
 		}
@@ -180,5 +212,17 @@ export class AlunoComponent implements OnInit {
 	onConfirmDelete(): void {
 		const label = this.aluno.nome ? this.aluno.nome : 'Aluno';
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
+	}
+
+	updateTooltipState() {
+		$(document).ready(function(){
+			$('.tooltipped').tooltip();
+		});
+	}
+
+	updateDropdownState() {
+		$(document).ready(function() {
+			$('select').material_select();
+		});
 	}
 }

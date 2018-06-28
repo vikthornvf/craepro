@@ -13,7 +13,7 @@ import { Enums } from '../../shared/enums';
 export class UsuarioListComponent extends ListViewComponent {
 
 	link = 'usuario';
-	usuarios: Usuario[] = [];
+	usuarios: any = [];
 
 	constructor(
 		z: NgZone,
@@ -21,7 +21,12 @@ export class UsuarioListComponent extends ListViewComponent {
 		private service: UsuarioService) { super(z, ns); }
 
 	loadList(): void {
-		this.usuarios = this.service.list();
+		this.service.list().subscribe(
+			usuarios => {
+				this.usuarios = usuarios;
+				this.loaded = true;
+			},
+			err => console.log(err));
 	}
 
 	clearSelection(): void {

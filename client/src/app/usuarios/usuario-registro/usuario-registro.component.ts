@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
 import { UsuarioService } from '../usuario.service';
 import { EscolaService } from '../../escolas/escola.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { Usuario } from '../usuario.model';
 import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
@@ -19,17 +21,20 @@ export class UsuarioRegistroComponent implements OnInit {
 	senhaBlured: boolean;
 	escolas: Escola[];
 	tiposUsuario = Enums.TipoUsuario;
+	error: string;
 
 	constructor(
+		private auth: AuthService,
 		private service: UsuarioService,
 		private escolaService: EscolaService,
+		private dialogs: DialogsService,
 		private fb: FormBuilder) {}
 
 	ngOnInit() {
 		this.form = this.fb.group({
 			'nome': this.fb.control(null, Validators.required),
 			'email': this.fb.control(null, [Validators.required, Validators.email]),
-			'senha': this.fb.control(null, [Validators.required, Validators.minLength(6)]),
+			'senha': this.fb.control(null, [Validators.required, Validators.minLength(4)]),
 			'senhaConfirm': null,
 			'tipo': this.fb.control(null, Validators.required),
 			'escola': this.fb.control(null),
@@ -40,7 +45,12 @@ export class UsuarioRegistroComponent implements OnInit {
 	}
 
 	loadEscolas() {
-		this.escolas = this.escolaService.list();
+		this.escolaService.list().subscribe(
+			escolas => {
+				this.escolas = escolas;
+				this.updateDropdownState();
+			},
+			err => console.log(err));
 	}
 
 	onBlurSenha() {
@@ -50,24 +60,43 @@ export class UsuarioRegistroComponent implements OnInit {
 	onSignup() {
 		if (this.form.invalid) {
 			this.submitted = true;
-			$(document).ready(function() {
-				$('select').material_select();
-			});
+			this.updateDropdownState();
 			return;
 		}
 
-		let usuario = new Usuario();
-		usuario.nome = this.nome.value();
-		usuario.email = this.email.value();
-		usuario.senha = this.senha.value();
-		usuario.tipo = this.tipo.value();
-		usuario.escola = this.escola.value();
+		const usuario = new Usuario();
+		usuario.nome = this.nome.value;
+		usuario.email = this.email.value;
+		usuario.senha = this.senha.value;
+		usuario.tipo = this.tipo.value;
+		usuario.permissoes = this.buildPermissoes(this.tipo.value);
+		usuario.escola = this.escola.value;
 		usuario.solicitado = true;
 
-		usuario = this.service.save(usuario);
-		this.service.login(usuario);
+		this.service.onSave(usuario).subscribe(
+			u => this.dialogs.toastSuccess(`Usuario ${u.nome} criado com sucesso!`),
+			err => {
+				const message = err['error']['errmsg'] as String;
+				if (message) {
+					if (message.includes('duplicate key')) {
+						if (message.includes('email')) {
+							this.error = 'Este email já foi cadastrado.';
+						}
+					}
+				}
+			});
 
 		this.submitted = true;
+	}
+
+	buildPermissoes(value: string): string[] {
+		const tipoUsuario = Enums.TipoUsuario.find(p => {
+			return p.value === value;
+		});
+		if (tipoUsuario) {
+			return tipoUsuario.auth;
+		}
+		return [];
 	}
 
 	validateSenha(ac: AbstractControl): {[s: string]: boolean} {
@@ -77,6 +106,12 @@ export class UsuarioRegistroComponent implements OnInit {
 			return {'senhaDiferente': true};
 		}
 		return null;
+	}
+
+	updateDropdownState() {
+		$(document).ready(function() {
+			$('select').material_select();
+		});
 	}
 
 	get nome() { return this.form.get('nome'); }

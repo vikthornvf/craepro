@@ -12,6 +12,7 @@ import { UsuarioListComponent } from './usuarios/usuario-list/usuario-list.compo
 import { UsuarioComponent } from './usuarios/usuario/usuario.component';
 import { UsuarioProfileComponent } from './usuarios/usuario-profile/usuario-profile.component';
 import { UsuarioPasswordComponent } from './usuarios/usuario-password/usuario-password.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { LoginGuardService } from './login-guard.service';
 import { AuthGuardService } from './auth-guard.service';
@@ -31,9 +32,9 @@ const appRoutes: Routes = [
 	{ path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuardService] },
 	{ path: 'usuarios/usuario', component: UsuarioComponent, canActivate: [AuthGuardService] },
 	{ path: 'usuarios/usuario/:id', component: UsuarioComponent, canActivate: [AuthGuardService] },
-	{ path: 'usuarios/usuario-profile', component: UsuarioProfileComponent, canActivate: [AuthGuardService] },
-	{ path: 'usuarios/usuario-senha', component: UsuarioPasswordComponent, canActivate: [AuthGuardService] },
-	// { path: '**', redirectTo: 'alunos' }
+	{ path: 'usuario-profile', component: UsuarioProfileComponent, canActivate: [AuthGuardService] },
+	{ path: 'usuario-senha', component: UsuarioPasswordComponent, canActivate: [AuthGuardService] },
+	{ path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

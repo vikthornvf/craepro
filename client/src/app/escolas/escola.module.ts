@@ -7,6 +7,7 @@ import { DirectivesModule } from '../shared/directives.module';
 import { AddButtonModule } from '../add-button/add-button.module';
 import { TelefoneModule } from '../telefone/telefone.module';
 import { EnderecoModule } from '../endereco/endereco.module';
+import { FormActionsModule } from '../form-actions/form-actions.module';
 
 import { EscolaListComponent } from './escola-list/escola-list.component';
 import { EscolaComponent } from './escola/escola.component';
@@ -27,7 +28,8 @@ import { EscolaService } from './escola.service';
 		DirectivesModule,
 		AddButtonModule,
 		TelefoneModule,
-		EnderecoModule
+		EnderecoModule,
+		FormActionsModule
 	],
 	providers: [EscolaService]
 })

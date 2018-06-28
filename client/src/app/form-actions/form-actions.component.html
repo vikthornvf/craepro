@@ -5,6 +5,7 @@
 				(click)="onCancel()">
 			<i class="material-icons right">close</i>Cancelar</a>
 		<button id="buttonSubmit"
+				*ngIf="canEdit"
 				type="submit"
 				class="btn-large default-size waves-effect waves-light teal lighten-2">
 			<i class="material-icons right">save</i>Salvar</button>
@@ -15,7 +16,7 @@
 	<label for="buttonSubmit" class="col red-text">* Campos obrigatórios</label>
 </div>
 
-<div *ngIf="canDelete">
+<div *ngIf="canEdit && canDelete">
 	<hr>
 	<div class="row">
 		<div class="col">

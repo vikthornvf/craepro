@@ -20,7 +20,13 @@ export class EscolaListComponent extends ListViewComponent {
 		private service: EscolaService) { super(z, ns); }
 
 	loadList(): void {
-		this.escolas = this.service.list();
+		this.service.list().subscribe(
+			escolas => {
+				this.escolas = escolas;
+				this.loaded = true;
+			},
+			err => console.log(err)
+		);
 	}
 
 	clearSelection(): void {

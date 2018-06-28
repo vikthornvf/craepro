@@ -14,6 +14,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() property: string;
 	@Input() selectedId: string;
 	@Output() select: EventEmitter<any> = new EventEmitter();
+	@Output() situacao: EventEmitter<Atendimento[]> = new EventEmitter();
 	@Output() closeModal: EventEmitter<boolean> = new EventEmitter();
 	@ViewChild('atendimentoModal') modal;
 
@@ -80,15 +81,21 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	loadAtendimentos(): void {
 		this.onLoad();
-		setTimeout(() => {
-			if (this.property === 'profissional') {
-				this.atendimentos = this.service.listByAluno(this.selectedId);
-			} else
-			if (this.property === 'aluno') {
-				this.atendimentos = this.service.listByProfessor(this.selectedId);
-			}
-			this.loaded();
-		}, 500);
+		if (this.property === 'profissional') {
+			this.service.listByAluno(this.selectedId).subscribe(
+				atendimentos => {
+					this.atendimentos = atendimentos;
+					this.loaded();
+				},
+				err => console.log(err));
+		} else if (this.property === 'aluno') {
+			this.service.listByProfessor(this.selectedId).subscribe(
+				atendimentos => {
+					this.atendimentos = atendimentos;
+					this.loaded();
+				},
+				err => console.log(err));
+		}
 	}
 
 	onClick(atendimento: Atendimento): void {
@@ -131,8 +138,9 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	onDeleteSelected(confirm: boolean) {
 		if (confirm) {
 			this._zone.run(() => {
-				this.service.delete(this.atendimentoSelected._id);
 				this.atendimentos = this.atendimentos.filter(a => a !== this.atendimentoSelected);
+				this.onEmitSituacao();
+				this.service.delete(this.atendimentoSelected._id);
 				this.onSelect(null);
 			});
 		}
@@ -148,5 +156,9 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 
 	onCloseModal() {
 		this.closeModal.emit(true);
+	}
+
+	onEmitSituacao() {
+		this.situacao.emit(this.atendimentos);
 	}
 }

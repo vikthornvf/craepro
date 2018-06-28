@@ -6,6 +6,6 @@ export class Escola {
 		public _id?: string,
 		public nome?: string,
 		public qtdAlunos?: number,
-		public telefones?: number[],
+		public telefones?: string[],
 		public enderecos?: Endereco[]) {}
 }

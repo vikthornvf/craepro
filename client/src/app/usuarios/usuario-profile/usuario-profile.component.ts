@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { UsuarioService } from '../usuario.service';
 import { EscolaService } from '../../escolas/escola.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { Usuario } from '../usuario.model';
 import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
@@ -16,13 +17,16 @@ export class UsuarioProfileComponent implements OnInit {
 	form: FormGroup;
 	submitted: boolean;
 	usuario: Usuario;
+	loaded: boolean;
 	permissoes = [];
 
 	constructor(
 		private auth: AuthService,
 		private service: UsuarioService,
 		private escolaService: EscolaService,
-		private fb: FormBuilder) {}
+		private dialogs: DialogsService,
+		private fb: FormBuilder,
+		private _zone: NgZone) {}
 
 	ngOnInit(): void {
 		this.initForm();
@@ -34,24 +38,19 @@ export class UsuarioProfileComponent implements OnInit {
 
 	initForm(): void {
 		this.form = this.fb.group({
-			'nome': null,
+			'nome': this.fb.control(null, Validators.required),
 			'email': this.fb.control(null, [Validators.required, Validators.email])
 		});
 	}
 
 	loadUsuario(): void {
-		const usuario = this.service.loadLoggedUsuario();
+		const details = this.auth.getUsuarioDetails();
 		this.form.patchValue({
-			'nome': usuario.nome,
-			'email': usuario.email
+			'nome': details.nome,
+			'email': details.email
 		});
-		this.usuario = usuario;
-		// const details = this.auth.getUsuarioDetails();
-		// this.form.patchValue({
-		// 	'nome': details.nome,
-		// 	'email': details.email
-		// });
-		// this.usuario = details;
+		this.usuario = details;
+		this.loaded = true;
 	}
 
 	onSave(): void {
@@ -69,6 +68,8 @@ export class UsuarioProfileComponent implements OnInit {
 	}
 
 	onLogout(): void {
-		this.service.logout();
+		this.dialogs.modalConfirmation(confirm => {
+			if (confirm) { this._zone.run(() => this.auth.logout()); }
+		}, 'Deseja realmente sair da sua conta de usuário?');
 	}
 }

@@ -1,89 +1,97 @@
-<h4 class="grey-text" *ngIf="!usuario._id">Novo Usuário</h4>
-<h3 class="light">{{ usuario.nome || usuario.email }}</h3>
-<blockquote>
-	<h5 class="light" *ngIf="usuario.nome">{{ usuario.email }}</h5>
-</blockquote>
-<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
-	<div class="row">
-		<div *ngIf="!usuario._id">
-			<div class="input-field col s12">
-				<input
-					id="inputNomeUsuario"
-					type="text"
-					focus="1"
-					formControlName="nome"
-					autocomplete="off"
-					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
-				<label class="active" for="inputNomeUsuario">Nome</label>
-			</div>
-
-			<div class="col s12">
-				<div class="input-field">
+<span *ngIf="loaded; else loading">
+	<h4 class="grey-text" *ngIf="!usuario._id">Novo Usuário</h4>
+	<h3 class="light">{{ usuario.nome || usuario.email }}</h3>
+	<blockquote>
+		<h5 class="light" *ngIf="usuario.nome">{{ usuario.email }}</h5>
+	</blockquote>
+	<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
+		<div class="row">
+			<div *ngIf="!usuario._id">
+				<div class="input-field col s12">
 					<input
-						id="inputEmailUsuario"
-						type="email"
-						formControlName="email"
+						id="inputNomeUsuario"
+						type="text"
+						focus="1"
+						formControlName="nome"
 						autocomplete="off"
-						[ngClass]="{ 'invalid': form.get('email').invalid && (form.get('email').touched || submitted) }">
-					<label class="active" for="inputEmailUsuario">Email*</label>
+						[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
+					<label class="active" for="inputNomeUsuario">Nome*</label>
 				</div>
-				<div *ngIf="form.get('email').invalid && (form.get('email').touched || submitted)">
-					<label class="red-text">Por favor, insira um email válido.</label>
+
+				<div class="col s12">
+					<div class="input-field">
+						<input
+							id="inputEmailUsuario"
+							type="email"
+							formControlName="email"
+							autocomplete="off"
+							[ngClass]="{ 'invalid': form.get('email').invalid && (form.get('email').touched || submitted) }">
+						<label class="active" for="inputEmailUsuario">Email*</label>
+					</div>
+					<div *ngIf="form.get('email').invalid && (form.get('email').touched || submitted)">
+						<label class="red-text">Por favor, insira um email válido.</label>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="col s12" [class.m6]="form.get('tipo').value === 'E'">
-			<div class="input-field">
+			<div class="col s12" [class.m6]="form.get('tipo').value === 'E'">
+				<div class="input-field">
+					<select
+							id="selectTipoUsuario"
+							formControlName="tipo"
+							materialize="material_select"
+							[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }"
+							(change)="onSelectTipo($event.target.value)">
+						<option value="" disabled selected>Selecione o Tipo de Usuário</option>
+						<option *ngFor="let tipo of tiposUsuario" [value]="tipo.value">{{ tipo.name }}</option>
+					</select>
+					<label for="selectTipoUsuario">Tipo de Usuário*</label>
+				</div>
+			</div>
+
+			<div class="input-field col m6 s12" *ngIf="form.get('tipo').value === 'E'">
 				<select
-						id="selectTipoUsuario"
-						formControlName="tipo"
+						id="selectEscola"
+						formControlName="escola"
 						materialize="material_select"
-						[ngClass]="{ 'invalid': form.get('tipo').invalid && submitted }"
-						(change)="onSelectTipo($event.target.value)">
-					<option value="" disabled selected>Selecione o Tipo de Usuário</option>
-					<option *ngFor="let tipo of tiposUsuario" [value]="tipo.value">{{ tipo.name }}</option>
+						[ngClass]="{ 'invalid': form.get('escola').invalid && submitted }">
+					<option value="" disabled selected>Selecione a Escola</option>
+					<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
 				</select>
-				<label for="selectTipoUsuario">Tipo de Usuário*</label>
+				<label for="selectEscola">Escola*</label>
+			</div>
+
+			<h4 class="col s12 grey-text">Permissões</h4>
+			<div *ngFor="let permissao of permissoes" class="col s12 m6">
+				<div class="switch">
+					<label class="black-text" style="font-size: 1rem;">
+						<input [id]="'check' + permissao.value"
+								type="checkbox"
+								[formControlName]="'has' + permissao.value"
+								(change)="onChangePermissions()">
+						<span class="lever"></span>
+						{{ permissao.name }}
+					</label>
+				</div>
+				<br>
+			</div>
+
+			<div class="col s12" *ngIf="usuario.solicitado">
+				<p class="red-text">Este usuário ainda não tem acesso ao sistema. Confirme-o para conceder as permissões.</p>
+				<a id="confirmUserButton" class="waves-effect" (click)="onConfirmUsuario()">CONFIRMAR USUÁRIO</a>
 			</div>
 		</div>
 
-		<div class="input-field col m6 s12" *ngIf="form.get('tipo').value === 'E'">
-			<select
-					id="selectEscola"
-					formControlName="escola"
-					materialize="material_select"
-					[ngClass]="{ 'invalid': form.get('escola').invalid && submitted }">
-				<option value="" disabled selected>Selecione a Escola</option>
-				<option *ngFor="let escola of escolas" [value]="escola._id">{{ escola.nome }}</option>
-			</select>
-			<label for="selectEscola">Escola*</label>
-		</div>
-
-		<h4 class="col s12 grey-text">Permissões</h4>
-		<div *ngFor="let permissao of permissoes" class="col s12 m6">
-			<div class="switch">
-				<label class="black-text" style="font-size: 1rem;">
-					<input [id]="'check' + permissao.value"
-							type="checkbox"
-							[formControlName]="'has' + permissao.value"
-							(change)="onChangePermissions()">
-					<span class="lever"></span>
-					{{ permissao.name }}
-				</label>
-			</div>
-			<br>
-		</div>
-
-		<div class="col s12" *ngIf="usuario.solicitado">
-			<p class="red-text">Este usuário ainda não tem acesso ao sistema. Confirme-o para conceder as permissões.</p>
-			<a id="confirmUserButton" class="waves-effect" (click)="onConfirmUsuario()">CONFIRMAR USUÁRIO</a>
-		</div>
+		<app-form-actions
+			[invalid]="form.invalid"
+			[canEdit]="canEdit"
+			[canDelete]="usuario._id"
+			(delete)="onConfirmDelete()">
+		</app-form-actions>
+	</form>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
 	</div>
-
-	<app-form-actions
-		[invalid]="form.invalid"
-		[canDelete]="usuario._id"
-		(delete)="onConfirmDelete()">
-	</app-form-actions>
-</form>
+</ng-template>

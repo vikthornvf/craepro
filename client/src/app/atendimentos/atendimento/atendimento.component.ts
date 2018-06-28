@@ -4,12 +4,14 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
 import { AtendimentoService } from '../atendimento.service';
 import { ProfessorService } from '../../professores/professor.service';
 import { AlunoService } from '../../alunos/aluno.service';
+import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
 import { Professor } from '../../professores/professor.model';
 import { Aluno } from '../../alunos/aluno.model';
 import { Parecer } from '../parecer.model';
 import { Enums } from '../../shared/enums';
+import { Horario } from '../horario.model';
 
 declare var $;
 
@@ -27,12 +29,17 @@ export class AtendimentoComponent implements OnInit {
 	@Output() delete = new EventEmitter<string>();
 
 	att: Atendimento;
-	professores: Professor[];
+	allProfessores: Professor[] = [];
+	professores: Professor[] = [];
 	professor: Professor;
 	aluno: Aluno;
 	pareceres: FormArray = this.fb.array([]);
 	showPareceres = false;
 	submitted = false;
+
+	canRequest: boolean;
+	canEdit: boolean;
+	canEditParecer: boolean;
 
 	form: FormGroup;
 	tipos: {}[] = Enums.Atts;
@@ -65,6 +72,7 @@ export class AtendimentoComponent implements OnInit {
 		private service: AtendimentoService,
 		private professorService: ProfessorService,
 		private alunoService: AlunoService,
+		private auth: AuthService,
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
@@ -77,15 +85,40 @@ export class AtendimentoComponent implements OnInit {
 			this.att = Object.assign({}, this.atendimento);
 			this.aluno = this.att.aluno;
 			this.professor = this.att.profissional;
+			if (this.att.inicio) {
+				this.loadProfessores();
+			}
 		}
 		this.initForm();
 		this.onChanges();
+		this.userAuth();
 	}
 
 	onChanges(): void {
 		this.form.get('horario.dia').valueChanges.subscribe(dia => {
 			this.onSelectDiaSemana(dia);
 		});
+	}
+
+	userAuth() {
+		const auth = this.auth.getUsuarioDetails().permissoes;
+		this.canRequest = auth.includes('A2');
+		this.canEditParecer = auth.includes('A3');
+		this.canEdit = auth.includes('A4');
+		if (!this.canEdit && !this.canEditParecer && !this.canRequest) {
+			return;
+		}
+		if (!this.canEdit) {
+			const tipo = this.form.get('tipo');
+			if (tipo.value) {
+				tipo.disable();
+				this.form.get('nome').disable();
+				this.form.get('horario').disable();
+			}
+		}
+		if (!this.canEditParecer) {
+			this.form.get('pareceres').disable();
+		}
 	}
 
 	initForm(): void {
@@ -97,7 +130,7 @@ export class AtendimentoComponent implements OnInit {
 				'hora': this.fb.control(null, this.validateIfHasInicio.bind(this)),
 			}),
 			'pareceres': this.pareceres
-		});
+		}, );
 
 		const a = this.att;
 		if (a) {
@@ -105,7 +138,7 @@ export class AtendimentoComponent implements OnInit {
 				'nome': this.professor ? this.professor.nome : null,
 				'autoComplete': null,
 				'tipo': a.tipo,
-				'horario': a.horario,
+				'horario': a.horario ? a.horario : new Horario()
 			});
 			this.pareceres = this.form.get('pareceres') as FormArray;
 			a.pareceres.forEach(parecer => this.pareceres.insert(0, this.createParecer(parecer)));
@@ -118,7 +151,7 @@ export class AtendimentoComponent implements OnInit {
 		}
 		clearTimeout(this.nomeTimeout);
 		this.nomeTimeout = setTimeout(() => {
-			this.loadProfessores();
+			this.filterProfessores();
 		}, 350);
 		$('#nome_att').dropdown('open');
 	}
@@ -150,12 +183,11 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	addParecer(): void {
-		const parecer = new Parecer();
-		const usuario = JSON.parse(localStorage.getItem('craepro-token'));
-		parecer.usuario = usuario.nome;
-
+		const usuario = this.auth.getUsuarioDetails();
+		const parecer = new Parecer(new Date(), usuario.nome);
 		this.pareceres = this.form.get('pareceres') as FormArray;
 		this.pareceres.insert(0, this.createParecer(parecer));
+
 		this.showPareceres = true;
 	}
 
@@ -169,17 +201,28 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	loadParent(): void {
-		this.aluno = this.alunoService.findById(this.selectedId);
+		this.alunoService.findById(this.selectedId).subscribe(
+			aluno => this.aluno = aluno,
+			err => console.log(err));
 	}
 
 	loadProfessores(): void {
+		this.professorService.list().subscribe(
+			professores => this.allProfessores = professores,
+			err => console.log(err));
+	}
+
+	filterProfessores(): void {
 		const nome = this.form.get('nome').value;
 		const tipo = this.form.get('tipo').value;
-		this.professores = this.professorService.listByNomeAndTipoAtendimento(nome, tipo);
+		this.professores = this.professorService.listByNomeAndTipoAtendimento(this.allProfessores, nome, tipo);
 	}
 
 	iniciarAtendimento(): void {
 		this.att.inicio = new Date();
+		if (!this.professores.length) {
+			this.loadProfessores();
+		}
 	}
 
 	finalizarAtendimento(): void {
@@ -195,17 +238,12 @@ export class AtendimentoComponent implements OnInit {
 	onSave(): void {
 		if (this.form.invalid) {
 			this.submitted = true;
-			// update dropdown state
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-
+			this.updateDropdownState();
 			this.dialogs.toastFail('Preencha todos os campos obrigatórios para salvar.');
 			return;
 		}
 
-		this.atendimento = this.att;
-		const att = this.atendimento;
+		const att = this.atendimento = this.att;
 
 		att.aluno = this.aluno;
 		att.profissional = this.professor;
@@ -213,17 +251,30 @@ export class AtendimentoComponent implements OnInit {
 		att.horario = this.form.get('horario').value;
 		att.pareceres = this.form.get('pareceres').value;
 		att.pareceres.reverse();
+		att.horario = att.horario ? att.horario : new Horario();
 
-		this.atendimento = this.service.save(att);
-		this.att = this.atendimento;
-		this.save.emit(this.atendimento);
+		if (!att._id) {
+			this.service.onCreate(att).subscribe(
+				res => {
+					att._id = res['_id'];
+					this.att = this.atendimento = att;
+					this.service.updateAlunoSituacao(att);
+					this.save.emit(this.atendimento);
+					this.dialogs.toastSuccess('Atendimento criado com sucesso!');
+				},
+				err => console.log(err));
+		}
+		else {
+			this.att = this.atendimento = this.service.save(att);
+			this.save.emit(this.atendimento);
+		}
 	}
 
 	onDelete(confirm: boolean): void {
 		if (confirm) {
-			const _id = this.atendimento._id;
-			this.service.delete(_id);
-			this.delete.emit(_id);
+			const att = this.atendimento;
+			this.service.delete(att._id);
+			this.delete.emit(att._id);
 		}
 	}
 
@@ -239,10 +290,17 @@ export class AtendimentoComponent implements OnInit {
 
 	validateIfHasInicio(control: FormControl): {[s: string]: boolean} {
 		if (this.att.inicio && !this.att.egresso) {
-			if (!control.value) {
+			const value = control.value;
+			if (control.value === null) {
 				return {'required': true};
 			}
 		}
 		return null;
+	}
+
+	updateDropdownState() {
+		$(document).ready(function() {
+			$('select').material_select();
+		});
 	}
 }

@@ -1,94 +1,121 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { EscolaService } from '../escolas/escola.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Aluno } from './aluno.model';
 import { Responsavel } from '../responsaveis/responsavel.model';
+import 'rxjs/add/operator/map';
+import { Atendimento } from '../atendimentos/atendimento.model';
 
-/**
-	ROUTES
-
-	app.get('/api/aluno/escola/:escolaId', controller.list);
-	app.get('/api/aluno/escola/:escolaId/desativados/:isDesativados', controller.list);
-
-	app.route('/api/aluno')
-		.get(controller.list)
-		.post(controller.add);
-
-	app.route('/api/aluno/:id')
-		.get(controller.findById)
-		.put(controller.update)
-		.delete(controller.deleteById);
- */
 @Injectable()
 export class AlunoService {
 
-	readonly url = 'api/aluno';
+	readonly url = '/api/aluno';
 	headers: HttpHeaders;
-
-	private alunos: Aluno[] = [
-		new Aluno('1', 'Alex dos Santos', 'D', 'E3', 'T', this.serviceEscola.findById('1')),
-		new Aluno('2', 'Ana Clara', 'P', 'E1', 'M', this.serviceEscola.findById('2')),
-		new Aluno('3', 'Betinho', 'A', 'F9', 'M', this.serviceEscola.findById('3')),
-		new Aluno('4', 'Carol Maria', 'A', 'F8', 'N', this.serviceEscola.findById('6')),
-		new Aluno('5', 'Carlinhos', 'A', 'F7', 'T', this.serviceEscola.findById('3')),
-		new Aluno('6', 'Joãozinho da Silva', 'A', 'F5', 'T', this.serviceEscola.findById('4')),
-		new Aluno('7', 'Karolzinha', 'E', 'F2', 'M', this.serviceEscola.findById('6')),
-		new Aluno('8', 'Zezinho', 'E', 'PB', 'M', this.serviceEscola.findById('2'))
-	];
-	idCount = 9; // TODO delete
 
 	constructor(
 		private http: HttpClient,
 		private serviceEscola: EscolaService,
-		private dialogs: DialogsService) {
+		private dialogs: DialogsService,
+		private router: Router) {
 		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list(): Aluno[] {
-		// this.service.list()
-		// 	.subscribe(
-		// 		alunos => this.alunos = alunos,
-		// 		err => console.log(err));
-		return this.alunos.slice();
+	list(): Observable<Aluno[]> {
+		return this.http.get(this.url)
+			.map(res => res as Aluno[]);
 	}
 
-	findById(_id: string): Aluno {
-		return this.alunos.find(a => a._id === _id);
+	findById(id: string): Observable<Aluno> {
+		return this.http.get(`${this.url}/${id}`);
 	}
 
-	save(aluno: Aluno): Aluno {
-		let msg: string;
-
-		if (aluno._id) {
-			const attIndex = this.alunos.find(a => a._id === aluno._id);
-			const index = this.alunos.indexOf(attIndex);
-			this.alunos[index] = aluno;
-			msg = `Dados de aluno(a) ${aluno.nome} salvos com sucesso!`;
-		} else {
-			aluno._id = this.idCount + '';
-			this.alunos.push(aluno);
-			this.idCount++;
-			msg = `Aluno(a) ${aluno.nome} salvo com sucesso!`;
+	save(aluno: Aluno, redirect: boolean = true): Aluno {
+		const id = aluno._id;
+		if (id) {
+			this.http.put(`${this.url}/${id}`, aluno, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Dados de aluno(a) ${aluno.nome} salvos com sucesso!`);
+						return aluno;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
 		}
-		this.dialogs.toastSuccess(msg);
+		else {
+			this.http.post(this.url, aluno, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Aluno(a) ${aluno.nome} salvo com sucesso!`);
+						aluno._id = res['_id'];
+						if (redirect) {
+							this.router.navigateByUrl('/alunos/aluno/' + aluno._id);
+						}
+						return aluno;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
 		return aluno;
 	}
 
-	updateSituacao(aluno: Aluno): Aluno {
-		if (aluno._id) {
-			const attIndex = this.alunos.find(a => a._id === aluno._id);
-			const index = this.alunos.indexOf(attIndex);
-			this.alunos[index] = aluno;
+	onSave(aluno: Aluno): Observable<Aluno> {
+		const id = aluno._id;
+		if (id) {
+			return this.http.put(`${this.url}/${id}`, aluno, { headers: this.headers });
 		}
-		return aluno;
+		return this.http.post(this.url, aluno, { headers: this.headers });
 	}
 
-	delete(id: string): boolean {
-		this.alunos = this.alunos.filter(e => e._id !== id);
-		this.dialogs.toastSuccess('Aluno excluído com sucesso!');
-		return true;
+	updateSituacao(aluno: Aluno, atendimentos: Atendimento[], save: boolean = true): Observable<Aluno> | null {
+		let solicitado = false;
+		let ativo = false;
+		let finalzado = false;
+		let situacao = aluno.situacao;
+
+		atendimentos.forEach(a => {
+			if (a.egresso) {
+				finalzado = true;
+			} else if (a.inicio) {
+				ativo = true;
+			} else {
+				solicitado = true;
+			}
+		});
+
+		if (solicitado || ativo || finalzado) {
+			if (solicitado) {
+				situacao = ativo
+					? 'P'
+					: 'E';
+			} else if (ativo) {
+				situacao = 'A';
+			} else if (finalzado) {
+				situacao = 'D';
+			}
+			if (aluno.situacao !== situacao) {
+				aluno.situacao = situacao;
+				const id = aluno._id;
+				if (id && save) {
+					return this.http.put(`${this.url}/situacao/${id}`, aluno, { headers: this.headers });
+				}
+			}
+		}
+	}
+
+	delete(id: string) {
+		this.http.delete(`${this.url}/${id}`).subscribe(
+			res => this.dialogs.toastSuccess('Aluno(a) excluído com sucesso!'),
+			err => {
+				console.log(err);
+				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+			});
 	}
 }

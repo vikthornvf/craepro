@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavbarService } from './navbar.service';
 import { Subscription } from 'rxjs/Subscription';
-import { UsuarioService } from '../../usuarios/usuario.service';
+import { AuthService } from '../../auth.service';
 
 declare var $: any;
 
@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private navService: NavbarService,
-		private usuarioService: UsuarioService) {}
+		private auth: AuthService) {}
 
 	ngOnInit() {
 		this.stateObservable = this.navService.barState.subscribe(barState => this.state = barState);
@@ -34,6 +34,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	onLogout() {
-		this.usuarioService.logout();
+		this.auth.logout();
 	}
 }

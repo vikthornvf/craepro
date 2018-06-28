@@ -1,5 +1,5 @@
 <div class="row">
-	<h5 class="light" *ngIf="!innerAlunoComponent">{{ aluno.nome }}</h5>
+	<h5 class="light" *ngIf="!innerAlunoComponent">{{ aluno?.nome }}</h5>
 	<p>Atendimento
 		<span *ngIf="att.egresso; else iniciadoEl">Finalizado em {{ att.egresso | date: 'dd/MM/yyyy' }}</span>
 		<ng-template #iniciadoEl>
@@ -71,32 +71,35 @@
 			</div>
 		</div>
 
-		<div *ngIf="att.egresso; else finalizarAttEl">
-			<div class="col">
-				<a class="btn waves-effect waves-light" (click)="continuarAtendimento()">
-					<i class="material-icons right">event_note</i>Continuar
-				</a>
-			</div>
-		</div>
-		<ng-template #finalizarAttEl>
-			<div class="col" *ngIf="att.inicio; else iniciarAttEl">
-				<a class="btn waves-effect waves-light" (click)="finalizarAtendimento()">
-					<i class="material-icons right">event_busy</i>Encerrar
-				</a>
-			</div>
-			<ng-template #iniciarAttEl>
-				<div class="col" *ngIf="form.get('tipo').value">
-					<a class="btn waves-effect waves-light" (click)="iniciarAtendimento()">
-						<i class="material-icons right">event_available</i>Iniciar
+		<span *ngIf="canEdit">
+			<div *ngIf="att.egresso; else finalizarAttEl">
+				<div class="col">
+					<a class="btn waves-effect waves-light" (click)="continuarAtendimento()">
+						<i class="material-icons right">event_note</i>Continuar
 					</a>
 				</div>
+			</div>
+			<ng-template #finalizarAttEl>
+				<div class="col" *ngIf="att.inicio; else iniciarAttEl">
+					<a class="btn waves-effect waves-light" (click)="finalizarAtendimento()">
+						<i class="material-icons right">event_busy</i>Encerrar
+					</a>
+				</div>
+				<ng-template #iniciarAttEl>
+					<div class="col" *ngIf="form.get('tipo').value">
+						<a class="btn waves-effect waves-light" (click)="iniciarAtendimento()">
+							<i class="material-icons right">event_available</i>Iniciar
+						</a>
+					</div>
+				</ng-template>
 			</ng-template>
-		</ng-template>
+		</span>
 	</div>
 
-	<div class="row">
-		<p>Pareceres <span class="green-text" *ngIf="!pareceres.length">- Explique a situação do aluno criando um parecer aqui.</span>
+	<div *ngIf="pareceres.length || canEditParecer" class="row">
+		<p>Pareceres
 			<button
+					*ngIf="canEditParecer"
 					type="button"
 					class="btn-floating simple"
 					[disabled]="pareceres.length && !pareceres.controls[0].get('texto').value"
@@ -108,7 +111,7 @@
 			<div *ngIf="pareceres.length && !showPareceres; else showPareceresEl">
 				<div [formGroupName]="0">
 					<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
-						<button type="button" class="btn-floating simple postfix" (click)="removeParecer(0)">
+						<button *ngIf="canEditParecer" type="button" class="btn-floating simple postfix" (click)="removeParecer(0)">
 							<i class="material-icons">close</i>
 						</button>
 						<textarea
@@ -119,6 +122,7 @@
 								autocomplete="off"></textarea>
 					</div>
 					<label class="col s12" [for]="'texto' + i">
+						Criado por
 						{{ pareceres.controls[0].get('usuario').value }}, em
 						{{ pareceres.controls[0].get('data').value | date: 'dd/MM/yyyy' }}
 					</label>
@@ -128,7 +132,7 @@
 				<div *ngFor="let parecer of pareceres.controls; index as i">
 					<div [formGroupName]="i">
 						<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
-							<button type="button" class="btn-floating simple postfix" (click)="removeParecer(i)">
+							<button *ngIf="canEditParecer" type="button" class="btn-floating simple postfix" (click)="removeParecer(i)">
 								<i class="material-icons">close</i>
 							</button>
 							<textarea [id]="'inputTexto' + i"
@@ -139,8 +143,8 @@
 							</textarea>
 						</div>
 						<label class="col s12" [for]="'inputTexto' + i">
-							{{ pareceres.controls[0].get('usuario').value }}, em
-							{{ pareceres.controls[0].get('data').value | date: 'dd/MM/yyyy' }}
+							{{ pareceres.controls[i].get('usuario').value }}, em
+							{{ pareceres.controls[i].get('data').value | date: 'dd/MM/yyyy' }}
 						</label>
 					</div>
 				</div>

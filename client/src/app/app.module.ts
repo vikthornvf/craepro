@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NavModule } from './nav/nav.module';
 import { DialogsModule } from './dialogs/dialogs.module';
+import { NotFoundModule } from './not-found/not-found.module';
 import { AlunoModule } from './alunos/aluno.module';
 import { ProfessorModule } from './professores/professor.module';
 import { EscolaModule } from './escolas/escola.module';
@@ -24,6 +25,7 @@ import { AppComponent } from './app.component';
 		HttpClientModule,
 		NavModule,
 		DialogsModule,
+		NotFoundModule,
 		AlunoModule,
 		ProfessorModule,
 		EscolaModule,

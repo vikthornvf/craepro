@@ -42,15 +42,26 @@ export class ResponsavelComponent implements OnInit {
 			return;
 		}
 
-		this.responsavel = this.resp;
-		const resp = this.responsavel;
+		const resp = this.resp = this.responsavel;
 
 		resp.aluno = this.aluno;
 		resp.nome = this.form.get('nome').value;
 		resp.parentesco = this.form.get('parentesco').value;
 
-		this.resp = this.responsavel = this.service.save(resp);
-		this.save.emit(this.responsavel);
+		if (!resp._id) {
+			this.service.onCreate(resp).subscribe(
+				res => {
+					resp._id = res['_id'];
+					this.resp = this.responsavel = resp;
+					this.save.emit(this.responsavel);
+					this.dialogs.toastSuccess(`Responsável ${resp.nome} criado com sucesso!`);
+				},
+				err => console.log(err));
+		}
+		else {
+			this.resp = this.responsavel = this.service.save(resp);
+			this.save.emit(this.responsavel);
+		}
 	}
 
 	onDelete(confirm: boolean): void {

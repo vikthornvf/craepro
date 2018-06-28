@@ -1,29 +1,42 @@
 <h4 class="grey-text">Usuários</h4>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+<span *ngIf="loaded; else loading">
+	<ul *ngIf="usuarios.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion">
 
-	<div class="collapsible-header flex-container disabled">
-		<input type="checkbox" disabled>
-		<label class="disabled"></label>
-		<div class="flex nome"><b class="truncate">Nome</b></div>
-		<div class="flex email"><b class="truncate">E-mail</b></div>
-		<div class="flex escola"><b class="truncate">Tipo</b></div>
-	</div>
-	<li *ngFor="let usuario of usuarios | navFilter: keyword:'nome'">
-
-		<div class="collapsible-header flex-container selectable" (click)="onSimpleSelect(usuario._id)">
-			<input
-				type="checkbox"
-				class="filled-in"
-				[id]="usuario._id"
-				[checked]="usuario._id === selectedId"
-				(click)="onSimpleSelect(usuario._id)">
-			<label [for]="usuario._id"></label>
-			<div class="flex nome truncate">{{ usuario.nome }}</div>
-			<div class="flex email truncate">{{ usuario.email }}</div>
-			<div class="flex escola truncate">{{ usuario.tipo !== 'E' ? service.getUsuarioTipo(usuario.tipo) : usuario.escola?.nome }}
-				<span *ngIf="usuario.solicitado" class="new badge amber darken-1" data-badge-caption="">Confirmar</span>
-			</div>
+		<div class="collapsible-header flex-container disabled">
+			<input type="checkbox" disabled>
+			<label class="disabled"></label>
+			<div class="flex nome"><b class="truncate">Nome</b></div>
+			<div class="flex email"><b class="truncate">E-mail</b></div>
+			<div class="flex escola"><b class="truncate">Tipo</b></div>
 		</div>
-	</li>
-</ul>
+		<li *ngFor="let usuario of usuarios | navFilter: keyword:'nome'">
+
+			<div class="collapsible-header flex-container selectable" (click)="onSimpleSelect(usuario._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="usuario._id"
+					[checked]="usuario._id === selectedId"
+					(click)="onSimpleSelect(usuario._id)">
+				<label [for]="usuario._id"></label>
+				<div class="flex nome truncate">{{ usuario.nome }}</div>
+				<div class="flex email truncate">{{ usuario.email }}</div>
+				<div class="flex escola truncate">{{ usuario.tipo !== 'E' ? service.getUsuarioTipo(usuario.tipo) : usuario.escola?.nome }}
+					<span *ngIf="usuario.solicitado" class="new badge amber darken-1" data-badge-caption="">Confirmar</span>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<ng-template #noData>
+		<div class="row center">
+			<p>Ainda nenhum aluno foi registrado. Crie o primeiro!</p>
+			<a class="waves-effect waves-light btn-large red darken-1" [routerLink]="link"><i class="material-icons right">add</i>CRIAR ALUNO</a>
+		</div>
+	</ng-template>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
+	</div>
+</ng-template>
 <app-floating-add-button [link]="link" [color]="'amber'"></app-floating-add-button>

@@ -1,65 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Escola } from './escola.model';
 import { DialogsService } from '../dialogs/dialogs.service';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class EscolaService {
 
-	readonly url = 'api/escolas';
+	readonly url = '/api/escola';
 	headers: HttpHeaders;
-
-	idCount = 7; // TODO delete
-
-	private escolas: Escola[] = [
-		new Escola('1', 'Escolinha', 4, [], []),
-		new Escola('2', 'A Escola', 5, [], []),
-		new Escola('3', 'Colégio', 2, [], []),
-		new Escola('4', 'Educanddo', 1, [], []),
-		new Escola('5', 'Óia o Estudo', 3, [], []),
-		new Escola('6', 'Vamstudá', 6, [], [])
-	];
 
 	constructor(
 		private http: HttpClient,
-		private dialogs: DialogsService) {
+		private dialogs: DialogsService,
+		private router: Router) {
+
 		this.headers = new HttpHeaders();
 		this.headers.append('Content-type', 'application/json');
 	}
 
-	list(): Escola[] {
-		return this.escolas.slice();
+	list(): Observable<Escola[]> {
+		return this.http.get(this.url)
+			.map(res => res as Escola[]);
 	}
 
-	findById(id: string): Escola {
-		return this.escolas.find(
-			escola => escola._id === id);
+	findById(id: string): Observable<Escola> {
+		return this.http.get(`${this.url}/${id}`);
 	}
 
-	save(escola: Escola): Escola {
-		let msg: string;
-
-		if (escola._id) {
-			const attIndex = this.escolas.find(a => a._id === escola._id);
-			const index = this.escolas.indexOf(attIndex);
-			this.escolas[index] = escola;
-			msg = `Dados de escola(a) ${escola.nome} salvos com sucesso!`;
-		} else {
-			escola._id = this.idCount + '';
-			this.escolas.push(escola);
-			this.idCount++;
-			msg = `Escola ${escola.nome} salvo com sucesso!`;
+	save(escola: Escola, redirect: boolean = true): Escola {
+		const id = escola._id;
+		if (id) {
+			this.http.put(`${this.url}/${id}`, escola, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Dados de escola ${escola.nome} salvos com sucesso!`);
+						return escola;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
 		}
-		this.dialogs.toastSuccess(msg);
+		else {
+			this.http.post(this.url, escola, { headers: this.headers })
+				.subscribe(
+					res => {
+						this.dialogs.toastSuccess(`Escola ${escola.nome} salvo com sucesso!`);
+						escola._id = res['_id'];
+						if (redirect) {
+							this.router.navigateByUrl('/escolas/escola/' + escola._id);
+						}
+						return escola;
+					},
+					err => {
+						console.log(err);
+						this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
 		return escola;
 	}
 
-	delete(id: string): boolean {
-		// TODO review
-		this.escolas = this.escolas.filter(e => e._id !== id);
-		this.dialogs.toastSuccess('Escola excluída com sucesso!');
-		return true;
+	delete(id: string) {
+		this.http.delete(`${this.url}/${id}`).subscribe(
+			res => this.dialogs.toastSuccess('Escola excluída com sucesso!'),
+			err => {
+				console.log(err);
+				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+			});
 	}
 }
 

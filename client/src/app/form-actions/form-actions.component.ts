@@ -9,6 +9,7 @@ import { NavbarService } from '../nav/navbar/navbar.service';
 export class FormActionsComponent {
 
 	@Input() invalid: boolean;
+	@Input() canEdit = true;
 	@Input() canDelete: boolean;
 	@Output() delete = new EventEmitter<boolean>();
 

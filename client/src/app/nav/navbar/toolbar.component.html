@@ -13,8 +13,8 @@
 			materialize="tooltip"
 			data-position="bottom"
 			data-ldelay="50"
-			data-tooltip="Alterar Dados">
-		<a [routerLink]="link"><i class="material-icons">mode_edit</i></a>
+			data-tooltip="Mostrar Mais Informações">
+		<a [routerLink]="link"><i class="material-icons">more</i></a>
 	</li>
 	<span *ngIf="hasAtt">
 		<li
@@ -22,11 +22,11 @@
 				materialize="tooltip"
 				data-position="bottom"
 				data-ldelay="50"
-				data-tooltip="Modificar Atendimento"
+				data-tooltip="Mais Dados do Atendimento"
 				(click)="onEmitTool(tool.EDIT_ATT)">
 			<a><i class="material-icons">event_note</i></a>
 		</li>
-		<li
+		<li *ngIf="canEditAtt"
 				class="tooltipped fade-in-effect"
 				style="display: inline-block;"
 				materialize="tooltip"

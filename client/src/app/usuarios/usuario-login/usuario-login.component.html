@@ -38,6 +38,7 @@
 		<div class="col s12">
 			<button id="loginBtn" class="waves-effect waves-light btn-large center-align col s12">ENTRAR</button>
 			<label *ngIf="form.invalid && submitted" class="red-text">Preencha ambos os campos.</label>
+			<label *ngIf="error" class="red-text">{{ error }}</label>
 		</div>
 	</div>
 </form>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../../nav/navbar/navbar.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { EscolaService } from '../escola.service';
+import { AuthService } from '../../auth.service';
 import { Escola } from '../escola.model';
 
 @Component({
@@ -14,13 +15,16 @@ export class EscolaComponent implements OnInit {
 
 	form: FormGroup;
 	submitted: boolean;
+	loaded: boolean;
+	canEdit: boolean;
 
-	escola: Escola;
+	escola: Escola = {};
 
 	constructor(
 		private service: EscolaService,
 		private navService: NavbarService,
 		private dialogs: DialogsService,
+		private auth: AuthService,
 		private route: ActivatedRoute) {}
 
 	ngOnInit(): void {
@@ -33,6 +37,12 @@ export class EscolaComponent implements OnInit {
 				this.initEscola();
 			}
 		});
+		this.userAuth();
+	}
+
+	userAuth() {
+		const auth = this.auth.getUsuarioDetails().permissoes;
+		this.canEdit = auth.includes('E2');
 	}
 
 	initForm(): void {
@@ -42,15 +52,21 @@ export class EscolaComponent implements OnInit {
 	}
 
 	loadEscola(id: string): void {
-		const escola = this.service.findById(id);
-		this.escola = escola;
-		this.form.patchValue({ 'nome': escola.nome });
+		this.service.findById(id).subscribe(
+			escola => {
+				this.escola = escola;
+				this.form.patchValue({ 'nome': escola.nome });
+				this.loaded = true;
+			},
+			err => console.log(err));
 	}
 
 	initEscola(): void {
 		this.escola = new Escola();
+		this.escola.qtdAlunos = 0;
 		this.escola.telefones = [];
 		this.escola.enderecos = [];
+		this.loaded = true;
 	}
 
 	onSave(): void {

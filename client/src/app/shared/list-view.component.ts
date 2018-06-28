@@ -12,6 +12,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 	keyword: string;
 	keywordObservable: Subscription;
 	toolbarObservable: Subscription;
+	loaded: boolean;
 
 	selectedId: string;
 	selected = false;

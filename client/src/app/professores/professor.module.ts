@@ -9,6 +9,7 @@ import { TelefoneModule } from '../telefone/telefone.module';
 import { EnderecoModule } from '../endereco/endereco.module';
 import { FormActionsModule } from '../form-actions/form-actions.module';
 import { DirectivesModule } from '../shared/directives.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { ProfessorListComponent } from './professor-list/professor-list.component';
 import { ProfessorComponent } from './professor/professor.component';
@@ -31,7 +32,8 @@ import { ProfessorService } from './professor.service';
 		TelefoneModule,
 		EnderecoModule,
 		FormActionsModule,
-		DirectivesModule
+		DirectivesModule,
+		PipesModule
 	],
 	providers: [ProfessorService]
 })

@@ -7,9 +7,4 @@ export class Professor {
 		public atendimentoTipos?: string[],
 		public telefones?: number[],
 		public enderecos?: Endereco[]) {}
-
-	get atendimentoTiposFormatted() {
-		return this.atendimentoTipos.toString()
-			.replace(',', ', ');
-	}
 }

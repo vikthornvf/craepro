@@ -1,59 +1,73 @@
 <h4 class="grey-text">Alunos</h4>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
+<span *ngIf="loaded; else loading">
+	<ul *ngIf="alunos.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
 
-	<div class="collapsible-header flex-container disabled">
-		<input type="checkbox" disabled>
-		<label class="disabled"></label>
-		<div class="flex nome"><b class="truncate">Nome (Situação)</b></div>
-		<div class="flex escola"><b class="truncate">Escola</b></div>
-		<div class="flex serie-turno"><b class="truncate">Série</b></div>
+		<div class="collapsible-header flex-container disabled">
+			<input type="checkbox" disabled>
+			<label class="disabled"></label>
+			<div class="flex nome"><b class="truncate">Nome (Situação)</b></div>
+			<div class="flex escola"><b class="truncate">Escola</b></div>
+			<div class="flex serie-turno"><b class="truncate">Série</b></div>
+		</div>
+		<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
+
+			<div class="collapsible-header flex-container selectable" (click)="onSelect(aluno._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="aluno._id"
+					[checked]="selected && aluno._id === selectedId"
+					(click)="toggleSelect($event, aluno._id)">
+				<label [for]="aluno._id"></label>
+				<div class="flex nome">
+					<span class="flex-container situacao">{{ aluno.nome }}<i
+						*ngIf="aluno.situacao"
+						class="material-icons flex situacao tooltipped"
+						materialize="tooltip"
+						data-position="left"
+						data-ldelay="50"
+						[attr.data-tooltip]="aluno.situacao | situacaoPipe"
+						[ngClass]="aluno.situacao?.toLowerCase()">assignment_ind</i>
+					</span>
+				</div>
+				<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
+				<div
+						class="flex serie-turno truncate tooltipped"
+						materialize="tooltip"
+						data-position="left"
+						data-ldelay="50"
+						[attr.data-tooltip]="aluno.turno | turnoPipe">{{ aluno.serie | seriePipe }}</div>
+			</div>
+
+			<div class="collapsible-body">
+				<div class="v-scroll">
+					<app-atendimento-list
+							*ngIf="selectedId === aluno._id"
+							property="profissional"
+							[selectedId]="selectedId"
+							(select)="onOpen()"
+							(situacao)="updateSituacao(aluno, $event)"
+							(closeModal)="updateAlunoSituacao(aluno)"
+							#atendimentoList></app-atendimento-list>
+				</div>
+				<a id="create-att"
+						class="waves-effect waves-light btn-large teal lighten-2"
+						style="margin: 15px 0 15px 0;"
+						(click)="atendimentoList.onCreate()">
+					<i class="material-icons right">add_circle</i> Novo Atendimento</a>
+			</div>
+		</li>
+	</ul>
+	<ng-template #noData>
+		<div class="row center">
+			<p>Ainda nenhum aluno foi registrado. Crie o primeiro!</p>
+			<a class="waves-effect waves-light btn-large red darken-1" [routerLink]="link"><i class="material-icons right">add</i>CRIAR ALUNO</a>
+		</div>
+	</ng-template>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
 	</div>
-	<li *ngFor="let aluno of alunos | navFilter: keyword:'nome'">
-
-		<div class="collapsible-header flex-container selectable" (click)="onSelect(aluno._id)">
-			<input
-				type="checkbox"
-				class="filled-in"
-				[id]="aluno._id"
-				[checked]="selected && aluno._id === selectedId"
-				(click)="toggleSelect($event, aluno._id)">
-			<label [for]="aluno._id"></label>
-			<div class="flex nome">
-				<span class="flex-container situacao">{{ aluno.nome }}<i
-					*ngIf="aluno.situacao"
-					class="material-icons flex situacao tooltipped"
-					materialize="tooltip"
-					data-position="left"
-					data-ldelay="50"
-					[attr.data-tooltip]="aluno.situacao | situacaoPipe"
-					[ngClass]="aluno.situacao ? aluno.situacao.toLowerCase() : null">more</i>
-				</span>
-			</div>
-			<div class="flex escola truncate">{{ aluno.escola.nome }}</div>
-			<div
-					class="flex serie-turno truncate tooltipped"
-					materialize="tooltip"
-					data-position="left"
-					data-ldelay="50"
-					[attr.data-tooltip]="aluno.turno | turnoPipe">{{ aluno.serie | seriePipe }}</div>
-		</div>
-
-		<div class="collapsible-body">
-			<div class="v-scroll">
-				<app-atendimento-list
-						*ngIf="selectedId === aluno._id"
-						property="profissional"
-						[selectedId]="selectedId"
-						(select)="onOpen()"
-						(closeModal)="refreshTooltips()"
-						#atendimentoList></app-atendimento-list>
-			</div>
-			<a id="create-att"
-					class="waves-effect waves-light btn-large teal lighten-2"
-					style="margin: 15px 0 15px 0;"
-					(click)="atendimentoList.onCreate()">
-				<i class="material-icons right">add_circle</i> Novo Atendimento</a>
-		</div>
-	</li>
-</ul>
+</ng-template>
 <app-floating-add-button [link]="link" [color]="'red'"></app-floating-add-button>

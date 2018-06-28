@@ -20,6 +20,11 @@ export class ProfessorListComponent extends ListViewComponent {
 		private service: ProfessorService) { super(z, ns); }
 
 	loadList(): void {
-		this.professores = this.service.list();
+		this.service.list().subscribe(
+			professores => {
+				this.professores = professores;
+				this.loaded = true;
+			},
+			err => console.log(err));
 	}
 }

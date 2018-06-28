@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { UsuarioService } from '../usuario.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 declare var Materialize: any;
 
@@ -12,9 +13,11 @@ export class UsuarioLoginComponent implements OnInit {
 
 	form: FormGroup;
 	submitted: boolean;
+	error: string;
 
 	constructor(
-		private usuarioService: UsuarioService,
+		private auth: AuthService,
+		private router: Router,
 		private fb: FormBuilder) {}
 
 	ngOnInit() {
@@ -31,9 +34,20 @@ export class UsuarioLoginComponent implements OnInit {
 			return;
 		}
 
-		this.usuarioService.login();
+		const email = this.email.value;
+		const senha = this.senha.value;
+		this.auth.login({ email, senha }).subscribe(
+			res => this.router.navigateByUrl('/'),
+			err => {
+				console.log(err);
+				const message = err['error']['message'];
+				if (message) {
+					this.error = message;
+				}
+			}
+		);
 
-		this.submitted = true;
+		this.submitted = false;
 	}
 
 	get email() { return this.form.get('email'); }

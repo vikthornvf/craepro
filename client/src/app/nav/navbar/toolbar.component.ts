@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarService } from './navbar.service';
+import { AuthService } from '../../auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,6 +13,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 	hasAtt = false;
 	hasAttSubscription: Subscription;
+	canEditAtt: boolean;
 
 	link: string[];
 	linkSubscription: Subscription;
@@ -19,10 +21,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 	tool = this.navService.tools;
 
-	constructor(private navService: NavbarService) {}
+	constructor(private navService: NavbarService, private auth: AuthService) {}
 
 	ngOnInit(): void {
-		this.hasAttSubscription = this.navService.hasAtt.subscribe(hasAtt => this.hasAtt = hasAtt);
+		this.hasAttSubscription = this.navService.hasAtt.subscribe(hasAtt => {
+			this.hasAtt = hasAtt;
+			const usuario = this.auth.getUsuarioDetails();
+			this.canEditAtt = usuario && usuario.permissoes.includes('A4');
+		});
 
 		const path = this.navService.path();
 		this.link$ = this.navService.linkObservable();
