@@ -48,7 +48,6 @@ module.exports = {
 
 		Usuario.create(usuario)
 			.then((result) => {
-				console.log(result);
 				res.json(result);
 			},
 			err => {
