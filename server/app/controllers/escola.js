@@ -5,6 +5,7 @@ module.exports = {
 
 	list(req, res) {
 		Escola.find({})
+			.sort({ nome: 1 })
 			.then((result) => {
 				res.json(result);
 			},

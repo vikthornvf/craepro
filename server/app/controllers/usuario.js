@@ -26,6 +26,7 @@ module.exports = {
 
 	list(req, res) {
 		Usuario.find({})
+			.sort({ email: 1 })
 			.populate('escola')
 			.then((result) => {
 				res.json(result);

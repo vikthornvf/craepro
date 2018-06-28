@@ -11,6 +11,7 @@ module.exports = {
 		}
 
 		Responsavel.find(query)
+			.sort({ nome: 1 })
 			.then((result) => {
 				res.json(result);
 			},

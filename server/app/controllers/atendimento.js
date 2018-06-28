@@ -16,6 +16,7 @@ module.exports = {
 		}
 
 		Atendimento.find(query)
+			.sort({ solicitacao: 1 })
 			.populate('aluno')
 			.populate('profissional')
 			.then((result) => {
