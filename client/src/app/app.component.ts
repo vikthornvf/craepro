@@ -16,11 +16,7 @@ export class AppComponent implements OnInit {
 		// FIXME
 		this.router.events.subscribe(e => {
 			if (e instanceof NavigationEnd) {
-				if (e.url.includes('login')) {
-					this.show = false;
-				} else {
-					this.show = true;
-				}
+				this.show = e.url !== '/login';
 			}
 		});
 	}
