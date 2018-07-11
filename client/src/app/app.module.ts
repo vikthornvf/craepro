@@ -6,7 +6,7 @@ import { NavModule } from './nav/nav.module';
 import { DialogsModule } from './dialogs/dialogs.module';
 import { NotFoundModule } from './not-found/not-found.module';
 import { AlunoModule } from './alunos/aluno.module';
-import { ProfessorModule } from './professores/professor.module';
+import { ProfissionalModule } from './profissionais/profissional.module';
 import { EscolaModule } from './escolas/escola.module';
 import { UsuarioModule } from './usuarios/usuario.module';
 
@@ -27,7 +27,7 @@ import { AppComponent } from './app.component';
 		DialogsModule,
 		NotFoundModule,
 		AlunoModule,
-		ProfessorModule,
+		ProfissionalModule,
 		EscolaModule,
 		UsuarioModule
 	],
