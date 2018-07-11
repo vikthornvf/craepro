@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 
 consign({cwd: 'app'})
 	.include('models')
+	.then('routes')
 	.then('controllers')
 	.into(app);
 
@@ -23,8 +24,6 @@ require('./config/database')(process.env.DB_URI);
 require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
-
-consign({cwd: 'app'}).include('routes').into(app);
 
 app.listen(3000, () => {
 	console.log('Server started.');
