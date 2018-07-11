@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Professor = mongoose.model('Professor');
+const Profissional = mongoose.model('Profissional');
 
 module.exports = {
 
 	list(req, res) {
-		Professor.find({})
+		Profissional.find({})
 			.sort({ nome: 1 })
 			.then((result) => {
 				res.json(result);
@@ -16,7 +16,7 @@ module.exports = {
 	},
 
 	add(req, res) {
-		Professor.create(req.body)
+		Profissional.create(req.body)
 			.then((result) => {
 				res.json(result);
 			},
@@ -27,9 +27,9 @@ module.exports = {
 	},
 
 	findById(req, res) {
-		Professor.findById(req.params.id)
+		Profissional.findById(req.params.id)
 			.then(function(result) {
-				if (!result) throw Error('Professor não encontrado.');
+				if (!result) throw Error('Profissional não encontrado.');
 				res.json(result);
 			},
 			function(err) {
@@ -39,7 +39,7 @@ module.exports = {
 	},
 
 	update(req, res) {
-		Professor.findByIdAndUpdate(req.params.id, req.body)
+		Profissional.findByIdAndUpdate(req.params.id, req.body)
 			.then(function(result) {
 				res.json(result);
 			},
@@ -50,7 +50,7 @@ module.exports = {
 	},
 
 	deleteById(req, res) {
-		Professor.remove({_id: req.params.id})
+		Profissional.remove({_id: req.params.id})
 			.then(function() {
 				res.sendStatus(204);
 			},

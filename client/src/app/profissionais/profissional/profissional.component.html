@@ -1,16 +1,16 @@
 <span *ngIf="loaded; else loading">
-	<h4 class="grey-text" *ngIf="!professor._id">Novo Professor</h4>
+	<h4 class="grey-text" *ngIf="!profissional._id">Novo Profissional</h4>
 	<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
 		<div class="row">
 			<div class="input-field col s12">
 				<input
-					id="inputNomeProfessor"
+					id="inputNomeProfissional"
 					type="text"
 					focus="1"
 					formControlName="nome"
 					autocomplete="off"
 					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
-				<label class="active" for="inputNomeProfessor">Nome*</label>
+				<label class="active" for="inputNomeProfissional">Nome*</label>
 			</div>
 		</div>
 
@@ -41,15 +41,15 @@
 					</label>
 				</div>
 			</div>
-			<app-telefone class="col s12 m6" [telefones]="professor.telefones"></app-telefone>
+			<app-telefone class="col s12 m6" [telefones]="profissional.telefones"></app-telefone>
 		</div>
 
-		<app-endereco class="row" [enderecos]="professor.enderecos"></app-endereco>
+		<app-endereco class="row" [enderecos]="profissional.enderecos"></app-endereco>
 
 		<app-form-actions
 			[invalid]="form.invalid"
 			[canEdit]="canEdit"
-			[canDelete]="professor._id"
+			[canDelete]="profissional._id"
 			(delete)="onConfirmDelete()">
 		</app-form-actions>
 	</form>

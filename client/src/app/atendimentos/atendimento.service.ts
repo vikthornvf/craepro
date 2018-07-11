@@ -2,27 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AlunoService } from '../alunos/aluno.service';
-import { ProfessorService } from '../professores/professor.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Atendimento } from './atendimento.model';
 import { Parecer } from './parecer.model';
 import { Horario } from './horario.model';
 import 'rxjs/add/operator/map';
 
-/**
-	ROUTES
-	app.get('/api/atendimento/aluno/:alunoId', controller.list);
-	app.get('/api/atendimento/professor/:professorId', controller.list);
-
-	app.route('/api/atendimento')
-		.get(controller.list)
-		.post(controller.add);
-
-	app.route('/api/atendimento/:id')
-		.get(controller.findById)
-		.put(controller.update)
-		.delete(controller.deleteById);
- */
 @Injectable()
 export class AtendimentoService {
 
@@ -31,8 +16,7 @@ export class AtendimentoService {
 
 	constructor(
 		private http: HttpClient,
-		private serviceAluno: AlunoService,
-		private serviceProfessor: ProfessorService,
+		private alunoService: AlunoService,
 		private dialogs: DialogsService) {
 
 		this.headers = new HttpHeaders();
@@ -49,8 +33,8 @@ export class AtendimentoService {
 			.map(res => res as Atendimento[]);
 	}
 
-	listByProfessor(professorId: string): Observable<Atendimento[]> {
-		return this.http.get(`${this.url}/professor/${professorId}`)
+	listByProfissional(profissionalId: string): Observable<Atendimento[]> {
+		return this.http.get(`${this.url}/profissional/${profissionalId}`)
 			.map(res => res as Atendimento[]);
 	}
 
@@ -106,7 +90,7 @@ export class AtendimentoService {
 			return;
 		}
 		this.listByAluno(aluno._id).subscribe(
-			atendimentos => this.serviceAluno.updateSituacao(aluno, atendimentos),
+			atendimentos => this.alunoService.updateSituacao(aluno, atendimentos),
 			err => console.log(err));
 	}
 

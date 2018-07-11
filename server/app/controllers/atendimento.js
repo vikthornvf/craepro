@@ -5,7 +5,7 @@ module.exports = {
 
 	list(req, res) {
 		const aluno = { _id: req.params.alunoId };
-		const profissional = { _id: req.params.professorId };
+		const profissional = { _id: req.params.profissionalId };
 
 		let query = {};
 		if (aluno._id) {

@@ -3,7 +3,7 @@ const controller = require('../controllers/atendimento');
 module.exports = (app) => {
 
 	app.get('/api/atendimento/aluno/:alunoId', controller.list);
-	app.get('/api/atendimento/professor/:professorId', controller.list);
+	app.get('/api/atendimento/profissional/:profissionalId', controller.list);
 
 	app.route('/api/atendimento')
 		.get(controller.list)

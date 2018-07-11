@@ -1,12 +1,12 @@
-const controller = require('../controllers/professor');
+const controller = require('../controllers/profissional');
 
 module.exports = (app) => {
 
-	app.route('/api/professor')
+	app.route('/api/profissional')
 		.get(controller.list)
 		.post(controller.add);
 
-	app.route('/api/professor/:id')
+	app.route('/api/profissional/:id')
 		.get(controller.findById)
 		.put(controller.update)
 		.delete(controller.deleteById);

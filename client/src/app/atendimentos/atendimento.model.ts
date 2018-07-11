@@ -1,5 +1,5 @@
 import { Aluno } from '../alunos/aluno.model';
-import { Professor } from '../professores/professor.model';
+import { Profissional } from '../profissionais/profissional.model';
 import { Parecer } from './parecer.model';
 import { Horario } from './horario.model';
 
@@ -9,7 +9,7 @@ export class Atendimento {
 		public _id?: string,
 		public tipo?: string,
 		public aluno?: Aluno,
-		public profissional?: Professor,
+		public profissional?: Profissional,
 		public pareceres?: Parecer[],
 		public solicitacao?: Date,
 		public inicio?: Date,

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavbarService } from '../../nav/navbar/navbar.service';
-import { ProfessorService } from '../professor.service';
+import { NavService } from '../../nav/nav.service';
+import { ProfissionalService } from '../profissional.service';
 import { AtendimentoService } from '../../atendimentos/atendimento.service';
-import { Professor } from '../professor.model';
+import { Profissional } from '../profissional.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { Endereco } from '../../shared/endereco.model';
 import { DialogsService } from '../../dialogs/dialogs.service';
@@ -13,26 +13,26 @@ import { AuthService } from '../../auth.service';
 declare var Materialize: any;
 
 @Component({
-	selector: 'app-professor',
-	templateUrl: './professor.component.html'
+	selector: 'app-profissional',
+	templateUrl: './profissional.component.html'
 })
-export class ProfessorComponent implements OnInit {
+export class ProfissionalComponent implements OnInit {
 
 	form: FormGroup;
 	submitted: boolean;
 	loaded: boolean;
 	canEdit: boolean;
 
-	professor: Professor;
+	profissional: Profissional;
 	atendimentos: Atendimento[];
 
 	@ViewChild('deleteConfirmModal') deleteConfirmModal;
 
 	constructor(
 		private dialogs: DialogsService,
-		private service: ProfessorService,
+		private service: ProfissionalService,
 		private atendimentoService: AtendimentoService,
-		private navService: NavbarService,
+		private navService: NavService,
 		private auth: AuthService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder) {}
@@ -42,9 +42,9 @@ export class ProfessorComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			const id = params['id'];
 			if (id) {
-				this.loadProfessor(id);
+				this.loadProfissional(id);
 			} else {
-				this.initProfessor();
+				this.initProfissional();
 			}
 		});
 		this.userAuth();
@@ -64,26 +64,26 @@ export class ProfessorComponent implements OnInit {
 		});
 	}
 
-	loadProfessor(id: string): void {
+	loadProfissional(id: string): void {
 		this.service.findById(id).subscribe(
-			professor => {
-				this.professor = professor;
+			profissional => {
+				this.profissional = profissional;
 				this.form.patchValue({
-					'nome': professor.nome,
-					'hasAee': professor.atendimentoTipos.includes('A'),
-					'hasFono': professor.atendimentoTipos.includes('F'),
-					'hasPsico': professor.atendimentoTipos.includes('P'),
+					'nome': profissional.nome,
+					'hasAee': profissional.atendimentoTipos.includes('A'),
+					'hasFono': profissional.atendimentoTipos.includes('F'),
+					'hasPsico': profissional.atendimentoTipos.includes('P'),
 				});
 				this.loaded = true;
 			},
 			err => console.log(err));
 	}
 
-	initProfessor(): void {
-		this.professor = new Professor();
-		this.professor.telefones = [];
-		this.professor.enderecos = [];
-		this.professor.atendimentoTipos = [];
+	initProfissional(): void {
+		this.profissional = new Profissional();
+		this.profissional.telefones = [];
+		this.profissional.enderecos = [];
+		this.profissional.atendimentoTipos = [];
 		this.loaded = true;
 	}
 
@@ -93,23 +93,23 @@ export class ProfessorComponent implements OnInit {
 			return;
 		}
 
-		const professor = this.professor;
-		professor.nome = this.form.get('nome').value;
-		professor.atendimentoTipos = this.buildAtendimentoTiposArray();
+		const profissional = this.profissional;
+		profissional.nome = this.form.get('nome').value;
+		profissional.atendimentoTipos = this.buildAtendimentoTiposArray();
 
-		this.professor = this.service.save(professor);
+		this.profissional = this.service.save(profissional);
 		this.submitted = false;
 	}
 
 	onDelete(confirm: boolean): void {
 		if (confirm) {
-			this.service.delete(this.professor._id);
+			this.service.delete(this.profissional._id);
 			this.navService.onNavigateBack();
 		}
 	}
 
 	onConfirmDelete(): void {
-		const label = this.professor.nome ? this.professor.nome : 'Professor';
+		const label = this.profissional.nome ? this.profissional.nome : 'Profissional';
 		this.dialogs.modalDelete(confirm => this.onDelete(confirm), label);
 	}
 

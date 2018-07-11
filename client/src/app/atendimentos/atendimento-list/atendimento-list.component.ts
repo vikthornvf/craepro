@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges, NgZone } from '@angular/core';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { AtendimentoService } from '../atendimento.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
@@ -29,7 +29,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	delay = 200;
 
 	constructor(
-		private navService: NavbarService,
+		private navService: NavService,
 		private service: AtendimentoService,
 		private dialogs: DialogsService,
 		private _zone: NgZone) {}
@@ -89,7 +89,7 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 				},
 				err => console.log(err));
 		} else if (this.property === 'aluno') {
-			this.service.listByProfessor(this.selectedId).subscribe(
+			this.service.listByProfissional(this.selectedId).subscribe(
 				atendimentos => {
 					this.atendimentos = atendimentos;
 					this.loaded();

@@ -1,7 +1,7 @@
 const assert = require('assert');
 const Aluno = require('../app/models/aluno');
 const Atendimento = require('../app/models/atendimento');
-const Professor = require('../app/models/professor');
+const Profissional = require('../app/models/profissional');
 const Escola = require('../app/models/escola');
 const Usuario = require('../app/models/usuario');
 
@@ -9,8 +9,8 @@ describe.only('Lista registros', (done) => {
     let aluno;
     let atendimento;
     let atendimento2;
-    let professor;
-    let professor2;
+    let profissional;
+    let profissional2;
     let escola;
     let usuario;
 
@@ -19,18 +19,18 @@ describe.only('Lista registros', (done) => {
         aluno = new Aluno({ nome:'Joao', escola: escola });
         atendimento = new Atendimento({ tipo: 'A' });
         atendimento2 = new Atendimento({ tipo: 'P' });
-        professor = new Professor({ nome: 'Paulo' });
-        professor2 = new Professor({ nome: 'Ze' });
+        profissional = new Profissional({ nome: 'Paulo' });
+        profissional2 = new Profissional({ nome: 'Ze' });
 
         escola.save()
             .then(() => {
-                Promise.all([aluno.save(), professor.save(), professor2.save()])
+                Promise.all([aluno.save(), profissional.save(), profissional2.save()])
                     .then(() => {
                         atendimento.aluno = aluno;
-                        atendimento.professor = professor;
+                        atendimento.profissional = profissional;
 
                         atendimento2.aluno = aluno;
-                        atendimento2.professor = professor2;
+                        atendimento2.profissional = profissional2;
 
                         atendimento.save();
                         atendimento2.save();
@@ -76,8 +76,8 @@ describe.only('Lista registros', (done) => {
             });
     });
 
-    it('lista os atendimentos de certo professor', (done) => {
-        Atendimento.find({ professor: professor })
+    it('lista os atendimentos de certo profissional', (done) => {
+        Atendimento.find({ profissional: profissional })
             .then((atendimentos) => {
                 console.log(atendimentos);
                 assert(atendimentos.length === 1);

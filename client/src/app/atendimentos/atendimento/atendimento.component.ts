@@ -2,12 +2,12 @@ import { MaterializeAction } from 'angular2-materialize';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AtendimentoService } from '../atendimento.service';
-import { ProfessorService } from '../../professores/professor.service';
+import { ProfissionalService } from '../../profissionais/profissional.service';
 import { AlunoService } from '../../alunos/aluno.service';
 import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
-import { Professor } from '../../professores/professor.model';
+import { Profissional } from '../../profissionais/profissional.model';
 import { Aluno } from '../../alunos/aluno.model';
 import { Parecer } from '../parecer.model';
 import { Enums } from '../../shared/enums';
@@ -29,9 +29,9 @@ export class AtendimentoComponent implements OnInit {
 	@Output() delete = new EventEmitter<string>();
 
 	att: Atendimento;
-	allProfessores: Professor[] = [];
-	professores: Professor[] = [];
-	professor: Professor;
+	allProfissioais: Profissional[] = [];
+	profissionais: Profissional[] = [];
+	profissional: Profissional;
 	aluno: Aluno;
 	pareceres: FormArray = this.fb.array([]);
 	showPareceres = false;
@@ -70,7 +70,7 @@ export class AtendimentoComponent implements OnInit {
 	constructor(
 		private dialogs: DialogsService,
 		private service: AtendimentoService,
-		private professorService: ProfessorService,
+		private profissionalService: ProfissionalService,
 		private alunoService: AlunoService,
 		private auth: AuthService,
 		private fb: FormBuilder) {}
@@ -84,9 +84,9 @@ export class AtendimentoComponent implements OnInit {
 		} else {
 			this.att = Object.assign({}, this.atendimento);
 			this.aluno = this.att.aluno;
-			this.professor = this.att.profissional;
+			this.profissional = this.att.profissional;
 			if (this.att.inicio) {
-				this.loadProfessores();
+				this.loadProfissioais();
 			}
 		}
 		this.initForm();
@@ -135,7 +135,7 @@ export class AtendimentoComponent implements OnInit {
 		const a = this.att;
 		if (a) {
 			this.form.patchValue({
-				'nome': this.professor ? this.professor.nome : null,
+				'nome': this.profissional ? this.profissional.nome : null,
 				'autoComplete': null,
 				'tipo': a.tipo,
 				'horario': a.horario ? a.horario : new Horario()
@@ -147,23 +147,23 @@ export class AtendimentoComponent implements OnInit {
 
 	onShowDropdown(key: string): void {
 		if (key === 'Enter') {
-			this.selectProfessor();
+			this.selectProfissional();
 		}
 		clearTimeout(this.nomeTimeout);
 		this.nomeTimeout = setTimeout(() => {
-			this.filterProfessores();
+			this.filterProfissioais();
 		}, 350);
 		$('#nome_att').dropdown('open');
 	}
 
-	selectProfessor(professor?: Professor): void {
-		if (this.professores && this.professores.length === 1) {
-			professor = this.professores[0];
+	selectProfissional(profissional?: Profissional): void {
+		if (this.profissionais && this.profissionais.length === 1) {
+			profissional = this.profissionais[0];
 		}
-		if (professor) {
-			this.professor = professor;
-			this.professores = null;
-			this.form.patchValue({ nome: professor.nome });
+		if (profissional) {
+			this.profissional = profissional;
+			this.profissionais = null;
+			this.form.patchValue({ nome: profissional.nome });
 			$('#nome_att').dropdown('close');
 		}
 	}
@@ -206,22 +206,22 @@ export class AtendimentoComponent implements OnInit {
 			err => console.log(err));
 	}
 
-	loadProfessores(): void {
-		this.professorService.list().subscribe(
-			professores => this.allProfessores = professores,
+	loadProfissioais(): void {
+		this.profissionalService.list().subscribe(
+			profissionais => this.allProfissioais = profissionais,
 			err => console.log(err));
 	}
 
-	filterProfessores(): void {
+	filterProfissioais(): void {
 		const nome = this.form.get('nome').value;
 		const tipo = this.form.get('tipo').value;
-		this.professores = this.professorService.listByNomeAndTipoAtendimento(this.allProfessores, nome, tipo);
+		this.profissionais = this.profissionalService.listByNomeAndTipoAtendimento(this.allProfissioais, nome, tipo);
 	}
 
 	iniciarAtendimento(): void {
 		this.att.inicio = new Date();
-		if (!this.professores.length) {
-			this.loadProfessores();
+		if (!this.profissionais.length) {
+			this.loadProfissioais();
 		}
 	}
 
@@ -246,7 +246,7 @@ export class AtendimentoComponent implements OnInit {
 		const att = this.atendimento = this.att;
 
 		att.aluno = this.aluno;
-		att.profissional = this.professor;
+		att.profissional = this.profissional;
 		att.tipo = this.form.get('tipo').value;
 		att.horario = this.form.get('horario').value;
 		att.pareceres = this.form.get('pareceres').value;

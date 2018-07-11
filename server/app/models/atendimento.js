@@ -21,7 +21,7 @@ const atendimentoSchema = new Schema({
 	},
 	profissional: {
 		type: Schema.Types.ObjectId,
-		ref: 'Professor'
+		ref: 'Profissional'
 	},
 });
 

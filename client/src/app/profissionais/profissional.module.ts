@@ -11,15 +11,15 @@ import { FormActionsModule } from '../form-actions/form-actions.module';
 import { DirectivesModule } from '../shared/directives.module';
 import { PipesModule } from '../pipes/pipes.module';
 
-import { ProfessorListComponent } from './professor-list/professor-list.component';
-import { ProfessorComponent } from './professor/professor.component';
+import { ProfissionalListComponent } from './profissional-list/profissional-list.component';
+import { ProfissionalComponent } from './profissional/profissional.component';
 
-import { ProfessorService } from './professor.service';
+import { ProfissionalService } from './profissional.service';
 
 @NgModule({
 	declarations: [
-		ProfessorListComponent,
-		ProfessorComponent
+		ProfissionalListComponent,
+		ProfissionalComponent
 	],
 	exports: [],
 	imports: [
@@ -35,6 +35,6 @@ import { ProfessorService } from './professor.service';
 		DirectivesModule,
 		PipesModule
 	],
-	providers: [ProfessorService]
+	providers: [ProfissionalService]
 })
-export class ProfessorModule { }
+export class ProfissionalModule { }

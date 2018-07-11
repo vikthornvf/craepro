@@ -1,6 +1,6 @@
 import { Endereco } from '../shared/endereco.model';
 
-export class Professor {
+export class Profissional {
 	constructor(
 		public _id?: string,
 		public nome?: string,

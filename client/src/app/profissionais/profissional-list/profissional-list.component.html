@@ -1,0 +1,50 @@
+<h4 class="grey-text">Profissionais</h4>
+<span *ngIf="loaded; else loading">
+	<ul *ngIf="profissionais.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
+
+		<div class="collapsible-header flex-container disabled">
+			<input type="checkbox" disabled>
+			<label class="disabled"></label>
+			<div class="flex nome"><b class="truncate">Nome</b></div>
+			<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
+		</div>
+		<li *ngFor="let profissional of profissionais | navFilter: keyword:'nome'">
+
+			<div class="collapsible-header flex-container selectable" (click)="onSelect(profissional._id)">
+				<input
+					type="checkbox"
+					class="filled-in"
+					[id]="profissional._id"
+					[checked]="selected && profissional._id === selectedId"
+					(click)="toggleSelect($event, profissional._id)">
+				<label [for]="profissional._id"></label>
+				<div class="flex nome truncate">{{ profissional.nome }}</div>
+				<div class="flex atendimentos truncate">{{ profissional.atendimentoTipos | tipoAtendimentoPipe }}</div>
+			</div>
+
+			<div class="collapsible-body">
+				<div class="v-scroll">
+					<app-atendimento-list
+						*ngIf="selectedId === profissional._id"
+						property="aluno"
+						[selectedId]="selectedId"
+						(select)="onOpen()"
+						#atendimentoList>
+					</app-atendimento-list>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<ng-template #noData>
+		<div class="row center">
+			<p>Ainda nenhum profissional foi registrado. Crie o primeiro!</p>
+			<a class="waves-effect waves-light btn-large deep-purple darken-1" [routerLink]="link"><i class="material-icons right">add</i>CRIAR PROFISSIONAL</a>
+		</div>
+	</ng-template>
+</span>
+<ng-template #loading>
+	<div class="progress">
+		<div class="indeterminate"></div>
+	</div>
+</ng-template>
+<app-floating-add-button color="deep-purple" [link]="link"></app-floating-add-button>
