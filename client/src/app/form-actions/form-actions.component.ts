@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NavbarService } from '../nav/navbar/navbar.service';
+import { NavService } from '../nav/nav.service';
 
 @Component({
 	selector: 'app-form-actions',
@@ -13,7 +13,7 @@ export class FormActionsComponent {
 	@Input() canDelete: boolean;
 	@Output() delete = new EventEmitter<boolean>();
 
-	constructor(private service: NavbarService) {}
+	constructor(private service: NavService) {}
 
 	onDelete(): void {
 		this.delete.emit(true);

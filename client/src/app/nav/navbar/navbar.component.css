@@ -1,47 +1,19 @@
 nav {
 	max-width: 100%;
 	-webkit-transition: background-color .4s ease-out;
-		 -moz-transition: background-color .4s ease-out;
-			 -o-transition: background-color .4s ease-out;
-					transition: background-color .4s ease-out;
-}
-
-.dropdown-content {
-	left: 0 !important;
-	right: 0;
-}
-
-a.user-icon {
-	position: absolute;
-	right: 0;
-	top: 0;
-	float: none !important;
-	z-index: 999;
-}
-a.user-icon > i {
-	height: 64px;
-	padding-top: 4px;
-}
-
-@media only screen and (max-width: 600px) {
-	a.user-icon > i {
-		height: 56px;
-		padding-top: 0;
-	}
+	   -moz-transition: background-color .4s ease-out;
+		 -o-transition: background-color .4s ease-out;
+			transition: background-color .4s ease-out;
 }
 
 @media only screen and (min-width: 993px) {
-	a.user-icon {
-		position: fixed;
-	}
-
 	nav {
 		max-width: calc(100% - 300px);
 	}
 }
 
 .sidenav-wrapper {
-	margin-right: 42px !important;
+	margin-left: 0px !important;
 }
 
 @media only screen and (max-width: 992px) {
@@ -54,10 +26,14 @@ a.user-icon > i {
 	background-color: #546e7a;
 }
 
-.searchbar {
+.returnbar {
 	background-color: #4db6ac;
 }
 
-.toolbar {
+.searchbar {
 	background-color: #0288d1;
+}
+
+.toolbar {
+	background-color: #ffb300;
 }

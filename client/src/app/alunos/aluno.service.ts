@@ -80,15 +80,19 @@ export class AlunoService {
 		let finalzado = false;
 		let situacao = aluno.situacao;
 
-		atendimentos.forEach(a => {
-			if (a.egresso) {
-				finalzado = true;
-			} else if (a.inicio) {
-				ativo = true;
-			} else {
-				solicitado = true;
-			}
-		});
+		if (atendimentos && atendimentos.length) {
+			atendimentos.forEach(a => {
+				if (a.egresso) {
+					finalzado = true;
+				} else if (a.inicio) {
+					ativo = true;
+				} else {
+					solicitado = true;
+				}
+			});
+		} else {
+			situacao = 'D';
+		}
 
 		if (solicitado || ativo || finalzado) {
 			if (solicitado) {

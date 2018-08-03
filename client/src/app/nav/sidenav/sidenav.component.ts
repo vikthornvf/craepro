@@ -1,6 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { NavService } from '../nav.service';
 import { AuthService } from '../../auth.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Usuario } from '../../usuarios/usuario.model';
+
+interface SidenavRoute {
+	name: string;
+	label: string;
+	auth: string;
+}
 
 declare var $;
 
@@ -9,42 +19,60 @@ declare var $;
 	templateUrl: './sidenav.component.html',
 	styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
 
-	private readonly defaultRoutes = [
+	private readonly defaultRoutes: SidenavRoute[] = [
+		{ name: 'home', label: 'Home', auth: '' },
+		{ name: 'dashboard', label: 'Dashboard', auth: '' },
 		{ name: 'alunos', label: 'Alunos', auth: 'A1' },
-		{ name: 'professores', label: 'Professores', auth: 'P1' },
+		{ name: 'profissionais', label: 'Profissionais', auth: 'P1' },
 		{ name: 'escolas', label: 'Escolas', auth: 'E1' },
 		{ name: 'usuarios', label: 'Usuários', auth: 'U1' }
 	];
+	routes: SidenavRoute[];
+	show: boolean;
+	usuario: Usuario;
+	hideSubscription: Subscription;
 
-	routes = [{}];
-
-	constructor(private auth: AuthService, private router: Router) {}
+	constructor(
+		private service: NavService,
+		private auth: AuthService,
+		private router: Router,
+		private dialogs: DialogsService,
+		private _zone: NgZone) {}
 
 	ngOnInit() {
-		this.buildSidenavLinks(this.router.url);
-		this.router.events.subscribe(e => {
-			if (e instanceof NavigationEnd) {
-				this.buildSidenavLinks(e.url);
-			}
+		this.hideSubscription = this.service.hideSidebar.subscribe((hide) => {
+			this.show = !hide;
 		});
+		this.usuario = this.auth.getUsuarioDetails();
+		this.onBuildRoutes();
 	}
 
-	buildSidenavLinks(url: string) {
-		this.routes = [];
-		if (this.auth.isLoggedIn()) {
-			const usuario = this.auth.getUsuarioDetails();
+	ngOnDestroy() {
+		this.hideSubscription.unsubscribe();
+	}
+
+	onBuildRoutes() {
+		const routes: SidenavRoute[] = [];
+		if (this.usuario) {
 			this.defaultRoutes.forEach(route => {
-				if (usuario.permissoes.includes(route.auth)) {
-					this.routes.push(route);
+				if (!route.auth.length || this.usuario.permissoes.includes(route.auth)) {
+					routes.push(route);
 				}
 			});
 		}
+		this.routes = routes;
 	}
 
 	onNavigate($event: Event): void {
 		$event.preventDefault();
 		$('.button-collapse').sideNav('hide');
+	}
+
+	onLogout() {
+		this.dialogs.modalConfirmation(confirm => {
+			if (confirm) { this._zone.run(() => this.auth.logout()); }
+		}, 'Deseja realmente sair da sua conta de usuário?', 'power_settings_new');
 	}
 }

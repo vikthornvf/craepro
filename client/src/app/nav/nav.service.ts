@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class NavbarService {
+export class NavService {
 
 	readonly state = {
 		NAVBAR: 'navbar',
@@ -25,6 +25,12 @@ export class NavbarService {
 
 	private barState$ = new BehaviorSubject<string>(this.state.NAVBAR);
 	barState = this.barState$.asObservable();
+
+	private hideSidebar$ = new BehaviorSubject<boolean>(false);
+	hideSidebar = this.hideSidebar$.asObservable();
+
+	hideTopbar$ = new BehaviorSubject<boolean>(false);
+	hideTopbar = this.hideTopbar$.asObservable();
 
 	// control the toolbar functions
 	toolbar = new Subject<number>();
@@ -55,5 +61,17 @@ export class NavbarService {
 
 	linkObservable(): Observable<string[]> {
 		return this.link$.asObservable();
+	}
+
+	onHideSidebar(hide: boolean) {
+		if (this.hideSidebar$.getValue() !== hide) {
+			this.hideSidebar$.next(hide);
+		}
+	}
+
+	onHideTopbar(hide: boolean) {
+		if (this.hideTopbar$.getValue() !== hide) {
+			this.hideTopbar$.next(hide);
+		}
 	}
 }

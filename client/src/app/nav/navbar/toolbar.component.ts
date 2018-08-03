@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavbarService } from './navbar.service';
+import { NavService } from '../nav.service';
 import { AuthService } from '../../auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 	tool = this.navService.tools;
 
-	constructor(private navService: NavbarService, private auth: AuthService) {}
+	constructor(private navService: NavService, private auth: AuthService) {}
 
 	ngOnInit(): void {
 		this.hasAttSubscription = this.navService.hasAtt.subscribe(hasAtt => {

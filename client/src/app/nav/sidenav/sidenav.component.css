@@ -1,21 +1,13 @@
 .logo {
-	transition: all .25s;
-	padding-top: 20px;
-	padding-left: 58px;
-	transform: scale(1);
-	-o-transform: scale(1);
-	-ms-transform: scale(1);
-	-moz-transform: scale(1);
-	-webkit-transform: scale(1);
+	background-image: url('/assets/img/logo-vertical234x48.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-bottom: 20px;
+	margin-top: 20px;
 }
 
 .logo:hover {
-	transition: all .6s;
-	transform: scale(1.03);
-	-o-transform: scale(1.03);
-	-ms-transform: scale(1.03);
-	-moz-transform: scale(1.03);
-	-webkit-transform: scale(1.03);
+	background-color: transparent;
 }
 
 .heart-pane a {
@@ -41,11 +33,19 @@
 	animation: heartbeat 1.5s infinite;
 }
 
+li.active.home {
+	border-left: 6px solid #2bbbad;
+}
+
+li.active.dashboard {
+	border-left: 6px solid #0288d1;
+}
+
 li.active.alunos {
 	border-left: 6px solid #e53935;
 }
 
-li.active.professores {
+li.active.profissionais {
 	border-left: 6px solid #5e35b1;
 }
 

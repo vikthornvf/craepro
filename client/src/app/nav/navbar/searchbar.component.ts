@@ -1,19 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarService } from './navbar.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavService } from '../nav.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-searchbar',
 	templateUrl: './searchbar.component.html',
 	styleUrls: ['./searchbar.component.css']
 })
-export class SearchbarComponent implements OnInit {
+export class SearchbarComponent implements OnInit, OnDestroy {
 
 	keyword = '';
+	keywordSubscription: Subscription;
 
-	constructor(private navService: NavbarService) {}
+	constructor(private navService: NavService) {}
 
 	ngOnInit() {
-		this.navService.keyword.subscribe(keyword => this.keyword = keyword);
+		this.keywordSubscription = this.navService.keyword.subscribe(keyword => this.keyword = keyword);
+	}
+
+	ngOnDestroy() {
+		this.keywordSubscription.unsubscribe();
 	}
 
 	onKeyup() {

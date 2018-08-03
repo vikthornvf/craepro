@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ListViewComponent } from '../../shared/list-view.component';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { AlunoService } from '../aluno.service';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
@@ -20,7 +20,7 @@ export class AlunoListComponent extends ListViewComponent {
 
 	constructor(
 		z: NgZone,
-		ns: NavbarService,
+		ns: NavService,
 		private service: AlunoService,
 		private attService: AtendimentoService) { super(z, ns); }
 
@@ -40,7 +40,7 @@ export class AlunoListComponent extends ListViewComponent {
 	}
 
 	updateSituacao(aluno: Aluno, atendimentos: Atendimento[]): void {
-		if (aluno && atendimentos) {
+		if (aluno) {
 			const o = this.service.updateSituacao(aluno, atendimentos);
 			if (o) {
 				o.subscribe(

@@ -1,28 +1,28 @@
-<div class="navbar-fixed">
+<div class="navbar-fixed" *ngIf="show">
 	<nav [class]="state">
-		<div class="nav-wrapper sidenav-wrapper">
-			<div class="row">
-				<div class="col s12" [ngSwitch]="state">
-					<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
-					<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
-					<ng-container *ngSwitchCase="'navbar'">
-						<ul class="slide-in-right-effect">
-							<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
-						</ul>
-					</ng-container>
-				</div>
-			</div>
+		<div class="nav-wrapper sidenav-wrapper" [ngSwitch]="state">
+			<ul id="user-profile"
+					*ngIf="auth.isLoggedIn()"
+					class="right">
+				<li>
+					<a class='user-icon dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
+						<i class="material-icons">account_circle</i>
+					</a>
+				</li>
+			</ul>
+			<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
+			<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
+			<ng-container *ngSwitchCase="'navbar'">
+				<ul class="slide-in-right-effect">
+					<li><a (click)="onBack()"><i class="material-icons left">keyboard_arrow_left</i> Voltar</a></li>
+				</ul>
+			</ng-container>
 		</div>
-		<ul>
-			<li>
-				<a class='user-icon dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
-					<i class="material-icons">account_circle</i>
-				</a>
-			</li>
-		</ul>
 		<ul id='user-dropdown' class='dropdown-content'>
-			<li><a routerLink="/usuario-profile"><i class="material-icons left">person</i>Minha conta</a></li>
-			<li><a (click)="onLogout()"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+			<li *ngIf="usuario"><span><label>{{ usuario.nome }}<br>({{ usuario.email }})</label></span></li>
+			<li><a routerLink="/usuario-profile"><i class="material-icons teal-text left">person</i>Minha conta</a></li>
+			<li><a routerLink="/usuario-senha"><i class="material-icons amber-text text-darken-1 left">lock</i>Alterar senha</a></li>
+			<li><a (click)="onLogout()"><i class="material-icons red-text left">power_settings_new</i>Sair</a></li>
 		</ul>
 	</nav>
 </div>

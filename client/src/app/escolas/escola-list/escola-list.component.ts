@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ListViewComponent } from '../../shared/list-view.component';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { EscolaService } from '../escola.service';
 import { Escola } from '../escola.model';
 
@@ -16,7 +16,7 @@ export class EscolaListComponent extends ListViewComponent {
 
 	constructor(
 		z: NgZone,
-		ns: NavbarService,
+		ns: NavService,
 		private service: EscolaService) { super(z, ns); }
 
 	loadList(): void {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { EscolaService } from '../escola.service';
 import { AuthService } from '../../auth.service';
@@ -22,7 +22,7 @@ export class EscolaComponent implements OnInit {
 
 	constructor(
 		private service: EscolaService,
-		private navService: NavbarService,
+		private navService: NavService,
 		private dialogs: DialogsService,
 		private auth: AuthService,
 		private route: ActivatedRoute) {}

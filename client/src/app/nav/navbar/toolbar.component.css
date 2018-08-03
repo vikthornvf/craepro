@@ -16,7 +16,7 @@ li {
 	margin-left: 15px;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 992px) {
+@media only screen and (max-width: 992px) {
 	.spacing-left {
 		margin-left: 10px;
 	}

@@ -10,7 +10,7 @@ import { SearchbarComponent } from './navbar/searchbar.component';
 import { ToolbarComponent } from './navbar/toolbar.component';
 import { NavFilter } from './nav.pipe';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { NavbarService } from './navbar/navbar.service';
+import { NavService } from './nav.service';
 
 @NgModule({
 	declarations: [
@@ -37,7 +37,7 @@ import { NavbarService } from './navbar/navbar.service';
 		SidenavComponent
 	],
 	providers: [
-		NavbarService
+		NavService
 	],
 })
 export class NavModule { }

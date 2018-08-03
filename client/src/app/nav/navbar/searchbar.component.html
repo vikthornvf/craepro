@@ -1,15 +1,17 @@
-<form class="transparent slide-in-effect">
-	<div class="input-field">
-	<input id="searchInput"
-		type="search"
-		autocomplete="off"
-		placeholder="Buscar"
-		(keyup)="onKeyup()"
-		[(ngModel)]="keyword"
-		[ngModelOptions]="{standalone: true}">
-		<label class="show-on-large label-icon" for="search">
-			<i class="material-icons">search</i>
-		</label>
-		<i class="material-icons" (click)="onCleanKeyword()">close</i>
-	</div>
-</form>
+<div class="form-wrapper">
+	<form class="transparent slide-in-effect">
+		<div class="input-field">
+		<input id="searchInput"
+			type="search"
+			autocomplete="off"
+			placeholder="Buscar"
+			(keyup)="onKeyup()"
+			[(ngModel)]="keyword"
+			[ngModelOptions]="{standalone: true}">
+			<label class="show-on-large label-icon" for="search">
+				<i class="material-icons">search</i>
+			</label>
+			<i class="material-icons" (click)="onCleanKeyword()">close</i>
+		</div>
+	</form>
+</div>

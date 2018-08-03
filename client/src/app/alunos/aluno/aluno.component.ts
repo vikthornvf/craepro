@@ -5,12 +5,11 @@ import { AlunoService } from '../aluno.service';
 import { EscolaService } from '../../escolas/escola.service';
 import { AtendimentoService } from '../../atendimentos/atendimento.service';
 import { ResponsavelService } from '../../responsaveis/responsavel.service';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { AuthService } from '../../auth.service';
 import { Aluno } from '../aluno.model';
 import { Escola } from '../../escolas/escola.model';
-import { Professor } from '../../professores/professor.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 import { Responsavel } from '../../responsaveis/responsavel.model';
 import { Enums } from '../../shared/enums';
@@ -44,7 +43,7 @@ export class AlunoComponent implements OnInit {
 		private escolaService: EscolaService,
 		private atendimentoService: AtendimentoService,
 		private responsavelService: ResponsavelService,
-		private navService: NavbarService,
+		private navService: NavService,
 		private dialogs: DialogsService,
 		private auth: AuthService,
 		private route: ActivatedRoute,
