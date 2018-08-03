@@ -1,13 +1,9 @@
-main.wrapper {
-	margin-left: 220px;
+main.topMargin {
 	margin-top: 30px;
 }
 
-@media only screen and (max-width : 992px) {
-	main.wrapper {
-		margin-left: 0px;
-		margin-top: 20px;
-	}
+main.wrapper {
+	margin-left: 220px;
 }
 
 header.wrapper, footer.wrapper {
@@ -15,6 +11,15 @@ header.wrapper, footer.wrapper {
 }
 
 @media only screen and (max-width : 992px) {
+
+	main.topMargin {
+		margin-top: 20px;
+	}
+
+	main.wrapper {
+		margin-left: 0px;
+	}
+
 	header.wrapper, footer.wrapper {
 		margin-left: 0;
 	}

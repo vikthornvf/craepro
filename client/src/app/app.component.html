@@ -1,7 +1,7 @@
-<header [class.wrapper]="show">
+<header #headerEl>
 	<app-nav></app-nav>
 </header>
-<main [class.wrapper]="show">
+<main #mainEl>
 	<div class="container">
 		<div class="row">
 			<router-outlet></router-outlet>
