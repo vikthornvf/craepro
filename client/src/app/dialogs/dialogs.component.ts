@@ -10,6 +10,7 @@ import { DialogsService } from './dialogs.service';
 export class DialogsComponent implements OnInit, OnDestroy {
 
 	dialogType = 0;
+	icon: string;
 	text: string;
 	label: string;
 	confirm: boolean;
@@ -25,9 +26,10 @@ export class DialogsComponent implements OnInit, OnDestroy {
 		this.dialogSubscription = this.service.invokeDialog.subscribe(dialogType => {
 			if (dialogType) {
 				this.dialogType = dialogType;
-				this.callback = this.service.callback.value;
-				this.label = this.service.label.value;
-				this.text = this.service.text.value;
+				this.callback = this.service.callback.getValue();
+				this.icon = this.service.icon.getValue();
+				this.text = this.service.text.getValue();
+				this.label = this.service.label.getValue();
 				this.onOpen();
 			}
 		});
@@ -48,7 +50,8 @@ export class DialogsComponent implements OnInit, OnDestroy {
 		this.service.onCloseModal();
 		this.dialogType = null;
 		this.callback = null;
-		this.label = null;
+		this.icon = null;
 		this.text = null;
+		this.label = null;
 	}
 }

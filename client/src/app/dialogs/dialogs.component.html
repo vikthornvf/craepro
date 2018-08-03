@@ -7,7 +7,7 @@
 		<div [ngSwitch]="dialogType">
 			<ng-container *ngSwitchCase="1">
 				<div class="row light-blue-text">
-					<i class="medium material-icons">info</i>
+					<i class="medium material-icons">{{ icon || 'info' }}</i>
 					<h4>Atenção</h4>
 				</div>
 				<div class="row">

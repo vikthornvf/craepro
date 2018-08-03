@@ -13,14 +13,16 @@ export class DialogsService {
 
 	label = new BehaviorSubject<string>(null);
 	text = new BehaviorSubject<string>(null);
+	icon = new BehaviorSubject<string>(null);
 	callback = new BehaviorSubject<Function>(null);
 
 	private invokeDialog$ = new BehaviorSubject<number>(null);
 	invokeDialog = this.invokeDialog$.asObservable();
 
-	modalConfirmation(callback: Function, text: string) {
+	modalConfirmation(callback: Function, text: string, icon?: string) {
 		this.callback.next(callback);
 		this.text.next(text);
+		this.icon.next(icon);
 		this.invokeDialog$.next(this.TYPE.CONFIRM);
 	}
 
@@ -33,6 +35,7 @@ export class DialogsService {
 	onCloseModal(): void {
 		this.label.next(null);
 		this.text.next(null);
+		this.icon.next(null);
 	}
 
 	toast(msg: string, time?: number, style?: string): void {
