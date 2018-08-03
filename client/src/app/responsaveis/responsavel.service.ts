@@ -1,26 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { AlunoService } from '../alunos/aluno.service';
-import { ProfessorService } from '../professores/professor.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Responsavel } from './responsavel.model';
 import 'rxjs/add/operator/map';
 
-/**
-	ROUTES
-	app.get('/api/Responsavel/aluno/:alunoId', controller.list);
-	app.get('/api/Responsavel/professor/:professorId', controller.list);
-
-	app.route('/api/Responsavel')
-		.get(controller.list)
-		.post(controller.add);
-
-	app.route('/api/Responsavel/:id')
-		.get(controller.findById)
-		.put(controller.update)
-		.delete(controller.deleteById);
- */
 @Injectable()
 export class ResponsavelService {
 
@@ -29,8 +13,6 @@ export class ResponsavelService {
 
 	constructor(
 		private http: HttpClient,
-		private serviceAluno: AlunoService,
-		private serviceProfessor: ProfessorService,
 		private dialogs: DialogsService) {
 
 		this.headers = new HttpHeaders();
