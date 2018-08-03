@@ -66,12 +66,8 @@ export class AuthService {
 		return false;
 	}
 
-	public login(usuario: TokenPayload): Observable<Usuario> {
-		let base;
-
-		base = this.http.post('/api/login', usuario);
-
-		const request = base.pipe(
+	public login(usuario: TokenPayload): Observable<TokenResponse> {
+		return this.http.post('/api/login', usuario).pipe(
 			map((data: TokenResponse) => {
 				if (data.token) {
 					this.saveToken(data.token);
@@ -79,8 +75,6 @@ export class AuthService {
 				return data;
 			})
 		);
-
-		return request;
 	}
 
 	public logout() {
