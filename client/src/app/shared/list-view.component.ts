@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Injectable, NgZone, ViewChild } from '@angular/core';
-import { NavbarService } from '../nav/navbar/navbar.service';
+import { NavService } from '../nav/nav.service';
 import { Subscription } from 'rxjs/Subscription';
 
 declare var $;
@@ -41,19 +41,21 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private _zone: NgZone,
-		private navService: NavbarService) {}
+		private navService: NavService) {}
 
 	abstract loadList(): void;
 
 	ngOnInit(): void {
 		this.loadList();
-		this.navService.changeState(this.navService.state.SEARCHBAR);
+		this.changeNavbar(this.navService.state.SEARCHBAR);
 		this.keywordObservable = this.navService.keyword.subscribe(keyword => this.keyword = keyword);
 		this.toolbarObservable = this.navService.toolbar.subscribe(code => this.toolbarFunctions(code));
+		this.navService.onHideSidebar(false);
+		this.navService.onHideTopbar(false);
 	}
 
 	ngOnDestroy(): void {
-		this.navService.changeState(this.navService.state.NAVBAR);
+		this.changeNavbar(this.navService.state.NAVBAR);
 		this.keywordObservable.unsubscribe();
 		this.toolbarObservable.unsubscribe();
 	}

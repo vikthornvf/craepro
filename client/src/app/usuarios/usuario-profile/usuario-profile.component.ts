@@ -70,6 +70,6 @@ export class UsuarioProfileComponent implements OnInit {
 	onLogout(): void {
 		this.dialogs.modalConfirmation(confirm => {
 			if (confirm) { this._zone.run(() => this.auth.logout()); }
-		}, 'Deseja realmente sair da sua conta de usuário?');
+		}, 'Deseja realmente sair da sua conta de usuário?', 'power_settings_new');
 	}
 }

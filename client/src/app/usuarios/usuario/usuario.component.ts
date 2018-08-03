@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { UsuarioService } from '../usuario.service';
 import { EscolaService } from '../../escolas/escola.service';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { Usuario } from '../usuario.model';
 import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
@@ -32,7 +32,7 @@ export class UsuarioComponent implements OnInit {
 		private dialogs: DialogsService,
 		private service: UsuarioService,
 		private escolaService: EscolaService,
-		private navService: NavbarService,
+		private navService: NavService,
 		private auth: AuthService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder,

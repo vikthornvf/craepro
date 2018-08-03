@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ListViewComponent } from '../../shared/list-view.component';
-import { NavbarService } from '../../nav/navbar/navbar.service';
+import { NavService } from '../../nav/nav.service';
 import { UsuarioService } from '../usuario.service';
 import { Usuario } from '../usuario.model';
 import { Enums } from '../../shared/enums';
@@ -17,7 +17,7 @@ export class UsuarioListComponent extends ListViewComponent {
 
 	constructor(
 		z: NgZone,
-		ns: NavbarService,
+		ns: NavService,
 		private service: UsuarioService) { super(z, ns); }
 
 	loadList(): void {
