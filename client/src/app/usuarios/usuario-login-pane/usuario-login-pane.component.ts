@@ -31,6 +31,10 @@ export class UsuarioLoginPaneComponent implements OnInit, OnDestroy {
 		this.updateTextFields();
 	}
 
+	onNavigateBack() {
+		this.navService.onNavigateBack();
+	}
+
 	private updateTextFields() {
 		if (typeof Materialize.updateTextFields === 'function') {
 			setTimeout(() => Materialize.updateTextFields(), 20);
