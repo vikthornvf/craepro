@@ -12,7 +12,7 @@ module.exports = {
 				res.status(404).json(err);
 				return;
 			}
-			if(usuario) {
+			if (usuario) {
 				token = usuario.generateJwt();
 				res.status(200);
 				res.json({
