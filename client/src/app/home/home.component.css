@@ -1,0 +1,156 @@
+h2 {
+	white-space: nowrap;
+}
+
+@media only screen and (min-width: 730px) and (max-width : 853px) {
+	h2 {
+		font-size: 2.92rem;
+	}
+}
+
+@media only screen and (min-width: 600px) and (max-width : 729px) {
+	h2 {
+		font-size: 2.28rem;
+	}
+}
+
+@media only screen and (max-width : 440px) {
+	h2 {
+		font-size: 2.92rem;
+	}
+}
+
+@media only screen and (max-width : 370px) {
+	h2 {
+		font-size: 2.28rem;
+	}
+}
+
+.valign {
+	display: -webkit-flex;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.full {
+	height: 100vh;
+}
+
+.full.wrapper {
+	margin-top: -64px;
+}
+
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex.align-center {
+	align-items: center;
+}
+
+.spacing {
+	padding-top: 30px;
+}
+
+.hero-spacing {
+	margin: 20px 0 20px 0;
+	padding: 20px 0 20px 0;
+}
+
+.spacing-separator {
+	height: 100px;
+}
+
+.round-bottom {
+	border-bottom-left-radius: 40% 12%;
+	border-bottom-right-radius: 40% 12%;
+}
+
+.content-end {
+	background-image: url("/assets/img/parallax1.png");
+	background-position: center bottom;
+	background-color: white;
+	position: relative;
+	z-index: 2;
+	height: 300px;
+	margin-bottom: 0;
+}
+
+.custom-separator {
+	border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+.custom-icon {
+	height: 100px;
+	width: 100px;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallax.first {
+	background-image: url("/assets/img/parallax1.png"), url("/assets/img/parallax.jpg");
+	background-position: center bottom, center;
+	background-attachment: scroll, fixed;
+}
+
+.parallax.second {
+	background-image: url("/assets/img/parallax2.jpg");
+	margin-top: -110px;
+	height: 610px;
+}
+
+.parallax.second > .container {
+	padding-top: 100px;
+	height: 610px;
+}
+
+@media only screen and (max-width : 992px) {
+	.spacing {
+		padding-top: 20px;
+	}
+
+	.spacing-separator {
+		height: 70px;
+	}
+
+	.content-end {
+		height: 250px;
+	}
+}
+
+@media only screen and (max-width : 601px) {
+	.full.wrapper {
+		margin-top: -56px;
+	}
+
+	.spacing-separator {
+		height: 30px;
+	}
+
+	.content-end {
+		height: 200px;
+	}
+}
+
+.blink-white {
+	animation: color-change 4s infinite;
+}
+
+@keyframes color-change {
+	0% { color: white; }
+	20% { color: transparent; }
+	40% { color: white; }
+	60% { color: transparent; }
+	80% { color: white; }
+	100% { color: white; }
+}

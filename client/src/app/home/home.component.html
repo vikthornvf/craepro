@@ -1,0 +1,183 @@
+<div class="full parallax first wrapper round-bottom">
+	<div class="container">
+		<div class="row full valign">
+			<div></div>
+			<div class="col m6 offset-m6">
+				<h2 class="white-text uppercase regular">Crae</h2>
+				<div class="custom-separator"></div>
+				<h2 class="white-text thin uppercase">
+					Centro<br>
+					Referencial de<br><span class="regular">
+					Atendimento<br>
+					ao Educando</span>
+				</h2>
+			</div>
+			<!-- <a routerLink="." fragment="sobre"> -->
+				<i class="material-icons medium white-text blink-white">expand_more</i>
+			<!-- </a> -->
+		</div>
+	</div>
+</div>
+
+<!-- <a id="sobre"></a> -->
+<div class="spacing-separator"></div>
+<div class="row flex align-center">
+	<div class="col s12 m6">
+		<div class="container blue-grey-text text-lighten-1">
+			<h4>Atendimento aos alunos da Rede Municipal de ensino com necessidades especiais</h4>
+			<p class="flow-text">
+				O <span class="uppercase">crae</span> trabalha em conjunto com as escolas da rede municipal de ensino de
+				Imbé.<br>Elas encaminham alunos com necessidade de acompanhamento especial, a partir da rotina escolar.
+			<p>
+		</div>
+	</div>
+	<div class="col s12 m6">
+		<img src="/assets/img/svg/illustration-atend.svg" alt="Atendimento aos alunos com necessidades especiais">
+	</div>
+</div>
+<div class="spacing-separator"></div>
+<div class="row flex align-center" style="flex-wrap: wrap-reverse;">
+	<div class="col s12 m6">
+		<img src="/assets/img/svg/illustration-prof.svg" alt="Profissionais capacitados que trabalham com amor">
+	</div>
+	<div class="col s12 m6">
+		<div class="container blue-grey-text text-lighten-1">
+			<h4>Profissionais capacitados que trabalham com amor</h4>
+			<p class="flow-text">
+				A filosofia de trabalho do <span class="uppercase">crae</span> é a valorização do ser humano nas suas
+				diversidades, dando a oportunidade aos alunos desenvolverem suas potencialidades, tanto afetiva,
+				cognitiva, psicomotora ou social.
+			</p>
+		</div>
+	</div>
+</div>
+
+<div class="spacing-separator"></div>
+<div class="blue-grey lighten-5 blue-grey-text hero-spacing">
+	<div class="container">
+		<div class="row">
+			<div class="col center">
+				<h3 class="light">Os dois pilares do <span class="uppercase">crae</span> em Imbé</h3>
+				<p class="flow-text">
+					A estrutura de operação do <span class="uppercase">crae</span> é baseada em duas colunas: atendimento
+					e investigação, buscando subsídios para diagnosticar alunos com Necessidades Educacionais Especiais e
+					assim proporcionar um espaço terapêuticopara que o educando esteja melhor preparado para a inclusão e
+					possibilite a permanente ascensão aos já inclusos, seja terapia temporária ou permanente, dando-lhes
+					condições para uma educação de qualidade.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row flex">
+	<div class="col s12 m6 blue-grey-text text-lighten-1">
+		<h3 class="center light">
+			<img src="/assets/img/svg/icon-search.svg" alt="Investigação" class="custom-icon"><br>
+			Investigação
+		</h3>
+		<div class="container">
+			<p class="flow-text">
+				Trabalha-se em uma nova perspectiva onde os profissionais procuram analisar seus educandos considerando a
+				complexidade, heterogeneidade e ritmo de aprendizado individual para que todos possam atingir seu máximo
+				de capacidade.
+			</p>
+		</div>
+	</div>
+	<div class="col s12 m6 blue-grey-text text-lighten-1">
+		<h3 class="center light">
+			<img src="/assets/img/svg/icon-atend.svg" alt="Atendimento" class="custom-icon"><br>
+			Atendimento
+		</h3>
+		<div class="container">
+			<p class="flow-text">
+				São atendendidos alunos com deficiência, transtornos ou dificuldades em geral que impeçam o acompanhamento
+				regular das atividades curriculares, além de alunos não diagnosticados, mas que apresentem limitações e
+				dificuldades de comunicação.
+			</p>
+		</div>
+	</div>
+</div>
+<div class="row round-bottom content-end"></div>
+
+<div class="parallax second">
+	<div class="container center valign-wrapper">
+		<h4 class="white-text">
+			Aprendizagem não é apenas o conteúdo definido mas sim agregador de valores, de atitudes costumes e de
+			relacionamento.
+		</h4>
+	</div>
+</div>
+
+<!-- <a id="contato"></a> -->
+<div class="row center">
+	<div class="flex blue-grey-text text-lighten-1">
+		<div class="col s12 m8">
+			<div class="container">
+				<form materialize [formGroup]="form" (ngSubmit)="onSubmit()">
+					<h4 class="center spacing">Fale com a gente!</h4>
+
+					<div class="input-field col s12">
+						<input id="nomeForm"
+							type="text"
+							formControlName="nome"
+							[ngClass]="{ 'invalid': nome.invalid && submitted }">
+						<label class="active" for="nomeForm">Nome</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="emailForm"
+							type="email"
+							formControlName="email"
+							[ngClass]="{ 'invalid': email.invalid && submitted }">
+						<label class="active" for="senhaLogin">Email</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="telefoneForm"
+							type="text"
+							formControlName="telefone"
+							[ngClass]="{ 'invalid': telefone.invalid && submitted }">
+						<label class="active" for="senhaLogin">Telefone</label>
+					</div>
+
+					<div class="input-field col s12">
+						<textarea id="mensagemForm"
+							formControlName="mensagem"
+							class="materialize-textarea"
+							autocomplete="off"
+							[ngClass]="{ 'invalid': mensagem.invalid && submitted }"></textarea>
+						<label class="active" for="mensagemForm">Mensagem</label>
+					</div>
+
+					<div class="row" *ngIf="form.invalid">
+						<div class="col s12">
+							<label for="buttonMsgSubmit">Por favor, preencha todos os campos corretamente</label>
+						</div>
+					</div>
+					<button id="buttonMsgSubmit" class="btn-large default-size waves-effect waves-light teal lighten-2">
+						Enviar
+						<i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div class="col s12 m4">
+			<div class="container">
+				<h4 class="spacing">Endereço</h4>
+				<p>
+					<a href="https://goo.gl/maps/CCqQg2gWs2H2" target="_blank">Ver no mapa
+						<i class="material-icons tiny">open_in_new</i>
+					</a>
+					<br>Rua Herval, 725
+					<br>Centro
+					<br>Imbé - RS
+					<br>95625-000
+				</p>
+				<h4 class="spacing">Telefone</h4><a href="tel:51 3627-1246" target="_blank">(51) 3627-1246</a>
+				<h4 class="spacing">Email</h4><a href="mailto:craeimbe@gmail.com" target="_blank">craeimbe@gmail.com</a>
+				<h4 class="spacing">Facebook</h4><a href="https://www.facebook.com/craeimbe" target="_blank">/craeimbe</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row content-end"></div>

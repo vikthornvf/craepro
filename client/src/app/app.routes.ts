@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { UsuarioLoginPaneComponent } from './usuarios/usuario-login-pane/usuario-login-pane.component';
+import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlunoListComponent } from './alunos/aluno-list/aluno-list.component';
 import { AlunoComponent } from './alunos/aluno/aluno.component';
 import { ProfissionalListComponent } from './profissionais/profissional-list/profissional-list.component';
@@ -19,8 +21,10 @@ import { AuthGuardService } from './auth-guard.service';
 
 
 const appRoutes: Routes = [
-	{ path: '', redirectTo: 'alunos', pathMatch: 'full' },
+	{ path: '', component: HomeComponent, pathMatch: 'full'  },
 	{ path: 'login', component: UsuarioLoginPaneComponent, canActivate: [LoginGuardService] },
+	{ path: 'login/:path', component: UsuarioLoginPaneComponent, canActivate: [LoginGuardService] },
+	// { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos', component: AlunoListComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos/aluno', component: AlunoComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos/aluno/:id', component: AlunoComponent, canActivate: [AuthGuardService] },

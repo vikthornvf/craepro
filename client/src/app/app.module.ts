@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { NavModule } from './nav/nav.module';
 import { DialogsModule } from './dialogs/dialogs.module';
 import { NotFoundModule } from './not-found/not-found.module';
+import { HomeModule } from './home/home.module';
+// import { DashboardModule } from './dashboard/dashboard.module';
 import { AlunoModule } from './alunos/aluno.module';
 import { ProfissionalModule } from './profissionais/profissional.module';
 import { EscolaModule } from './escolas/escola.module';
@@ -26,6 +28,8 @@ import { AppComponent } from './app.component';
 		NavModule,
 		DialogsModule,
 		NotFoundModule,
+		HomeModule,
+		// DashboardModule,
 		AlunoModule,
 		ProfissionalModule,
 		EscolaModule,

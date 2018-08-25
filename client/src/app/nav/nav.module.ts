@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from '../app.routes';
 
 import { NavComponent } from './nav.component';
+import { HomebarComponent } from './navbar/homebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchbarComponent } from './navbar/searchbar.component';
 import { ToolbarComponent } from './navbar/toolbar.component';
@@ -15,6 +16,7 @@ import { NavService } from './nav.service';
 @NgModule({
 	declarations: [
 		NavComponent,
+		HomebarComponent,
 		NavbarComponent,
 		SearchbarComponent,
 		ToolbarComponent,
