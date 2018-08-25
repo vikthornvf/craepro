@@ -1,37 +1,39 @@
-<span *ngIf="loaded; else loading">
-	<h4 class="grey-text" *ngIf="!escola._id">Nova Escola</h4>
-	<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
-		<div class="row">
-			<div class="input-field col s12">
-				<input
-					id="inputNomeEscola"
-					type="text"
-					formControlName="nome"
-					autocomplete="off"
-					[focus]="!escola._id"
-					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
-				<label class="active" for="inputNomeEscola">Nome*</label>
+<div class="container spacing">
+	<span *ngIf="loaded; else loading">
+		<h4 class="grey-text" *ngIf="!escola._id">Nova Escola</h4>
+		<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
+			<div class="row">
+				<div class="input-field col s12">
+					<input
+						id="inputNomeEscola"
+						type="text"
+						formControlName="nome"
+						autocomplete="off"
+						[focus]="!escola._id"
+						[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
+					<label class="active" for="inputNomeEscola">Nome*</label>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			<app-telefone class="col s12" [telefones]="escola.telefones"></app-telefone>
-		</div>
-		<div class="row">
-			<app-endereco class="col s12" [enderecos]="escola.enderecos"></app-endereco>
-		</div>
+			<div class="row">
+				<app-telefone class="col s12" [telefones]="escola.telefones"></app-telefone>
+			</div>
+			<div class="row">
+				<app-endereco class="col s12" [enderecos]="escola.enderecos"></app-endereco>
+			</div>
 
-		<app-form-actions
-			[invalid]="form.invalid"
-			[canEdit]="canEdit"
-			[canDelete]="escola._id"
-			(delete)="onConfirmDelete()">
-		</app-form-actions>
+			<app-form-actions
+				[invalid]="form.invalid"
+				[canEdit]="canEdit"
+				[canDelete]="escola._id"
+				(delete)="onConfirmDelete()">
+			</app-form-actions>
 
-	</form>
-</span>
-<ng-template #loading>
-	<div class="progress">
-		<div class="indeterminate"></div>
-	</div>
-</ng-template>
+		</form>
+	</span>
+	<ng-template #loading>
+		<div class="progress">
+			<div class="indeterminate"></div>
+		</div>
+	</ng-template>
+</div>

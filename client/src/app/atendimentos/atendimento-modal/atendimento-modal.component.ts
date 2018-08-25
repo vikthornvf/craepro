@@ -14,6 +14,7 @@ export class AtendimentoModalComponent implements OnInit {
 	@Input() atendimento: Atendimento;
 	@Output() load = new EventEmitter<boolean>();
 	@Output() close = new EventEmitter<boolean>();
+	@ViewChild('atendimentoElement') atendimentoElement;
 
 	canCreate: boolean;
 	canEdit: boolean;
@@ -52,6 +53,10 @@ export class AtendimentoModalComponent implements OnInit {
 	openCreate() {
 		this.create = true;
 		this.onOpen();
+	}
+
+	onSave() {
+		this.atendimentoElement.onSave();
 	}
 
 	private onOpen() {

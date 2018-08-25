@@ -48,14 +48,17 @@ export class AuthService {
 
 	public getUsuarioDetails(): UsuarioDetails {
 		const token = this.getToken();
-		let payload;
 		if (token) {
-			payload = token.split('.')[1];
-			payload = window.atob(payload);
+			let payload = token.split('.')[1];
+			try {
+				payload = window.atob(payload);
+			} catch (err) {
+				this.saveToken(null);
+				return null;
+			}
 			return JSON.parse(payload);
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	public isLoggedIn(): boolean {
@@ -80,6 +83,6 @@ export class AuthService {
 	public logout() {
 		this.token = '';
 		localStorage.removeItem('craepro-token');
-		this.router.navigateByUrl('/login');
+		this.router.navigateByUrl('/');
 	}
 }

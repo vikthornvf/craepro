@@ -1,61 +1,63 @@
-<span *ngIf="loaded; else loading">
-	<h4 class="grey-text" *ngIf="!profissional._id">Novo Profissional</h4>
-	<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
-		<div class="row">
-			<div class="input-field col s12">
-				<input
-					id="inputNomeProfissional"
-					type="text"
-					focus="1"
-					formControlName="nome"
-					autocomplete="off"
-					[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
-				<label class="active" for="inputNomeProfissional">Nome*</label>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col s12 m6">
-				<p style="min-height:40px;padding-top:6px;">Tipos de Atendimento Realizados:</p>
-				<div class="switch">
-					<label class="black-text" style="font-size: 1rem">
-						<input id="checkAee" type="checkbox" formControlName="hasAee">
-						<span class="lever"></span>
-						AEE
-					</label>
-				</div>
-				<br>
-				<div class="switch">
-					<label class="black-text" style="font-size: 1rem">
-						<input id="checkFono" type="checkbox" formControlName="hasFono">
-						<span class="lever"></span>
-						Fonoaudiológico
-					</label>
-				</div>
-				<br>
-				<div class="switch">
-					<label class="black-text" style="font-size: 1rem">
-						<input id="checkPsico" type="checkbox" formControlName="hasPsico">
-						<span class="lever"></span>
-						Psicológico
-					</label>
+<div class="container spacing">
+	<span *ngIf="loaded; else loading">
+		<h4 class="grey-text" *ngIf="!profissional._id">Novo Profissional</h4>
+		<form materialize [formGroup]="form" (ngSubmit)="onSave()" class="slide-in-effect">
+			<div class="row">
+				<div class="input-field col s12">
+					<input
+						id="inputNomeProfissional"
+						type="text"
+						focus="1"
+						formControlName="nome"
+						autocomplete="off"
+						[ngClass]="{ 'invalid': form.get('nome').invalid && form.get('nome').touched }">
+					<label class="active" for="inputNomeProfissional">Nome*</label>
 				</div>
 			</div>
-			<app-telefone class="col s12 m6" [telefones]="profissional.telefones"></app-telefone>
+
+			<div class="row">
+				<div class="col s12 m6">
+					<p style="min-height:40px;padding-top:6px;">Tipos de Atendimento Realizados:</p>
+					<div class="switch">
+						<label class="black-text" style="font-size: 1rem">
+							<input id="checkAee" type="checkbox" formControlName="hasAee">
+							<span class="lever"></span>
+							AEE
+						</label>
+					</div>
+					<br>
+					<div class="switch">
+						<label class="black-text" style="font-size: 1rem">
+							<input id="checkFono" type="checkbox" formControlName="hasFono">
+							<span class="lever"></span>
+							Fonoaudiológico
+						</label>
+					</div>
+					<br>
+					<div class="switch">
+						<label class="black-text" style="font-size: 1rem">
+							<input id="checkPsico" type="checkbox" formControlName="hasPsico">
+							<span class="lever"></span>
+							Psicológico
+						</label>
+					</div>
+				</div>
+				<app-telefone class="col s12 m6" [telefones]="profissional.telefones"></app-telefone>
+			</div>
+
+			<app-endereco class="row" [enderecos]="profissional.enderecos"></app-endereco>
+
+			<app-form-actions
+				[invalid]="form.invalid"
+				[canEdit]="canEdit"
+				[canDelete]="profissional._id"
+				(delete)="onConfirmDelete()">
+			</app-form-actions>
+		</form>
+	</span>
+	<ng-template #loading>
+		<div class="progress">
+			<div class="indeterminate"></div>
 		</div>
-
-		<app-endereco class="row" [enderecos]="profissional.enderecos"></app-endereco>
-
-		<app-form-actions
-			[invalid]="form.invalid"
-			[canEdit]="canEdit"
-			[canDelete]="profissional._id"
-			(delete)="onConfirmDelete()">
-		</app-form-actions>
-	</form>
-</span>
-<ng-template #loading>
-	<div class="progress">
-		<div class="indeterminate"></div>
-	</div>
-</ng-template>
+	</ng-template>
+</div>
