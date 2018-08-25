@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavService } from '../nav/nav.service';
 
 @Component({
 	selector: 'app-not-found',
 	templateUrl: './not-found.component.html'
 })
-export class NotFoundComponent {
+export class NotFoundComponent implements OnInit, OnDestroy {
 
-	constructor(private router: Router) {}
+	constructor(private navService: NavService) {}
 
-	navigate() {
-		this.router.navigateByUrl('/');
+	ngOnInit() {
+		this.navService.onHideSidebar(true);
+	}
+
+	ngOnDestroy() {
+		this.navService.onHideSidebar(false);
 	}
 }
