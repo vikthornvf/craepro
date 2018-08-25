@@ -1,5 +1,5 @@
-<div class="navbar-fixed" *ngIf="show">
-	<nav [class]="state">
+<div class="navbar-fixed">
+	<nav class="{{ state }}" [ngClass]="{ 'wrapper': sidenavWrapper }" #nav>
 		<div class="nav-wrapper sidenav-wrapper" [ngSwitch]="state">
 			<ul id="user-profile"
 					*ngIf="auth.isLoggedIn()"
@@ -10,6 +10,7 @@
 					</a>
 				</li>
 			</ul>
+			<!-- <app-homebar *ngSwitchCase="'homebar'"></app-homebar> -->
 			<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
 			<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
 			<ng-container *ngSwitchCase="'navbar'">

@@ -1,36 +1,34 @@
-<span *ngIf="show">
-	<a id="menuBtn"
-			href="#"
-			class="button-collapse top-nav hide-on-large-only"
-			data-activates="sidenav"
-			materialize="sideNav"
-			[materializeParams]="[{edge:'left'}]">
-		<i class="material-icons">menu</i>
-	</a>
-	<ul id="sidenav" class="side-nav fixed z-depth-3">
-		<li><a routerLink="/" class="logo fade-in-effect"></a></li>
-		<li class="divider"></li>
-		<li
-				*ngFor="let route of routes"
-				routerLinkActive="active"
-				[ngClass]="route.name">
-			<a
-					class="waves-effect waves-teal"
-					[routerLink]="[route.name]"
-					(click)="onNavigate($event)">{{ route.label }}</a>
-		</li>
-		<li class="divider"></li>
-		<li routerLinkActive="active">
-			<a routerLink="/usuario-profile"><i class="material-icons teal-text left">person</i>{{ usuario?.nome.substr(0, usuario?.nome.indexOf(" ")) || 'Minha conta' }}</a>
-		</li>
-		<li routerLinkActive="active">
-			<a routerLink="/usuario-senha"><i class="material-icons amber-text text-darken-1 left">lock</i>Alterar senha</a>
-		</li>
-		<li>
-			<a (click)="onLogout()"><i class="material-icons red-text left">power_settings_new</i>Sair</a>
-		</li>
-	</ul>
-	<div class="heart-pane hide-on-med-and-down">
-		<a class="grey-text">Desenvolvido com<i class="material-icons tiny heart">favorite</i></a>
-	</div>
-</span>
+<a id="menuBtn"
+		href="#"
+		class="button-collapse top-nav hide-on-large-only"
+		data-activates="sidenav"
+		materialize="sideNav"
+		[materializeParams]="[{edge:'left'}]">
+	<i class="material-icons">menu</i>
+</a>
+<ul id="sidenav" class="side-nav fixed z-depth-3">
+	<li><a routerLink="/" class="logo fade-in-effect"></a></li>
+	<li class="divider"></li>
+	<li
+			*ngFor="let route of routes"
+			routerLinkActive="active"
+			[ngClass]="route.name">
+		<a
+				class="waves-effect waves-teal"
+				[routerLink]="route.name"
+				(click)="onNavigate($event)">{{ route.label }}</a>
+	</li>
+	<li class="divider"></li>
+	<li routerLinkActive="active">
+		<a routerLink="/usuario-profile"><i class="material-icons teal-text left">person</i>{{ usuario?.nome.substr(0, usuario?.nome.indexOf(" ")) || 'Minha conta' }}</a>
+	</li>
+	<li routerLinkActive="active">
+		<a routerLink="/usuario-senha"><i class="material-icons amber-text text-darken-1 left">lock</i>Alterar senha</a>
+	</li>
+	<li>
+		<a (click)="onLogout()"><i class="material-icons red-text left">power_settings_new</i>Sair</a>
+	</li>
+</ul>
+<div class="heart-pane hide-on-med-and-down">
+	<a class="grey-text">Desenvolvido com<i class="material-icons tiny heart">favorite</i></a>
+</div>

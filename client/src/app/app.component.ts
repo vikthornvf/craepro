@@ -11,7 +11,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	@ViewChild('headerEl') headerEl: ElementRef;
 	@ViewChild('mainEl') mainEl: ElementRef;
-	topbarSubscription: Subscription;
 	sidebarSubscription: Subscription;
 
 	constructor(private navService: NavService, private renderer: Renderer2) {}
@@ -26,17 +25,9 @@ export class AppComponent implements OnInit, OnDestroy {
 				this.renderer.addClass(this.mainEl.nativeElement, 'wrapper');
 			}
 		});
-		this.topbarSubscription = this.navService.hideTopbar.subscribe(hide => {
-			if (hide) {
-				this.renderer.removeClass(this.mainEl.nativeElement, 'topMargin');
-			} else {
-				this.renderer.addClass(this.mainEl.nativeElement, 'topMargin');
-			}
-		});
 	}
 
 	ngOnDestroy() {
 		this.sidebarSubscription.unsubscribe();
-		this.topbarSubscription.unsubscribe();
 	}
 }

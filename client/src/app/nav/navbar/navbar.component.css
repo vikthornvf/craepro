@@ -6,28 +6,40 @@ nav {
 			transition: background-color .4s ease-out;
 }
 
+nav.wrapper {
+	max-width: 100% !important;
+}
+
 @media only screen and (min-width: 993px) {
-	nav {
-		max-width: calc(100% - 300px);
+	nav.wrapper {
+		max-width: calc(100% - 300px) !important;
 	}
 }
 
 .sidenav-wrapper {
-	margin-left: 0px !important;
+	margin-left: 0px;
 }
 
 @media only screen and (max-width: 992px) {
 	.sidenav-wrapper {
-		margin-left: 42px !important;
+		margin-left: 42px;
 	}
+}
+
+.homebar {
+	background-color: transparent;
+	-webkit-box-shadow: none;
+			box-shadow: none;
+}
+
+.homebar.filled {
+	background-color: #2bbbad;
+	-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .navbar {
 	background-color: #546e7a;
-}
-
-.returnbar {
-	background-color: #4db6ac;
 }
 
 .searchbar {

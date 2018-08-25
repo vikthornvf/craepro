@@ -22,7 +22,6 @@ declare var $;
 export class SidenavComponent implements OnInit, OnDestroy {
 
 	private readonly defaultRoutes: SidenavRoute[] = [
-		{ name: 'home', label: 'Home', auth: '' },
 		{ name: 'dashboard', label: 'Dashboard', auth: '' },
 		{ name: 'alunos', label: 'Alunos', auth: 'A1' },
 		{ name: 'profissionais', label: 'Profissionais', auth: 'P1' },
@@ -31,7 +30,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 	];
 	routes: SidenavRoute[];
 	show: boolean;
-	usuario: Usuario;
 	hideSubscription: Subscription;
 
 	constructor(
@@ -45,7 +43,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 		this.hideSubscription = this.service.hideSidebar.subscribe((hide) => {
 			this.show = !hide;
 		});
-		this.usuario = this.auth.getUsuarioDetails();
 		this.onBuildRoutes();
 	}
 
@@ -54,10 +51,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
 	}
 
 	onBuildRoutes() {
+		const usuario = this.auth.getUsuarioDetails();
 		const routes: SidenavRoute[] = [];
-		if (this.usuario) {
+		if (usuario) {
 			this.defaultRoutes.forEach(route => {
-				if (!route.auth.length || this.usuario.permissoes.includes(route.auth)) {
+				if (!route.auth.length || usuario.permissoes.includes(route.auth)) {
 					routes.push(route);
 				}
 			});

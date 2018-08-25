@@ -33,12 +33,8 @@
 	animation: heartbeat 1.5s infinite;
 }
 
-li.active.home {
-	border-left: 6px solid #2bbbad;
-}
-
 li.active.dashboard {
-	border-left: 6px solid #0288d1;
+	border-left: 6px solid #2bbbad;
 }
 
 li.active.alunos {

@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 export class NavService {
 
 	readonly state = {
+		HOMEBAR: 'homebar',
 		NAVBAR: 'navbar',
 		SEARCHBAR: 'searchbar',
 		TOOLBAR: 'toolbar'
@@ -20,17 +21,18 @@ export class NavService {
 		DELETE_ATT: 3
 	};
 
-	private keyword$ = new BehaviorSubject<string>('');
-	keyword = this.keyword$.asObservable();
-
 	private barState$ = new BehaviorSubject<string>(this.state.NAVBAR);
 	barState = this.barState$.asObservable();
 
 	private hideSidebar$ = new BehaviorSubject<boolean>(false);
 	hideSidebar = this.hideSidebar$.asObservable();
 
-	hideTopbar$ = new BehaviorSubject<boolean>(false);
+	private hideTopbar$ = new BehaviorSubject<boolean>(false);
 	hideTopbar = this.hideTopbar$.asObservable();
+
+	// used on searchbar
+	private keyword$ = new BehaviorSubject<string>('');
+	keyword = this.keyword$.asObservable();
 
 	// control the toolbar functions
 	toolbar = new Subject<number>();

@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, Renderer2, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavService } from '../nav.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { AuthService } from '../../auth.service';
+import { AuthService, UsuarioDetails } from '../../auth.service';
+import { HomebarComponent } from './homebar.component';
 import { Subscription } from 'rxjs/Subscription';
-import { Usuario } from '../../usuarios/usuario.model';
+
+declare var $;
 
 @Component({
 	selector: 'app-navbar',
@@ -15,26 +17,51 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 	state: string = this.navService.state.NAVBAR;
 	stateObservable: Subscription;
-	show: boolean;
-	hideObservable: Subscription;
-	usuario: Usuario;
+	hideSidebarObservable: Subscription;
+	sidenavWrapper: boolean;
+	usuario: UsuarioDetails;
+
+	now = new Date().getTime();
+	@ViewChild('nav') nav: ElementRef;
+	@HostListener('window:scroll', ['$event'])
+	checkScroll() {
+		if (this.state !== this.navService.state.HOMEBAR) {
+			return;
+		}
+		const scrollPosition = window.pageYOffset;
+		if (new Date().getTime() - this.now > 150 || scrollPosition === 0) {
+			this.now = new Date().getTime();
+			if (scrollPosition >= 56) {
+				this.renderer.addClass(this.nav.nativeElement, 'filled');
+			} else {
+				this.renderer.removeClass(this.nav.nativeElement, 'filled');
+			}
+		}
+	}
 
 	constructor(
 		private navService: NavService,
 		private dialogs: DialogsService,
 		private auth: AuthService,
+		private renderer: Renderer2,
 		private _zone: NgZone) {}
 
 	ngOnInit() {
-		this.show = this.auth.isLoggedIn();
 		this.usuario = this.auth.getUsuarioDetails();
-		this.hideObservable = this.navService.hideTopbar.subscribe(hide => this.show = !hide);
 		this.stateObservable = this.navService.barState.subscribe(barState => this.state = barState);
+		this.hideSidebarObservable = this.navService.hideSidebar.subscribe(hide => this.sidenavWrapper = !hide);
+		this.updateDropdownState();
 	}
 
 	ngOnDestroy() {
 		this.stateObservable.unsubscribe();
-		this.hideObservable.unsubscribe();
+		this.hideSidebarObservable.unsubscribe();
+	}
+
+	updateDropdownState() {
+		$(document).ready(function() {
+			$('select').material_select();
+		});
 	}
 
 	onLogout() {
