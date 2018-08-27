@@ -1,14 +1,12 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
-import { StorageService } from '../storage.service';
-import { EscolaService } from '../escolas/escola.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Usuario } from './usuario.model';
 import { Enums } from '../shared/enums';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsuarioService {
@@ -28,7 +26,9 @@ export class UsuarioService {
 
 	list(): Observable<Usuario[]> {
 		return this.http.get(this.url)
-			.map(res => res as Usuario[]);
+			.pipe(
+				map(res => res as Usuario[])
+			);
 	}
 
 	findById(id: string): Observable<Usuario> {

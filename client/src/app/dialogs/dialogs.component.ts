@@ -1,6 +1,6 @@
-import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { MaterializeAction } from 'angular2-materialize';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DialogsService } from './dialogs.service';
 
 @Component({

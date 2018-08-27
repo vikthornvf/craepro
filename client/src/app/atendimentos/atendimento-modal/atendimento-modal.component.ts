@@ -1,6 +1,5 @@
-import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import { MaterializeAction } from 'angular2-materialize';
 import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { Atendimento } from '../atendimento.model';
 import { AuthService } from '../../auth.service';
 

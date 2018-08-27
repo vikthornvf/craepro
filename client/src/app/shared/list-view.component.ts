@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Injectable, NgZone, ViewChild } from '@angular/core';
+import { OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core';
 import { NavService } from '../nav/nav.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 declare var $;
 
-@Injectable()
 export abstract class ListViewComponent implements OnInit, OnDestroy {
 
 	@ViewChild('atendimentoList') atendimentoList;

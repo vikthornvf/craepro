@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DialogsService } from './dialogs/dialogs.service';
-import { Usuario } from './usuarios/usuario.model';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators/map';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface UsuarioDetails {
 	_id: string;
@@ -70,14 +69,15 @@ export class AuthService {
 	}
 
 	public login(usuario: TokenPayload): Observable<TokenResponse> {
-		return this.http.post('/api/login', usuario).pipe(
-			map((data: TokenResponse) => {
-				if (data.token) {
-					this.saveToken(data.token);
-				}
-				return data;
-			})
-		);
+		return this.http.post('/api/login', usuario)
+			.pipe(
+				map((data: TokenResponse) => {
+					if (data.token) {
+						this.saveToken(data.token);
+					}
+					return data;
+				})
+			);
 	}
 
 	public logout() {

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, Renderer2, NgZone } from '@angular/core';
-import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { NavService } from '../nav.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { AuthService, UsuarioDetails } from '../../auth.service';
-import { HomebarComponent } from './homebar.component';
-import { Subscription } from 'rxjs/Subscription';
 
 declare var $;
 

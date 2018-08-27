@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { NavService } from '../nav.service';
 import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Usuario } from '../../usuarios/usuario.model';
 
 interface SidenavRoute {
 	name: string;

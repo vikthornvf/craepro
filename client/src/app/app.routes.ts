@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UsuarioLoginPaneComponent } from './usuarios/usuario-login-pane/usuario-login-pane.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlunoListComponent } from './alunos/aluno-list/aluno-list.component';
 import { AlunoComponent } from './alunos/aluno/aluno.component';
 import { ProfissionalListComponent } from './profissionais/profissional-list/profissional-list.component';

@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
 import { NavService } from '../nav.service';
 import { AuthService } from '../../auth.service';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'app-toolbar',

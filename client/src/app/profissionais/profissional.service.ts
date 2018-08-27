@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Profissional } from './profissional.model';
 import { DialogsService } from '../dialogs/dialogs.service';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProfissionalService {
@@ -23,7 +23,9 @@ export class ProfissionalService {
 
 	list(): Observable<Profissional[]> {
 		return this.http.get(this.url)
-			.map(res => res as Profissional[]);
+			.pipe(
+				map(res => res as Profissional[])
+			);
 	}
 
 	listByNomeAndTipoAtendimento(profissionais: Profissional[], nome: string, tipo: string): Profissional[] {

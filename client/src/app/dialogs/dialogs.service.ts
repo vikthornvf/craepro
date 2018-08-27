@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 declare var Materialize: any, $: any;
 

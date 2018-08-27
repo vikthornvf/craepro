@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { EscolaService } from '../escolas/escola.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Aluno } from './aluno.model';
-import { Responsavel } from '../responsaveis/responsavel.model';
-import 'rxjs/add/operator/map';
 import { Atendimento } from '../atendimentos/atendimento.model';
 
 @Injectable()
@@ -17,7 +15,6 @@ export class AlunoService {
 
 	constructor(
 		private http: HttpClient,
-		private serviceEscola: EscolaService,
 		private dialogs: DialogsService,
 		private router: Router) {
 		this.headers = new HttpHeaders();
@@ -26,7 +23,9 @@ export class AlunoService {
 
 	list(): Observable<Aluno[]> {
 		return this.http.get(this.url)
-			.map(res => res as Aluno[]);
+			.pipe(
+				map(res => res as Aluno[])
+			);
 	}
 
 	findById(id: string): Observable<Aluno> {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NavService } from './nav.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-nav',

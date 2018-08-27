@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AlunoService } from '../alunos/aluno.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Atendimento } from './atendimento.model';
-import { Parecer } from './parecer.model';
-import { Horario } from './horario.model';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AtendimentoService {
@@ -25,17 +23,23 @@ export class AtendimentoService {
 
 	list(): Observable<Atendimento[]> {
 		return this.http.get(this.url)
-			.map(res => res as Atendimento[]);
+			.pipe(
+				map(res => res as Atendimento[])
+			);
 	}
 
 	listByAluno(alunoId: string): Observable<Atendimento[]> {
 		return this.http.get(`${this.url}/aluno/${alunoId}`)
-			.map(res => res as Atendimento[]);
+			.pipe(
+				map(res => res as Atendimento[])
+			);
 	}
 
 	listByProfissional(profissionalId: string): Observable<Atendimento[]> {
 		return this.http.get(`${this.url}/profissional/${profissionalId}`)
-			.map(res => res as Atendimento[]);
+			.pipe(
+				map(res => res as Atendimento[])
+			);
 	}
 
 	findById(id: string): Observable<Atendimento> {

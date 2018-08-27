@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Responsavel } from './responsavel.model';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ResponsavelService {
@@ -21,12 +21,16 @@ export class ResponsavelService {
 
 	list(): Observable<Responsavel[]> {
 		return this.http.get(this.url)
-			.map(res => res as Responsavel[]);
+			.pipe(
+				map(res => res as Responsavel[])
+			);
 	}
 
 	listByAluno(alunoId: string): Observable<Responsavel[]> {
 		return this.http.get(`${this.url}/aluno/${alunoId}`)
-			.map(res => res as Responsavel[]);
+			.pipe(
+				map(res => res as Responsavel[])
+			);
 	}
 
 	findById(id: string): Observable<Responsavel> {

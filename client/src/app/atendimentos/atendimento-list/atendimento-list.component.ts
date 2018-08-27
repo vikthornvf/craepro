@@ -1,9 +1,9 @@
 import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges, NgZone } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NavService } from '../../nav/nav.service';
 import { AtendimentoService } from '../atendimento.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Atendimento } from '../atendimento.model';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-atendimento-list',
