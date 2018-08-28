@@ -192,8 +192,14 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	removeParecer(i: number): void {
-		this.pareceres.removeAt(i);
-		this.showPareceres = true;
+		this.dialogs.modalDelete(confirm => this.onRemoveParecer(i, confirm), 'parecer');
+	}
+
+	onRemoveParecer(i: number, confirm: boolean) {
+		if (confirm) {
+			this.pareceres.removeAt(i);
+			this.showPareceres = true;
+		}
 	}
 
 	toggleShowParecer(): void {
@@ -290,7 +296,6 @@ export class AtendimentoComponent implements OnInit {
 
 	validateIfHasInicio(control: FormControl): {[s: string]: boolean} {
 		if (this.att.inicio && !this.att.egresso) {
-			const value = control.value;
 			if (control.value === null) {
 				return {'required': true};
 			}
