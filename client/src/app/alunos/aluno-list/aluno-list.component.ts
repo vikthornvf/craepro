@@ -4,7 +4,6 @@ import { NavService } from '../../nav/nav.service';
 import { AlunoService } from '../aluno.service';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
-import { AtendimentoService } from '../../atendimentos/atendimento.service';
 
 declare var $: any;
 
@@ -21,8 +20,7 @@ export class AlunoListComponent extends ListViewComponent {
 	constructor(
 		z: NgZone,
 		ns: NavService,
-		private service: AlunoService,
-		private attService: AtendimentoService) { super(z, ns); }
+		private service: AlunoService) { super(z, ns); }
 
 	loadList(): void {
 		this.service.list().subscribe(
@@ -30,12 +28,6 @@ export class AlunoListComponent extends ListViewComponent {
 				this.alunos = alunos;
 				this.loaded = true;
 			},
-			err => console.log(err));
-	}
-
-	updateAlunoSituacao(aluno: Aluno) {
-		this.attService.listByAluno(aluno._id).subscribe(
-			atendimentos => this.updateSituacao(aluno, atendimentos),
 			err => console.log(err));
 	}
 
