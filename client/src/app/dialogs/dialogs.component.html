@@ -20,11 +20,11 @@
 			<ng-container *ngSwitchCase="2">
 				<div class="row red-text">
 					<i class="medium material-icons">delete_forever</i>
-					<h4>Excluir Registro</h4>
+					<h4>Excluir {{ label | titlecase }}</h4>
 				</div>
 				<div class="row">
 					<p class="black-text center">
-						Desejas realmente excluir o registro<span *ngIf="label"> de {{ label }}</span>?<br>
+						Desejas realmente excluir o registro<span *ngIf="label"> de {{ label | lowercase }}</span>?<br>
 						Quando um registro é excluido permanentemente, não é mais possível acessá-lo.
 					</p>
 				</div>
