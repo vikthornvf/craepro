@@ -76,13 +76,13 @@ export class AlunoService {
 	updateSituacao(aluno: Aluno, atendimentos: Atendimento[], save: boolean = true): Observable<Aluno> | null {
 		let solicitado = false;
 		let ativo = false;
-		let finalzado = false;
+		let finalizado = false;
 		let situacao = aluno.situacao;
 
 		if (atendimentos && atendimentos.length) {
 			atendimentos.forEach(a => {
 				if (a.egresso) {
-					finalzado = true;
+					finalizado = true;
 				} else if (a.inicio) {
 					ativo = true;
 				} else {
@@ -90,17 +90,17 @@ export class AlunoService {
 				}
 			});
 		} else {
-			situacao = 'D';
+			finalizado = true;
 		}
 
-		if (solicitado || ativo || finalzado) {
+		if (solicitado || ativo || finalizado) {
 			if (solicitado) {
 				situacao = ativo
 					? 'P'
 					: 'E';
 			} else if (ativo) {
 				situacao = 'A';
-			} else if (finalzado) {
+			} else if (finalizado) {
 				situacao = 'D';
 			}
 			if (aluno.situacao !== situacao) {
