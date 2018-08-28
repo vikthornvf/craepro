@@ -10,7 +10,7 @@
 <div *ngFor="let telefone of telefones; index as i; trackBy:customTrackBy">
 	<div class="input-field col s12">
 		<button type="button" class="btn-floating simple postfix" (click)="removeTelefone(i)">
-			<i class="material-icons">close</i>
+			<i class="material-icons">delete</i>
 		</button>
 		<input [id]="'inputTelefone' + i"
 			type="tel"

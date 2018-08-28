@@ -112,7 +112,7 @@
 				<div [formGroupName]="0">
 					<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
 						<button *ngIf="canEditParecer" type="button" class="btn-floating simple postfix" (click)="removeParecer(0)">
-							<i class="material-icons">close</i>
+							<i class="material-icons">delete</i>
 						</button>
 						<textarea
 								id="texto0"
@@ -133,7 +133,7 @@
 					<div [formGroupName]="i">
 						<div class="input-field col s12 fade-in-effect" style="margin: 0px;">
 							<button *ngIf="canEditParecer" type="button" class="btn-floating simple postfix" (click)="removeParecer(i)">
-								<i class="material-icons">close</i>
+								<i class="material-icons">delete</i>
 							</button>
 							<textarea [id]="'inputTexto' + i"
 								formControlName="texto"
@@ -143,6 +143,7 @@
 							</textarea>
 						</div>
 						<label class="col s12" [for]="'inputTexto' + i">
+							Criado por
 							{{ pareceres.controls[i].get('usuario').value }}, em
 							{{ pareceres.controls[i].get('data').value | date: 'dd/MM/yyyy' }}
 						</label>
