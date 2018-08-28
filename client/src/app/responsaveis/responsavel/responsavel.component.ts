@@ -1,12 +1,9 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ResponsavelService } from '../responsavel.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Responsavel } from '../responsavel.model';
-import { Endereco } from '../../shared/endereco.model';
 import { Aluno } from '../../alunos/aluno.model';
-
-declare var Materialize: any;
 
 @Component({
 	selector: 'app-responsavel',

@@ -2,10 +2,8 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { UsuarioService } from '../usuario.service';
-import { EscolaService } from '../../escolas/escola.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { Usuario } from '../usuario.model';
-import { Escola } from '../../escolas/escola.model';
 import { Enums } from '../../shared/enums';
 
 @Component({
@@ -23,10 +21,9 @@ export class UsuarioProfileComponent implements OnInit {
 	constructor(
 		private auth: AuthService,
 		private service: UsuarioService,
-		private escolaService: EscolaService,
 		private dialogs: DialogsService,
 		private fb: FormBuilder,
-		private _zone: NgZone) {}
+		private zone: NgZone) {}
 
 	ngOnInit(): void {
 		this.initForm();
@@ -69,7 +66,7 @@ export class UsuarioProfileComponent implements OnInit {
 
 	onLogout(): void {
 		this.dialogs.modalConfirmation(confirm => {
-			if (confirm) { this._zone.run(() => this.auth.logout()); }
+			if (confirm) { this.zone.run(() => this.auth.logout()); }
 		}, 'Deseja realmente sair da sua conta de usuário?', 'power_settings_new');
 	}
 }

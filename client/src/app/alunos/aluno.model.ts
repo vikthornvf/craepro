@@ -1,5 +1,4 @@
 import { Escola } from '../escolas/escola.model';
-import { Responsavel } from '../responsaveis/responsavel.model';
 
 export class Aluno {
 

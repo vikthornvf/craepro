@@ -9,7 +9,7 @@ export class DiasSemanaPipe implements PipeTransform {
 		if (value === null) {
 			return '';
 		}
-		const dia = Enums.Dias.find(s => s.value+'' === value);
+		const dia = Enums.Dias.find(s => s.value + '' === value);
 		return dia ? dia.name : '';
 	}
 }
@@ -22,7 +22,7 @@ export class DiasSemanaShortPipe implements PipeTransform {
 		if (value === null) {
 			return '';
 		}
-		const dia = Enums.Dias.find(s => s.value+'' === value);
+		const dia = Enums.Dias.find(s => s.value + '' === value);
 		return dia ? dia.name : '';
 	}
 }

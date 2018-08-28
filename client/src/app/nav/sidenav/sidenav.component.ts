@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavService } from '../nav.service';
 import { AuthService } from '../../auth.service';
@@ -34,7 +33,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 	constructor(
 		private service: NavService,
 		private auth: AuthService,
-		private router: Router,
 		private dialogs: DialogsService,
 		private _zone: NgZone) {}
 

@@ -1,6 +1,6 @@
 import { MaterializeAction } from 'angular2-materialize';
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AtendimentoService } from '../atendimento.service';
 import { ProfissionalService } from '../../profissionais/profissional.service';
 import { AlunoService } from '../../alunos/aluno.service';

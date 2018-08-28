@@ -12,7 +12,6 @@ import { PipesModule } from '../pipes/pipes.module';
 
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoComponent } from './aluno/aluno.component';
-import { FormActionsComponent } from '../form-actions/form-actions.component';
 
 import { AlunoService } from './aluno.service';
 

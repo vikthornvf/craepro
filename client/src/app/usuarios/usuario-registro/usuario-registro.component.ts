@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, AbstractControl, Validators } from '@angular/forms';
-import { AuthService } from '../../auth.service';
+import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../usuario.service';
 import { EscolaService } from '../../escolas/escola.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
@@ -24,7 +23,6 @@ export class UsuarioRegistroComponent implements OnInit {
 	error: string;
 
 	constructor(
-		private auth: AuthService,
 		private service: UsuarioService,
 		private escolaService: EscolaService,
 		private dialogs: DialogsService,

@@ -1,5 +1,3 @@
-import { Usuario } from '../usuarios/usuario.model';
-
 export class Parecer {
 
 	constructor(

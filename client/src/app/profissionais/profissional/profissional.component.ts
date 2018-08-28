@@ -1,16 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavService } from '../../nav/nav.service';
 import { ProfissionalService } from '../profissional.service';
-import { AtendimentoService } from '../../atendimentos/atendimento.service';
-import { Profissional } from '../profissional.model';
-import { Atendimento } from '../../atendimentos/atendimento.model';
-import { Endereco } from '../../shared/endereco.model';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { AuthService } from '../../auth.service';
-
-declare var Materialize: any;
+import { Profissional } from '../profissional.model';
+import { Atendimento } from '../../atendimentos/atendimento.model';
 
 @Component({
 	selector: 'app-profissional',
@@ -31,7 +27,6 @@ export class ProfissionalComponent implements OnInit {
 	constructor(
 		private dialogs: DialogsService,
 		private service: ProfissionalService,
-		private atendimentoService: AtendimentoService,
 		private navService: NavService,
 		private auth: AuthService,
 		private route: ActivatedRoute,

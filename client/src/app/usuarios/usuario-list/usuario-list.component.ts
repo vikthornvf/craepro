@@ -2,8 +2,6 @@ import { Component, NgZone } from '@angular/core';
 import { ListViewComponent } from '../../shared/list-view.component';
 import { NavService } from '../../nav/nav.service';
 import { UsuarioService } from '../usuario.service';
-import { Usuario } from '../usuario.model';
-import { Enums } from '../../shared/enums';
 
 @Component({
 	selector: 'app-usuario-list',

@@ -22,7 +22,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 		{
 			onOpen: (el) => {
 				this.currentElementId = el[0].firstElementChild.firstElementChild;
-				this._zone.run(() => this.onOpen());
+				this.zone.run(() => this.onOpen());
 			},
 			onClose: (el) => {
 				let elementId;
@@ -30,7 +30,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 					elementId = el[0].firstElementChild.firstElementChild;
 				} catch (err) {}
 				if (this.currentElementId === elementId) {
-					this._zone.run(() => this.onClose());
+					this.zone.run(() => this.onClose());
 				}
 			}
 		}
@@ -39,7 +39,7 @@ export abstract class ListViewComponent implements OnInit, OnDestroy {
 	abstract link: string;
 
 	constructor(
-		private _zone: NgZone,
+		private zone: NgZone,
 		private navService: NavService) {}
 
 	abstract loadList(): void;
