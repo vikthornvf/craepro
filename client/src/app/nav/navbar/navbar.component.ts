@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		this.usuario = this.auth.getUsuarioDetails();
 		this.stateObservable = this.navService.barState.subscribe(barState => this.state = barState);
 		this.hideSidebarObservable = this.navService.hideSidebar.subscribe(hide => this.sidenavWrapper = !hide);
-		this.updateDropdownState();
+		this.initDropdown();
 	}
 
 	ngOnDestroy() {
@@ -58,9 +58,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		this.hideSidebarObservable.unsubscribe();
 	}
 
-	updateDropdownState() {
+	initDropdown() {
 		$(document).ready(function() {
-			$('select').material_select();
+			$('.dropdown-button').dropdown();
 		});
 	}
 
