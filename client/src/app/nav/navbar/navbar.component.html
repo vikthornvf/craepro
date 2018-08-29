@@ -1,11 +1,11 @@
 <div class="navbar-fixed">
 	<nav class="{{ state }}" [ngClass]="{ 'wrapper': sidenavWrapper }" #nav>
-		<div class="nav-wrapper sidenav-wrapper" [ngSwitch]="state">
+		<div class="nav-wrapper" [ngClass]="{ 'sidenav-wrapper': sidenavWrapper }" [ngSwitch]="state">
 			<ul id="user-profile"
 					*ngIf="auth.isLoggedIn()"
 					class="right">
 				<li>
-					<a class='user-icon dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-activates='user-dropdown'>
+					<a class="user-icon dropdown-button" data-beloworigin="true" data-constrainwidth="false" data-activates="user-dropdown">
 						<i class="material-icons">account_circle</i>
 					</a>
 				</li>
@@ -19,7 +19,7 @@
 				</ul>
 			</ng-container>
 		</div>
-		<ul id='user-dropdown' class='dropdown-content'>
+		<ul id="user-dropdown" class="dropdown-content">
 			<li *ngIf="usuario"><span><label>{{ usuario.nome }}<br>({{ usuario.email }})</label></span></li>
 			<li><a routerLink="/usuario-profile"><i class="material-icons teal-text left">person</i>Minha conta</a></li>
 			<li><a routerLink="/usuario-senha"><i class="material-icons amber-text text-darken-1 left">lock</i>Alterar senha</a></li>
