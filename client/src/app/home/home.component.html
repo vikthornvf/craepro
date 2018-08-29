@@ -1,10 +1,7 @@
 <div class="full parallax first wrapper round-bottom">
 	<div class="container">
 		<div class="row full valign">
-			<div></div>
 			<div class="col m6 offset-m6">
-				<h2 class="white-text uppercase regular">Crae</h2>
-				<div class="custom-separator"></div>
 				<h2 class="white-text thin uppercase">
 					Centro<br>
 					Referencial de<br><span class="regular">
@@ -12,14 +9,14 @@
 					ao Educando</span>
 				</h2>
 			</div>
-			<!-- <a routerLink="." fragment="sobre"> -->
+			<a routerLink="." fragment="sobre">
 				<i class="material-icons medium white-text blink-white">expand_more</i>
-			<!-- </a> -->
+			</a>
 		</div>
 	</div>
 </div>
 
-<!-- <a id="sobre"></a> -->
+<a id="sobre"></a>
 <div class="spacing-separator"></div>
 <div class="row flex align-center">
 	<div class="col s12 m6">
@@ -27,7 +24,7 @@
 			<h4>Atendimento aos alunos da Rede Municipal de ensino com necessidades especiais</h4>
 			<p class="flow-text">
 				O <span class="uppercase">crae</span> trabalha em conjunto com as escolas da rede municipal de ensino de
-				Imbé.<br>Elas encaminham alunos com necessidade de acompanhamento especial, a partir da rotina escolar.
+				Imbé. Elas encaminham alunos com necessidade de acompanhamento especial, a partir da rotina escolar.
 			<p>
 		</div>
 	</div>
@@ -57,7 +54,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col center">
-				<h3 class="light">Os dois pilares do <span class="uppercase">crae</span> em Imbé</h3>
+				<h3 class="light">Os dois pilares do <span class="uppercase">crae</span></h3>
 				<p class="flow-text">
 					A estrutura de operação do <span class="uppercase">crae</span> é baseada em duas colunas: atendimento
 					e investigação, buscando subsídios para diagnosticar alunos com Necessidades Educacionais Especiais e
@@ -108,60 +105,11 @@
 	</div>
 </div>
 
-<!-- <a id="contato"></a> -->
+<a id="contato"></a>
 <div class="row center">
 	<div class="flex blue-grey-text text-lighten-1">
-		<div class="col s12 m8">
-			<div class="container">
-				<form materialize [formGroup]="form" (ngSubmit)="onSubmit()">
-					<h4 class="center spacing">Fale com a gente!</h4>
-
-					<div class="input-field col s12">
-						<input id="nomeForm"
-							type="text"
-							formControlName="nome"
-							[ngClass]="{ 'invalid': nome.invalid && submitted }">
-						<label class="active" for="nomeForm">Nome</label>
-					</div>
-
-					<div class="input-field col s12">
-						<input id="emailForm"
-							type="email"
-							formControlName="email"
-							[ngClass]="{ 'invalid': email.invalid && submitted }">
-						<label class="active" for="senhaLogin">Email</label>
-					</div>
-
-					<div class="input-field col s12">
-						<input id="telefoneForm"
-							type="text"
-							formControlName="telefone"
-							[ngClass]="{ 'invalid': telefone.invalid && submitted }">
-						<label class="active" for="senhaLogin">Telefone</label>
-					</div>
-
-					<div class="input-field col s12">
-						<textarea id="mensagemForm"
-							formControlName="mensagem"
-							class="materialize-textarea"
-							autocomplete="off"
-							[ngClass]="{ 'invalid': mensagem.invalid && submitted }"></textarea>
-						<label class="active" for="mensagemForm">Mensagem</label>
-					</div>
-
-					<div class="row" *ngIf="form.invalid">
-						<div class="col s12">
-							<label for="buttonMsgSubmit">Por favor, preencha todos os campos corretamente</label>
-						</div>
-					</div>
-					<button id="buttonMsgSubmit" class="btn-large default-size waves-effect waves-light teal lighten-2">
-						Enviar
-						<i class="material-icons right">send</i>
-					</button>
-				</form>
-			</div>
-		</div>
-		<div class="col s12 m4">
+		<!-- <div class="col s12 m4"> -->
+		<div class="col s12">
 			<div class="container">
 				<h4 class="spacing">Endereço</h4>
 				<p>
@@ -178,6 +126,77 @@
 				<h4 class="spacing">Facebook</h4><a href="https://www.facebook.com/craeimbe" target="_blank">/craeimbe</a>
 			</div>
 		</div>
+		<!-- <div class="col s12 m8">
+			<div class="container">
+				<form materialize [formGroup]="form" (ngSubmit)="onSubmit()">
+					<h4 class="center spacing">Fale com a gente!</h4>
+
+					<div class="input-field col s12">
+						<input id="nomeForm"
+							type="text"
+							formControlName="nome"
+							[ngClass]="{ 'invalid': nome.invalid && (nome.touched || submitted) }">
+						<label class="active" for="nomeForm">Nome</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="emailForm"
+							type="email"
+							formControlName="email"
+							[ngClass]="{ 'invalid': email.invalid && (email.touched || submitted) }">
+						<label class="active" for="senhaLogin">Email</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="telefoneForm"
+							type="text"
+							formControlName="telefone"
+							[ngClass]="{ 'invalid': telefone.invalid && (telefone.touched || submitted) }">
+						<label class="active" for="senhaLogin">Telefone</label>
+					</div>
+
+					<div class="input-field col s12">
+						<textarea id="mensagemForm"
+							formControlName="mensagem"
+							class="materialize-textarea"
+							autocomplete="off"
+							[ngClass]="{ 'invalid': mensagem.invalid && (mensagem.touched || submitted) }"></textarea>
+						<label class="active" for="mensagemForm">Mensagem</label>
+					</div>
+
+					<div class="row" *ngIf="form.invalid">
+						<div class="col s12">
+							<label for="buttonMsgSubmit">Por favor, preencha todos os campos corretamente</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div *ngIf="loading" class="preloader-wrapper small active">
+								<div class="spinner-layer spinner-blue-only">
+									<div class="circle-clipper left">
+									<div class="circle"></div>
+									</div><div class="gap-patch">
+									<div class="circle"></div>
+									</div><div class="circle-clipper right">
+									<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+							<button id="buttonMsgSubmit"
+								*ngIf="!loading"
+								class="btn-large default-size waves-effect waves-light teal lighten-2">
+									<i class="material-icons right">send</i>Enviar
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div> -->
 	</div>
 </div>
-<div class="row content-end"></div>
+<div class="row content-end">
+	<p class="white-text">
+		Desenvolvido com<i class="material-icons tiny heart">favorite</i>
+		<br><a href="https://github.com/vikthornvf" target="_blank" class="white-text">Vikthor Ferreira</a>
+	</p>
+</div>

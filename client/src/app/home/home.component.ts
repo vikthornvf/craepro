@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HomeService, EmailData } from './home.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { EmailData, HomeService } from './home.service';
 import { NavService } from '../nav/nav.service';
+
+declare var $;
 
 @Component({
 	selector: 'app-home',
@@ -23,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.initForm();
 		this.navService.changeState(this.navService.state.HOMEBAR);
 		this.navService.onHideSidebar(true);
+		$('div#sidenav-overlay').hide();
 	}
 
 	ngOnDestroy(): void {
@@ -45,13 +48,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.submitted = false;
+		this.loading = true;
 		const data: EmailData = {
 			sender: this.nome.value,
 			email: this.email.value,
 			phone: this.telefone.value,
 			message: this.mensagem.value,
 		};
-		this.service.sendEmail(data);
+		this.service.sendEmail(data)
+			.then((done) => {
+				this.loading = false;
+				this.form.reset();
+			});
+
 	}
 
 	get nome(): AbstractControl { return this.form.get('nome'); }
