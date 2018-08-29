@@ -1,9 +1,10 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ResponsavelService } from '../responsavel.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { Responsavel } from '../responsavel.model';
+import { ResponsavelService } from '../responsavel.service';
 import { Aluno } from '../../alunos/aluno.model';
+import { Responsavel } from '../responsavel.model';
 
 @Component({
 	selector: 'app-responsavel',

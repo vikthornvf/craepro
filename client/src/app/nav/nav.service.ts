@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class NavService {

@@ -1,8 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthService } from '../../auth.service';
-import { UsuarioService } from '../usuario.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
+import { UsuarioService } from '../usuario.service';
 import { Usuario } from '../usuario.model';
 import { Enums } from '../../shared/enums';
 

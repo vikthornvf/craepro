@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, Renderer2, NgZone } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+
 import { Subscription } from 'rxjs';
-import { NavService } from '../nav.service';
-import { DialogsService } from '../../dialogs/dialogs.service';
+
 import { AuthService, UsuarioDetails } from '../../auth.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
+import { NavService } from '../nav.service';
 
 declare var $;
 

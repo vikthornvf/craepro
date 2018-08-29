@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Usuario } from '../usuario.model';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { UsuarioService } from '../usuario.service';
+import { Usuario } from '../usuario.model';
 
 @Component({
 	selector: 'app-usuario-password',

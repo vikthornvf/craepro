@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavService } from '../../nav/nav.service';
+
+import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { EscolaService } from '../escola.service';
-import { AuthService } from '../../auth.service';
+import { NavService } from '../../nav/nav.service';
 import { Escola } from '../escola.model';
 
 @Component({

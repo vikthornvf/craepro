@@ -1,7 +1,8 @@
 import { Component, NgZone } from '@angular/core';
+
 import { ListViewComponent } from '../../shared/list-view.component';
-import { NavService } from '../../nav/nav.service';
 import { EscolaService } from '../escola.service';
+import { NavService } from '../../nav/nav.service';
 import { Escola } from '../escola.model';
 
 @Component({

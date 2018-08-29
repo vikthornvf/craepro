@@ -1,40 +1,41 @@
-import { MaterializeSharedModule } from '../shared/materialize-shared.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NavModule } from '../nav/nav.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { AddButtonModule } from '../add-button/add-button.module';
 import { FormActionsModule } from '../form-actions/form-actions.module';
+import { NavModule } from '../nav/nav.module';
 import { DirectivesModule } from '../shared/directives.module';
 
-import { UsuarioRegistroComponent } from './usuario-registro/usuario-registro.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioLoginComponent } from './usuario-login/usuario-login.component';
 import { UsuarioLoginPaneComponent } from './usuario-login-pane/usuario-login-pane.component';
-import { UsuarioListComponent } from './usuario-list/usuario-list.component';
-import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioPasswordComponent } from './usuario-password/usuario-password.component';
 import { UsuarioProfileComponent } from './usuario-profile/usuario-profile.component';
+import { UsuarioRegistroComponent } from './usuario-registro/usuario-registro.component';
 
 import { UsuarioService } from './usuario.service';
 
 @NgModule({
 	declarations: [
-		UsuarioRegistroComponent,
+		UsuarioComponent,
+		UsuarioListComponent,
 		UsuarioLoginComponent,
 		UsuarioLoginPaneComponent,
-		UsuarioListComponent,
-		UsuarioComponent,
 		UsuarioPasswordComponent,
-		UsuarioProfileComponent
+		UsuarioProfileComponent,
+		UsuarioRegistroComponent
 	],
 	exports: [],
 	imports: [
-		MaterializeSharedModule,
 		BrowserModule,
 		ReactiveFormsModule,
-		NavModule,
+		MaterializeSharedModule,
 		AddButtonModule,
 		FormActionsModule,
+		NavModule,
 		DirectivesModule
 	],
 	providers: [

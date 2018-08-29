@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { AlunoService } from '../alunos/aluno.service';
 import { DialogsService } from '../dialogs/dialogs.service';
 import { Atendimento } from './atendimento.model';

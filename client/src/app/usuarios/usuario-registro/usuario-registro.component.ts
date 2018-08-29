@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
-import { UsuarioService } from '../usuario.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { EscolaService } from '../../escolas/escola.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { Usuario } from '../usuario.model';
+import { UsuarioService } from '../usuario.service';
 import { Escola } from '../../escolas/escola.model';
+import { Usuario } from '../usuario.model';
 import { Enums } from '../../shared/enums';
 
 declare var $: any;

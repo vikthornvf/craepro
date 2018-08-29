@@ -1,4 +1,5 @@
 import { Component, NgZone } from '@angular/core';
+
 import { ListViewComponent } from '../../shared/list-view.component';
 import { NavService } from '../../nav/nav.service';
 import { ProfissionalService } from '../profissional.service';

@@ -1,8 +1,10 @@
-import { Component, Input, Output, ViewChild, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges, NgZone } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+
 import { Subscription } from 'rxjs';
-import { NavService } from '../../nav/nav.service';
+
 import { AtendimentoService } from '../atendimento.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
+import { NavService } from '../../nav/nav.service';
 import { Atendimento } from '../atendimento.model';
 
 @Component({

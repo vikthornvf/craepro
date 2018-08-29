@@ -1,6 +1,8 @@
-import { OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core';
-import { NavService } from '../nav/nav.service';
+import { NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+
+import { NavService } from '../nav/nav.service';
 
 declare var $;
 

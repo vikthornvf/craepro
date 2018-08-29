@@ -1,4 +1,5 @@
-import { Directive, OnChanges, Input, ElementRef, Inject } from '@angular/core';
+import { Directive, ElementRef, Inject, Input, OnChanges } from '@angular/core';
+
 @Directive({
 	selector: '[focus]'
 })

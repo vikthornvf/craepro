@@ -1,16 +1,17 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
 import { AlunoService } from '../aluno.service';
-import { EscolaService } from '../../escolas/escola.service';
 import { AtendimentoService } from '../../atendimentos/atendimento.service';
-import { ResponsavelService } from '../../responsaveis/responsavel.service';
-import { NavService } from '../../nav/nav.service';
-import { DialogsService } from '../../dialogs/dialogs.service';
 import { AuthService } from '../../auth.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
+import { EscolaService } from '../../escolas/escola.service';
+import { NavService } from '../../nav/nav.service';
+import { ResponsavelService } from '../../responsaveis/responsavel.service';
 import { Aluno } from '../aluno.model';
-import { Escola } from '../../escolas/escola.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
+import { Escola } from '../../escolas/escola.model';
 import { Responsavel } from '../../responsaveis/responsavel.model';
 import { Enums } from '../../shared/enums';
 

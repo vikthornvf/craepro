@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { NavService } from './nav/nav.service';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+
+import { NavService } from './nav/nav.service';
 
 @Component({
 	selector: 'app-root',

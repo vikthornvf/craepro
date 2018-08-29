@@ -1,6 +1,8 @@
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+
 import { MaterializeAction } from 'angular2-materialize';
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { DialogsService } from './dialogs.service';
 
 @Component({

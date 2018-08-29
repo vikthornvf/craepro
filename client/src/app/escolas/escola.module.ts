@@ -1,17 +1,16 @@
-import { MaterializeSharedModule } from '../shared/materialize-shared.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NavModule } from '../nav/nav.module';
-import { DirectivesModule } from '../shared/directives.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { AddButtonModule } from '../add-button/add-button.module';
-import { TelefoneModule } from '../telefone/telefone.module';
+import { DirectivesModule } from '../shared/directives.module';
 import { EnderecoModule } from '../endereco/endereco.module';
 import { FormActionsModule } from '../form-actions/form-actions.module';
-
-import { EscolaListComponent } from './escola-list/escola-list.component';
+import { NavModule } from '../nav/nav.module';
+import { TelefoneModule } from '../telefone/telefone.module';
 import { EscolaComponent } from './escola/escola.component';
-
+import { EscolaListComponent } from './escola-list/escola-list.component';
 import { EscolaService } from './escola.service';
 
 @NgModule({
@@ -21,15 +20,15 @@ import { EscolaService } from './escola.service';
 	],
 	exports: [],
 	imports: [
-		MaterializeSharedModule,
-		BrowserModule,
 		ReactiveFormsModule,
-		NavModule,
-		DirectivesModule,
+		BrowserModule,
+		MaterializeSharedModule,
 		AddButtonModule,
-		TelefoneModule,
+		DirectivesModule,
 		EnderecoModule,
-		FormActionsModule
+		FormActionsModule,
+		NavModule,
+		TelefoneModule
 	],
 	providers: [EscolaService]
 })

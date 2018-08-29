@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { Endereco } from '../shared/endereco.model';
 
 declare var Materialize: any;

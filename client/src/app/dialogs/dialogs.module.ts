@@ -1,6 +1,7 @@
-import { MaterializeSharedModule } from '../shared/materialize-shared.module';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { DialogsComponent } from './dialogs.component';
 import { DialogsService } from './dialogs.service';
 

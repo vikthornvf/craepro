@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+import { AuthService } from '../../auth.service';
+import { DialogsService } from '../../dialogs/dialogs.service';
 import { NavService } from '../../nav/nav.service';
 import { ProfissionalService } from '../profissional.service';
-import { DialogsService } from '../../dialogs/dialogs.service';
-import { AuthService } from '../../auth.service';
-import { Profissional } from '../profissional.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
+import { Profissional } from '../profissional.model';
 
 @Component({
 	selector: 'app-profissional',

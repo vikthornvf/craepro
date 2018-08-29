@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+
 import { Subscription } from 'rxjs';
-import { NavService } from '../nav.service';
+
 import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
+import { NavService } from '../nav.service';
 
 interface SidenavRoute {
 	name: string;
@@ -34,7 +36,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 		private service: NavService,
 		private auth: AuthService,
 		private dialogs: DialogsService,
-		private _zone: NgZone) {}
+		private zone: NgZone) {}
 
 	ngOnInit() {
 		this.hideSubscription = this.service.hideSidebar.subscribe((hide) => {
@@ -67,7 +69,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
 	onLogout() {
 		this.dialogs.modalConfirmation(confirm => {
-			if (confirm) { this._zone.run(() => this.auth.logout()); }
+			if (confirm) { this.zone.run(() => this.auth.logout()); }
 		}, 'Deseja realmente sair da sua conta de usuário?', 'power_settings_new');
 	}
 }

@@ -1,17 +1,19 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 import { MaterializeAction } from 'angular2-materialize';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
-import { AtendimentoService } from '../atendimento.service';
-import { ProfissionalService } from '../../profissionais/profissional.service';
+
 import { AlunoService } from '../../alunos/aluno.service';
+import { AtendimentoService } from '../atendimento.service';
 import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { Atendimento } from '../atendimento.model';
-import { Profissional } from '../../profissionais/profissional.model';
+import { ProfissionalService } from '../../profissionais/profissional.service';
 import { Aluno } from '../../alunos/aluno.model';
-import { Parecer } from '../parecer.model';
-import { Enums } from '../../shared/enums';
+import { Atendimento } from '../atendimento.model';
 import { Horario } from '../horario.model';
+import { Parecer } from '../parecer.model';
+import { Profissional } from '../../profissionais/profissional.model';
+import { Enums } from '../../shared/enums';
 
 declare var $;
 

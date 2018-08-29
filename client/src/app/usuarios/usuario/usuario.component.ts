@@ -1,14 +1,15 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+import { AuthService } from '../../auth.service';
 import { DialogsService } from '../../dialogs/dialogs.service';
-import { UsuarioService } from '../usuario.service';
 import { EscolaService } from '../../escolas/escola.service';
 import { NavService } from '../../nav/nav.service';
-import { Usuario } from '../usuario.model';
+import { UsuarioService } from '../usuario.service';
 import { Escola } from '../../escolas/escola.model';
+import { Usuario } from '../usuario.model';
 import { Enums } from '../../shared/enums';
-import { AuthService } from '../../auth.service';
 
 declare var $: any;
 

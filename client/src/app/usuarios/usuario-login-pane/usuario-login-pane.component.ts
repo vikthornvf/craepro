@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { NavService } from '../../nav/nav.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 declare var Materialize: any;
 

@@ -1,7 +1,9 @@
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+
 import { MaterializeAction } from 'angular2-materialize';
-import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { Atendimento } from '../atendimento.model';
+
 import { AuthService } from '../../auth.service';
+import { Atendimento } from '../atendimento.model';
 
 @Component({
 	selector: 'app-atendimento-modal',

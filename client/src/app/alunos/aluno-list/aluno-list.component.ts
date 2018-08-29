@@ -1,7 +1,8 @@
 import { Component, NgZone } from '@angular/core';
+
 import { ListViewComponent } from '../../shared/list-view.component';
-import { NavService } from '../../nav/nav.service';
 import { AlunoService } from '../aluno.service';
+import { NavService } from '../../nav/nav.service';
 import { Aluno } from '../aluno.model';
 import { Atendimento } from '../../atendimentos/atendimento.model';
 
