@@ -1,4 +1,23 @@
-<a class="brand-logo left">CRAE</a>
-<ul id="nav-mobile" class="right">
-  <li><a routerLink="/dashboard">CRAE Pro</a></li>
+<ul class="left hide-on-med-and-up">
+	<li>
+		<a class="dropdown-button left uppercase" data-activates="homebar-dropdown">crae
+			<i class="material-icons right">expand_more</i>
+		</a>
+	</li>
+</ul>
+<ul id="homebar-dropdown" class="dropdown-content custom-dropdown">
+	<li><a routerLink="." class="uppercase">crae</a></li>
+	<li><a routerLink="." fragment="sobre">Sobre</a></li>
+	<li><a routerLink="." fragment="contato">Contato</a></li>
+</ul>
+
+<a a routerLink="." class="logo center uppercase hide-on-small-only">crae</a>
+<ul class="left hide-on-small-only">
+	<li><a routerLink="." fragment="sobre">Sobre</a></li>
+	<li><a routerLink="." fragment="contato">Contato</a></li>
+</ul>
+<ul class="right">
+	<li class="custom-color">
+		<a class="custom-buttom valign-wrapper" routerLink="/dashboard"><p>Acessar</p></a>
+	</li>
 </ul>
