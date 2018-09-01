@@ -5,18 +5,18 @@ const controller = require('../controllers/atendimento');
 /**
  * GET list atendimento by aluno
  */
-router.get('/atendimento/aluno/:alunoId', controller.list);
+router.get('/aluno/:alunoId', controller.list);
 
 /**
  * GET list atendimento by profissional
  */
-router.get('/atendimento/profissional/:profissionalId', controller.list);
+router.get('/profissional/:profissionalId', controller.list);
 
 /**
  * GET list all
  * POST add new atendimento
  */
-router.route('/atendimento')
+router.route('/')
 	.get(controller.list)
 	.post(controller.add);
 
@@ -25,7 +25,7 @@ router.route('/atendimento')
  * PUT update existing atendimento
  * DELETE remove atendimento by id
  */
-router.route('/atendimento/:id')
+router.route('/:id')
 	.get(controller.findById)
 	.put(controller.update)
 	.delete(controller.deleteById);

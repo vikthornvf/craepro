@@ -6,7 +6,7 @@ const controller = require('../controllers/aluno');
  * GET list all
  * POST add new aluno
  */
-router.route('/aluno')
+router.route('/')
 	.get(controller.list)
 	.post(controller.create);
 
@@ -15,7 +15,7 @@ router.route('/aluno')
  * PUT update existing aluno
  * DELETE remove aluno by id
  */
-router.route('/aluno/:id')
+router.route('/:id')
 	.get(controller.findById)
 	.put(controller.update)
 	.delete(controller.deleteById);
@@ -23,6 +23,6 @@ router.route('/aluno/:id')
 /**
  * PUT updates specific field of aluno by id
  */
-router.put('/aluno/situacao/:id', controller.updateSituacao)
+router.put('/situacao/:id', controller.updateSituacao)
 
 module.exports = router;

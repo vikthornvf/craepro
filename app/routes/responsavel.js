@@ -5,13 +5,13 @@ const controller = require('../controllers/responsavel');
 /**
  * GET list responsavel by aluno
  */
-router.get('/responsavel/aluno/:alunoId', controller.list);
+router.get('/aluno/:alunoId', controller.list);
 
 /**
  * GET list all
  * POST create new responsavel
  */
-router.route('/responsavel')
+router.route('/')
 	.get(controller.list)
 	.post(controller.add);
 
@@ -20,7 +20,7 @@ router.route('/responsavel')
  * PUT update existing responsavel
  * DELETE remove responsavel by id
  */
-router.route('/responsavel/:id')
+router.route('/:id')
 	.get(controller.findById)
 	.put(controller.update)
 	.delete(controller.deleteById);

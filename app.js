@@ -27,13 +27,13 @@ const profissionalRoutes = require('./app/routes/profissional');
 const responsavelRoutes  = require('./app/routes/responsavel');
 const usuarioRoutes      = require('./app/routes/usuario');
 
-app.use('/api', alunoRoutes);
-app.use('/api', atendimentoRoutes);
-app.use('/api', authRoutes);
-app.use('/api', escolaRoutes);
-app.use('/api', profissionalRoutes);
-app.use('/api', responsavelRoutes);
-app.use('/api', usuarioRoutes);
+app.use('/api/aluno', alunoRoutes);
+app.use('/api/atendimento', atendimentoRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/escola', escolaRoutes);
+app.use('/api/profissional', profissionalRoutes);
+app.use('/api/responsavel', responsavelRoutes);
+app.use('/api/usuario', usuarioRoutes);
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public/dist/index.html'));
 });

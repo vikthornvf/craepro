@@ -6,7 +6,7 @@ const controller = require('../controllers/usuario');
  * GET list all
  * POST add new usuario
  */
-router.route('/usuario')
+router.route('/')
 	.get(controller.list)
 	.post(controller.add);
 
@@ -15,7 +15,7 @@ router.route('/usuario')
  * PUT update existing usuario
  * DELETE remove usuario by id
  */
-router.route('/usuario/:id')
+router.route('/:id')
 	.get(controller.findById)
 	.put(controller.update)
 	.delete(controller.deleteById);

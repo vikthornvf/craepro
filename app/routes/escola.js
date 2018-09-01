@@ -6,7 +6,7 @@ const controller = require('../controllers/escola');
  * GET list all
  * POST add new escola
  */
-router.route('/escola')
+router.route('/')
 	.get(controller.list)
 	.post(controller.add);
 
@@ -15,7 +15,7 @@ router.route('/escola')
  * PUT update existing escola
  * DELETE remove escola by id
  */
-router.route('/escola/:id')
+router.route('/:id')
 	.get(controller.findById)
 	.put(controller.update)
 	.delete(controller.deleteById);
