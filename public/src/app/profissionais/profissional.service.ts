@@ -63,7 +63,6 @@ export class ProfissionalService {
 						this.dialogs.toastSuccess(`Profissional ${profissional.nome} salvo com sucesso!`);
 						profissional._id = res['_id'];
 						if (redirect) {
-							console.log('redirect');
 							this.router.navigateByUrl('/profissionais/profissional/' + profissional._id);
 						}
 						return profissional;
