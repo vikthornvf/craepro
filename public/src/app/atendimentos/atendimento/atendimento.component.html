@@ -41,8 +41,8 @@
 						(keyup)="onShowDropdown($event.key)">
 				<label for="nome_att">Profissional*</label>
 			</div>
-			<ul id='profissional-dropdown' class='dropdown-content'>
-				<li *ngFor="let p of profissionales"><a (click)="selectProfissional(p)">{{ p.nome }}</a></li>
+			<ul id="profissional-dropdown" class="dropdown-content">
+				<li *ngFor="let p of profissionais"><a (click)="selectProfissional(p)">{{ p.nome }}</a></li>
 			</ul>
 
 			<div formGroupName="horario">

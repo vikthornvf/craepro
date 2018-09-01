@@ -215,9 +215,11 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	loadProfissioais(): void {
-		this.profissionalService.list().subscribe(
-			profissionais => this.allProfissioais = profissionais,
-			err => console.log(err));
+		this.profissionalService.list()
+			.subscribe(
+				profissionais => this.allProfissioais = profissionais,
+				err => console.log(err)
+			);
 	}
 
 	filterProfissioais(): void {
