@@ -5,9 +5,12 @@ import { Subscription } from 'rxjs';
 
 import { DialogsService } from './dialogs.service';
 
+declare var $;
+
 @Component({
 	selector: 'app-dialogs',
-	templateUrl: './dialogs.component.html'
+	templateUrl: './dialogs.component.html',
+	styleUrls: ['./dialogs.component.css']
 })
 export class DialogsComponent implements OnInit, OnDestroy {
 
@@ -42,6 +45,7 @@ export class DialogsComponent implements OnInit, OnDestroy {
 	}
 
 	private onOpen() {
+		$('#dialogs').modal();
 		this.modalActions.emit({ action: 'modal', params: ['open'] });
 	}
 
