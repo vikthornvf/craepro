@@ -23,7 +23,7 @@ export class DialogsComponent implements OnInit, OnDestroy {
 	dialogSubscription: Subscription;
 
 	modalActions = new EventEmitter<string|MaterializeAction>();
-	modalParams = [{ complete: () => this.onClose() }];
+	modalParams = { complete: () => this.onClose() };
 
 	constructor(private service: DialogsService) {}
 
@@ -45,7 +45,7 @@ export class DialogsComponent implements OnInit, OnDestroy {
 	}
 
 	private onOpen() {
-		$('#dialogs').modal();
+		$('#dialogs').modal(this.modalParams);
 		this.modalActions.emit({ action: 'modal', params: ['open'] });
 	}
 
