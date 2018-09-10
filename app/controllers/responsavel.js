@@ -1,68 +1,46 @@
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
-
 var Responsavel = mongoose.model('Responsavel');
 
-exports.list = function(req, res) {
+exports.list = (req, res) => {
 	const aluno = { _id: req.params.alunoId };
-	let query = {};
+	const query = {};
 	if (aluno._id) {
 		query.aluno = aluno;
 	}
 
 	Responsavel.find(query)
 		.sort({ nome: 1 })
-		.then((result) => {
-			res.json(result);
-		},
-		err => {
-			console.log(err);
-			res.status(500).json(err);
+		.exec((err, responsaveis) => {
+			if (err) return res.status(500).json(err);
+			res.json(responsaveis);
 		});
 };
 
-exports.add = function(req, res) {
-	Responsavel.create(req.body)
-		.then((result) => {
-			res.json(result);
-		},
-		err => {
-			console.log(err);
-			res.status(500).json(err);
-		});
+exports.add = (req, res) => {
+	Responsavel.create(req.body, (err, responsavel) => {
+		if (err) return res.status(500).json(err);
+		res.json(responsavel);
+	});
 };
 
-exports.findById = function(req, res) {
-	Responsavel.findById(req.params.id)
-		.then(function(result) {
-			if (!result) throw Error('Responsavel não encontrado.');
-			res.json(result);
-		},
-		function(err) {
-			console.log(err);
-			res.status(404).json(err);
-		});
+exports.findById = (req, res) => {
+	Responsavel.findById(req.params.id, (err, responsavel) => {
+		if (err) return res.status(404).json(err);
+		if (!responsavel) return res.status(404).send('Responsavel não encontrado.');
+		res.json(responsavel);
+	});
 };
 
-exports.update = function(req, res) {
-	Responsavel.findByIdAndUpdate(req.params.id, req.body)
-		.then(function(result) {
-			res.json(result);
-		},
-		function(err) {
-			console.log(err);
-			res.status(500).json(err);
-		});
+exports.update = (req, res) => {
+	Responsavel.findByIdAndUpdate(req.params.id, req.body, (err, responsavel) => {
+		if (err) return res.status(500).json(err);
+		res.json(responsavel);
+	});
 };
 
-exports.deleteById = function(req, res) {
-	Responsavel.remove({_id: req.params.id})
-		.then(function() {
-			res.sendStatus(204);
-		},
-		function(err) {
-			console.log(err);
-			res.status(500).json(err);
-		});
+exports.deleteById = (req, res) => {
+	Responsavel.findByIdAndRemove(req.params.id, (err, responsavel) => {
+		if (err) return res.status(500).json(err);
+		res.json(responsavel);
+	});
 };

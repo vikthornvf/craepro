@@ -1,13 +1,10 @@
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
 var Atendimento = mongoose.model('Atendimento');
 
-exports.list = function(req, res) {
+exports.list = (req, res) => {
 	const aluno = { _id: req.params.alunoId };
 	const profissional = { _id: req.params.profissionalId };
-
-	let query = {};
+	const query = {};
 	if (aluno._id) {
 		query.aluno = aluno;
 	}
@@ -19,58 +16,40 @@ exports.list = function(req, res) {
 		.sort({ solicitacao: 1 })
 		.populate('aluno')
 		.populate('profissional')
-		.then((result) => {
-			res.json(result);
-		},
-		err => {
-			console.log(err);
-			res.status(500).json(err);
+		.exec((err, atendimentos) => {
+			if (err) return res.status(500).json(err);
+			res.json(atendimentos);
 		});
 };
 
-exports.add = function(req, res) {
-	Atendimento.create(req.body)
-		.then((result) => {
-			res.json(result);
-		},
-		err => {
-			console.log(err);
-			res.status(500).json(err);
+exports.add = (req, res) => {
+	Atendimento.create(req.body, (err, atendimento) => {
+			if (err) return res.status(500).json(err);
+			res.json(atendimento);
 		});
 };
 
-exports.findById = function(req, res) {
+exports.findById = (req, res) => {
 	Atendimento.findById(req.params.id)
 		.populate('aluno')
 		.populate('profissional')
-		.then(function(result) {
-			if (!result) throw Error('Atendimento não encontrado.');
-			res.json(result);
-		},
-		function(err) {
-			console.log(err);
-			res.status(404).json(err);
+		.exec((err, atendimento) => {
+			if (err) return res.status(500).json(err);
+			if (!atendimento) return res.status(404).send('Atendimento não encontrado.');
+			res.json(atendimento);
 		});
 };
 
-exports.update = function(req, res) {
-	Atendimento.findByIdAndUpdate(req.params.id, req.body)
-		.then(function(result) {
-			res.json(result);
-		},
-		function(err) {
-			console.log(err);
-			res.status(500).json(err);
-		});
+exports.update = (req, res) => {
+	Atendimento.findByIdAndUpdate(req.params.id, req.body, (err, atendimento) => {
+		if (err) return res.status(500).json(err);
+		res.json(atendimento);
+	});
 };
 
-exports.deleteById = function(req, res) {
-	Atendimento.remove({_id: req.params.id})
-		.then(function() {
-			res.sendStatus(204);
-		},
-		function(err) {
-			console.log(err);
-			res.status(500).json(err);
-		});
+exports.deleteById = (req, res) => {
+	Atendimento.findByIdAndRemove(req.params.id, (err, atendimento) => {
+		if (err) return res.status(500).json(err);
+		res.json(atendimento);
+	});
 };
