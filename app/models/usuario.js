@@ -11,7 +11,8 @@ const usuarioSchema = new Schema({
 	email: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		lowercase: true
 	},
 	tipo: {
 		type: String,
@@ -23,7 +24,8 @@ const usuarioSchema = new Schema({
 	},
 	permissoes: {
 		type: [String],
-		required: true
+		required: true,
+		uppercase: true
 	},
 	solicitado: {
 		type: Boolean,
