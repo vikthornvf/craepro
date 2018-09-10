@@ -71,7 +71,7 @@ export class AuthService {
 	}
 
 	public login(usuario: TokenPayload): Observable<TokenResponse> {
-		return this.http.post('/api/login', usuario)
+		return this.http.post('/api/auth/login', usuario)
 			.pipe(
 				map((data: TokenResponse) => {
 					if (data.token) {
