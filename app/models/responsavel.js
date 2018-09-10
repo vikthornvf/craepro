@@ -15,4 +15,4 @@ const responsavelSchema = new Schema({
 });
 
 const Responsavel = mongoose.model('Responsavel', responsavelSchema);
-// module.exports = Responsavel;
+module.exports = Responsavel;
