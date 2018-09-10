@@ -25,5 +25,52 @@ const atendimentoSchema = new Schema({
 	},
 });
 
+atendimentoSchema.post('save', (atendimento) => updateAlunoStatus(atendimento));
+atendimentoSchema.post('findOneAndUpdate', (atendimento) => updateAlunoStatus(atendimento));
+atendimentoSchema.post('findOneAndRemove', (atendimento) => updateAlunoStatus(atendimento));
+
 const Atendimento = mongoose.model('Atendimento', atendimentoSchema);
 module.exports = Atendimento;
+
+function updateAlunoStatus(atendimento) {
+
+	Atendimento.find({ aluno: atendimento.aluno })
+		.exec((err, atendimentos) => {
+			if (err) return console.log(err);
+
+			let solicitado = false;
+			let ativo = false;
+			let finalizado = false;
+			let situacao;
+
+			if (atendimentos && atendimentos.length) {
+				atendimentos.forEach(a => {
+					if (a.egresso) {
+						finalizado = true;
+					} else if (a.inicio) {
+						ativo = true;
+					} else {
+						solicitado = true;
+					}
+				});
+
+				if (solicitado) {
+					situacao = ativo
+						? 'P' // Parcialmente ativo
+						: 'E'; // Em espera
+				} else if (ativo) {
+					situacao = 'A'; // Ativo
+				} else if (finalizado) {
+					situacao = 'D'; // Desligado
+				}
+			} else {
+				situacao = 'S'; // Sem atendimento
+			}
+
+			const Aluno = mongoose.model('Aluno');
+			Aluno.findByIdAndUpdate(atendimento.aluno, { situacao }, (error, aluno) => {
+				if (error) return console.log(error);
+				console.log(`Updated ${aluno.nome}'s status to ${situacao}`);
+			});
+		});
+}

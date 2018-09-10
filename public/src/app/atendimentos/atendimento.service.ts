@@ -55,7 +55,6 @@ export class AtendimentoService {
 				.subscribe(
 					res => {
 						this.dialogs.toastSuccess(`Dados do atendimento alterados com sucesso!`);
-						this.updateAlunoSituacao(atendimento);
 						return atendimento;
 					},
 					err => {
@@ -69,7 +68,6 @@ export class AtendimentoService {
 					res => {
 						this.dialogs.toastSuccess('Atendimento criado com sucesso!');
 						atendimento._id = res['_id'];
-						this.updateAlunoSituacao(atendimento);
 						return atendimento;
 					},
 					err => {
@@ -85,19 +83,6 @@ export class AtendimentoService {
 		if (!id) {
 			return this.http.post(this.url, atendimento, { headers: this.headers });
 		}
-	}
-
-	updateAlunoSituacao(atendimento: Atendimento) {
-		if (!atendimento) {
-			return;
-		}
-		const aluno = atendimento.aluno;
-		if (!aluno) {
-			return;
-		}
-		this.listByAluno(aluno._id).subscribe(
-			atendimentos => this.alunoService.updateSituacao(aluno, atendimentos),
-			err => console.log(err));
 	}
 
 	delete(id: string) {

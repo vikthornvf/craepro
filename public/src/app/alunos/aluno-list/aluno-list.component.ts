@@ -34,12 +34,7 @@ export class AlunoListComponent extends ListViewComponent {
 
 	updateSituacao(aluno: Aluno, atendimentos: Atendimento[]): void {
 		if (aluno) {
-			const o = this.service.updateSituacao(aluno, atendimentos);
-			if (o) {
-				o.subscribe(
-					res => this.refreshTooltips(),
-					err => console.log(err));
-			}
+			this.service.updateSituacao(aluno, atendimentos);
 			this.refreshTooltips();
 		}
 	}

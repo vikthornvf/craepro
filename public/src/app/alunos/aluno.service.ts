@@ -75,11 +75,10 @@ export class AlunoService {
 		return this.http.post(this.url, aluno, { headers: this.headers });
 	}
 
-	updateSituacao(aluno: Aluno, atendimentos: Atendimento[], save: boolean = true): Observable<Aluno> | null {
+	updateSituacao(aluno: Aluno, atendimentos: Atendimento[]): Aluno | null {
 		let solicitado = false;
 		let ativo = false;
 		let finalizado = false;
-		let situacao = aluno.situacao;
 
 		if (atendimentos && atendimentos.length) {
 			atendimentos.forEach(a => {
@@ -91,28 +90,20 @@ export class AlunoService {
 					solicitado = true;
 				}
 			});
-		} else {
-			finalizado = true;
-		}
 
-		if (solicitado || ativo || finalizado) {
 			if (solicitado) {
-				situacao = ativo
-					? 'P'
-					: 'E';
+				aluno.situacao = ativo
+					? 'P' // Parcialmente ativo
+					: 'E'; // Em espera
 			} else if (ativo) {
-				situacao = 'A';
+				aluno.situacao = 'A'; // Ativo
 			} else if (finalizado) {
-				situacao = 'D';
+				aluno.situacao = 'D'; // Desligado
 			}
-			if (aluno.situacao !== situacao) {
-				aluno.situacao = situacao;
-				const id = aluno._id;
-				if (id && save) {
-					return this.http.put(`${this.url}/situacao/${id}`, aluno, { headers: this.headers });
-				}
-			}
+		} else {
+			aluno.situacao = 'S'; // Sem atendimento
 		}
+		return aluno;
 	}
 
 	delete(id: string) {

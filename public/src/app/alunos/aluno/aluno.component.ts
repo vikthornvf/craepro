@@ -167,9 +167,11 @@ export class AlunoComponent implements OnInit {
 
 	loadAtendimentos(id: string): void {
 		if (id) {
-			this.atendimentoService.listByAluno(id).subscribe(
-				atendimentos => this.atendimentos = atendimentos,
-				err => console.log(err));
+			this.atendimentoService.listByAluno(id)
+				.subscribe(
+					atendimentos => this.atendimentos = atendimentos,
+					err => console.log(err)
+				);
 		}
 	}
 
@@ -177,7 +179,6 @@ export class AlunoComponent implements OnInit {
 		this._zone.run(() => {
 			const index = this.atendimentos.indexOf(atendimento);
 			this.atendimentos.splice(index, 1);
-			this.service.updateSituacao(this.aluno, this.atendimentos);
 		});
 	}
 
