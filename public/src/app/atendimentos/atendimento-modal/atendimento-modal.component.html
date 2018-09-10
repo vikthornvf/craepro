@@ -1,23 +1,21 @@
-<div
-		id="modalAtendimento"
-		class="modal modal-fixed-footer"
-		materialize="modal"
-		[materializeParams]="modalAtendimentoParams"
-		[materializeActions]="modalAtendimentoActions">
-	<div class="modal-content">
+<div id="modalAtendimento"
+	 class="modal modal-fixed-footer"
+	 materialize="modal"
+	 [materializeParams]="modalAtendimentoParams"
+	 [materializeActions]="modalAtendimentoActions">
+	<div *ngIf="opened" class="modal-content">
 		<app-atendimento
-				*ngIf="!closed"
-				[create]="create"
-				[selectedId]="selectedId"
-				[atendimento]="atendimento"
-				(save)="emitLoad()"
-				#atendimentoElement></app-atendimento>
+			 [create]="create"
+			 [selectedId]="selectedId"
+			 [atendimento]="atendimento"
+			 (save)="onSave($event)"
+			 #atendimentoElement></app-atendimento>
 	</div>
 	<div class="modal-footer">
-		<a class="modal-close waves-effect btn-flat" (click)="closed = true">
+		<a class="modal-close waves-effect btn-flat">
 			<b class="light-blue-text">Cancelar</b>
 		</a>
-		<a *ngIf="canCreate || canEdit || canEditParecer" class="waves-effect btn-flat" (click)="onSave()">
+		<a *ngIf="canCreate || canEdit || canEditParecer" class="waves-effect btn-flat" (click)="atendimentoElement.onSave()">
 			<b class="light-blue-text">Salvar</b>
 		</a>
 	</div>

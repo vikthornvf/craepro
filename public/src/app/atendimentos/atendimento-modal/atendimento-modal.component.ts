@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import { MaterializeAction } from 'angular2-materialize';
 
+import { AtendimentoComponent } from '../atendimento/atendimento.component';
 import { AuthService } from '../../auth.service';
 import { Atendimento } from '../atendimento.model';
 
@@ -9,59 +10,66 @@ import { Atendimento } from '../atendimento.model';
 	selector: 'app-atendimento-modal',
 	templateUrl: './atendimento-modal.component.html'
 })
-export class AtendimentoModalComponent implements OnInit {
+export class AtendimentoModalComponent {
 
 	@Input() selectedId: string;
 	@Input() atendimento: Atendimento;
 	@Output() load = new EventEmitter<boolean>();
-	@Output() close = new EventEmitter<boolean>();
-	@ViewChild('atendimentoElement') atendimentoElement;
+	@Output() close = new EventEmitter<Atendimento>();
+	@ViewChild('atendimentoElement') atendimentoElement: AtendimentoComponent;
 
 	canCreate: boolean;
 	canEdit: boolean;
 	canEditParecer: boolean;
 
-	closed = true;
+	opened: boolean;
 	create: boolean;
-	modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
-	modalAtendimentoParams = [{
+	private modalAtendimentoActions = new EventEmitter<string|MaterializeAction>();
+	private modalAtendimentoParams = [{
 		dismissible: false,
 		complete: () => {
-			this.closed = true;
-			this.close.emit(true);
+			this.close.emit(this.atendimento);
+			this.opened = false;
 		}
 	}];
 
 	constructor(private auth: AuthService) {}
 
-	ngOnInit() {
+	onInit() {
+		this.opened = true;
 		const auth = this.auth.getUsuarioDetails().permissoes;
 		this.canCreate = auth.includes('A2');
 		this.canEditParecer = auth.includes('A3');
 		this.canEdit = auth.includes('A4');
 	}
 
-	emitLoad() {
-		this.load.emit(true);
-		this.modalAtendimentoActions.emit({ action: 'modal', params: ['close'] });
-	}
-
-	open() {
-		this.create = false;
+	open(atendimento: Atendimento) {
 		this.onOpen();
+		this.atendimento = atendimento;
+		this.create = !atendimento;
 	}
 
-	openCreate() {
-		this.create = true;
-		this.onOpen();
-	}
+	// openCreate(atendimento: Atendimento) {
+	// 	this.onOpen();
+	// 	if (this.atendimento === null) {
+	// 		this.atendimentoElement.onInit();
+	// 	} else {
+	// 		this.atendimento = null;
+	// 	}
+	// 	this.create = true;
+	// }
 
-	onSave() {
-		this.atendimentoElement.onSave();
+	onSave(atendimento: Atendimento) {
+		this.atendimento = atendimento;
+		this.onClose();
 	}
 
 	private onOpen() {
-		this.closed = false;
+		this.onInit();
 		this.modalAtendimentoActions.emit({ action: 'modal', params: ['open'] });
+	}
+
+	private onClose() {
+		this.modalAtendimentoActions.emit({ action: 'modal', params: ['close'] });
 	}
 }

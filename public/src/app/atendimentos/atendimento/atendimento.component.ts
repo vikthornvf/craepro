@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { MaterializeAction } from 'angular2-materialize';
@@ -21,7 +21,7 @@ declare var $;
 	selector: 'app-atendimento',
 	templateUrl: './atendimento.component.html'
 })
-export class AtendimentoComponent implements OnInit {
+export class AtendimentoComponent implements OnChanges, OnInit {
 
 	@Input() create = false;
 	@Input() innerAlunoComponent = false;
@@ -78,6 +78,19 @@ export class AtendimentoComponent implements OnInit {
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
+		this.onInit();
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		const ca = changes.atendimento;
+		if (ca && ca.currentValue !== ca.previousValue) {
+			this.atendimento = ca.currentValue;
+			this.profissional = this.atendimento ? this.atendimento.profissional : null;
+			this.onInit();
+		}
+	}
+
+	onInit() {
 		if (this.create) {
 			this.att = new Atendimento();
 			this.att.solicitacao = new Date();
@@ -143,7 +156,9 @@ export class AtendimentoComponent implements OnInit {
 				'horario': a.horario ? a.horario : new Horario()
 			});
 			this.pareceres = this.form.get('pareceres') as FormArray;
-			a.pareceres.forEach(parecer => this.pareceres.insert(0, this.createParecer(parecer)));
+			if (a.pareceres) {
+				a.pareceres.forEach(parecer => this.pareceres.insert(0, this.createParecer(parecer)));
+			}
 		}
 	}
 
@@ -236,6 +251,12 @@ export class AtendimentoComponent implements OnInit {
 	}
 
 	finalizarAtendimento(): void {
+		if (this.form.invalid) {
+			this.submitted = true;
+			this.updateDropdownState();
+			this.dialogs.toastFail('Preencha todos os campos obrigatórios para encerrar.');
+			return;
+		}
 		this.att.egresso = new Date();
 		this.updateDynamicValidators();
 	}
@@ -253,7 +274,7 @@ export class AtendimentoComponent implements OnInit {
 			return;
 		}
 
-		const att = this.atendimento = this.att;
+		const att = this.att;
 
 		att.aluno = this.aluno;
 		att.profissional = this.profissional;
@@ -264,15 +285,17 @@ export class AtendimentoComponent implements OnInit {
 		att.horario = att.horario ? att.horario : new Horario();
 
 		if (!att._id) {
-			this.service.onCreate(att).subscribe(
-				res => {
-					att._id = res['_id'];
-					this.att = this.atendimento = att;
-					this.service.updateAlunoSituacao(att);
-					this.save.emit(this.atendimento);
-					this.dialogs.toastSuccess('Atendimento criado com sucesso!');
-				},
-				err => console.log(err));
+			this.service.onCreate(att)
+				.subscribe(
+					res => {
+						att._id = res['_id'];
+						this.att = this.atendimento = att;
+						this.save.emit(this.atendimento);
+						this.dialogs.toastSuccess('Atendimento criado com sucesso!');
+						this.create = false;
+					},
+					err => console.log(err)
+				);
 		}
 		else {
 			this.att = this.atendimento = this.service.save(att);

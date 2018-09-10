@@ -141,8 +141,8 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 		if (confirm) {
 			this._zone.run(() => {
 				this.atendimentos = this.atendimentos.filter(a => a !== this.atendimentoSelected);
-				this.onEmitSituacao();
 				this.service.delete(this.atendimentoSelected._id);
+				this.onEmitSituacao();
 				this.onSelect(null);
 			});
 		}
@@ -153,10 +153,22 @@ export class AtendimentoListComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	onCreate() {
-		this.modal.openCreate();
+		this.modal.open();
 	}
 
-	onCloseModal() {
+	onCloseModal(atendimento: Atendimento) {
+		if (atendimento) {
+			const atendimentos = this.atendimentos.slice();
+			const index = this.atendimentos.findIndex(att => att._id === atendimento._id);
+			if (index >= 0) {
+				atendimentos[index] = atendimento;
+			} else {
+				atendimentos.push(atendimento);
+			}
+			this.onSelect(atendimento);
+			this.atendimentos = atendimentos;
+		}
+		this.onEmitSituacao();
 		this.closeModal.emit(true);
 	}
 

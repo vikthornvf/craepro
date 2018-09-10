@@ -13,8 +13,8 @@
 				*ngFor="let att of atendimentos"
 				[ngClass]="{ 'active': att === atendimentoSelected }"
 				(click)="onClick(att)"
-				(dblclick)="onDoubleClick(att); atendimentoModal.open()"
-				(press)="onPress(att); atendimentoModal.open()">
+				(dblclick)="onDoubleClick(att); atendimentoModal.open(atendimentoSelected)"
+				(press)="onPress(att); atendimentoModal.open(atendimentoSelected)">
 			<td>
 				<input
 						type="checkbox"
@@ -46,7 +46,6 @@
 
 <app-atendimento-modal
 		[selectedId]="selectedId"
-		[atendimento]="atendimentoSelected"
 		(load)="loadAtendimentos()"
-		(close)="onCloseModal()"
+		(close)="onCloseModal($event)"
 		#atendimentoModal></app-atendimento-modal>

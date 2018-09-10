@@ -36,7 +36,6 @@
 						[ngClass]="{ 'invalid': form.get('nome').invalid && submitted }"
 						[materializeActions]="nomeActions"
 						[materializeParams]="nomeParams"
-						[focus]="att.inicio && !att.egresso"
 						(keydown.tab)="selectProfissional()"
 						(keyup)="onShowDropdown($event.key)">
 				<label for="nome_att">Profissional*</label>
