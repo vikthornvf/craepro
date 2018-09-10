@@ -19,23 +19,13 @@ consign({cwd: 'app'})
 	.then('controllers')
 	.into(app);
 
-const alunoRoutes        = require('./app/routes/aluno');
-const atendimentoRoutes  = require('./app/routes/atendimento');
-const authRoutes         = require('./app/routes/auth');
-const escolaRoutes       = require('./app/routes/escola');
-const profissionalRoutes = require('./app/routes/profissional');
-const responsavelRoutes  = require('./app/routes/responsavel');
-const usuarioRoutes      = require('./app/routes/usuario');
-
-app.use('/api/aluno', alunoRoutes);
-app.use('/api/atendimento', atendimentoRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/escola', escolaRoutes);
-app.use('/api/profissional', profissionalRoutes);
-app.use('/api/responsavel', responsavelRoutes);
-app.use('/api/usuario', usuarioRoutes);
+const api = require('./app/routes');
+app.use('/api', api);
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/dist/index.html'));
+	res.format({
+		html: () => res.sendFile(path.join(__dirname, 'public/dist/index.html')),
+		json: () => res.sendStatus(200)
+	});
 });
 
 require('./config/database')(process.env.DB_URI);

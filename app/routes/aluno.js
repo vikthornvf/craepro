@@ -20,9 +20,4 @@ router.route('/:id')
 	.put(controller.update)
 	.delete(controller.deleteById);
 
-/**
- * PUT updates specific field of aluno by id
- */
-router.put('/situacao/:id', controller.updateSituacao)
-
 module.exports = router;
