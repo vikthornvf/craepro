@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
 const Schema = mongoose.Schema;
 const EnderecoSchema = require('./endereco_schema');
 
@@ -15,11 +13,26 @@ const profissionalSchema = new Schema({
 	}]
 });
 
-profissionalSchema.pre('remove', function (next) {
+profissionalSchema.post('findOneAndRemove', (profissional, next) => {
+
+	// find and remove all atendimentos related
 	const Atendimento = mongoose.model('Atendimento');
 
-	Atendimento.remove({ _id: { $in: this.atendimentos } })
-		.then(() => next());
+	Atendimento.find({ profissional: profissional._id }, (err, atendimentos) => {
+		if (err) {
+			return console.log(err);
+		}
+		if (atendimentos && atendimentos.length) {
+			var promises = [];
+			atendimentos.forEach((att) => {
+				promises.push(Atendimento.findByIdAndRemove(att._id));
+			});
+			Promise.all(promises).then(() => {
+				console.log(`Removed all ${profissional.nome}'s atendimentos.`);
+				next();
+			});
+		}
+	});
 });
 
 const Profissional = mongoose.model('Profissional', profissionalSchema);

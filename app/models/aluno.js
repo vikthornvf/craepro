@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
 const Schema = mongoose.Schema;
 
 const alunoSchema = new Schema({
@@ -15,13 +13,18 @@ const alunoSchema = new Schema({
 	}
 });
 
-alunoSchema.pre('remove', function (next) {
+alunoSchema.post('findOneAndRemove', (aluno, next) => {
 	const Atendimento = mongoose.model('Atendimento');
 	const Responsavel = mongoose.model('Responsavel');
-
 	Promise.all([
-		Atendimento.remove({ aluno: { $in: this.atendimentos } }),
-		Responsavel.remove({ aluno: { $in: this.atendimentos } })
+		Atendimento.remove({ aluno: aluno._id }, (err) => {
+			if (err) return console.log(err);
+			console.log(`Removed all ${aluno.nome}'s atendimentos.`);
+		}),
+		Responsavel.remove({ aluno: aluno._id }, (err) => {
+			if (err) return console.log(err);
+			console.log(`Removed all ${aluno.nome}'s responsaveis.`);
+		}),
 	]).then(() => next());
 });
 

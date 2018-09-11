@@ -25,14 +25,14 @@ const atendimentoSchema = new Schema({
 	},
 });
 
-atendimentoSchema.post('save', (atendimento) => updateAlunoStatus(atendimento));
-atendimentoSchema.post('findOneAndUpdate', (atendimento) => updateAlunoStatus(atendimento));
-atendimentoSchema.post('findOneAndRemove', (atendimento) => updateAlunoStatus(atendimento));
+atendimentoSchema.post('save', (atendimento, next) => updateAlunoStatus(atendimento, next));
+atendimentoSchema.post('findOneAndUpdate', (atendimento, next) => updateAlunoStatus(atendimento, next));
+atendimentoSchema.post('findOneAndRemove', (atendimento, next) => updateAlunoStatus(atendimento, next));
 
 const Atendimento = mongoose.model('Atendimento', atendimentoSchema);
 module.exports = Atendimento;
 
-function updateAlunoStatus(atendimento) {
+function updateAlunoStatus(atendimento, next) {
 
 	Atendimento.find({ aluno: atendimento.aluno })
 		.exec((err, atendimentos) => {
@@ -71,6 +71,7 @@ function updateAlunoStatus(atendimento) {
 			Aluno.findByIdAndUpdate(atendimento.aluno, { situacao }, (error, aluno) => {
 				if (error) return console.log(error);
 				console.log(`Updated ${aluno.nome}'s status to ${situacao}`);
+				next();
 			});
 		});
 }
