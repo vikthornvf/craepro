@@ -1,3 +1,7 @@
+.side-nav li > a {
+	font-weight: inherit;
+}
+
 .logo {
 	background-image: url('/assets/img/logo-vertical234x48.png');
 	background-repeat: no-repeat;
