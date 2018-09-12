@@ -19,7 +19,6 @@ export class ResponsavelComponent implements OnInit {
 	@Output() delete = new EventEmitter<string>();
 
 	form: FormGroup;
-	resp: Responsavel;
 
 	constructor(
 		private service: ResponsavelService,
@@ -27,10 +26,9 @@ export class ResponsavelComponent implements OnInit {
 		private fb: FormBuilder) {}
 
 	ngOnInit(): void {
-		this.resp = Object.assign({}, this.responsavel);
 		this.form = this.fb.group({
-			'nome': new FormControl(null, Validators.required),
-			'parentesco': null
+			'nome': new FormControl(this.responsavel.nome, Validators.required),
+			'parentesco': this.responsavel.parentesco
 		});
 	}
 
@@ -40,24 +38,20 @@ export class ResponsavelComponent implements OnInit {
 			return;
 		}
 
-		const resp = this.resp = this.responsavel;
-
-		resp.aluno = this.aluno;
-		resp.nome = this.form.get('nome').value;
-		resp.parentesco = this.form.get('parentesco').value;
-
-		if (!resp._id) {
-			this.service.onCreate(resp).subscribe(
+		this.responsavel.aluno = this.aluno;
+		this.responsavel.nome = this.form.get('nome').value;
+		this.responsavel.parentesco = this.form.get('parentesco').value;
+		if (!this.responsavel._id) {
+			this.service.onCreate(this.responsavel).subscribe(
 				res => {
-					resp._id = res['_id'];
-					this.resp = this.responsavel = resp;
+					this.responsavel._id = res['_id'];
 					this.save.emit(this.responsavel);
-					this.dialogs.toastSuccess(`Responsável ${resp.nome} criado com sucesso!`);
+					this.dialogs.toastSuccess(`Responsável ${this.responsavel.nome} criado com sucesso!`);
 				},
 				err => console.log(err));
 		}
 		else {
-			this.resp = this.responsavel = this.service.save(resp);
+			this.responsavel = this.service.save(this.responsavel);
 			this.save.emit(this.responsavel);
 		}
 	}
