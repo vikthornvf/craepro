@@ -77,11 +77,13 @@ export class ResponsavelService {
 	}
 
 	delete(id: string) {
-		this.http.delete(`${this.url}/${id}`).subscribe(
-			res => this.dialogs.toastSuccess('Responsavel excluído com sucesso!'),
-			err => {
-				console.log(err);
-				this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
-			});
+		if (id) {
+			this.http.delete(`${this.url}/${id}`).subscribe(
+				res => this.dialogs.toastSuccess('Responsavel excluído com sucesso!'),
+				err => {
+					console.log(err);
+					this.dialogs.toastFail('Ocorreu um erro! Por favor, tente mais tarde.');
+				});
+		}
 	}
 }
