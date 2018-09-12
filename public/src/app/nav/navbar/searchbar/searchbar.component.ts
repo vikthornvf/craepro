@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { NavService } from '../nav.service';
+import { NavService } from '../../nav.service';
 
 @Component({
 	selector: 'app-searchbar',
