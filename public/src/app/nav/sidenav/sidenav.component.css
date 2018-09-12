@@ -2,6 +2,10 @@
 	font-weight: inherit;
 }
 
+.side-nav li > a > i {
+	font-size: 1.5rem;
+}
+
 .logo {
 	background-image: url('/assets/img/logo-vertical234x48.png');
 	background-repeat: no-repeat;

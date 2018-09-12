@@ -1,12 +1,12 @@
 <div class="container spacing">
-	<h4 class="grey-text">Escolas</h4>
+	<h3 class="light blue-grey-text text-lighten-2">Escolas</h3>
 	<span *ngIf="loaded; else loading">
 		<ul *ngIf="escolas.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion">
 
-			<div class="collapsible-header flex-container disabled">
+			<div class="collapsible-header flex-container disabled blue-grey-text">
 				<input type="checkbox" disabled>
 				<label class="disabled"></label>
-				<div class="flex nome"><b class="truncate">Nome</b></div>
+				<div class="flex nome truncate">Nome</div>
 			</div>
 			<li *ngFor="let escola of escolas | navFilter: keyword:'nome'">
 

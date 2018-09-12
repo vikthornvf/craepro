@@ -1,13 +1,13 @@
 <div class="container spacing">
-	<h4 class="grey-text">Profissionais</h4>
+	<h3 class="light blue-grey-text text-lighten-2">Profissionais</h3>
 	<span *ngIf="loaded; else loading">
 		<ul *ngIf="profissionais.length; else noData" materialize="collapsible" class="collapsible" data-collapsible="accordion" [materializeParams]="params">
 
-			<div class="collapsible-header flex-container disabled">
+			<div class="collapsible-header flex-container disabled blue-grey-text">
 				<input type="checkbox" disabled>
 				<label class="disabled"></label>
-				<div class="flex nome"><b class="truncate">Nome</b></div>
-				<div class="flex atendimentos"><b class="truncate">Atendimentos</b></div>
+				<div class="flex nome truncate">Nome</div>
+				<div class="flex atendimentos truncate">Atendimentos</div>
 			</div>
 			<li *ngFor="let profissional of profissionais | navFilter: keyword:'nome'">
 
