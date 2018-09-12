@@ -1,6 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { AppRoutingModule } from '../app.routes';
@@ -24,7 +24,7 @@ import { NavService } from './nav.service';
 		NavFilter
 	],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		FormsModule,
 		MaterializeSharedModule,
 		AppRoutingModule

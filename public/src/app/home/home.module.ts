@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { AppRoutingModule } from '../app.routes';
@@ -13,7 +13,7 @@ import { HomeService } from './home.service';
 		MaterializeSharedModule,
 		AppRoutingModule,
 		ReactiveFormsModule,
-		BrowserModule
+		CommonModule
 	],
 	exports: [],
 	providers: [HomeService]

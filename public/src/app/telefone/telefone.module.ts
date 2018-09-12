@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { TelefoneComponent } from './telefone.component';
@@ -9,7 +9,7 @@ import { TelefoneComponent } from './telefone.component';
 	declarations: [TelefoneComponent],
 	imports: [
 		MaterializeSharedModule,
-		BrowserModule,
+		CommonModule,
 		FormsModule
 	],
 	exports: [TelefoneComponent]

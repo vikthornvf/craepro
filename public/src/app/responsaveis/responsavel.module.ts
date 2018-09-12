@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { EnderecoModule } from '../endereco/endereco.module';
@@ -13,7 +13,7 @@ import { ResponsavelService } from './responsavel.service';
 	declarations: [ResponsavelComponent],
 	imports: [
 		ReactiveFormsModule,
-		BrowserModule,
+		CommonModule,
 		MaterializeSharedModule,
 		EnderecoModule,
 		DirectivesModule,

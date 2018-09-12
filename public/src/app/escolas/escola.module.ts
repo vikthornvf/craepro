@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { MaterializeSharedModule } from '../shared/materialize-shared.module';
 import { AddButtonModule } from '../add-button/add-button.module';
@@ -21,7 +21,7 @@ import { EscolaService } from './escola.service';
 	exports: [],
 	imports: [
 		ReactiveFormsModule,
-		BrowserModule,
+		CommonModule,
 		MaterializeSharedModule,
 		AddButtonModule,
 		DirectivesModule,
