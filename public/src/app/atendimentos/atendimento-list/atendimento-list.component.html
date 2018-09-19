@@ -1,16 +1,17 @@
 <table class="highlight" *ngIf="atendimentos.length; else semAtendimentos">
 	<thead>
-		<tr>
-			<th>{{ property | titlecase }}</th>
-			<th>Atendimento</th>
-			<th class="extended">Estado</th>
-			<th class="extended">Parecer Atualizado</th>
+		<tr class="blue-grey-text">
+			<th class="regular">{{ property | titlecase }}</th>
+			<th class="regular">Atendimento</th>
+			<th class="regular extended">Estado</th>
+			<th class="regular extended">Parecer Atualizado</th>
 		</tr>
 	</thead>
 
 	<tbody>
 		<tr
 				*ngFor="let att of atendimentos"
+				class="clickable"
 				[ngClass]="{ 'active': att === atendimentoSelected }"
 				(click)="onClick(att)"
 				(dblclick)="onDoubleClick(att); atendimentoModal.open(atendimentoSelected)"
