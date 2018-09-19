@@ -3,6 +3,7 @@ import { Component, NgZone } from '@angular/core';
 import { ListViewComponent } from '../../shared/list-view.component';
 import { NavService } from '../../nav/nav.service';
 import { UsuarioService } from '../usuario.service';
+import { Usuario } from '../usuario.model';
 
 @Component({
 	selector: 'app-usuario-list',
@@ -12,7 +13,7 @@ import { UsuarioService } from '../usuario.service';
 export class UsuarioListComponent extends ListViewComponent {
 
 	link = 'usuario';
-	usuarios: any = [];
+	usuarios: Usuario[];
 
 	constructor(
 		z: NgZone,
