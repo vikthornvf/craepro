@@ -6,6 +6,12 @@ const controller = require('../controllers/usuario');
  * GET list all
  * POST add new usuario
  */
+router.get('/solicitado', controller.listSolicitado);
+
+/**
+ * GET list all
+ * POST add new usuario
+ */
 router.route('/')
 	.get(controller.list)
 	.post(controller.add);

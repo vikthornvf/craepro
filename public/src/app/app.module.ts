@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { MaterializeSharedModule } from './shared/materialize-shared.module';
 import { AlunoModule } from './alunos/aluno.module';
-// import { DashboardModule } from './dashboard/dashboard.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { DialogsModule } from './dialogs/dialogs.module';
 import { EscolaModule } from './escolas/escola.module';
 import { HomeModule } from './home/home.module';
@@ -25,7 +25,7 @@ import { AppComponent } from './app.component';
 		BrowserModule,
 		MaterializeSharedModule,
 		AlunoModule,
-		// DashboardModule,
+		DashboardModule,
 		DialogsModule,
 		EscolaModule,
 		HomeModule,

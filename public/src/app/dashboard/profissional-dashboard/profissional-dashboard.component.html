@@ -1,0 +1,10 @@
+<div class="container spacing">
+	<h4 class="grey-text">Olá, {{ usuario.nome?.split(' ')[0] }}!</h4>
+	<span *ngIf="loaded; else loading">
+	</span>
+	<ng-template #loading>
+		<div class="progress">
+			<div class="indeterminate"></div>
+		</div>
+	</ng-template>
+</div>

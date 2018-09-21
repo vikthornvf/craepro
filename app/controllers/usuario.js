@@ -11,6 +11,16 @@ exports.list = (req, res) => {
 		});
 };
 
+exports.listSolicitado = (req, res) => {
+	Usuario.find({ solicitado: true })
+		.sort({ email: 1 })
+		.populate('escola')
+		.exec((err, usuarios) => {
+			if (err) return res.status(500).json(err);
+			res.json(usuarios);
+		});
+};
+
 exports.add = (req, res) => {
 	const usuario = new Usuario();
 	usuario.nome = req.body.nome;

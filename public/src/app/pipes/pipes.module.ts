@@ -5,6 +5,7 @@ import { DiasSemanaPipe, DiasSemanaShortPipe } from './dias-semana.pipe';
 import { SeriePipe } from './serie.pipe';
 import { SituacaoPipe } from './situacao.pipe';
 import { TipoAtendimentoPipe } from './tipoAtendimento.pipe';
+import { TipoUsuarioPipe } from './tipoUsuario.pipe';
 import { TurnoPipe } from './turno.pipe';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { TurnoPipe } from './turno.pipe';
 		SeriePipe,
 		SituacaoPipe,
 		TipoAtendimentoPipe,
+		TipoUsuarioPipe,
 		TurnoPipe
 	],
 	exports: [
@@ -24,6 +26,7 @@ import { TurnoPipe } from './turno.pipe';
 		SeriePipe,
 		SituacaoPipe,
 		TipoAtendimentoPipe,
+		TipoUsuarioPipe,
 		TurnoPipe
 	],
 })

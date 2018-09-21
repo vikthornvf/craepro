@@ -33,6 +33,13 @@ export class UsuarioService {
 			);
 	}
 
+	listSolicitado(): Observable<Usuario[]> {
+		return this.http.get(this.url + '/solicitado')
+			.pipe(
+				map(res => res as Usuario[])
+			);
+	}
+
 	findById(id: string): Observable<Usuario> {
 		return this.http.get(`${this.url}/${id}`);
 	}

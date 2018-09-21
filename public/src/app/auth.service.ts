@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { DialogsService } from './dialogs/dialogs.service';
-
 export interface UsuarioDetails {
 	_id: string;
 	email: string;
 	nome: string;
 	permissoes: string[];
+	tipo: string;
 	exp: number;
 }
 
@@ -32,7 +31,6 @@ export class AuthService {
 
 	constructor(
 		private http: HttpClient,
-		private dialogs: DialogsService,
 		private router: Router) {}
 
 	private saveToken(token: string) {

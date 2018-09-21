@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AlunoComponent } from './alunos/aluno/aluno.component';
 import { AlunoListComponent } from './alunos/aluno-list/aluno-list.component';
-// import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EscolaComponent } from './escolas/escola/escola.component';
 import { EscolaListComponent } from './escolas/escola-list/escola-list.component';
 import { HomeComponent } from './home/home.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
 	{ path: '', component: HomeComponent, pathMatch: 'full'  },
 	{ path: 'login', component: UsuarioLoginPaneComponent, canActivate: [LoginGuardService] },
 	{ path: 'login/:path', component: UsuarioLoginPaneComponent, canActivate: [LoginGuardService] },
-	// { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+	{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos', component: AlunoListComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos/aluno', component: AlunoComponent, canActivate: [AuthGuardService] },
 	{ path: 'alunos/aluno/:id', component: AlunoComponent, canActivate: [AuthGuardService] },

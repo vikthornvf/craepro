@@ -1,0 +1,44 @@
+<div class="card hoverable">
+	<div class="card-content">
+		<div class="card-title">Usuários solicitados</div>
+		<div *ngIf="loaded; else loading" class="v-scroll">
+			<table *ngIf="usuarios.length" class="highlight">
+				<thead class="thead">
+					<tr>
+						<th>Usuário</th>
+						<th>Email</th>
+						<th>Tipo</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let u of usuarios">
+						<td>{{ u.nome }}</td>
+						<td>{{ u.email }}</td>
+						<td>{{ u.tipo | tipoUsuarioPipe }}</td>
+						<td>
+							<i class="material-icons left blue-grey-text tooltipped clickable"
+								materialize="tooltip"
+								data-position="left"
+								data-delay="50"
+								data-tooltip="Ver Usuário"
+								(click)="onViewUusario(u)">account_circle</i>
+							<i class="material-icons left green-text lighten-1 tooltipped clickable"
+								materialize="tooltip"
+								data-position="left"
+								data-delay="50"
+								data-tooltip="Confirmar Usuário"
+								(click)="onConfirmUusario(u)">check_circle</i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p *ngIf="!usuarios.length" class="blue-grey-text text-lighten-2">Nenhum usuário aguardando confirmação.</p>
+		</div>
+		<ng-template #loading>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</ng-template>
+	</div>
+</div>

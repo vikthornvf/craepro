@@ -1,5 +1,5 @@
-<div class="container spacing">
-	<div class="row">
-		<h2 class="light">DASHBOARD</h2>
-	</div>
+<div class="container spacing" [ngSwitch]="usuario?.tipo">
+	<h3 class="light blue-grey-text text-lighten-2">Olá, {{ usuario.nome?.split(' ')[0] }}!</h3>
+	<app-admin-dashboard *ngSwitchCase="'A'" [usuario]="usuario"></app-admin-dashboard>
+	<app-profissional-dashboard *ngSwitchCase="'P'" [usuario]="usuario"></app-profissional-dashboard>
 </div>
