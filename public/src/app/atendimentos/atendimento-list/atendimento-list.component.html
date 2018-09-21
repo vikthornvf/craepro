@@ -1,28 +1,26 @@
 <table class="highlight" *ngIf="atendimentos.length; else semAtendimentos">
 	<thead>
-		<tr class="blue-grey-text">
-			<th class="regular">{{ property | titlecase }}</th>
-			<th class="regular">Atendimento</th>
-			<th class="regular extended">Estado</th>
-			<th class="regular extended">Parecer Atualizado</th>
+		<tr>
+			<th>{{ property | titlecase }}</th>
+			<th>Atendimento</th>
+			<th class="extended">Estado</th>
+			<th class="extended">Parecer Atualizado</th>
 		</tr>
 	</thead>
 
 	<tbody>
-		<tr
-				*ngFor="let att of atendimentos"
-				class="clickable"
-				[ngClass]="{ 'active': att === atendimentoSelected }"
-				(click)="onClick(att)"
-				(dblclick)="onDoubleClick(att); atendimentoModal.open(atendimentoSelected)"
-				(press)="onPress(att); atendimentoModal.open(atendimentoSelected)">
+		<tr *ngFor="let att of atendimentos"
+			 class="clickable"
+			 [ngClass]="{ 'active': att === atendimentoSelected }"
+			 (click)="onClick(att)"
+			 (dblclick)="onDoubleClick(att); atendimentoModal.open(atendimentoSelected)"
+			 (press)="onPress(att); atendimentoModal.open(atendimentoSelected)">
 			<td>
-				<input
-						type="checkbox"
-						class="filled-in"
-						[id]="att._id"
-						[checked]="att === atendimentoSelected"
-						(click)="onSelect(att)">
+				<input [id]="att._id"
+					type="checkbox"
+					class="filled-in"
+					[checked]="att === atendimentoSelected"
+					(click)="onSelect(att)">
 				<label for="atendimento._id" style="color: black !important">{{ att[property] ? att[property].nome : '(indefinido)' }}</label>
 			</td>
 			<td>
@@ -30,7 +28,7 @@
 				<ng-template #tipoIndefinidoEl>(indefinido)</ng-template>
 			</td>
 			<td>{{ att.inicio ? (att.egresso ? 'Finalizado' : 'Ativo') : 'Em espera' }} (
-					{{ (att.inicio ? (att.egresso ? att.egresso : att.inicio ) : att.solicitacao) | date: 'dd/MM/yyyy' }} )
+				{{ (att.inicio ? (att.egresso ? att.egresso : att.inicio) : att.solicitacao) | date: 'dd/MM/yyyy' }} )
 			</td>
 			<td>{{ (att.pareceres.length > 0) ? att.pareceres[att.pareceres.length-1].texto : '(sem parecer)' }}</td>
 		</tr>
