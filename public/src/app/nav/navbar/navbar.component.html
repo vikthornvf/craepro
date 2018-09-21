@@ -5,8 +5,13 @@
 					*ngIf="auth.isLoggedIn()"
 					class="right">
 				<li>
-					<a class="dropdown-button" data-beloworigin="true" data-constrainwidth="false" data-activates="user-dropdown">
-						<i class="material-icons">account_circle</i>
+					<a class="dropdown-button btn-floating waves-effect lighten-2 waves-light z-depth-0 center"
+					 data-beloworigin="true"
+					 data-constrainwidth="false"
+					 data-activates="user-dropdown"
+					 [ngClass]="usuario ? (usuario.cor || 'deep-purple') : 'white'">
+					  	<span *ngIf="sigla" style="font-size: 26px;">{{ sigla }}</span>
+						<i *ngIf="!sigla" class="material-icons teal-text">account_circle</i>
 					</a>
 				</li>
 			</ul>
@@ -20,7 +25,7 @@
 			</ng-container>
 		</div>
 		<ul id="user-dropdown" class="dropdown-content">
-			<li *ngIf="usuario"><span><label>{{ usuario.nome }}<br>{{ usuario.email }}</label></span></li>
+			<li><span><label>{{ usuario?.nome }}<br>{{ usuario?.email }}</label></span></li>
 			<li><a routerLink="/usuario-profile"><i class="material-icons teal-text left">person</i>Minha conta</a></li>
 			<li><a routerLink="/usuario-senha"><i class="material-icons amber-text text-darken-1 left">lock</i>Alterar senha</a></li>
 			<li><a (click)="onLogout()"><i class="material-icons red-text left">power_settings_new</i>Sair</a></li>

@@ -3,7 +3,7 @@ form {
 }
 
 .form-wrapper {
-	width: calc(100% - 54px);
+	width: calc(100% - 70px);
 }
 
 .input-field input[type=search] {
@@ -19,20 +19,12 @@ form {
 		height: 53px !important;
 	}
 
-	.form-wrapper {
-		width: calc(100% - 64px);
-	}
-
 	.input-field input[type=search] {
 		margin-left: 10px;
 	}
 }
 
 @media only screen and (min-width: 601px) and (max-width: 992px) {
-	.form-wrapper {
-		width: calc(100% - 64px);
-	}
-
 	.input-field input[type=search] {
 		margin-left: 13px;
 	}

@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	hideSidebarObservable: Subscription;
 	sidenavWrapper: boolean;
 	usuario: UsuarioDetails;
+	sigla: string;
 
 	now = new Date().getTime();
 	@ViewChild('nav') nav: ElementRef;
@@ -51,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 		this.stateObservable = this.navService.barState.subscribe(barState => this.state = barState);
 		this.hideSidebarObservable = this.navService.hideSidebar.subscribe(hide => this.sidenavWrapper = !hide);
 		this.initDropdown();
+		this.onSetSigla();
 	}
 
 	ngOnDestroy() {
@@ -72,5 +74,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 	onBack() {
 		this.navService.onNavigateBack();
+	}
+
+	onSetSigla() {
+		const nome = this.usuario.nome.split(' ');
+		if (nome) {
+			this.sigla = nome[0].slice(0, 1).toUpperCase();
+			if (nome.length - 1 > 0) {
+				this.sigla += nome[nome.length - 1].slice(0, 1).toUpperCase();
+			}
+		}
 	}
 }

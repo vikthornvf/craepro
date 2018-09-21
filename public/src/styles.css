@@ -53,6 +53,11 @@ input[type="checkbox"]:disabled + label {
 			animation-name: fadein;
 }
 
+thead > tr > th, .collapsible-header.disabled {
+	font-weight: 400;
+	color: #90a4ae !important;
+}
+
 .collapsible-header.selectable:hover {
 	background-color: #eeeeee;
 }
