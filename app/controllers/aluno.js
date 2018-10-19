@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Aluno = mongoose.model('Aluno');
 
 exports.list = (req, res) => {
-	Aluno.find()
+	Aluno.find(req.query)
 		.sort({ nome: 1 })
 		.populate('escola')
 		.exec((err, alunos) => {

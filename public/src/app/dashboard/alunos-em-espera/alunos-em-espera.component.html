@@ -1,0 +1,38 @@
+<div class="card hoverable">
+	<div class="card-content">
+		<div class="card-title red-text text-darken-1">Alunos em Espera</div>
+		<div *ngIf="loaded; else loading" class="v-scroll">
+			<table *ngIf="alunos.length" class="highlight">
+				<thead class="thead">
+					<tr>
+						<th>Nome</th>
+						<th>Escola</th>
+						<th>Série</th>
+						<th>Ver</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let a of alunos">
+						<td>{{ a.nome }}</td>
+						<td>{{ a.escola.nome }}</td>
+						<td>{{ a.serie | seriePipe }}</td>
+						<td>
+							<i class="material-icons left blue-grey-text tooltipped clickable"
+								materialize="tooltip"
+								data-position="left"
+								data-delay="50"
+								data-tooltip="Ver Aluno"
+								(click)="onViewUusario(a)">visibility</i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p *ngIf="!alunos.length" class="blue-grey-text text-lighten-2">Nenhum usuário aguardando confirmação.</p>
+		</div>
+		<ng-template #loading>
+			<div class="progress">
+				<div class="indeterminate"></div>
+			</div>
+		</ng-template>
+	</div>
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -24,7 +24,18 @@ export class AlunoService {
 	}
 
 	list(): Observable<Aluno[]> {
-		return this.http.get(this.url)
+		return this.http.get(this.url, { headers: this.headers })
+			.pipe(
+				map(res => res as Aluno[])
+			);
+	}
+
+	listBySituacao(situacao: string): Observable<Aluno[]> {
+		const params = new HttpParams().set('situacao', situacao);
+		return this.http.get(this.url, {
+				params,
+				headers: this.headers
+			})
 			.pipe(
 				map(res => res as Aluno[])
 			);
