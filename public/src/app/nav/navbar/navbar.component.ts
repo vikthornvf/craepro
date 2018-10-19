@@ -77,11 +77,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	onSetSigla() {
-		const nome = this.usuario.nome.split(' ');
-		if (nome) {
-			this.sigla = nome[0].slice(0, 1).toUpperCase();
-			if (nome.length - 1 > 0) {
-				this.sigla += nome[nome.length - 1].slice(0, 1).toUpperCase();
+		if (this.usuario) {
+			const nome = this.usuario.nome.split(' ');
+			if (nome) {
+				this.sigla = nome[0].slice(0, 1).toUpperCase();
+				if (nome.length - 1 > 0) {
+					this.sigla += nome[nome.length - 1].slice(0, 1).toUpperCase();
+				}
 			}
 		}
 	}
