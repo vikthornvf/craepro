@@ -1,11 +1,11 @@
 <div class="card hoverable">
 	<div class="card-content">
-		<div class="card-title">Usuários solicitados</div>
+		<div class="card-title amber-text text-darken-1">Usuários solicitados</div>
 		<div *ngIf="loaded; else loading" class="v-scroll">
 			<table *ngIf="usuarios.length" class="highlight">
 				<thead class="thead">
 					<tr>
-						<th>Usuário</th>
+						<th>Nome</th>
 						<th>Email</th>
 						<th>Tipo</th>
 						<th>Ações</th>
@@ -22,13 +22,13 @@
 								data-position="left"
 								data-delay="50"
 								data-tooltip="Ver Usuário"
-								(click)="onViewUusario(u)">account_circle</i>
+								(click)="onViewUusario(u)">visibility</i>
 							<i class="material-icons left green-text lighten-1 tooltipped clickable"
 								materialize="tooltip"
 								data-position="left"
 								data-delay="50"
 								data-tooltip="Confirmar Usuário"
-								(click)="onConfirmUusario(u)">check_circle</i>
+								(click)="onConfirmUusario(u)">done</i>
 						</td>
 					</tr>
 				</tbody>
