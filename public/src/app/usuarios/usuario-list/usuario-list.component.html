@@ -23,7 +23,7 @@
 					<div class="flex nome truncate">{{ usuario.nome }}</div>
 					<div class="flex email truncate">{{ usuario.email }}</div>
 					<div class="flex escola truncate">{{ usuario.tipo !== 'E' ? service.getUsuarioTipo(usuario.tipo) : usuario.escola?.nome }}
-						<span *ngIf="usuario.solicitado" class="new badge amber darken-1" data-badge-caption="">Confirmar</span>
+						<span *ngIf="usuario.solicitado" class="new badge amber darken-1" data-badge-caption="">Pendente</span>
 					</div>
 				</div>
 			</li>
