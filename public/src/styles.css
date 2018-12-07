@@ -58,6 +58,26 @@ thead > tr > th, .collapsible-header.disabled {
 	color: #90a4ae !important;
 }
 
+.tabs .tab a{
+	color:#90a4ae;
+}
+
+.tabs .tab a:hover {
+	color:#4db6ac;
+}
+
+.tabs .tab a.active {
+	color:#4db6ac !important;
+}
+
+.tabs > .tab > a.main {
+	color: rgba(0, 0, 0, 0.87);
+}
+
+.tabs .indicator {
+	background-color:#4db6ac;
+}
+
 .collapsible-header.selectable:hover {
 	background-color: #eeeeee;
 }
