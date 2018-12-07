@@ -1,6 +1,6 @@
 <div class="card hoverable">
 	<div class="card-content">
-		<div class="card-title amber-text text-darken-1">Usuários solicitados</div>
+		<div class="card-title amber-text">Usuários solicitados</div>
 		<div *ngIf="loaded; else loading" class="v-scroll">
 			<table *ngIf="usuarios.length" class="highlight">
 				<thead class="thead">
@@ -8,7 +8,7 @@
 						<th>Nome</th>
 						<th>Email</th>
 						<th>Tipo</th>
-						<th>Ações</th>
+						<th style="width: 1%">Ações</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -1,6 +1,6 @@
 <div class="card hoverable">
 	<div class="card-content">
-		<div class="card-title red-text text-darken-1">Alunos em Espera</div>
+		<div class="card-title red-text">Alunos em espera</div>
 		<div *ngIf="loaded; else loading" class="v-scroll">
 			<table *ngIf="alunos.length" class="highlight">
 				<thead class="thead">
@@ -8,7 +8,7 @@
 						<th>Nome</th>
 						<th>Escola</th>
 						<th>Série</th>
-						<th>Ver</th>
+						<th style="width: 1%">Ver</th>
 					</tr>
 				</thead>
 				<tbody>
