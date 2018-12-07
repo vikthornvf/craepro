@@ -15,7 +15,7 @@
 					</a>
 				</li>
 			</ul>
-			<app-homebar *ngSwitchCase="'homebar'"></app-homebar>
+			<app-homebar *ngSwitchCase="'homebar'" [logged]="auth.isLoggedIn()"></app-homebar>
 			<app-searchbar *ngSwitchCase="'searchbar'"></app-searchbar>
 			<app-toolbar *ngSwitchCase="'toolbar'"></app-toolbar>
 			<ng-container *ngSwitchCase="'navbar'">

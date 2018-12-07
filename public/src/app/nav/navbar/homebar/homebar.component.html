@@ -16,7 +16,7 @@
 	<li><a routerLink="." fragment="sobre">Sobre</a></li>
 	<li><a routerLink="." fragment="contato">Contato</a></li>
 </ul>
-<ul class="right">
+<ul *ngIf="!logged" class="right">
 	<li class="custom-color">
 		<a class="custom-buttom valign-wrapper" routerLink="/dashboard"><p>Acessar</p></a>
 	</li>

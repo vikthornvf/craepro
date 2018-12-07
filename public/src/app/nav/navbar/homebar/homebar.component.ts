@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 declare var $;
 
@@ -8,6 +8,8 @@ declare var $;
 	styleUrls: ['./homebar.component.css']
 })
 export class HomebarComponent implements OnInit {
+
+	@Input() logged: boolean;
 
 	ngOnInit(): void {
 		this.initDropdown();
